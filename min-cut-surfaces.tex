@@ -1,0 +1,142 @@
+\documentclass[11pt,twoside]{article}
+
+%\documentclass{sig-alternate}
+
+\usepackage{jeffe,graphicx,hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{marvosym}
+%\usepackage{picins}
+%\usepackage{smallbib}
+\usepackage{cite}
+\usepackage{verbatim}
+
+%-----------------------------------------------------------------------
+%  These packages are purely cosmetic.
+%  Just comment them out if they don't work for you.
+%-----------------------------------------------------------------------
+%\usepackage{microtype}
+%\usepackage[charter]{mathdesign}
+%\def\sfdefault{fvs}
+%\def\ttdefault{fvm}
+%\usepackage[mathcal]{euscript}
+%\usepackage{stmaryrd}
+
+
+%-----------------------------------------------------------------------
+%  Local definitions
+%-----------------------------------------------------------------------
+\def\arcto{\mathord\shortrightarrow}
+\def\arc#1#2{#1\arcto#2}
+\def\cra#1#2{#1\mathord\shortleftarrow#2}
+\def\fence#1#2{#1\mathord\shortuparrow#2}
+\def\ecnef#1#2{#1\mathord\shortdownarrow#2}
+\def\head{\mathit{head}}
+\def\tail{\mathit{tail}}
+\def\lsh{\mathit{left}}
+\def\rsh{\mathit{right}}
+\def\rev{\mathit{rev}}
+\def\Z{\mathbb{Z}}
+\def\Real{\mathbb{R}}
+\def\Q{\mathbb{Q}}
+
+% needs marvosym package:
+\def\snip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\Rightscissors}\!}}}
+\let\unlhd\trianglelefteq	% fix mathdesign font bug
+
+\let\cycle\gamma
+\let\path p
+\let\primalarc\alpha
+\def\dualarc{p}
+
+\def\Sigmabar{\overline{\smash{\Sigma}\vphantom{t}}}
+\def\SIGMABAR{\boldsymbol{\overline{\smash{\Sigma}\vphantom{x}}}}
+\def\Gbar{\overline{\smash{G}\vphantom{t}}}
+\def\Vbar{\overline{\smash{V}\vphantom{t}}}
+\def\Ebar{\overline{\smash{E}\vphantom{t}}}
+\def\bbar{\overline{\smash{b}\vphantom{t}}}
+\def\nbar{\overline{n}}
+\def\gbar{\overline{g}}
+\def\wbar{\overline{w}}
+\def\sigmabar{\overline{\sigma}}
+\def\cyclebar{\overline{\cycle}}
+\def\chibar{\overline{\chi}}
+
+\def\fakeparagraph#1{\par\medskip\noindent\textbf{#1}}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+\begin{document}
+
+\pagestyle{myheadings}
+\markboth{Minimum cuts in surface graphs}
+		 {Erin W. Chambers, Jeff Erickson, Kyle Fox, and Amir Nayyeri}
+
+\begin{titlepage}
+
+\title{Minimum cuts in surface graphs\footnote{
+Portions of this work done by different subsets of the authors appeared in~\cite{cen-mcshc-09},~\cite{en-mcsnc-11}, and~\cite{efn-gmcse-12}.
+}}
+
+\author{
+  Erin W. Chambers%
+  \thanks{Department of Computer Science and Mathematics, Saint Louis
+  University;
+  \url{echambe5@slu.edu}.  Supported in part by NSF grants CCF 1054779 and DMS-0528086.
+  Portions of this work were done while this author was a student at the University of Illinois at Urbana-Champaign.}
+  \and
+  Jeff Erickson%
+  \thanks{Department of Computer Science,
+  University of Illinois, Urbana-Champaign; \url{jeffe@illinois.edu}.
+  Supported in part by NSF grants CCF 09-15519 and DMS-0528086.
+  }
+  \and
+  Kyle Fox%
+  \thanks{Department of Computer Science,
+      University of Illinois, Urbana-Champaign;
+      \url{kylefox2@illinois.edu}.
+      Supported in part by
+      the Department of Energy Office
+      of Science Graduate Fellowship Program (DOE SCGF),
+      made possible in part by the American Recovery and
+      Reinvestment Act of 2009, administered by ORISE-ORAU
+      under contract no. DE-AC05-06OR23100.}
+  \and
+  Amir Nayyeri%
+  \thanks{Department of Computer Science,
+      Carnegie Mellon University,
+      \url{amirn@cs.cmu.edu}. Supported in part by NSF grants
+      CCF 1065106, CCF 09-15519, and DMS-0528086. Portions of this work were done while this author was a student 
+      at the University of Illinois at Urbana-Champaign.}
+      }
+
+%\DRAFT
+
+\maketitle
+\begin{abstract}
+Let $G$ be a directed graph with $n$ vertices embedded on an edge-weighted orientable surface of genus $g$.
+We describe algorithms to efficiently compute minimum $s,t$-cuts and global minimum cuts of~$G$.
+\note{TODO(kylejfox): Rewrite abstract.}
+\end{abstract}
+
+\noindent
+
+\thispagestyle{empty}
+\setcounter{page}{0}
+\end{titlepage}
+
+
+%---------------------------------------
+
+
+
+% Begin bbl nonsense
+\bibliographystyle{abbrv}
+\bibliography{topology,data-structures,optimization,other}
+
+
+\end{document}
+
