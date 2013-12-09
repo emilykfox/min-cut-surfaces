@@ -5,7 +5,7 @@ Minimum cuts in surface graphs (tentative title). By Erin W. Chambers, Jeff Eric
 
 
 
-Abstract: Let G be a directed graph with n vertices embedded on an edge-weighted orientable surface of genus g. We describe algorithms to efficiently compute minimum s,t-cuts and global minimum cuts of G.
+Abstract: Let G be an edge-weighted directed graph with n vertices embedded on an orientable surface of genus g. We describe algorithms to efficiently compute minimum s,t-cuts and global minimum cuts of G.
 
 
 
