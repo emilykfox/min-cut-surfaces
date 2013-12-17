@@ -1,4 +1,14 @@
 \section{Characterizing Homology}
 \label{sec:characterizing}
 
-\note{TODO: Write a section on crossing parity vectors and homology signatures.}
+Throughout the paper, we fix a directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundaries.
+When considering undirected graphs, we assume the weight function is symmetric.
+Without loss of generality, we assume that the underlying surface $\Sigma$ has at least one boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
+
+In this section, we describe two standard methods for preprocessing a combinatorial surface in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $\eta$ can be computed in $O(\beta)$ time per edge.
+Both methods characterize the homology class of any even subgraph using a vector of~$\beta$ bits.
+The vectors are computed using a one of two natural generalizations of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
+In the first method, the vector is based on the crossings between~$\eta$ and a set of~$\beta$ primal paths.
+By carefully selecting these paths, we can place a bound on the number of times a~$\Z_2$-minimal even subgraph can cross any of these paths; this bound is necessary for the algorithm given in Section~\ref{sec:crossing}.
+In the second method, the vector is based on the crossings between~$\eta$ and a set of~$\beta$ \emph{dual} paths.
+The vectors from the second method are more easily described and computed than the ones in the first, so we opt to use the second method in the algorithm given in Section~\ref{sec:homcover}.
