@@ -12,3 +12,43 @@ In the first method, the vector is based on the crossings between~$\eta$ and a s
 By carefully selecting these paths, we can place a bound on the number of times a~$\Z_2$-minimal even subgraph can cross any of these paths; this bound is necessary for the algorithm given in Section~\ref{sec:crossing}.
 In the second method, the vector is based on the crossings between~$\eta$ and a set of~$\beta$ \emph{dual} paths.
 The vectors from the second method are more easily described and computed than the ones in the first, so we opt to use the second method in the algorithm given in Section~\ref{sec:homcover}.
+
+
+
+\subsection{Crossing Parity Vectors}
+
+The first method begins by computing a set $P$ of~$\beta$ paths, each of which is the concatenation of two shortest paths (possibly meeting in the interior of an edge), such that the surface $\Sigma\setminus P$ is a topological disk.
+Specifically, it constructs a \emph{greedy system of arcs} in $O(\beta n)$ time, using a modification by Chambers \etal~\cite{ccelw-scsih-08} to an algorithm of Erickson and Whittlesey~\cite{ew-gohhg-05} for constructing a \emph{greedy system of loops}.
+If the surface has exactly one boundary, then the greedy system of arcs is identical to a greedy system of loops where every loop shares the same basepoint on the boundary.
+\note{TODO(kylejfox): Explicitly describe the construction using Henzinger \etal for the shortest paths.}
+
+Let $p_1, p_2, \dots, p_\beta$ denote the paths in $P$.  It is no coincidence that the number of paths in $P$ is equal to the dimension of the homology group $H(G)$.  Indeed, we can identify the homology class of any even subgraph by considering the number of times it crosses each path in $P$, as follows.
+
+For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the path~$p_i$.  The \EMPH{crossing vector} $x(\gamma)$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements.
+\begin{lemma}
+\label{lem:decomposition}
+Every even subgraph of an embedded graph has a cycle decomposition.
+\end{lemma}
+
+\begin{proof}
+Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex $v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.  
+\end{proof}
+
+Crossing vectors are not well-defined for arbitrary even subgraphs; different cycle decompositions can yield different crossing numbers.  However, the \emph{parity} of the crossing numbers is independent of the cycle decomposition.  The \EMPH{crossing parity vector} of any even subgraph $H$ is the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the path $p_i$ crosses (any cycle decomposition of) $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
+
+\begin{lemma}
+Two even subgraphs are homologous if and only if their crossing parity vectors are equal.
+\end{lemma}
+
+\begin{proof}
+Every boundary subgraph is the symmetric difference of facial cycles.  Any non-contractible loop or arc crosses any facial cycle an even number of times; thus, the crossing parity vector of any facial cycle is the zero vector.  Every pair of even subgraphs $H$ and $H'$ satisfies the identity $x(H\oplus H') = x(H) \oplus x(H')$.  Thus, the crossing parity vector of any boundary subgraph is the zero vector.
+\end{proof}
+
+\begin{lemma}
+We can compute the crossing parity vector of any even subgraph in $O(\beta)$ time per edge after computing~$P$.
+\end{lemma}
+
+\begin{proof}
+We can compute a cycle decomposition $\gamma_1, \dots, \gamma_r$ of $H$ in $O(1)$ time per edge, by following the proof of Lemma~\ref{lem:decomposition}.
+We can compute the number of crossings between any cycle $\gamma_i$ and any path $p_j$ in time proportional to the number of edges in $\gamma_i$.
+\end{proof}
