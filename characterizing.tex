@@ -8,8 +8,8 @@ Without loss of generality, we assume that the underlying surface $\Sigma$ has a
 In this section, we describe two standard methods for preprocessing a combinatorial surface in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $\eta$ can be computed in $O(\beta)$ time per edge.
 Both methods characterize the homology class of any even subgraph using a vector of~$\beta$ bits.
 The vectors are computed using a one of two natural generalizations of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
-In the first method, the vector is based on the crossings between~$\eta$ and a set of~$\beta$ primal paths.
-By carefully selecting these paths, we can place a bound on the number of times a~$\Z_2$-minimal even subgraph can cross any of these paths; this bound is necessary for the algorithm given in Section~\ref{sec:crossing}.
+In the first method, the vector is based on the crossings between~$\eta$ and a set of~$\beta$ primal arcs.
+By carefully selecting these arcs, we can place a bound on the number of times a~$\Z_2$-minimal even subgraph can cross any of these arcs; this bound is necessary for the algorithm given in Section~\ref{sec:crossing}.
 In the second method, the vector is based on the crossings between~$\eta$ and a set of~$\beta$ \emph{dual} paths.
 The vectors from the second method are more easily described and computed than the ones in the first, so we opt to use the second method in the algorithm given in Section~\ref{sec:homcover}.
 
