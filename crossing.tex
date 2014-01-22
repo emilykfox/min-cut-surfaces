@@ -5,13 +5,13 @@
 Let~$G$ be undirected, and let $H$
 be an even subgraph of $G$.  In this section, we describe an
 algorithm to compute the minimum-cost even subgraph homologous with
-$H$ in $(g+b)^{O(g+b)}n\log n$ time.  In fact, our algorithm can be
+$H$ in $(g+b)^{O(g+b)}n\log \log n$ time.  In fact, our algorithm can be
 modified easily to compute a minimum-cost representative in
 \emph{every} homology class in the same asymptotic running time;
 there are exactly $2^{2g+\max\set{b-1,0}}$ such classes.
 By Lemma~\cite{lem:surface-st-cut}, our algorithm can be used to find a minimum $s,t$-cut in~$G^*$ in the same amount of time.
 
-Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a network of shortest paths as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each shortest path in the decomposition network $O(g+b)$ times.  We quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles, which we easily enumerate.  Within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern using an algorithm of Kutz \cite{k-csnco-06}.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
+Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a network of shortest paths as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each shortest path in the decomposition network $O(g+b)$ times.  We quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles, which we easily enumerate.  Within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern using an improvement by Italiano \etal~\cite{insw-iamcmf-11} to an algorithm of Kutz \cite{k-csnco-06}.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
 \note{TODO(kylejfox): Assume uniqueness of shortest paths in the prelims.}
 
@@ -53,15 +53,17 @@ We dualize the abstract polygonal schema by replacing each edge with a vertex, a
 \caption{Two disjoint simple cycles on a surface of genus 2, and the corresponding weighted triangulation.}
 \end{figure}
 
-For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths in $P$.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time, by gluing together $x$ copies of the planar surface $\Sigma\setminus P$ into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.  Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log n)$ time.
+For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths in $P$.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time, by gluing together $x$ copies of the planar surface $\Sigma\setminus P$ into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
+Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $s,t$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
+Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log \log n)$ time.
 
 \begin{theorem}
 Let $G$ be a graph with positively weighted edges embedded on a surface with genus
 $g$ and $b$ boundary components, and let $H$ be an even subgraph of $G$.
 We can compute the minimum-cost even subgraph homologous with $H$ in
-$(g+b)^{O(g+b)} n\log n$ time.
+$(g+b)^{O(g+b)} n\log \log n$ time.
 \end{theorem}
 
 \begin{corollary}
-Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components, and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $g^{O(g)} n\log n$ time.
+Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components, and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $g^{O(g)} n\log \log n$ time.
 \end{corollary}
