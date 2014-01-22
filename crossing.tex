@@ -1,4 +1,16 @@
 \section{Crossing Sequences and Triangulations}
 \label{sec:crossing}
 
-\note{TODO: Write a section on computing $\Z_2$-minimal even subgraphs (and cycles?) using the SoCG 2009 crossing sequence method.}
+
+Let~$G$ be undirected, and let $H$
+be an even subgraph of $G$.  In this section, we describe an
+algorithm to compute the minimum-cost even subgraph homologous with
+$H$ in $(g+b)^{O(g+b)}n\log n$ time.  In fact, our algorithm can be
+modified easily to compute a minimum-cost representative in
+\emph{every} homology class in the same asymptotic running time;
+there are exactly $2^{2g+\max\set{b-1,0}}$ such classes.
+By Lemma~\cite{lem:surface-st-cut}, our algorithm can be used to find a minimum $s,t$-cut in~$G^*$ in the same amount of time.
+
+Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a network of shortest paths as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each shortest path in the decomposition network $O(g+b)$ times.  We quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles, which we easily enumerate.  Within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern using an algorithm of Kutz \cite{k-csnco-06}.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
+
+To simplify the presentation of our results, we assume that there is a unique shortest path $\sigma(u,v)$ between any pair of vertices $u$ and $v$ in the input graph $G$.  If necessary, this assumption can be enforced (at least with high probability) using standard perturbation techniques \cite{mvv-memi-87}.

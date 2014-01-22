@@ -16,6 +16,7 @@ The vectors from the second method are more easily described and computed than t
 
 
 \subsection{Crossing parity vectors}
+\label{sec:characterizing_crossings}
 
 The first method begins by computing a set~$A$ of~$\beta$ arcs, each of which is the concatenation of two shortest paths (possibly meeting in the interior of an edge), such that the surface $\Sigma\setminus A$ is a topological disk.
 Following Chambers \etal~\cite{ccelw-scsih-08}, we construct a \emph{greedy system of arcs}, using a variant of Erickson and Whittlesey's algorithm to construct optimal systems of loops \cite{ew-gohhg-05}.  Our algorithm uses a natural generalization of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary, essentially dual to the tree-coforest decompositions described for the second method of determining homology.
@@ -76,6 +77,7 @@ We can compute the number of crossings between any cycle $\gamma_i$ and any arc 
 
 
 \subsection{Homology signatures}
+\label{characterizing_signatures}
 
 Our second method associates a vector of $\beta$ bits with each edge $e$, called the \EMPH{signature} of~$e$; the homology class of any even subgraph is characterized by the bit-wise exclusive-or of the signatures of its edges.
 
