@@ -54,3 +54,57 @@ Every lift of a shortest directed path in $G$ is a shortest directed path in $\G
 \label{lem:lift-minimal}
 A loop $\ell$ in $G$ with basepoint $v$ is $\Z_2$-minimal if and only if, for every homology class $h\in (\Z_2)^\beta$, the lifted path $(\ell,h)$ is a shortest directed path in $\Gbar$ from $(v,h)$ to $(v,h\oplus[\ell])$.
 \end{lemma}
+
+% --------------------------------------------------------------------------------
+\subsection{Computing $\Z_2$-minimal cycles}
+\label{sec:homcover_cycles}
+
+The results in the previous section immediately suggest an algorithm to compute the shortest directed cycle in a given $\Z_2$-homology class $h$ in time $2^{O(\beta)}n^2$: construct the $\Z_2$-homology cover, and then compute the shortest path from $(v,0)$ to $(v,h)$, for every vertex $v$ in the original graph.  In this section, we describe a more complex algorithm that runs in time $2^{O(\beta)}n\log n$.
+Recall that any path $\sigma$ from $u$ to $v$ in $G$ is the projection of a unique path $(\sigma,0)$ from $(u,0)$ to $(v,[\sigma])$ in $\Gbar$.
+
+\begin{lemma}
+\label{lem:nocross}
+Let $\cycle$ be a $\Z_2$-minimal cycle in $G$, and let~$\sigma$ be any shortest path in $G$ that intersects $\cycle$.  There is a $\Z_2$-minimal cycle $\cycle'$ homologous to $\cycle$, which is the projection of a shortest path $(\cycle', h)$ in $\Gbar$ that starts with a subpath of $(\sigma, 0)$ but does not otherwise intersect $(\sigma, 0)$.
+\end{lemma}
+
+\begin{proof}
+Let $v$ be the vertex of $\sigma\cap\cycle$ closest to the starting vertex of $\sigma$, and let $(v,h)$ be the corresponding vertex of the lifted path $(\sigma,0)$.  Think of~$\cycle$ as a loop based at $v$.  Lemma \ref{lem:lift-minimal} implies that the lifted path $(\cycle, h)$ is a shortest path from $(v,h)$ to $(v,h\oplus [\cycle])$.
+
+Now let $(w,h')$ be the last vertex along $(\cycle,h)$ that is also a vertex of $(\sigma,0)$.  Let $(\cycle', h)$ be the path obtained from $(\cycle, h)$ by replacing the subpath from from $(v,h)$ to $(w,h')$ with the corresponding subpath of $(\sigma,0)$.  By construction, $(\cycle', h)$ starts with a directed subpath of $(\sigma,0)$ but does not otherwise intersect $(\sigma,0)$.   Because both $(\cycle, h)$ and $(\sigma,0)$ are shortest paths in $\Sigmabar$, the new path $(\cycle', h)$ has the same length as $(\cycle, h)$.  Thus, the projected cycle $\cycle'$ has the same length and homology class as $\cycle$, which implies that~$\cycle'$ is $\Z_2$-minimal.
+\end{proof}
+
+We emphasize that the modified cycle $\cycle'$ may intersect~$\sigma$ arbitrarily many times; however, all such intersections lift to intersections between $(\cycle', h)$ and lifts of $\sigma$ other than $(\sigma, 0)$.
+
+Our algorithm uses a generalization of Klein's seminal multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
+
+\begin{lemma}[Chambers \etal~\cite{cce-msspe-13}]
+\label{lem:multishort}
+Let $G$ be a directed graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of $G$.  We can preprocess $G$ in $O(gn\log n)$ time and $O(n)$ space so that the length of the shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$ time.
+\end{lemma}
+
+\begin{theorem}
+\label{thm:min-cycle}
+Let $G$ be a directed graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest directed cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 4^\beta \beta^2\, n\log n)$ time.
+\end{theorem}
+
+\begin{proof}
+We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{S:homology}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we return the empty walk and halt.
+
+Next, we construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, as described in Section~\ref{sec:homcover_cover}, as well as the set $S$ of directed shortest paths described in Section~\ref{sec:characterizing_crossings}.
+Any cycle homologous with~$\cycle$ must intersect at least one member of~$S$ as if~$\cycle$ is not null-homologous.
+We look for the shortest path in $\Gbar$ of the canonical form described in Lemma~\ref{lem:nocross}, by considering each shortest path $\sigma\in S$ in turn as follows.
+
+Let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arcto (v_t, h_t)$.  We construct the combinatorial surface $\Sigmabar\snip(\sigma,0)$ by splitting the path $(\sigma,0)$ into two parallel paths from $(v_0,0)$ to $(v_t,h_t)$, which we denote  $(\sigma,0)^+$ and $(\sigma,0)^-$.  For each index $1\le i\le t-1$, let $(v_i,h_i)^+$ and $(v_i,h_i)^-$ denote the copies of vertex $(v_i,h_i)$  on the paths $(\sigma,0)^+$ and $(\sigma,0)^-$, respectively.  The paths $(\sigma,0)^+$ and $(\sigma,0)^-$ bound a new common face $f_{(\sigma,0)}$ in $\Sigmabar\snip(\sigma,0)$.
+
+Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $\cycle$ intersects $\sigma$, then some $\Z_2$-minimal cycle homologous to $\cycle$ is the projection of a shortest path in $\Sigmabar\snip(\sigma,0)$ from some vertex $(v_i,h_i)^\pm$ to the corresponding vertex $(v_i, h_i\oplus[\cycle])$.  To compute these shortest paths, we implicitly compute the shortest path in $\Sigmabar\snip(\sigma,0)$ from every vertex on the boundary of $f_{(\sigma,0)}$ to \emph{every} vertex of $\Sigmabar\snip(\sigma,0)$, using Lemma~\ref{lem:multishort}.  The resulting algorithm runs in $O(\gbar\,\nbar \log \nbar) = O(4^\beta \beta^2\, n\log n)$ time, by Lemma \ref{lem:cover-cxy}.
+\end{proof}
+
+By running this algorithm $2^\beta$ times, we can compute the shortest directed cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.  In particular, we can compute the shortest directed cycle in~$\Sigma$ that has nontrivial $\Z_2$-homology.  When the original surface has no boundary, this is just the shortest \emph{non-separating} cycle in $\Sigma$.  Recently, Cabello \etal~\cite{ccl-fsncd-10} described an algorithm to compute the shortest non-separating cycle in any surface-embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time; our algorithm is faster whenever $g \le (\lg n)/13$.
+
+\begin{corollary}
+\label{C:nonsep}
+Given a directed graph $G$ with $n$ vertices with non-negative edge weights, cellularly embedded on a surface with genus~$g$, we can compute the shortest directed cycle in $G$ that is non-separating in $\Sigma$ in $O(64^g g^2 n\log n)$ time.
+\end{corollary}
+
+Note however, that a recent algorithm of Erickson~\cite{e-sncds-11} improves this running time further to~$O(g^2 n \log n)$ by using similar similar techniques in a different covering space known as the cyclic double cover.
+Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shortest \emph{non-contractible} cycle in an embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time.  Our approach does not lead to a faster algorithm for this problem;  contractibility is inherently  a property of \emph{homotopy}, not homology.
