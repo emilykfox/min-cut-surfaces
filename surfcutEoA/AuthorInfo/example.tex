@@ -1,0 +1,545 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%% example.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample input file for your contribution to Springer ENCYCLOPEDIAs
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%%%%%%%%%% Springer-Verlag %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[natbib]{svcyclop}
+
+% \documentclass[natbib]{svcyclop}
+% call for the natbib-system if you wish to have sophisticated citations,
+% remember to adapt the references at the end of your contribution then
+% see explanation at the end of this file.
+%
+% A detailed explanation and demonstration of the natbib system can
+% be found at
+%     http://merkel.zoneo.net/Latex/natbib.php
+%
+% If you use BibTeX to manage your citation use the style "spbasic.bst"
+% that is "natbib" aware.
+
+\usepackage{graphicx}    % standard LaTeX graphics tool
+                         % when including figure files
+
+\usepackage{amsfonts,amsmath} % typesetting complicated math
+
+% Hint:
+% Use the "hyperref" package in the preamble
+% if you want to supply active links within
+% your text; e.g. at the \CrossRef section
+\usepackage{hyperref}
+
+% Hint:
+% Use the package "url" in the preamble
+% to avoid problems with special characters
+% used in your e-mail or web address in the
+% \author or the \institute field below
+\usepackage{url}
+\urlstyle{tt}
+
+% etc.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+% Please specify your Entry Title in one continuous line
+\title{Circuit Placement}
+
+% Please specify the Names of Entry Author(s)
+\author{Andrew A. Kennings\inst{1}
+\and
+Igor I. Markov\inst{2}}
+% if there is more than one author, use "\and" in between
+% the particular author lines
+%
+% add "\inst{<No.>}" directly after the author name to indicate
+% the mapping to the relevant affiliations/addresses in the
+% forthcoming "\institute" field
+%
+% see also the example contribution file "example.tex" for detailed info
+
+% Please specify your Address/Affiliation and use "\\" as EOL for structuring
+% specify Phone / Fax / e-mail if applicable, use "\\" as EOL for structuring
+% more than one address/affiliation? separate each two entries with
+% a line containing "\and"
+\institute{
+Department of Electrical and Computer Engineering,
+University of Waterloo, Waterloo, ON, Canada
+\and
+Department of Electrical Engineering and Computer
+Science, University of Michigan, Ann Arbor, MI, USA
+}
+% make sure to give at least as many institute addresses
+% as the mapping to the authors requires;
+% the numbering is done automatically by the "\and" command
+% see also the example contribution file "example.tex" for detailed info
+
+% Please specify Years and Authors of Summarized Original Work
+% use one continuous line for each paper; use semicolon to separate
+% the year from the last names; don't use "and" between author names
+% adhere to the following format:
+% "Year of paper"; "last names of authors" separated by commas without "and"
+% use "\\" as EOL for structuring
+\sumoriwork{2000; Caldwell, Kahng, Markov\\
+2002; Kennings, Markov\\
+2006; Kennings, Vorwerk}
+% see also the example contribution file "example.tex"
+% for detailed information
+%
+
+% Please specify the Keywords - use semicolon for separation
+\keywords{EDA; Netlist; Layout; Min-cut placement; Min-cost maxflow; Analytical placement; Mathematical programming}
+
+\maketitle  % completes, checks, and typesets the contribution's head
+
+% you have 7 predefined headings at hand you can use throughout your contribution;
+% just call the relevant commands instead of generating a new "\section" for them;
+% the next two headings are mandatory:
+% \ProbDef   -   Problem Definition
+% \KeyRes    -   Key Results
+%
+% the following heading commands may be used as and when required:
+% \Applic    -   Applications
+% \OpenProb  -   Open Problems
+% \ExpRes    -   Experimental Results
+% \DataSets  -   URLs to Code and Data Sets
+% \CrossRef  -   Cross References
+
+
+\ProbDef
+
+This problem is concerned with efficiency determining constrained
+positions of objects while minimizing a measure of interconnect between
+the objects, as in a physical layout of integrated circuits, commonly
+done in 2-dimensions. While most formulations are NP-hard, modern circuits
+are so large that practical algorithms for placement
+must have near-linear runtime and memory requirements,
+but not necessarily produce optimal solutions. While early
+software for circuit placement was based on Simulated Annealing,
+research in algorithms identified more scalable
+techniques which are now being adopted in the Electronic
+Design Automation industry.
+
+One models a circuit by a hypergraph $G_h(V_h,E_h)$ with (I) vertices
+$V_h=\{v_1,\ldots,v_n\}$ representing logic gates,
+standard cells, larger modules, or fixed I/O pads and (ii)
+$E_h=\{e_1,\ldots,e_m\}$ representing connections
+between modules. Every incident pair of a vertex and a hyperedge
+connect through a pin for a total of $P$ pins in the
+hypergraph. Each vertex $v_i\in V_h$ has width $w_i$, height
+$h_i$ and area $A_i$. Hyperedges may also be weighted. Given
+$G_h$, circuit placement seeks center positions $(x_i,y_i)$ for vertices
+that optimize a hypergraph-based objective subject
+to constraints (see below). A placement is captured by
+$\mathrm{x}= (x_1,\ldots,x_n\}$ and $\mathrm{y}= (y_1,\ldots,y_n\}$.
+
+\subsubsection{Objective} Let $C_k$ be the index set of the hypergraph
+vertices incident to hyperedge $e_k$. The total halfperimeter
+wirelength $(\mathrm{HPWL})$ of the circuit hypergraph
+is given by $(\mathrm{HPWL}(G_h) = \sum_{e_k\in E_h}\mathrm{HPWL}(e_k) =
+\sum_{e_k\in E_h}\left[\max_{i,j\in C_k}|x_i - x_j|+\max_{i,j\in C_k}
+|y_i - y_j|\right]$.
+
+$\mathrm{HPWL}$ is piece-wise linear, separable in the $x$ and $y$ directions,
+convex, but not strictly convex. Among many
+objectives for circuit placement, it is the simplest and
+most common.
+
+\subsection{Constraints}
+\begin{enumerate}
+\item \textbf{No overlap.} The area occupied by any two vertices cannot
+overlap; i. e., either $|x_i-x_j|\ge \frac12(w_i + w_j)$ or
+$|y_i-y_j|\ge \frac12(h_i + h_j), \forall v_i,v_j\in V_h$.
+\item \textbf{Fixed outline.} Each vertex $v_i\in V_h$ must be placed entirely
+within a specified rectangular region bounded by
+$x_{\textrm{min}}(y_\textrm{min})$ and $x_{\textrm{max}}(y_\textrm{max})$
+ which denote the left (bottom)
+and right (top) boundaries of the specified region.
+\item \textbf{Discrete slots.} There is only a finite number of discrete
+positions, typically on a grid. However, in large-scale
+circuit layout, slot constraints are often ignored during
+\emph{global placement}, and enforced only during \emph{legalization}
+and \emph{detail placement}.
+\end{enumerate}
+
+Other constraints may include alignment, minimum and
+maximum spacing, etc. Many placement techniques temporarily
+relax overlap constraints into density constraints
+to avoid vertices clustered in small regions. A $m\times n$ regular
+bin structure$ $B is superimposed over the fixed outline
+and vertex area is assigned to bins based on the positions
+of vertices. Let $D_{ij}$ denote the density of bin $B_{ij}\in B$, defined
+as the total cell area assigned to bin $B_{ij}$ divided by
+its capacity. Vertex overlap is limited implicitly by $D_{ij}\le
+K;\forall B_{ij}\in B$, for some $K \le 1$ (density target).
+
+\subsection{Problem 1 (Circuit Placement)}
+{\itshape
+\textsc{INPUT}: Circuit hypergraph $G_h(V_h,E_h)$ and a fixed outline
+for the placement area.
+\textsc{OUTPUT}: Positions for each vertex $v_i\in V_h$ such that
+(1) wirelength is minimized and (2) the area-density constraints
+$D_{ij}\le K$ are satisfied for all $B_{i j}\in B$.}
+
+\KeyRes
+
+An unconstrained optimal position of a single placeable
+vertex connected to fixed vertices can be found in linear
+time as the median of adjacent positions \cite{KenVor06}. Unconstrained
+$\mathrm{HPWL}$ minimization for multiple placeable vertices
+can be formulated as a linear program \cite{KenMar02,RedCho06}. For each
+$e_k \in  E_h$, upper and lower bound variables $U_k$ and $L_k$ are
+added. The cost of $e_k$ ($x$-direction only) is the difference
+between $U_k$ and $L_k$. Each $U_k(L_k)$ comes with $p_k$ inequality
+constraints that restricts its value to be larger (smaller)
+than the position of every vertex $i\in C_k$. A hypergraph
+with $n$ vertices and $m$ hyperedges is represented by a linear
+program with $n + 2m$ variables and $2P$ constraints.
+
+Linear programming has poor scalability, and integrating
+constraint-tracking into optimization is difficult.
+Other approaches include non-linear optimization and
+partitioning-based methods.
+
+\subsection{Combinatorial Techniques
+for Wirelength Minimization}
+The no-overlap constraints are not convex and cannot be
+directly added to the linear program for $\mathrm{HPWL}$ minimization.
+Such a program is first solved directly or by casting its
+dual as an instance of the min-costmax-flow problem \cite{TanTiaWon05}.
+Vertices often cluster in small regions of high density. One
+can lower-bound the distance between closely-placed vertices
+with a single linear constraint that depends on the relative
+placement of these vertices \cite{RedCho06}. The resulting optimization
+problem is incrementally re-solved, and the process
+repeats until the desired density is achieved.
+
+The \emph{min-cut placement} technique is based on balanced
+min-cut partitioning of hypergraphs and is more focused
+on density constraints \cite{RoyAdyPapMar06}. Vertices of the initial hypergraph
+are first partitioned in two similar-sized groups. One
+of them is assigned to the left half of the placement region,
+and the other one to the right half. Partitioning is performed
+by the Multi-level Fiduccia-Mattheyses ($\mathrm{MLFM}$)
+heuristic \cite{PapMar07} to minimize connections between the two
+groups of vertices (the net-cut objective). Each half is partitioned
+again, but takes into account the connections to
+the other half \cite{RoyAdyPapMar06}. At the large scale, ensuring the similar
+sizes of bi-partitions corresponds to density constraints
+and cut minimization corresponds to $\mathrm{HPWL}$ minimization.
+When regions become small and contain $< 10$ vertices,
+optimal positions can be found with respect to discrete
+slot constraints by branch-and-bound \cite{CalKahMar00}. Balanced
+hypergaph partitioning is NP-hard \cite{CGKMSP98}, but the $\mathrm{MLFM}$
+heuristic takes $O((V + E)\log V)$ time. The entire min-cut
+placement procedure takes $O((V + E)(\log V)^2)$ time and
+can process hypergraphs with millions of vertices in several
+hours.
+
+A special case of interest is that of one-dimensional
+placement. When all vertices have identical width and
+none of them are fixed, one obtains the NP-hard \textsc{Minimum
+Linear Arrangement} problem \cite{CGKMSP98} which can
+be approximated in polynomial time within $O(\log V)$
+and solved exactly for trees in $O(V^3)$ time as shown by
+Yannakakis. The min-cut technique described above also
+works well for the related NP-hard \textsc{Minimum-Cut
+Linear Arrangement} problem \cite{CGKMSP98}.
+
+\subsection{Nonlinear Optimization}
+Quadratic and generic non-linear optimization may be
+faster than linear programming, while reasonably approximating
+the original formulation. The hypergraph is represented
+by a weighted graph where $w_{ij}$ represents the
+weight on the 2-pin edge connecting vertices $v_i$ and $v_j$ in
+the weighted graph. When an edge is absent, $w_{i j} = 0$, and
+in general $w_{ii} = -\sum_{i\neq j}w_{i j}$.
+
+\subsubsection{Quadratic Placement} A quadratic placement ($x$-direction
+only) is given by
+\begin{equation}\label{eq:first}
+\Phi(x) = \sum_{i,j}w_{ij}\left[(x_i-x_j)^2\right]=
+\frac12\vec{x}^T\vec{Qx}+\vec{c}^T\vec{x}+\text{const.}
+\end{equation}
+
+The global minimum of $\Phi(x)$ is found by solving $\vec{Qx}+\vec{c} = 0$
+which is a sparse, symmetric, positive-definite system of
+linear equations (assuming $\ge 1$ fixed vertex), efficiently
+solved to sufficient accuracy using any number of iterative
+solvers. Quadratic placement may have different optima
+depending on the model (clique or star) used to represent
+hyperedges. However, for a $k$-pin hyperedge, if the
+weight on the 2-pin edges introduced is set to $W_c$ in the
+clique mode and $kW_c$ in the star model, then the models
+are equivalent in quadratic placement \cite{RedCho06}.
+
+\subsubsection{Linearized Quadratic Placement} Quadratic placement
+can produce lower quality placements. To approximate the
+linear objective, one can iteratively solve Eq.~(\ref{eq:first}) with $w_{i j} =
+1/|x_i-x_j|$ computed at every iteration. Alternatively, one
+can solve a single $\beta$-regularized optimization problem
+given by $\Phi^\beta(x) = \min_x\sum_{i,j}w_{ij}\sqrt{x_i-x_j)^2+\beta}.\ \beta > 0$,
+e.g., using a Primal-Dual Newton method with quadratic
+convergence \cite{AlpChKaMaMu98}.
+
+\subsubsection{Half-Perimeter Wirelength Placement} $\mathrm{HPWL}$ can be
+provably approximated by strictly convex and differentiable
+functions. For 2-pin hyperedges, $\beta$-regularization
+can be used \cite{AlpChKaMaMu98}. For an $m$-pin hyperedge ($m \ge 3$), one
+can rewrite $\mathrm{HPWL}$ as the maximum ($l_\infty$-norm) of all
+$m(m-1)/2$ pairwise distances $|x_i - x_j|$ and approximate
+the $l_\infty$-norm by the $l_p$-norm ($p$-th root of the sum of $p$-th
+powers). This removes all non-differentiabilities except
+at $0$ which is then removed with $\beta$-regularization. The resulting
+$\mathrm{HPWL}$ approximation is given by
+\begin{equation}\label{eq:second}
+\mathrm{HPWL}_{p-\beta-\mathrm{reg}}(G_h)=\sum_{e_k\in E_h}\left(\sum_{i,j\in C_k}|x_i-x_j<^p+\beta\right)^{1/p}
+\end{equation}
+which overestimates $\mathrm{HPWL}$ with arbitrarily small relative
+error as $p\to \infty$ and $\beta\to0$ \cite{RedCho06}. Alternatively, $\mathrm{HPWL}$ can
+be approximated via the log-sum-exp formula given by
+\begin{equation}\label{eq:third}
+\mathrm{HPWL}_{\text{log-sum-exp}}(G_h)=
+\alpha\sum_{e_k\in E_h}\left[\ln\left(\sum_{i\in C_k}\exp
+\left(\frac{x_i}{\alpha}\right)\right)+\ln\left(\sum_{v_i\in C_k}
+\exp\left(\frac{-x_i}{\alpha}\right)\right)\right]
+\end{equation}
+where $\alpha > 0$ is a smoothing parameter \cite{KhaWan05}. Both approximations
+can be optimized using conjugate gradient methods.
+
+\subsection{Analytic Techniques for Target Density Constraints}
+The target density constraints are non-differentiable and
+are typically handled by approximation.
+
+\subsubsection{Force-Based Spreading} The key idea is to add constant
+forces f that pull vertices always from overlaps, and recompute
+the forces over multiple iterations to reflect changes
+in vertex distribution. For quadratic placement, the new
+optimality conditions are $\vec{Qx} + \vec{c} + \vec{f} = \vec{0}$ \cite{KenVor06}. The constant
+force can perturb a placement in any number of ways to
+satisfy the target density constraints. The force $\vec{f}$ is computed
+using a discrete version of Poisson's equation.
+
+\subsubsection{Fixed-Point Spreading} A fixed point $f$ is a pseudovertex
+with zero area, fixed at $(x_f,y_f)$, and connected to
+one vertex $H(f)$ in the hypergraph through the use of
+a pseudo-edge with weight $w_{f,H(f)}$. Quadratic placement
+with fixed points is given by $\Phi(x) = \sum_{i,j} w{i,j}(x_i-x_j)^2 +
+\sum_fw_{f,H(f)}(x_{H(f)}-x_f)^2$.
+Each each fixed point $F$f introduces
+a quadratic term $w_{f,H(f)}(x_{H(f)}-x_f)^2$. By manipulating
+the positions of fixed points, one can perturb a placement
+to satisfy the target density constraints. Compared
+to constant forces, fixed points improve the controllability
+and stability of placement iterations \cite{HuMar05}.
+
+\subsubsection{Generalized Force-Directed Spreading} The Helmholtz
+equation models a diffusion process and makes it ideal for
+spreading vertices \cite{ChaConSze05}. The Helmholtz equation is given by
+\begin{gather}\label{eq:four}
+\frac{\partial^2\phi(x,y)}{\partial x^2}
+\frac{\partial^2\phi(x,y)}{\partial y^2}-
+\epsilon\phi(x,y)=D(x,y),\\
+(x,y)\in R\frac{\partial \phi}{\partial v}= 0,
+(x,y) \text{ on the boundary of } R\nonumber
+\end{gather}
+where $\epsilon>0, v$ is an outer unit normal, $R$ represents the
+fixed outline, and $D(x,y)$ represents the continuous density
+function. The boundary conditions, $\partial\Phi/\partial v = 0$, specify
+that forces pointing outside of the fixed outline be set
+to zero -- this is a key difference with the Poisson method
+which assumes that forces become zero at infinity. The
+value $\Phi_{ij}$ at the center of each bin $B_{ij}$ is found by discretization
+of Eq. (\ref{eq:four}) using finite differences. The density constraints
+are replaced by $\Phi_{ij}=\hat K,\forall b_{ij}\in B$ where $\hat K$ is
+a scaled representative of the density target $K$. Wirelength
+minimization subject to the smoothed density constraints
+can be solved via Uzawa's algorithm. For quadratic wirelength,
+this algorithm is a generalization of force-based
+spreading.
+
+\subsubsection{Potential Function Spreading} Target density constraints
+can also be satisfied via a penalty function. The
+area assigned to bin $B_{ij}$ by vertex $v_i$ is represented by
+$\hbox{Potential}(v_i,B_{ij})$ which is a bell-shaped function. The use
+of piecewise quadratic functions make the potential function
+non-convex, but smooth and differentiable \cite{KhaWan05}. The
+penalty term given by
+\begin{equation}\label{eq:fifth}
+\text{Penalty} = \sum_{B_{ij}\in B}\left(\sum_{v_i\in V_h}\hbox{Potential}(v_i,B_{ij})-K\right)^2
+\end{equation}
+can be combined with a wirelength approximation to arrive
+at an unconstrained optimization problem which is
+solved using an efficient conjugate gradient method \cite{KhaWan05}.
+
+\Applic
+
+Practical applications involve more sophisticated interconnect
+objectives, such as circuit delay, routing congestion,
+power dissipation, power density, and maximum thermal gradient.
+The above techniques are adapted to
+handle multi-objective optimization. Many such extensions
+are based on heuristic assignment of net weights that
+encourage the shortening of some (e.g., timing-critical
+and frequently-switching) connections at the expense of
+other connections. To moderate routing congestion, predictive
+congestion maps are used to decrease the maximal
+density constraint for placement in congested regions. Another
+application is in physical synthesis, where incremental
+placement is used to evaluate changes in circuit topology.
+
+\OpenProb
+
+None is reported.
+
+\ExpRes
+
+Circuit placement has been actively studied for the past
+30 years and a wealth of experimental results are reported
+throughout the literature. A 2003 result demonstrated that
+placement tools could produce results as much as $1:41\times$
+to $2:09\times$ known optimal wirelengths on average (advances
+have been made since this study). A 2005 placement contest
+found that a set of tools produced placements with
+wirelengths that differed by as much as $1:84\times$ on average.
+A 2006 placement contest found that a set of tools produced
+placements that differed by as much as $1:39\times$ on average
+when the objective was the simultaneous minimization
+of wirelength, routability and run time. Placement run
+times range from minutes for smaller instances to hours
+for larger instances, with several millions of variables.
+
+\DataSets
+
+Benchmarks include the ICCAD '04 suite
+(\url{http://vlsicad.eecs.umich.edu/BK/ICCAD04bench/}), the ISPD '05
+suite (\url{http://www.sigda.org/ispd2005/contest.htm}) and the ISPD '06
+suite (\url{http://www.sigda.org/ispd2006/contest.htm}). Instances in
+these benchmark suites contain between 10K to 2.5M placeable objects.
+Other common suites can be found, including large-scale placement
+instances problems with known optimal solutions
+(\url{http://cadlab.cs.ucla.edu/~pubbench}).
+
+\CrossRef
+\href{http://link.springer.com/referenceworkentry/10.1007%2F978-0-387-30162-4_291}
+{Performance-Driven Clustering}\\
+Energy Minimization in VLSI Circuits
+
+%% BibTeX users please use
+%\bibliographystyle{spbasic}
+%\bibliography{<name of bib_database>}
+%
+%\end{document}
+%
+% Non-BibTeX users please use
+%\begin{thebibliography}{8.}
+%
+% and use \bibitem to create references.
+%
+% Use the following syntax and markup for your references
+%
+
+
+%% Complete Book
+%\bibitem{book} Faber K (1997) Biotransformations in organic
+%chemistry, 3rd edn. Springer, Berlin Heidelberg New York
+%
+%% Contributions, Chapters or Sections in Books
+%\bibitem{contribution} Brown FR, Jackson D (1987) Analytical chemistry.
+%In: Whie FC, Red SA (eds) Modern chemistry. Springer, Berlin Heidelberg
+%New York, p 220
+%
+%% Journal
+%\bibitem{journal}
+%Fuchigami T (1994) Top Curr Chem 170:25
+%
+%% Other Possibilities
+%\bibitem{Other} Tanzawa H (1986) First Japan-US workshop on Biomedical
+%Polymer Science. Kyoto, Japan
+%
+%\end{thebibliography}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\end{document}
+
+% here a faked reference section follows working with the natbib-system
+% allowing for author-year citation without automated BibTeX usage
+
+% Non-BibTeX users please use
+
+\begin{thebibliography}{12}
+%
+% and use \bibitem to create references. Consult the Instructions
+% for authors for reference list style.
+
+\bibitem[{{Alpert} et~al.(1998){Alpert}, {Chan}, {Kahng}, {Markov},
+{Mulet}}]{AlpChKaMaMu98} {Alpert} CJ,
+{Chan} T, {Kahng} AB, {Markov} IL, {Mulet} P (1998) Faster
+minimization of linear wirelength for global placement. IEEE
+Trans. CAD 17(1), 3-13
+
+\bibitem[{{Caldwell} et~al.(2000){Caldwell}, {Kahng},
+{Markov}}]{CalKahMar00} {Caldwell} AE, {Kahng} AB, {Markov} IL (2000)
+Optimal partitioners and end-case placers for standard-cell layout.
+IEEE Trans. CAD 19(11), 1304-1314
+
+\bibitem[{{Chan} et~al.(2005){Chan}, {Cong}, {Sze}}]{ChaConSze05}
+{Chan} T, {Cong} J, {Sze} K (2005) Multilevel generalized force-directed
+method for circuit placement. Proc. Intl. Symp. Physical Design.
+ACM Press, San Francisco, 3-5 Apr 2005. pp. 185-192
+
+\bibitem[{{Ausiello} et~al.(1998)
+{Ausiello}, {Crescenzi}, {Gambosi}, {Kann}, {Marchetti-Spaccamela},
+{Protasi}}] {CGKMSP98} {Ausiello} G, {Crescenzi} P, {Gambosi} G,
+{Kann} V, {Marchetti-Spaccamela} A, {Protasi} M (1998) Complexity and
+Approximation: Combinatorial optimization problems and their
+approximability properties. Springer
+
+\bibitem[{{Hu} et~al.(2005){Hu}, {Marek-Sadowska}}]{HuMar05}
+{Hu} B, {Marek-Sadowska} M (2005) Multilevel fixed-point-additionbased
+VLSI placement. IEEE Trans. CAD 24(8), 1188-1203
+
+\bibitem[{{Kahng} et~al.(2005){Khang}, {Wang}}]{KhaWan05}
+{Kahng} AB, {Wang} Q (2005) Implementation and extensibility of an
+analytic placer. IEEE Trans. CAD 24(5), 734-747
+
+\bibitem[{{Kennings} et~al.(2002){Kennings}, {Markov}}]{KenMar02}
+{Kennings} A, {Markov} IL (2002) Smoothingmax-terms and analytical
+minimization of half-perimeter wirelength. VLSI Design 14(3),
+229-237
+
+\bibitem[{{Kennings} et~al.(2006){Kennings}, {Vorwerk}}]{KenVor06}
+{Kennings} A, {Vorwerk} K (2006) Force-directed methods for generic
+placement. IEEE Trans. CAD 25(10), 2076-2087
+
+\bibitem[{{Papa} et~al.(2007){Papa}, {Markov}}]{PapMar07}
+{Papa} DA, {Markov} IL (2007) Hypergraph partitioning and clustering.
+In: Gonzalez, T. (ed.) Handbook of algorithms. Taylor \&
+Francis Group, Boca Raton, CRC Press, pp. 61-1
+
+\bibitem[{{Reda} et~al.(2006){Reda}, {Chowdhary}}]{RedCho06} {Reda} S,
+{Chowdhary} A (2006) Effective linear programming based
+placement methods. In: ACM Press, San Jose, 9-12 Apr
+
+\bibitem[{{Roy} et~al.(2006){Roy}, {Adya}, {Papa}, {Markov}}]{RoyAdyPapMar06}
+{Roy} JA, {Adya} SN, {Papa} DA, {Markov} IL(2006) Min-cut floorplacement.
+IEEE Trans. CAD 25(7), 1313-1326
+
+\bibitem[{{Tang} et~al.(2005){Tang}, {Tian}, {Wong}}]{TanTiaWon05}
+{Tang} X, {Tian} R, {Wong} MDF (2005) Optimal redistribution of white
+space for wirelength minimization. In: Tang, T.-A. (ed.) Proc.
+Asia South Pac. Design Autom. Conf., ACM Press, 18-21 Jan
+2005, Shanghai. pp. 412-417
+
+\end{thebibliography}
+
+\end{document}
+% end of file "example.tex"
+
+

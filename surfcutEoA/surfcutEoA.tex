@@ -1,0 +1,180 @@
+\documentclass[natbib]{svcyclop}
+\usepackage{graphicx} 
+\usepackage{amsfonts,amsmath}
+\usepackage{hyperref}
+\usepackage{url}
+\urlstyle{tt}
+
+\usepackage[utf8x]{inputenc}
+\usepackage{microtype}
+\usepackage{stmaryrd,marvosym}
+\usepackage{cite}
+\usepackage{verbatim}
+\usepackage[dvipsnames,usenames]{color}
+
+
+\def\NOTE#1{\textcolor{Red}{\textbf{\textsf{••• #1 •••}}}}
+
+%-----------------------------------------------------------------------
+%  Local definitions
+%-----------------------------------------------------------------------
+\def\arcto{\mathord\shortrightarrow}
+\def\arc#1#2{#1\arcto#2}
+\def\cra#1#2{#1\mathord\shortleftarrow#2}
+\def\fence#1#2{#1\mathord\shortuparrow#2}
+\def\ecnef#1#2{#1\mathord\shortdownarrow#2}
+\def\head{\mathit{head}}
+\def\tail{\mathit{tail}}
+\def\lsh{\mathit{left}}
+\def\rsh{\mathit{right}}
+\def\rev{\mathit{rev}}
+\def\Z{\mathbb{Z}}
+\def\Real{\mathbb{R}}
+\def\Q{\mathbb{Q}}
+\def\reverse#1{\smash{\overline{#1}}}
+\def\snip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\Rightscissors}\!}}}
+\def\subsnip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\footnotesize\Rightscissors}\!}}}
+\def\Gsnip{\mathord{G_{\subsnip}}}
+\def\Sigmasnip{\mathord{\Sigma_{\subsnip}}}
+\def\gammasnip{\mathord{\gamma_{\subsnip}}}
+
+% needs marvosym package:
+\def\snip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\Rightscissors}\!}}}
+\let\unlhd\trianglelefteq	% fix mathdesign font bug
+
+\let\cycle\gamma
+\let\path p
+\let\primalarc\alpha
+\def\dualarc{p}
+
+\def\Sigmabar{\overline{\smash{\Sigma}\vphantom{t}}}
+\def\SIGMABAR{\boldsymbol{\overline{\smash{\Sigma}\vphantom{x}}}}
+\def\Gbar{\overline{\smash{G}\vphantom{t}}}
+\def\Vbar{\overline{\smash{V}\vphantom{t}}}
+\def\Ebar{\overline{\smash{E}\vphantom{t}}}
+\def\bbar{\overline{\smash{b}\vphantom{t}}}
+\def\nbar{\overline{n}}
+\def\gbar{\overline{g}}
+\def\wbar{\overline{w}}
+\def\sigmabar{\overline{\sigma}}
+\def\cyclebar{\overline{\cycle}}
+\def\chibar{\overline{\chi}}
+
+\def\fakeparagraph#1{\par\medskip\noindent\textbf{#1}}
+
+
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{lemma}[theorem]{Lemma}
+
+% ----------------------------------------------------------------------
+\begin{document}
+
+\title{Minimum cuts in surface graphs}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+\author{
+	Erin W. Chambers\inst{1}
+\and
+	Jeff Erickson\inst{2}
+\and
+	Kyle J. Fox\inst{3}
+\and
+	Amir Nayyeri\inst{4}}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+\institute{
+	Department of Computer Science and Mathematics,
+	Saint Louis University, St. Louis, MO, USA
+\and
+	Department of Computer Science,
+	University of Illinois, Urbana, IL, USA
+\and
+	Institute for Computational and Experimental Research in Mathematics,
+	Brown University, Providence, RI, USA
+\and
+	Department of Electrical Engineering and Computer Science,
+	Oregon State University, Corvallis, OR, USA}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+\sumoriwork{2009; Chambers, Erickson, Nayyeri\\
+2011; Erickson, Nayyeri\\
+2012; Erickson, Fox, Nayyeri}
+
+% - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+\keywords{Topological graph theory;
+Graph embedding;
+Minimum cuts; 
+Cycle-cut duality;
+Homotopy;
+Homology}
+
+\maketitle
+
+% ----------------------------------------------------------------------
+
+\ProbDef
+
+\subsection{Background}
+
+\subsection{Problem statement}
+
+\subsection{Problem 1 (Minimum $(s,t)$-Cut)}
+{\itshape
+\textsc{INPUT}: An undirected graph $G = (V, E)$ embedded on a surface of genus $g$, a non-negative capacity function $c\colon E \to \mathbb{R}$, and two vertices $s$ and $t$.
+\textsc{OUTPUT}: A minimum-capacity $(s,t)$-cut in $G$.}
+
+
+\subsection{Problem 2 (Global Minimum Cut)}
+{\itshape
+\textsc{INPUT}: An undirected graph $G = (V, E)$  embedded on a surface of genus $g$ and a non-negative capacity function $c\colon E \to \mathbb{R}$.
+\textsc{OUTPUT}: A minimum-capacity cut in $G$.}
+
+
+
+% ----------------------------------------------------------------------
+
+\KeyRes
+
+\subsection{Topological Background}
+
+\begin{itemize}
+\item Surfaces, genus, embedding, duality
+\item Homotopy: continuous deformation
+\item Homology: even subgraphs, boundary subgraphs
+\item Tree-cotree decompositions, greedy systems of loops and arcs
+\item Covering spaces
+\end{itemize}
+
+\subsection{Crossing Sequences}
+
+\subsection{Homology Covers}
+
+\subsection{Global Minimum Cuts}
+
+
+% ----------------------------------------------------------------------
+
+\OpenProb
+
+\NOTE{List anything here?}
+
+% ----------------------------------------------------------------------
+
+\CrossRef
+
+\NOTE{Check table of contents of volume 2}
+
+% ----------------------------------------------------------------------
+
+\nocite{bk-amfdp-09, hkrs-fspap-97, k-msspp-05, r-mstcp-83, insw-iamcmf-11, multishort, parshort, splitting, gohog, optcycles, e-dgteg-03, c-scgsp-10}
+
+\bibliographystyle{spbasic}
+\bibliography{jeffe,topology,data-structures,optimization,other}
+
+
+\end{document}
