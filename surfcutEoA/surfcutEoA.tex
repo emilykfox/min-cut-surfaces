@@ -119,9 +119,16 @@ Fixed-parameter tractability}
 
 \subsection{Background}
 
-\begin{itemize}
-\item Surfaces, genus, embedding, duality
-\end{itemize}
+%\begin{itemize}
+%\item Surfaces, genus, embedding, duality
+%\end{itemize}
+
+A surface is a compact Hausdorff space in which each point has a neighborhood homeomorphic to the plane or closed half plane.
+The genus of a surface is the maximum number of disjoint simple cycles whose complement with respect to the surface is connected.
+An embedding of a graph on a surface maps vertices to distinct points on the surface and edges to interior disjoint curves.  
+A face of an embedding is a maximal connected subset of the surface that is disjoint from the image of the graph.
+An embedding is cellular if its faces are homeomorphic to the plane.
+
 
 \subsection{Problem statement}
 
@@ -142,87 +149,121 @@ Fixed-parameter tractability}
 
 \subsection{Topological Background}
 
-\begin{itemize}
-\item Duality
-\item Planar minimum cut is dual to shortest generating cycle in an annulus \cite{is-mfpn-79, r-mstcp-83}
-\item Homotopy: continuous deformation
-\item Homology: even subgraphs, boundary subgraphs
-\item Tree-cotree decompositions, greedy systems of loops and arcs
-\item Covering spaces
-\end{itemize}
+%\begin{itemize}
+%\item Duality
+%\item Planar minimum cut is dual to shortest generating cycle in an annulus \cite{is-mfpn-79, r-mstcp-83}
+%\item Homotopy: continuous deformation
+%\item Homology: even subgraphs, boundary subgraphs
+%\item Tree-cotree decompositions, greedy systems of loops and arcs
+%\item Covering spaces
+%\end{itemize}
+
+The dual of a cellularly embedded graph $G$ is a graph $G^*$.  The vertices of $G^*$ correspond to the faces of $G$, and two vertices (in $G^*$) are joined by a (dual) edge if and only if they correspond to adjacent faces of $G$.
+Duality maps cycles to cuts and vice versa.  
+In particular, planar minimum cut is dual to shortest generating cycle in an annulus \cite{is-mfpn-79, r-mstcp-83}.
+
+Two cycles are homotopic if one can be continuously deformed to the other.  
+Two even subgraphs are homologous if their symmetric difference is the boundary of a subset of the surface.
+The edges of a cellularly embedded graph can be decomposed into three subsets $(T, C, X)$ where $T$ is a spanning tree of $G$, $C^*$ is a spanning tree of $G^*$ and $X$ is a set of $2g$ edges.  
+Adding each member of $X$ to $T$ one obtains a unique cycle.  
+If $T$ is a shortest path tree, the set of $2g$ cycles that is obtained by adding members of $X$ to $T$ is called a greedy system of loops.
+
+A covering of a surface $\Sigma$ is a space $\overline{\Sigma}$ together with a continuous surjective map, $\sigma: \overline{\Sigma} \rightarrow \Sigma$. For every point $p \in \Sigma$ there is a neighborhood $U$ of $p$ such that $\sigma^{-1}(U)$ is a union of disjoint discs in $\overline{\Sigma}$.
+
 
 \subsection{Dual Homology and Cycle Decomposition}
 
-\begin{itemize}
-\item
 Let $X$ denote the set of edges that cross the minimum $(s,t)$-cut in $G$.  Then $X^*$ induces the minimum-cost subgraph of $G^*$ that is $\Z_2$-homologous with $\partial s^*$.
-\item
+
 Any even subgraph can be decomposed into cycles (closed walks).  Each cycle in $X^*$ is $\Z_2$-minimal; however, these individual cycles could lie in arbitrary homology classes.
-\end{itemize}
+
 
 \subsection{Weighted Triangulations}
 
-\begin{itemize}
-\item
+%\begin{itemize}
+%\item
+%Our first algorithm \cite{surfcut} reduces computing a minimum $(s,t)$-cut in a graph embedded on a genus-$g$ surface to $g^{O(g)}$ instances of the planar minimum-cut problem.
+%\item
+%Any cycle decomposition of any $\Z_2$-minimal subgraph crosses any shortest path, and therefore any arc in the greedy system of arcs, at most $O(g)$ times.
+%\item
+%Cutting the surface along the system of arcs and contracting the resulting boundary arcs to points yields a polygon with $O(g)$ vertices called an \emph{abstract polygonal schema}.
+%\item
+%The crossing pattern of any even subgraph can be encoded as a weighted triangulation of this polygon.  We only need to consider triangulation with edge weights between $0$ and $O(g)$; there are $g^{O(g)}$ such weighted triangulations.
+%\item
+%Conversely, every weighted triangulation corresponds to a homotopy class of a collection of cycles.  This collection of cycles comprises the dual of an $(s,t)$-cut if and only if the total weight incident to every vertex of the triangulation is odd.  More generally, the parities of the weight incident to the vertices define a vector that encodes the homology class of the cycles.
+%\item
+%From each weighted triangulation, we can find the corresponding minimum-cost even subgraph using an algorithm of Kutz \cite{k-csnco-06}.  The triangulation itself encodes a decomposition of the target subgraph into edge-disjoint cycles.  Each of these cycles is the shortest generating cycle in an annulus obtained by gluing $O(g^2)$ copies of the disk $\Sigma\setminus P$, and can therefore be computed in $O(g^2n\log\log n)$ time using the planar minimum-cut algorithm of Italiano \etal~\cite{insw-iamcmf-11}.
+%\item
+%The overall running time of the algorithm is $g^{O(g)}n\log\log n$.
+%\item
+%As a side result, we prove that finding the minimum-cost even subgraph in any $\Z_2$-homology class is NP-hard, by a reduction from \textsc{MaxCut}.  Different reductions imply that it is NP-hard to find the minimum-cost \emph{closed walk} \cite{splitting} or \emph{simple cycle}
+%\cite{ccl-fctpe-11} in a given $\Z_2$-homology class.
+%\end{itemize}
+
 Our first algorithm \cite{surfcut} reduces computing a minimum $(s,t)$-cut in a graph embedded on a genus-$g$ surface to $g^{O(g)}$ instances of the planar minimum-cut problem.
-\item
-Any cycle decomposition of any $\Z_2$-minimal subgraph crosses any shortest path, and therefore any arc in the greedy system of arcs, at most $O(g)$ times.
-\item
+We observe that the minimum $(s,t)$-cut is dual to the minimum even subgraph in a certain homology class.
+Any cycle decomposition of any $\Z_2$-minimal subgraph crosses any shortest path, and therefore any arc in the greedy system of arcs, at most $O(g)$ times.  We enumerate over all possibilities for the cycle decomposition of the dual of the minimum cut.  The crossing bound above is exploited to restrain the number of possibilities and thus the running time of the algorithm
+
 Cutting the surface along the system of arcs and contracting the resulting boundary arcs to points yields a polygon with $O(g)$ vertices called an \emph{abstract polygonal schema}.
-\item
-The crossing pattern of any even subgraph can be encoded as a weighted triangulation of this polygon.  We only need to consider triangulation with edge weights between $0$ and $O(g)$; there are $g^{O(g)}$ such weighted triangulations.
-\item
+The crossing pattern of any even subgraph can be encoded as a weighted triangulation of this polygon.  Because of the crossing bound, we only need to consider triangulation with edge weights between $0$ and $O(g)$; there are $g^{O(g)}$ such weighted triangulations.
 Conversely, every weighted triangulation corresponds to a homotopy class of a collection of cycles.  This collection of cycles comprises the dual of an $(s,t)$-cut if and only if the total weight incident to every vertex of the triangulation is odd.  More generally, the parities of the weight incident to the vertices define a vector that encodes the homology class of the cycles.
-\item
+
 From each weighted triangulation, we can find the corresponding minimum-cost even subgraph using an algorithm of Kutz \cite{k-csnco-06}.  The triangulation itself encodes a decomposition of the target subgraph into edge-disjoint cycles.  Each of these cycles is the shortest generating cycle in an annulus obtained by gluing $O(g^2)$ copies of the disk $\Sigma\setminus P$, and can therefore be computed in $O(g^2n\log\log n)$ time using the planar minimum-cut algorithm of Italiano \etal~\cite{insw-iamcmf-11}.
-\item
-The overall running time of the algorithm is $g^{O(g)}n\log\log n$.
-\item
+Hence, the overall running time of the algorithm is $g^{O(g)}n\log\log n$.
+
 As a side result, we prove that finding the minimum-cost even subgraph in any $\Z_2$-homology class is NP-hard, by a reduction from \textsc{MaxCut}.  Different reductions imply that it is NP-hard to find the minimum-cost \emph{closed walk} \cite{splitting} or \emph{simple cycle}
 \cite{ccl-fctpe-11} in a given $\Z_2$-homology class.
 
-
-\end{itemize}
-
 \subsection{$\Z_2$-Homology Cover}
 
-\begin{itemize}
-\item
+%\begin{itemize}
+%\item
+%Our second algorithm \cite{homcover} explicitly searches for all $\Z_2$-minimal cycles in $G^*$, and then assembles them into the dual of the minimum $(s,t)$-cut.
+%\item
+%As in our first algorithm, we first cut the surface into a disk using a greedy system of arcs $A$.  The homology class of a cycle $\gamma$ is determined by the parity of the number of crossings of $\gamma$ with each arc in $A$.
+%\item
+%The \emph{$\Z_2$-homology cover} $\overline\Sigma$ of the combinatorial surface $\Sigma$ is defined by assembling several copies of $\Sigma$ as follows.  First, cut the surface $\Sigma$ along all $2g+1$ arcs in $A$ to obtain a topological disk~$D$; each arc $\alpha_i\in A$ appears as two paths $\alpha_i^+$ and $\alpha_i^-$ on the boundary of $D$.  For each index $i$ and homology class $h\in\Z_2^{2g+1}$, let $\alpha^+_{i,h}$ and $\alpha^-_{i,h}$ respectively denote the copies of $\alpha_i^+$ and $\alpha_i^-$ in $D_h$.  Let $h\oplus h’$ denote the bit-wise exclusive-or of two bit vectors $h, h’\in\Z_2^{2g+1}$, and let $h \land i = h\oplus 2^i$ denote the bit vector obtained from $h$ by flipping its $i$th bit.  Finally, $\overline\Sigma$ is constructed by gluing together these $2^{2g+1}$ disks by identifying the paths $\alpha^+_{i,h}$ and $\alpha^-_{i,h \land i}$ for each homology class $h$ and index $i$.  
+%
+%\item
+%This combinatorial surface has complexity $2^{O(g)}n$ and genus $2^{O(g)}$.  In particular, 
+%every vertex $v$ and edge $e$ induces $2^{2g+1}$ vertices $v_h$ and edges $e_h$ in $\overline{G}$, one for each homology class $h$.  Each edge $e_h$ of $\overline{G}$ inherits the cost of the corresponding edge $e$ in $G$.  
+%
+%\item
+%Any walk in $\overline{G}$ projects to a walk in $G$ (by dropping subscripts); conversely, any walk in $G$ lifts to $2^{2g+1}$ different walks in $\overline{G}$, each uniquely determined by a lift of one of its endpoints.  In particular, any walk in $\overline{G}$ from $v_h$ to $v_{h’}$ projects to a closed walk in $G$, starting and ending at $v$, with homology class $h\oplus h’$.  Conversely, the \emph{shortest} closed walk in any homology class $h$ is the projection of the \emph{shortest} path from $v_0$ to $v_h$, for some vertex $v$.
+%
+%\item
+%Apply multiple-source shortest paths \cite{multishort} to compute this shortest path in $2^{O(g)}n\log n$ time. \NOTE{Need more detail here.}
+%\end{itemize}
+
+
 Our second algorithm \cite{homcover} explicitly searches for all $\Z_2$-minimal cycles in $G^*$, and then assembles them into the dual of the minimum $(s,t)$-cut.
-\item
 As in our first algorithm, we first cut the surface into a disk using a greedy system of arcs $A$.  The homology class of a cycle $\gamma$ is determined by the parity of the number of crossings of $\gamma$ with each arc in $A$.
-\item
+
+At the very high level our algorithm reduces the problem of computing minimum cycles in certain homology classes to computing shortest paths in a larger covering space obtained from cutting and gluing multiple copies of $\Sigma$.
 The \emph{$\Z_2$-homology cover} $\overline\Sigma$ of the combinatorial surface $\Sigma$ is defined by assembling several copies of $\Sigma$ as follows.  First, cut the surface $\Sigma$ along all $2g+1$ arcs in $A$ to obtain a topological disk~$D$; each arc $\alpha_i\in A$ appears as two paths $\alpha_i^+$ and $\alpha_i^-$ on the boundary of $D$.  For each index $i$ and homology class $h\in\Z_2^{2g+1}$, let $\alpha^+_{i,h}$ and $\alpha^-_{i,h}$ respectively denote the copies of $\alpha_i^+$ and $\alpha_i^-$ in $D_h$.  Let $h\oplus h’$ denote the bit-wise exclusive-or of two bit vectors $h, h’\in\Z_2^{2g+1}$, and let $h \land i = h\oplus 2^i$ denote the bit vector obtained from $h$ by flipping its $i$th bit.  Finally, $\overline\Sigma$ is constructed by gluing together these $2^{2g+1}$ disks by identifying the paths $\alpha^+_{i,h}$ and $\alpha^-_{i,h \land i}$ for each homology class $h$ and index $i$.  
 
-\item
 This combinatorial surface has complexity $2^{O(g)}n$ and genus $2^{O(g)}$.  In particular, 
 every vertex $v$ and edge $e$ induces $2^{2g+1}$ vertices $v_h$ and edges $e_h$ in $\overline{G}$, one for each homology class $h$.  Each edge $e_h$ of $\overline{G}$ inherits the cost of the corresponding edge $e$ in $G$.  
+Any walk in $\overline{G}$ projects to a walk in $G$ (by dropping subscripts); conversely, any walk in $G$ lifts to $2^{2g+1}$ different walks in $\overline{G}$, each uniquely determined by a lift of one of its endpoints and all have the same length.  In particular, any walk in $\overline{G}$ from $v_h$ to $v_{h’}$ projects to a closed walk in $G$, starting and ending at $v$, with homology class $h\oplus h’$.  Conversely, the \emph{shortest} closed walk in any homology class $h$ is the projection of the \emph{shortest} path from $v_0$ to $v_h$, for some vertex $v$.  Therefore, knowing $v$ we would be able to compute the shortest closed walk.
 
-\item
-Any walk in $\overline{G}$ projects to a walk in $G$ (by dropping subscripts); conversely, any walk in $G$ lifts to $2^{2g+1}$ different walks in $\overline{G}$, each uniquely determined by a lift of one of its endpoints.  In particular, any walk in $\overline{G}$ from $v_h$ to $v_{h’}$ projects to a closed walk in $G$, starting and ending at $v$, with homology class $h\oplus h’$.  Conversely, the \emph{shortest} closed walk in any homology class $h$ is the projection of the \emph{shortest} path from $v_0$ to $v_h$, for some vertex $v$.
-
-\item
-Apply multiple-source shortest paths \cite{multishort} to compute this shortest path in $2^{O(g)}n\log n$ time. \NOTE{Need more detail here.}
-\end{itemize}
+We know that the shortest cycle in each non-zero homology class crosses at least one arc of $A$ an odd number of times; in particular, at least once.
+Let $a$ denote such an arc and $\overline{a}$ denote any lift of it in $\overline{G}$.  We cut $\overline{G}$ along $\overline{a}$ to obtain a face whose boundary is composed of two copies of $\overline{a}$.
+Finally, we apply multiple-source shortest paths \cite{multishort} to compute all shortest paths with one endpoint on $\overline{a}$ in $2^{O(g)}n\log n$ time.
 
 \subsection{Global Minimum Cuts}
 
-\begin{itemize}
-\item
 Our result generalizes the recent $O(n\log \log n)$-time algorithm for planar graphs by Łącki and Sankowski \cite{ls-mcsc-11}, which in turn relies on the $O(n\log\log n)$-time algorithm for planar minimum $(s,t)$-cuts of Italiano \etal\ \cite{insw-iamcmf-11}.
 
-\item
 The global minimum cut in a surface graph $G$ is dual to the minimum-cost nonempty separating subgraph of the dual graph $G^*$.  In particular, if $G$ is planar, the global minimum cut in $G$ is dual to the shortest nonempty cycle in $G^*$.
-\item
 There are two cases to consider: Either the minimum-cost separating subgraph is a simple contractible cycle, or it isn’t.  We describe two algorithms, one of which is guaranteed to return the minimum-cost separating subgraph.
 
-\item
+
 To handle the contractible cycle case, we first slice the surface $\Sigma$ to make it planar.  Specifically, we first slice the surface along the shortest non-separating cycle $\alpha$ in $G^*$; we can find this cycle in $g^{O(g)}n\log\log n$ time using a variant of our weighted-triangulation algorithm.  We then slice the surface $\Sigma\snip\alpha$  along a greedy system of arcs connecting its two boundary cycles in $O(gn)$ time.  Call the resulting planar graph $D$; each edge of the cycle $\alpha$ and the greedy system of arcs appears as two edges on the outer face of $D$.  Results of Cabello \cite{c-fscss-10} imply that the shortest simple contractible cycle in the  $G^*$ is also a simple cycle in $H$.  Let $e$ be an arbitrary edge of the cycle $\alpha$; this edge appears as two edges $e_1$ and $e_2$ on the outer face of $D$.  Using the planar algorithm of Łącki and Sankowski \cite{ls-mcsc-11}, we find the shortest cycle $\gamma’_1$ in  $D\setminus e_1$ and the shortest cycle $\gamma’_2$ in $D\setminus e_2$.  Let $\gamma’$ be the shorter of these two cycles; this cycle projects to a closed walk $\gamma$ in the original dual graph $G^*$.  If $\gamma$ is a simple cycle, then $\gamma$ is the shortest contractible simple cycle in $G^*$; otherwise,  the minimum-cost separating subgraph of $G$ is not a simple cycle.
 
-\item
+
 Now suppose the minimum-cost separating subgraph $X$ is not a simple contractible cycle.  Our second algorithm begins by enumerating all $2^{O(g)}$ $\Z_2$-minimal cycles in $\Sigma^*$, in $g^{O(g)}n\log\log n$ time, again using a variant of our weighted-triangulation algorithm.  Now let $A$ and $B$ denote the components of the surface $\Sigma^*\snip X$.  Because $X$ is not a contractible cycle, the surfaces $A$ and $B$ both have nontrivial topology, and therefore contain at least one nontrivial $\Z_2$-minimal cycle.  All such cycles are also $\Z_2$-minimal in~$\Sigma^*$.  For any edge $e$ in any $\Z_2$-minimal cycle in $A$, t least one face of $\Sigma$ incident to $e$ is also a face of $A$.  Thus, if we mark the faces on either size of an arbitrary edge of each $\Z_2$-minimal cycle in $\Sigma^*$, the resulting set of $2^{O(g)}$ marked faces include at least two that are separated by~$X$.  In other words, in $g^{O(g)}n\log\log n$ time, we can identify a set $T$ of $2^{O(g)}$ vertices of $G$, at least two of which are separated by the global minimum cut.  Thus, if we fix an arbitrary source vertex $s$ and compute the minimum $(s,t)$-cut for each vertex $t\in T$, in $2^{O(g)}\cdot g^{O(g)}n\log\log n = g^{O(g)}n\log\log n$ time, the smallest such cut is the global minimum cut.
 
-\end{itemize}
+
 
 % ----------------------------------------------------------------------
 
@@ -246,7 +287,8 @@ Finally, it is natural to ask whether minimum cuts can be computed quickly in ot
 \nocite{bk-amfdp-09, hkrs-fspap-97, k-msspp-05, r-mstcp-83, insw-iamcmf-11, multishort, parshort, splitting, gohog, optcycles, surflow, surfcut, homcover, global, e-dgteg-03, c-scgsp-10, p-deeoc-13}
 
 \bibliographystyle{spbasic}
-\bibliography{jeffe,topology,data-structures,optimization}
+%\bibliography{jeffe,topology,data-structures,optimization}
+\bibliography{topology,data-structures,optimization}
 
 
 \end{document}
