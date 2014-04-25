@@ -127,7 +127,7 @@ A surface is a compact Hausdorff space in which each point has a neighborhood ho
 The genus of a surface is the maximum number of disjoint simple cycles whose complement with respect to the surface is connected.
 An embedding of a graph on a surface maps vertices to distinct points on the surface and edges to interior disjoint curves.  
 A face of an embedding is a maximal connected subset of the surface that is disjoint from the image of the graph.
-An embedding is cellular if its faces are homeomorphic to the plane.
+An embedding is cellular if every face is homeomorphic to the plane.
 
 
 \subsection{Problem statement}
@@ -160,12 +160,12 @@ An embedding is cellular if its faces are homeomorphic to the plane.
 
 The dual of a cellularly embedded graph $G$ is a graph $G^*$.  The vertices of $G^*$ correspond to the faces of $G$, and two vertices (in $G^*$) are joined by a (dual) edge if and only if they correspond to adjacent faces of $G$.
 Duality maps cycles to cuts and vice versa.  
-In particular, planar minimum cut is dual to shortest generating cycle in an annulus \cite{is-mfpn-79, r-mstcp-83}.
+In particular, a planar minimum cut is dual to shortest generating cycle in an annulus \cite{is-mfpn-79, r-mstcp-83}.
 
 Two cycles are homotopic if one can be continuously deformed to the other.  
-Two even subgraphs are homologous if their symmetric difference is the boundary of a subset of the surface.
-The edges of a cellularly embedded graph can be decomposed into three subsets $(T, C, X)$ where $T$ is a spanning tree of $G$, $C^*$ is a spanning tree of $G^*$ and $X$ is a set of $2g$ edges.  
-Adding each member of $X$ to $T$ one obtains a unique cycle.  
+Two even subgraphs are $\mathbb{Z}_2$-homologous if their symmetric difference is the boundary of a subset of the surface.
+A tree-cotree decomposition is a decomposition of the edges of a cellularly embedded graph into three subsets $(T, C, X)$ where $T$ is a spanning tree of $G$, $C^*$ is a spanning tree of $G^*$ and $X$ is a set of $2g$ edges.  
+Adding each member of $X$ to $T$ gives a unique cycle.  
 If $T$ is a shortest path tree, the set of $2g$ cycles that is obtained by adding members of $X$ to $T$ is called a greedy system of loops.
 
 A covering of a surface $\Sigma$ is a space $\overline{\Sigma}$ together with a continuous surjective map, $\sigma: \overline{\Sigma} \rightarrow \Sigma$. For every point $p \in \Sigma$ there is a neighborhood $U$ of $p$ such that $\sigma^{-1}(U)$ is a union of disjoint discs in $\overline{\Sigma}$.
