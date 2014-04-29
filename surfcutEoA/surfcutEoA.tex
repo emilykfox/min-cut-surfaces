@@ -200,7 +200,7 @@ Any even subgraph can be decomposed into cycles (closed walks).  Each cycle in $
 %\cite{ccl-fctpe-11} in a given $\Z_2$-homology class.
 %\end{itemize}
 
-Our first algorithm \cite{surfcut} reduces computing a minimum $(s,t)$-cut in a graph embedded on a genus-$g$ surface to $g^{O(g)}$ instances of the planar minimum-cut problem.
+Our first algorithm \cite{cen-mcshc-09} reduces computing a minimum $(s,t)$-cut in a graph embedded on a genus-$g$ surface to $g^{O(g)}$ instances of the planar minimum-cut problem.
 We observe that the minimum $(s,t)$-cut is dual to the minimum even subgraph in a certain homology class.
 Any cycle decomposition of any $\Z_2$-minimal subgraph crosses any shortest path, and therefore any arc in the greedy system of arcs, at most $O(g)$ times.  We enumerate over all possibilities for the cycle decomposition of the dual of the minimum cut.  The crossing bound above is exploited to restrain the number of possibilities and thus the running time of the algorithm
 
@@ -211,8 +211,7 @@ Conversely, every weighted triangulation corresponds to a homotopy class of a co
 From each weighted triangulation, we can find the corresponding minimum-cost even subgraph using an algorithm of Kutz \cite{k-csnco-06}.  The triangulation itself encodes a decomposition of the target subgraph into edge-disjoint cycles.  Each of these cycles is the shortest generating cycle in an annulus obtained by gluing $O(g^2)$ copies of the disk $\Sigma\setminus P$, and can therefore be computed in $O(g^2n\log\log n)$ time using the planar minimum-cut algorithm of Italiano \etal~\cite{insw-iamcmf-11}.
 Hence, the overall running time of the algorithm is $g^{O(g)}n\log\log n$.
 
-As a side result, we prove that finding the minimum-cost even subgraph in any $\Z_2$-homology class is NP-hard, by a reduction from \textsc{MaxCut}.  Different reductions imply that it is NP-hard to find the minimum-cost \emph{closed walk} \cite{splitting} or \emph{simple cycle}
-\cite{ccl-fctpe-11} in a given $\Z_2$-homology class.
+Surprisingly, finding the minimum-cost even subgraph in an arbitrary $\Z_2$-homology class is NP-hard, by a reduction from \textsc{MaxCut}.  Different reductions imply that it is NP-hard to find the minimum-cost \emph{closed walk} \cite{ccelw-scsih-08} or \emph{simple cycle}~\cite{c-fscss-10} in a given $\Z_2$-homology class.
 
 \subsection{$\Z_2$-Homology Cover}
 
@@ -236,7 +235,7 @@ As a side result, we prove that finding the minimum-cost even subgraph in any $\
 %\end{itemize}
 
 
-Our second algorithm \cite{homcover} explicitly searches for all $\Z_2$-minimal cycles in $G^*$, and then assembles them into the dual of the minimum $(s,t)$-cut.
+Our second algorithm \cite{en-mcsnc-11} explicitly searches for all $\Z_2$-minimal cycles in $G^*$, and then assembles them into the dual of the minimum $(s,t)$-cut.
 As in our first algorithm, we first cut the surface into a disk using a greedy system of arcs $A$.  The homology class of a cycle $\gamma$ is determined by the parity of the number of crossings of $\gamma$ with each arc in $A$.
 
 At the very high level our algorithm reduces the problem of computing minimum cycles in certain homology classes to computing shortest paths in a larger covering space obtained from cutting and gluing multiple copies of $\Sigma$.
@@ -248,11 +247,11 @@ Any walk in $\overline{G}$ projects to a walk in $G$ (by dropping subscripts); c
 
 We know that the shortest cycle in each non-zero homology class crosses at least one arc of $A$ an odd number of times; in particular, at least once.
 Let $a$ denote such an arc and $\overline{a}$ denote any lift of it in $\overline{G}$.  We cut $\overline{G}$ along $\overline{a}$ to obtain a face whose boundary is composed of two copies of $\overline{a}$.
-Finally, we apply multiple-source shortest paths \cite{multishort} to compute all shortest paths with one endpoint on $\overline{a}$ in $2^{O(g)}n\log n$ time.
+Finally, we apply multiple-source shortest paths \cite{cce-msspe-13} to compute all shortest paths with one endpoint on $\overline{a}$ in $2^{O(g)}n\log n$ time.
 
 \subsection{Global Minimum Cuts}
 
-Our result generalizes the recent $O(n\log \log n)$-time algorithm for planar graphs by Łącki and Sankowski \cite{ls-mcsc-11}, which in turn relies on the $O(n\log\log n)$-time algorithm for planar minimum $(s,t)$-cuts of Italiano \etal\ \cite{insw-iamcmf-11}.
+Our final result generalizes the recent $O(n\log \log n)$-time algorithm for planar graphs by Łącki and Sankowski \cite{ls-mcsc-11}, which in turn relies on the $O(n\log\log n)$-time algorithm for planar minimum $(s,t)$-cuts of Italiano \etal\ \cite{insw-iamcmf-11}.
 
 The global minimum cut in a surface graph $G$ is dual to the minimum-cost nonempty separating subgraph of the dual graph $G^*$.  In particular, if $G$ is planar, the global minimum cut in $G$ is dual to the shortest nonempty cycle in $G^*$.
 There are two cases to consider: Either the minimum-cost separating subgraph is a simple contractible cycle, or it isn’t.  We describe two algorithms, one of which is guaranteed to return the minimum-cost separating subgraph.
@@ -269,7 +268,8 @@ Now suppose the minimum-cost separating subgraph $X$ is not a simple contractibl
 
 \OpenProb
 
-Extending these minimum-cut algorithms to \emph{directed} surface graphs remains an interesting open problem.  Indeed, the most efficient algorithms known to compute minimum $(s,t)$-cuts in directed surface graphs first compute a maximum $(s,t)$-flow and apply the maxflow-mincut theorem.  In \emph{planar} directed graphs, maximum $(s,t)$-flows can be computed in $O(n\log n)$ time using the recent algorithm of Borradaile and Klein~\cite{bk-amfdp-09}; minimum $(s,t)$-cuts can also be computed directly in $O(n\log n)$ time using the covering-space algorithm of \citet{wobble}.  For higher-genus graphs, Chambers \etal~\cite{surflow} describe a  maximum-flow algorithms that run in $g^{O(g)}n^{3/2}$ time for arbitrary capacities and in $O(g^8 n\log^2 n \log^2 C)$ for integer capacities that sum to $C$.
+Extending these minimum-cut algorithms to \emph{directed} surface graphs remains an interesting open problem.  Indeed, the most efficient algorithms known to compute minimum $(s,t)$-cuts in directed surface graphs first compute a maximum $(s,t)$-flow and apply the maxflow-mincut theorem.  In \emph{planar} directed graphs, maximum $(s,t)$-flows can be computed in $O(n\log n)$ time using the recent algorithm of Borradaile and Klein~\cite{bk-amfdp-09}; minimum $(s,t)$-cuts can also be computed directly in $O(n\log n)$ time using the covering-space algorithm of \cite{wobble}.
+For higher-genus graphs, Chambers \etal~\cite{cen-hfcc-12} describe a  maximum-flow algorithms that run in $g^{O(g)}n^{3/2}$ time for arbitrary capacities and in $O(g^8 n\log^2 n \log^2 C)$ for integer capacities that sum to $C$.
 
 Another open problem is reducing the dependence on the genus from exponential to polynomial.  Even though there are near-quadratic algorithms to compute minimum cuts, the only known approach to achieving near-linear time for bounded-genus graphs with weighted edges is to solve an exponential number of instances of an NP-hard problem!
 
@@ -288,7 +288,7 @@ Finally, it is natural to ask whether minimum cuts can be computed quickly in ot
 
 \bibliographystyle{spbasic}
 %\bibliography{jeffe,topology,data-structures,optimization}
-\bibliography{topology,data-structures,optimization}
+\bibliography{../topology,../data-structures,../optimization}
 
 
 \end{document}
