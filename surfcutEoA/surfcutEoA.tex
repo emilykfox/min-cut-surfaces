@@ -167,6 +167,9 @@ In particular, a planar minimum $(s,t)$-cut is dual to shortest generating cycle
 Two cycles are homotopic if one can be continuously deformed to the other.  
 Two even subgraphs are $\mathbb{Z}_2$-homologous if their symmetric difference is the boundary of a subset of the surface.
 An even subgraph (or cycle) is $\Z_2$-minimal if its edges have minimum total weight within its homology class.
+Any even subgraph can be decomposed into cycles (closed walks).
+Each cycle of a $\Z_2$-minimal even subgraph $X$ is itself $\Z_2$-minimal; however, these individual cycles could lie in arbitrary homology classes.
+
 A tree-cotree decomposition is a decomposition of the edges of a cellularly embedded graph into three subsets $(T, C, X)$ where $T$ is a spanning tree of $G$, $C^*$ is a spanning tree of $G^*$ and $X$ is a set of $2g$ edges.  
 Adding each member of $X$ to $T$ gives a unique cycle.  
 If $T$ is a shortest path tree, the set of $2g$ cycles that is obtained by adding members of $X$ to $T$ is called a greedy system of loops.
@@ -175,12 +178,7 @@ There is a similar concept called a greedy system of arcs for surfaces with boun
 
 A covering of a surface $\Sigma$ is a space $\overline{\Sigma}$ together with a continuous surjective map, $\sigma: \overline{\Sigma} \rightarrow \Sigma$. For every point $p \in \Sigma$ there is a neighborhood $U$ of $p$ such that $\sigma^{-1}(U)$ is a union of disjoint discs in $\overline{\Sigma}$.
 
-
-\subsection{Dual Homology and Cycle Decomposition}
-
 Let $X$ denote the set of edges that cross the minimum $(s,t)$-cut in $G$.  Then $X^*$ induces the minimum-cost subgraph of $G^*$ that is $\Z_2$-homologous with $\partial s^*$.
-
-Any even subgraph can be decomposed into cycles (closed walks).  Each cycle in $X^*$ is $\Z_2$-minimal; however, these individual cycles could lie in arbitrary homology classes.
 
 
 \subsection{Weighted Triangulations}
