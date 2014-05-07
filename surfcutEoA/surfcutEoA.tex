@@ -275,7 +275,7 @@ Now suppose the minimum-cost separating subgraph $X^*$ is not a simple contracti
 \OpenProb
 
 Extending these minimum-cut algorithms to \emph{directed} surface graphs remains an interesting open problem.  Indeed, the most efficient algorithms known to compute minimum $(s,t)$-cuts in directed surface graphs first compute a maximum $(s,t)$-flow and apply the maxflow-mincut theorem.  In \emph{planar} directed graphs, maximum $(s,t)$-flows can be computed in $O(n\log n)$ time using the recent algorithm of Borradaile and Klein~\cite{bk-amfdp-09}; minimum $(s,t)$-cuts can also be computed directly in $O(n\log n)$ time using the covering-space algorithm of \cite{wobble}.
-\NOTE{Kyle: What is references wobble supposed to be?}
+\NOTE{Kyle: What is references wobble supposed to be? If Janiga and Koubek, then we should drop it.}
 For higher-genus graphs, Chambers \etal~\cite{cen-hfcc-12} describe a  maximum-flow algorithms that run in $g^{O(g)}n^{3/2}$ time for arbitrary capacities and in $O(g^8 n\log^2 n \log^2 C)$ for integer capacities that sum to $C$.
 
 Another open problem is reducing the dependence on the genus from exponential to polynomial.  Even though there are near-quadratic algorithms to compute minimum cuts, the only known approach to achieving near-linear time for bounded-genus graphs with weighted edges is to solve an exponential number of instances of an NP-hard problem!
