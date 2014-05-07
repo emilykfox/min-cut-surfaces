@@ -125,6 +125,8 @@ Fixed-parameter tractability}
 
 A surface is a compact Hausdorff space in which each point has a neighborhood homeomorphic to the plane or closed half plane.
 The genus of a surface is the maximum number of disjoint simple cycles whose complement with respect to the surface is connected.
+A surface is orientable if it contains no subspace homeomorphic to the M\"{o}bius band.
+\NOTE{Kyle: Should we only consider orientable?}
 An embedding of a graph on a surface maps vertices to distinct points on the surface and edges to interior disjoint curves.  
 A face of an embedding is a maximal connected subset of the surface that is disjoint from the image of the graph.
 An embedding is cellular if every face is homeomorphic to the plane.
@@ -132,15 +134,14 @@ An embedding is cellular if every face is homeomorphic to the plane.
 
 \subsection{Problem statement}
 
-\NOTE{Kyle: I think the first and third papers only address orientable surfaces, and all our magic numbers assume orientable.}
 \subsubsection{Problem 1 (Minimum (s,t)-Cut)}
 {\itshape
-\textsc{Input}: An undirected graph $G = (V, E)$ embedded on a surface of genus $g$, a non-negative capacity function $c\colon E \to \mathbb{R}$, and two vertices $s$ and $t$. \textsc{Output}:~A minimum-capacity $(s,t)$-cut in $G$.}
+\textsc{Input}: An undirected graph $G = (V, E)$ embedded on an orientable surface of genus $g$, a non-negative capacity function $c\colon E \to \mathbb{R}$, and two vertices $s$ and $t$. \textsc{Output}:~A minimum-capacity $(s,t)$-cut in $G$.}
 
 
 \subsubsection{Problem 2 (Global Minimum Cut)}
 {\itshape
-\textsc{Input}: An undirected graph $G = (V, E)$  embedded on a surface of genus $g$ and a non-negative capacity function $c\colon E \to \mathbb{R}$.  \textsc{Output}: A minimum-capacity cut in $G$.}
+\textsc{Input}: An undirected graph $G = (V, E)$  embedded on an orientable surface of genus $g$ and a non-negative capacity function $c\colon E \to \mathbb{R}$.  \textsc{Output}: A minimum-capacity cut in $G$.}
 
 
 
