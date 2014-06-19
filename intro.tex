@@ -13,7 +13,7 @@ Two of these algorithms are designed to solve the minimum $(s,t)$-cut problem; t
 Before describing our results in detail, we first review several related results; technical terms are defined in Section \ref{sec:prelims}.
 
 \fakeparagraph{Planar minimum cuts.}
-\note{TODO(Kyle): Add references for global minimum cut.}
+\note{TODO(Kyle): Make sure we do not use ``minimum cut'' when we specifically mean ``minimum $(s,t)$-cut''.}
 Recall that for any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subset of the edges of $G$ that intersects every path from $s$ to $t$.  A \emph{minimum} $(s,t)$-cut is an $(s,t)$-cut of minimum size, or minimum total weight if the edges of $G$ are weighted.
 
 Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum cut by cutting the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
@@ -24,7 +24,12 @@ minimum $t,s$-cut is smaller than the minimum $s,t$-cut.}.
 
 Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obtain an $O(n)$-time planar shortest-path algorithm; using this algorithm in place of Dijkstra's algorithm improves the running times of both Reif's and Janiga and Koubek's algorithms to $O(n\log n)$.  The same improvement can also be obtained using more recent multiple-source shortest path algorithms by Klein~\cite{k-msspp-05} and Cabello and Chambers \cite{cc-msspg-07}.
 
-Minimum cuts in directed planar graphs can also be obtained in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (if the graph satisfies certain connectivity restrictions) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
+Minimum $(s,t)$-cuts in directed planar graphs can also be obtained in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (if the graph satisfies certain connectivity restrictions) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
+
+A \EMPH{cut} (without specified $s$ and $t$) is a subset of edges of $G$ that separate $G$ into two non-empty sets of vertices.
+A \emph{minimum} cut is a cut of minimum size, or minimum total weight if the edges of $G$ are weighted.
+To differentiate between minimum $(s,t)$-cuts and minimum cuts, we sometimes refer to the latter as global minimum cuts.
+Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity. Their algorithm runs in~$O(n \log^2 n)$ time. Their algorithm was later improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.
 
 \fakeparagraph{Generalizations of planar graphs.}
 Surprisingly little is known about the complexity of computing maximum flows or minimum cuts in generalizations of planar graphs.  In particular, we know of no algorithm to compute minimum cuts in non-planar graphs that does not first compute a maximum flow.
@@ -38,7 +43,10 @@ However, this algorithm is slower than more recent and more general algorithms \
 Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} describe maximum flow algorithms that are tailored specifically for graphs of constant genus.
 Given a graph embedded on a surface of genus~$g$, their algorithms can compute a maximum flow in time $O(g^8 n \log^2 n \log^2 C)$ where $C$ is the sum of integer edge weights and time $g^{O(g)}n^{3/2}$ when edge weights are arbitrary positive real numbers.
 
-Euler's formula implies that a simple $n$-vertex graph embedded on a surface of genus $O(n)$ has at most $O(n)$ edges.  The fastest known combinatorial maximum-flow algorithms for sparse graphs, due to Sleator and Tarjan~\cite{st-dsdt-83} and Goldberg and Tarjan~\cite{gt-namfp-88}, run in time $O(n^2\log n)$.  The fastest algorithm known for integer capacities, due to Goldberg and Rao \cite{gr-bfdb-98}, runs in time $O(n^{3/2}\log n\log U)$, where $U$ is an upper bound on the integer edge weights.  These are also the fastest algorithms known prior to Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} for computing maximum flows or minimum cuts in graphs of any positive genus.
+Euler's formula implies that a simple $n$-vertex graph embedded on a surface of genus $O(n)$ has at most $O(n)$ edges.
+The fastest known combinatorial maximum-flow algorithm for sparse graphs, due to Orlin~\cite{o-mfotl-13}, runs in time $O(n^2 / \log n)$.
+The fastest algorithm known for small integer capacities, due to Goldberg and Rao \cite{gr-bfdb-98}, runs in time $O(n^{3/2}\log n\log U)$, where $U$ is an upper bound on the integer edge weights.
+Finally, the fastest known algorithm for computing global minimum cuts for sparse graphs, due to Karger~\cite{k-mcnlt-00}, runs in~$O(n \log^3 n)$ time.
 
 For further background on maximum flows, minimum cuts, and related problems, we refer the reader to monographs by Ahuja \etal\ \cite{amo-nftaa-93} and Schrijver \cite{s-cape-03}.
 
