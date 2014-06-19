@@ -66,7 +66,8 @@ Dey \etal~\cite{dls-chtl-07, dlsc-cgaht-08} describe algorithms to find short \e
 \subsection{New results and organization}
 The input to our first algorithm is an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.  Given vertices $s$ and $t$, our algorithm computes a minimum-weight $(s,t)$-cut in $g^{O(g)}n\log \log n$ time.
 For any fixed positive genus, this result improves the best previous time bound of Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} by a factor of $\min\set{ \sqrt{n} / \log \log n, \log^2 n / \log \log n \log^2 C}$ (compared to minimum cut algorithms for general sparse graphs, the improvement is $\min\set{n / ( \log n \log \log n), \sqrt{n} \log n / \log \log n \log C}$).
-\note{Mention how this time matches planar algorithm and will be improved when planar improves.}
+The bottleneck for our algorithm is the time it takes to compute a minimum weight $(s,t)$-cut in a \emph{planar} embedded graph.
+For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
 
 Our minimum-cut algorithm is a special case of a more general algorithm to compute a minimum-cost \emph{subgraph} in a given $\Z_2$-homology class.  Even when the homology class is specified by a simple cycle, the output representative may be the union of several cycles; see Figure \ref{F:homology2}.  For surfaces with genus $g$ and $b$ boundary components, our algorithm runs in $(g+b)^{O(g+b)}n\log\log n$ time.
 We give this algorithm in Section~\ref{sec:crossing}.
@@ -81,13 +82,13 @@ We also show how to extend this algorithm to compute a minimum-weight $(s,t)$-cu
 These algorithms are described in Section~\ref{sec:homcover}.
 
 Our final algorithm takes as input an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.
-This algorithm computes a minimum-weight cut (global minimum cut) in $g^{O(g)}n\log \log n$ time.
-Here, no $s$ or $t$ are specified, our algorithm simply returns a minimum weight subset of edges that separate the vertices of~$G$ into two non-empty sets.
-\note{Mention how this time matches planar algorithm and will be improved when planar improves.}
-As in the case of computing minimum-weight $(s,t)$-cuts, our algorithm for global minimum cuts depends upon our more general algorithm for minimum-cost subgraphs in given $\Z_2$-homology classes.
-As mentioned, the more general problem is NP-hard.
+This algorithm computes a global minimum cut in $g^{O(g)}n\log \log n$ time.
+Again, the bottleneck for this algorithm is the time it takes to compute a global minimum cut in a \emph{planar} embedded graph.
+For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
+We present the global minimum cut algorithm in Section~\ref{sec:global}.
 
-Of course, both versions of the original minimum-cut problem are not NP-hard!
+As in the case of computing minimum-weight $(s,t)$-cuts, our algorithm for global minimum cuts depends upon our more general algorithm for minimum-cost subgraphs in given $\Z_2$-homology classes.
+The more general problem is NP-hard, but of course, both versions of the original minimum-cut problem are not NP-hard!
 We conjecture that minimum-weight $(s,t)$-cuts and global minimum cuts can be computed in time $O(g^c n\log \log n)$ for some small constant $c$.
 
 As mentioned, Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} describe algorithms to compute a maximum flow in surface embedded graphs, using very different techniques from this paper.  Specifically, given a directed graph embedded on an orientable surface of genus~$g$, with two specified vertices $s$ and $t$, they can compute a maximum $(s,t)$-flow in $O(g^8 n\log^2 n\log^2 C)$ time for integer capacities that sum to $C$, or in $g^{O(g)}n^{3/2}$ time for real capacities.  Their key insight is that it suffices to optimize the relative \emph{real} homology class of the flow, rather than directly optimizing the flow itself.
