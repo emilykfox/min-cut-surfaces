@@ -1,4 +1,13 @@
 \section{Conclusions and Open Problems}
 \label{sec:conclusions}
 
-\note{TODO: Write a section on conclusions and open problems.}
+Many potential improvements and open questions remain.  For example, unlike the flow algorithms described in Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12}, our minimum $(s,t)$-cut algorithms do not seem to extend easily to embedded \emph{directed} graphs.  Computing minimum $(s,t)$-cuts in directed graphs embedded on a surface in near-linear time remains an open question.
+
+We conjecture that maximum $(s,t)$-flows, minimum $(s,t)$-cuts, and global minimum cuts in embedded graphs can be computed in $O(g^k n\log n)$ time for some small constant $k$, perhaps using a
+generalization of the network simplex algorithm of Borradaile and
+Klein \cite{b-epnfc-08, bk-amfdp-09}.  Even the special
+case of unit capacities is open.
+
+\paragraph{Acknowledgments}
+The authors would like to thank Chandra Chekuri and Aparna Sundar for helpful discussions.
+In addition, they would like to thank the anonymous reviewers for the extended abstracts this paper is based upon for their comments and suggestions.
