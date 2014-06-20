@@ -9,11 +9,12 @@
 We begin by recalling several useful definitions related to surface-embedded graphs.  For further background, we refer the reader to Gross and Tucker \cite{gt-tgt-01} or Mohar and Thomassen~\cite{mt-gs-01} for topological graph theory, and to Hatcher~\cite{h-at-02} or Stillwell~\cite{s-ctcgt-93} for surface topology and homology.
 
 
-\subsection{Surfaces and Curves}
+\subsection{Surfaces and curves}
 
 A \EMPH{surface} (more formally, a \emph{2-manifold with boundary}) is a compact Hausdorff space in which every point has an open neighborhood homeomorphic to either the plane $\Real^2$ or a closed halfplane $\set{(x,y)\in \Real^2\mid x\ge 0}$.  The points with halfplane neighborhoods make up the \EMPH{boundary} of the surface; every component of the boundary is homeomorphic to a circle.
 A surface is \EMPH{non-orientable} if it contains a subset homeomorphic to
-the M\"obius band, and \EMPH{orientable} otherwise. In this dissertation, we consider only compact, connected, and orientable surfaces.
+the M\"obius band, and \EMPH{orientable} otherwise. In this paper, we consider only compact, connected, and orientable surfaces.
+\note{Kyle: I guess we can do non-orientable, at least for computing minimal directed cycles, although the Betti numbers get nastier.}
 
 A \EMPH{path} in a surface $\Sigma$ is a continuous function $p\colon [0,1]\to\Sigma$.
 A \EMPH{loop} is a path whose endpoints~$p(0)$ and~$p(1)$ coincide;
@@ -34,8 +35,8 @@ The \EMPH{reversal}~$\rev(p)$ of a path~$p$ is defined by
 setting~$\rev(p)(t) = p(1-t)$. The \EMPH{concatenation}~$p \cdot q$ of two
 paths~$p$ and~$q$ with~$p(1)=q(0)$ is the path created by
 setting~$(p\cdot q)(t) = p(2t)$ for all~$t \leq 1/2$
-and~$(p\cdot q)(t) = q(2t-1)$ for all~$t \geq 1/2$. Finally, let~$p[x,y]$
-denote the subpath of a path~$p$ from point~$x$ to point~$y$.
+and~$(p\cdot q)(t) = q(2t-1)$ for all~$t \geq 1/2$.
+% Kyle: I removed the definition for subpath p[x,y], because I don't think we use it.
 
 The \EMPH{genus} of a surface $\Sigma$ is the maximum number of disjoint simple cycles in $\Sigma$ whose complement is connected.
  Up to homeomorphism,
@@ -44,7 +45,7 @@ boundary cycles $b\ge 0$.
 Orientable surfaces with~$b$ boundary components are differentiated by their \EMPH{Euler characteristic} ${\chi = 2 - 2g - b}$ (for non-orientable surfaces, ${\chi = 2 - g - b}$).
 
 
-\subsection{Graph Embeddings}
+\subsection{Graph embeddings}
 
 An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
@@ -82,63 +83,25 @@ subgraph~$F$ of~$G$.
 Further, we may sometimes use~$D$ to refer to an edge set or the subgraph~$F = (V, D)$,
 but it should be clear which we mean from context.
 
-A \EMPH{tree-cotree decomposition}~$(T,L,C)$ of an undirected
-graph~$G$ embedded on a surface without boundary 
-is a partition of the edges into three disjoint subsets;
-a spanning tree~$T$ of~$G$, a spanning cotree~$C$ (the dual of a spanning
-tree~$C^*$ of~$G^*$), and leftover edges~$L=G \setminus (T \cup C)$.
-Euler's formula implies that in any tree-cotree decomposition, the set~$L$
-contains exactly~$2g$ edges~\cite{e-dgteg-03}.
-The definitions for dual
-graphs and tree-cotree decompositions given above
-extend to surfaces with boundary, but
-we do not require these extensions in this dissertation.
-
-For some of the problems we consider in Chapters~\ref{chap:non-trivial} and~\ref{chap:max-flow}, the input is actually a \emph{directed} edge-weighted (or capacitated)
+For the problem we consider in Section~\ref{sec:homcover}, the input is actually a \emph{directed} edge-weighted
 graph~$G$ with a cellular embedding on some surface.
 We use the
 notation~$u \arcto v$ to denote the directed \EMPH{dart} from vertex~$u$ to vertex~$v$, and let~$\vec{E}$ be the set of darts in~$G$.
 Without loss of generality, we consider only \EMPH{symmetric} directed graphs,
 in which the reversal~$v \arcto u$ of any dart~$u \arcto v$ is another dart,
-possibly with infinite weight (or~$0$ capacity).
+possibly with weight~$0$.
 We also assume that in the cellular embedding,
 the images of any edge in~$G$ and its reversal coincide (but with opposite
 orientations).
 The two darts~$u \arcto v$ and~$v \arcto u$ therefore define an \EMPH{edge}~$uv$
 with a canonical orientation~$u \arcto v$; edge~$vu$ does not necessarily exist even though~$uv$ does.
-Thus, like Cabello \etal~\cite{ccl-fsncd-10} and Erickson~\cite{e-sncds-11},
+Thus, like other authors~\cite{ccl-fsncd-10,e-sncds-11,f-sntcd-13},
 we implicitly model directed graphs as \emph{undirected graphs with asymmetric
 edge weights}.
-We may denote dart~$u \arcto v$ as~$f \uparrow g$ if faces~$f$ and~$g$ lie to its left and right respectively.
-The dual of any dart~$f \uparrow g$ is~$f^* \arcto g^*$.
+The dual of any dart with face~$f$ to its left and~$g$ to its right is~$f^* \arcto g^*$.
 Note that the duality of darts is \emph{not} an involution the way we have specified the orientation of the dual dart here.
 
-Let~$p = v_0 \arcto v_1 \arcto \dots \arcto v_k$ be a simple directed cycle
-or arc in an
-embedded graph~$G$. We say an edge~$u \arcto v_i$ \EMPH{enters~$p$
-from the left}
-(resp. right) if the vertices~$v_{i-1}$,~$u$, and~$v_{i+1}$ (module~$k$
-in the case of a cycle) are ordered
-clockwise (resp. counterclockwise) around~$v_i$, according to the
-embedding's rotation system. An edge~$v_i \arcto u$ \EMPH{leaves~$p$ from the
-left} (resp. right) if its reversal~$u \arcto v_i$ enters~$p$ from the
-left (resp. right).
-If~$p$ is an arc,
-the above definitions require that~$0 < i < k$ and that~$u$
-is not a vertex in~$p$. Recall an arc's endpoints lie on boundary cycles.
-Let~$t_0 v_0$ and~$v_0 w_0$ be the boundary edges
-incident to~$v_0$ with vertices~$t_0$, $v_1$, and $w_0$ appearing in clockwise
-order around~$v_0$. We say~$t_0 \arcto v_0$ enters~$p$ from the left.
-We say~$w_0 \arcto v_0$ enters~$p$
-from the right. Similarly,
-if~$t_k v_k$ and~$v_k w_k$ are boundary edges incident to~$v_k$ with
-vertices~$t_k$, $w_k$, and~$v_{k-1}$ appearing in clockwise order around~$v_k$,
-we say~$t_k \arcto v_k$ enters~$p$ from the left and~$w_k \arcto v_k$
-enters~$p$ from the right. Finally, we treat~$t_0$ as~$v_{-1}$ and~$t_k$
-as~$v_{k+1}$ to define entering from the left (resp. right) for any
-other edges~$u \arcto v_0$ or~$u \arcto v_k$ where~$u$ does not appear in~$p$.
-
-\subsection{Homotopy and Homology}
+\subsection{Homotopy and homology}
 
 Two paths~$p$ and~$q$ in $\Sigma$ are \EMPH{homotopic} if one can be
 continuously deformed into the other without changing their endpoints.
@@ -155,24 +118,14 @@ Given a weight function on the darts of~$G$, we say a directed path or cycle is 
 
 Homology is a coarser equivalence relation than homotopy, with nicer
 algebraic properties.  Like several earlier papers \cite{cf-qhc2-07,
-cf-qhc-08, dls-chtl-07, dlsc-cgaht-08}, we will consider only
+cf-qhc-08, dls-chtl-07, dlsc-cgaht-08,e-sncds-11,f-sntcd-13}, we will consider only
 one-dimensional cellular homology with coefficients in the finite
 field $\Z_2$; this restriction allows us to radically simplify our
-definitions.  For a more general treatment of homology, we refer the
-reader to our companion paper~\cite{cen-hfcc-09} or to standard
-references on topology \cite{h-at-01, s-ctcgt-93, z-tc-05}.
-
-%\note{Reviewer 2 suggests: "you should probably emphasize that the even and boundary subgraphs are vector spaces over $Z_2$, and define $\oplus$."}
-
+definitions.
 Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the union of edge-disjoint cycles.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, every separating cycle is a boundary subgraph.
-%For planar graphs, every even subgraph is a boundary subgraph, but this equivalence does not extend to higher-genus embeddings.
+
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
-%Equivalently, two even subgraphs are homologous if one can be continuously deformed into the other via a deformation that may include splitting cycles at self-intersection points, merging intersecting pairs of cycles, or adding or deleting contractible cycles.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{F:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{F:homology2}.
-
-%\note{Reviewer 2 says: "Figure 1, left, is hard to understand (draw the hidden parts of the curves".  Erin: I disagree!  I wouldn't change it, but that's your call, Jeff.}
-
-%\note{Jeff: Um.  The `hidden' parts of the curves are already there: thinner, lighter, and cased.  I don't know how to make them any clearer!  The lack of visualization ability in the SOCG community never ceases to amaze me.}
 
 \begin{figure}[htb]
 \centering
@@ -189,39 +142,27 @@ Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cy
 \label{F:homology2}
 \end{figure}
 
-\subsection{Flows and Cuts}
-Consider again homology with coefficients in~$\R$.
-We will often refer to $1$-chains as \EMPH{flows} or \EMPH{coflows} depending on if we are focusing on the primal or dual graph.
-Any flow can be decomposed to a set of weighted paths and cycles.
-For any capacity function~$c : \vec{E} \to \R$ on the \emph{darts}, we say a flow~$\phi$ is \EMPH{feasible} if $-c(v \arcto u) \leq \phi(uv) \leq c(u \arcto v)$.
-Note that capacity functions do not necessarily have to be non-negative for feasibility to be well defined.
-Given a coflow~$\theta$ we define the capacity of~$\theta$ with respect to~$c$ as follows.
-Let~$c' : E \to \R$ be a function on the edges such that~$c'(uv) = c(u \arcto v)$ if~$\theta(uv) \geq 0$ and~$c'(uv) = -c(v \arcto u)$ if~$\theta(uv) < 0$.
-The capacity of~$\theta$ with respect to~$c$ is the dot product~$\langle \theta, c' \rangle$.
+\subsection{Cut-even subgraph duality}
+\note{Kyle: The lemma below is key to the algorithms working, but there doesn't appear to be enough there to make them their own section. Where should we put them?}
 
-For $s,t \in V$, an $s,t$-\EMPH{flow} is a 1-chain $\phi: E \to \R$ such that $\partial \phi(v) = 0$ for all $v \in V\backslash \{s,t\}$.
-The value of an $s,t$-flow~$\phi$ is $\sum_{s \arcto v} \phi(s \arcto v)$.
-A \EMPH{maximum $s,t$-flow} with respect to a capacity function~$c$ is a feasible flow of highest value.
-For a flow $\phi$, the \EMPH{residual capacity} function $c_{\phi}: \vec{E} \to \R$ is defined as $c_{\phi}(u \arcto v) = c(u \arcto v) - \phi(u \arcto v)$.
-Given a capacity function~$c$, we may refer to the \EMPH{residual graph $G_{\phi}$} when discussing the graph~$G$ coupled with residual capacity function~$c_\phi$.
-The \EMPH{dual residual graph}~$G^*_{\phi}$ is simply the dual graph~$G^*$ coupled with the residual capacity function~$c_\phi$.
+A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.
+We formalize this equivalence in the following lemma.
 
-An \EMPH{cut} in~$G = (V, E)$ is defined as a subset of vertices~$S \subseteq V$; we refer to $S$ and $T = V\backslash S$ as different \EMPH{sides} of the cut.
-Given two vertices~$s$ and~$t$ with $s \in S$ and $t \in T$, we say $S$ is an
-\EMPH{$s,t$-cut}.
-A dart~$u \arcto v$ (and its associated edge~$uv$ or~$vu$) \EMPH{crosses} a cut $S$ if exactly one of $u$ and $v$ lie in $S$.
-In particular, $u \arcto v$ crosses $S$ in the \EMPH{forward} direction if $u\in S$ and in the \EMPH{backward} direction if $v \in S$.
-For a cut $S$ we use the notation \EMPH{$\Gamma^+(S)$} to denote the set of all darts that cross $S$ in the \emph{forward} direction.
-We define \EMPH{$\Gamma^-(S)$} as the set of darts that cross $S$ in the backward direction.
-A walk $W$ crosses a cut $S$ $k$ times if  there are $k$ edges of $W$ that cross $S$.
+\begin{lemma}
+\label{lem:cut-duality}
+Let $G$ be an edge-weighted graph embedded on a surface $\Sigma$ without boundary, and let $s$ and $t$ be vertices of~$G$.  Finally, let $C$ be the minimum-weight $(s,t)$-cut in~$G$.  Then~$C^*$ is the minimum-weight even subgraph of $G^*$ homologous with the boundary of $s^*$ in the surface $\Sigma\setminus(s^*\cup t^*)$.
+\end{lemma}
 
-Given a dart capacity function~$c : \vec{E} \to \R$, the value or capacity of a cut~$S$ is~$\sum_{u \arcto v \in \Gamma^+(S)} c(u \arcto v)$.
-Equivalently, the capacity of a cut~$S$ is equal to the capacity of a coflow~$\theta$ such that~$\theta(u \arcto v) = 1$ if~$u \arcto v \in \Gamma^+(S)$ and~$\theta(u \arcto v) = 0$ if~$uv$ does not cross~$S$.
-A \EMPH{minimum $s,t$-cut} of~$G$ with respect to capacity function~$c$ is an $s,t$-cut of minimum value.
-The well known maximum-flow/minimum-cut theorem of Ford and Fulkerson~\cite{ff-mfn-56} states that for any non-negative capacity function $c$, the value of a maximum feasible $s,t$-flow is equal to the value of a minimum $s,t$-cut.
+\begin{proof}
+Let $\partial s^*$ denote the boundary of $s^*$, and let $\Sigma'$ denote the surface $\Sigma\setminus {(s^*\cup t^*)}$.
+
+Let $C$ be an arbitrary $(s,t)$-cut in $G$.  This cut partitions the vertices of $G$ into two disjoint subsets, $S$ and $T$, respectively containing vertices $s$ and $t$.  Thus, the dual subgraph $C^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $C^*$ is the boundary of the union of the faces in $S^*$, which implies that $C^*$ is null-homologous in $\Sigma$.  The subgraph $C^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus,  $C^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $C^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
+
+Conversely, let $C^*$ be an arbitrary even subgraph of $G^*$ homologous to $\partial s^*$ in $\Sigma'$.  The subgraph $C^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  This immediately implies that $C^*$ is null-homologous in $\Sigma$; moreover, faces $s^*$ and $t^*$ are on opposite sides of $C^*$.   any path from $s$ to $t$ in the original graph $G$ must traverse at least one edge of $C$.  We conclude that $C$ is an $(s,t)$-cut.
+\end{proof}
 
 
-\subsection{Covering Spaces and Cutting}
+\subsection{Covering spaces and cutting}
 
 A continuous map~$\pi : \Sigma' \to \Sigma$ between two surfaces is called a
 \EMPH{covering map} if each point~$x \in \Sigma$ lies in an open
