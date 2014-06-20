@@ -5,14 +5,14 @@ Let~$G$ be undirected. We now turn our attention computing the global minimum cu
 To work with topology in computing a minimum cut, we use the following lemma which is similar very similar to Lemma~\ref{lem:cut-duality}.
 We say a null-homologous even subgraph~$\eta$ is a \EMPH{separating subgraph} if it contains at least one edge.
 
-\note{kylejfox: Throughout the dissertation I said vertex sets were cuts. We may need to reconcile with the $s,t$-cut papers.}
 \begin{lemma}
 \label{lem:mincut-z2}
-Let~$G$ be an undirected graph with non-negative edge capacities, cellularly embedded on a surface~$\Sigma$ without boundary, let~$S$ be a minimum cut in~$G$, and let~$C$ be the edges crossing~$S$.  Then~$C^*$ is a minimum weight separating subgraph of~$G^*$.
+Let~$G$ be an edge-weighted undirected graph embedded on a surface~$\Sigma$ without boundary, and let~$C$ be a minimum cut in~$G$.
+Then~$C^*$ is a minimum weight separating subgraph of~$G^*$.
 \end{lemma}
 
 \begin{proof}
-  Let~$C$ be the edges crossing an arbitrary cut in~$G$.  The cut partitions the vertices of $G$
+  Let~$C$ be an arbitrary cut in~$G$.  The cut partitions the vertices of $G$
   into two disjoint subsets~$S$ and~$T$. Therefore, the dual subgraph~$C^*$
   partitions the faces of~$G^*$ into two disjoint subsets~$S^*$ and~$T^*$.
   Further,~$C^*$ is the boundary of the union of faces in~$S^*$, implying
@@ -23,7 +23,7 @@ Let~$G$ be an undirected graph with non-negative edge capacities, cellularly emb
   of~$G^*$.  Moreover, because $C^*$ is non-empty, it must be the boundary of
   a \emph{proper, non-empty} subset of faces.  Let $s^*$ and $t^*$ be faces
   of $G^*$ on either side of $C^*$.  Any path from~$s$ to~$t$ in the primal
-  graph~$G$ must traverse at least one edge of~$C$.  We conclude that~$C$ crosses
+  graph~$G$ must traverse at least one edge of~$C$.  We conclude that~$C$ is
   a cut (in particular, an $s,t$-cut).
 \end{proof}
 
