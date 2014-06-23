@@ -10,10 +10,10 @@ used as a subroutine to compute minimum-cost even subgraphs in
 using a dynamic programming procedure described later in this section.
 Again, by Lemma~\ref{lem:surface-st-cut}, our algorithm can be used to find a minimum $s,t$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
 
-The algorithm of the previous section constructs and searches several relevant finite portions of the (infinite) universal cover of the input surface.
-Instead of the universal cover, the algorithms of this section construct and search another canonical covering space, called the \emph{$\Z_2$-homology cover}.
+The algorithm of the previous section constructs and searches several relevant finite portions of the (infinite) universal cover of the input surface.  One reason to suspect better tools exist is that even in undirected graphs, finding optimal cycles in a given homology class by enumerating homotopy classes seems to create unnecessary complications.  
+Instead of the universal cover, the algorithms of this section construct and search another canonical covering space, called the \emph{$\Z_2$-homology cover}; these techniques have also been used in other work on computing shortest non-trivial directed cycles~\cite{e-sncds-11,f-sntcd-13}.
 We also use a generalization of Klein's seminal multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded graphs \cite{cce-msspe-13}.
-\note{TODO(kylejfox): The top of page 2 in the SODA 2011 paper contains some good motivation for the homology cover technique. That material should be transferred either to here or the introduction. Also mention the shortest non-trivial directed cycle papers~\cite{e-sncds-11,f-sntcd-13} that use similar techniques.}
+
 
 \subsection{Constructing the $\Z_2$-homology cover}
 \label{sec:homcover_cover}
