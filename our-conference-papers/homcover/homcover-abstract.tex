@@ -1,0 +1,36 @@
+\documentclass[10pt]{article}
+\usepackage{fullpage,latexsym,amssymb,multicol}
+
+%no page number
+\pagestyle{empty} 
+
+\begin{document}
+
+%reduce  space between lines
+\baselineskip=9pt 
+
+%Title
+\begin{center}{\large \bf Minimum Cuts and Shortest Non-Separating Cycles via Homology Covers}
+%Authors
+\begin{multicols}{2}
+	Jeff Erickson\\[1ex]
+	Department of Computer Science\\
+	University of Illinois at Urbana-Champaign\\
+	jeffe@cs.uiuc.edu
+
+	Amir Nayyeri\\[1ex]
+	Department of Computer Science\\
+	University of Illinois at Urbana-Champaign\\
+	nayyeri2@cs.uiuc.edu
+\end{multicols}
+\end{center}
+
+\def\Z{\mathbb{Z}}
+\def\etal{\emph{et al.}}
+
+%Abstract
+Let $G$ be a directed graph with weighted edges, embedded on a surface of genus~$g$.  We describe an algorithm to compute a shortest directed cycle in $G$ in any given $\Z_2$-homology class in $2^{O(g)}n\log n$ time; this problem is {NP}-hard even for undirected graphs.  We also present two applications of our algorithm.  The first is an algorithm to compute a shortest non-separating directed cycle in $G$ in $2^{O(g)} n\log n$ time, improving the recent algorithm of Cabello \etal\ [SOCG 2010] for all $g=o(\log n)$.  The second is a combinatorial algorithm to compute minimum $(s,t)$-cuts in \emph{undirected} surface graphs in $2^{O(g)} n\log n$ time, improving on previous combinatorial algorithms, and in particular the recent  of Chambers \etal\ [SOCG 2009], for all~$g = o(\log n)$.  Unlike earlier algorithms for surface graphs that construct and search finite portions of the universal cover, our algorithms use another canonical covering space, called  the \emph{$\Z_2$-homology cover}.
+
+\bigskip
+
+\end{document}

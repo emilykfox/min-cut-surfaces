@@ -1,0 +1,561 @@
+% ======================================================================
+%  Compile with pdflatex.
+% ======================================================================
+\documentclass{sig-alternate}
+\usepackage{jeffe,graphicx,hyperref}
+\usepackage[obey]{fixacm}
+
+%-----------------------------------------------------------------------
+%  These packages are purely cosmetic.
+%  Just comment them out if they don't work for you.
+%-----------------------------------------------------------------------
+%\usepackage{txfonts}
+\usepackage{microtype}
+\usepackage[charter]{mathdesign}
+\def\sfdefault{fvs}
+\def\ttdefault{fvm}
+\usepackage[mathcal]{euscript}
+\usepackage{stmaryrd}
+
+\def\note#1{\EMPH{\color{red} #1}}
+
+\clubpenalty 5000
+\widowpenalty 5000
+
+%-----------------------------------------------------------------------
+%  Local definitions
+%-----------------------------------------------------------------------
+\makeatletter % less nice replacements for stmaryrd characters
+\@ifundefined{shortrightarrow}{\let\shortrightarrow\rightarrow}{}
+\@ifundefined{shortleftarrow}{\let\shortleftarrow\leftarrow}{}
+\@ifundefined{shortuparrow}{\let\shortuparrow\uparrow}{}
+\@ifundefined{shortdownarrow}{\let\shortdownarrow\downarrow}{}
+\makeatother
+
+\def\arc#1#2{#1\mathord\shortrightarrow#2}
+\def\cra#1#2{#1\mathord\shortleftarrow#2}
+\def\fence#1#2{#1\mathord\shortuparrow#2}
+\def\ecnef#1#2{#1\mathord\shortdownarrow#2}
+\def\head{\operatorname{head}}
+\def\tail{\operatorname{tail}}
+\def\lsh{\operatorname{left}}
+\def\rsh{\operatorname{right}}
+\def\rev{\operatorname{rev}}
+\def\head{\emph{head}}
+\def\tail{\emph{tail}}
+\def\lsh{\emph{left}}
+\def\rsh{\emph{right}}
+\def\rev{\emph{rev}}
+\def\Z{\mathbb{Z}}
+\def\N{\mathbb{N}}
+\def\Real{\mathbb{R}}
+\def\Q{\mathbb{Q}}
+
+\def\dvec#1{\vec{#1}\,^*}       % dual dart
+\def\bdry{\mathord{\partial\!}} % mathdesign puts extra space after \partial
+%\def\bdry{\partial}
+\def\opt#1{#1_{\emph{OPT}}}
+\def\Cmax{U}
+\def\Csum{C}
+\def\Cmin{c_{\min}}
+
+\def\fakeparagraph#1{\medskip\noindent\textbf{#1}~}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+
+
+% ----------------------------------------------------------------------
+\begin{document}
+
+\conferenceinfo{SCG'09,} {June 8--10, 2009, Aarhus, Denmark.} 
+\CopyrightYear{2009}
+\crdata{978-1-60558-501-7/09/06} 
+
+\title{Minimum Cuts and Shortest Homologous Cycles%
+	\huge\thanks{Research partially supported by NSF grant DMS-0528086.}}
+
+\author{
+    Erin W. Chambers
+    \\[0.5ex]
+	\affaddr{Department of Computer Science and Mathematics}\\
+	\affaddr{Saint Louis University}\\
+	\email{\url{echambe5@slu.edu}}
+\alignauthor
+    \and
+	Jeff Erickson\\[0.5ex]
+	\affaddr{Department of Computer Science}\\
+    \affaddr{University of Illinois, Urbana-Champaign}\\
+	\email{\url{jeffe@cs.uiuc.edu}}
+\alignauthor
+	Amir Nayyeri\\[0.5ex]
+	\affaddr{Department of Computer Science}\\
+    \affaddr{University of Illinois, Urbana-Champaign}\\
+	\email{\url{nayyeri2@illinois.edu}}
+}
+\maketitle
+
+\begin{abstract}
+We describe the first algorithms to compute minimum cuts in surface-embedded graphs in near-linear time.  Given an undirected graph embedded on an orientable surface of genus~$g$, with two specified vertices $s$ and $t$, our algorithm computes a minimum $(s,t)$-cut in $g^{O(g)} n\log n$ time.  Except for the special case of planar graphs, for which $O(n\log n)$-time algorithms have been known for more than 20 years, the best previous time bounds for finding minimum cuts in embedded graphs follow from algorithms for general sparse graphs.  A slight generalization of our minimum-cut algorithm computes a minimum-cost subgraph in every $\Z_2$-homology class.  We also prove that finding a minimum-cost subgraph homologous to a single input cycle is {NP}-hard.
+\end{abstract}
+
+
+\category{F.2.2}
+{Analysis of Algorithms and Problem Complexity}
+{Nonnumerical Algorithms and Problems}
+[Computations on discrete structures]
+%
+\category{G.2.2}
+{Discrete Mathematics}
+{Graph theory}
+[Graph algorithms]
+
+\terms{Algorithms, Performance}
+
+\keywords{computational topology, topological graph theory}
+
+
+
+
+\begin{center}\Huge\sf
+Please see submitted pdf file for the paper body.
+\end{center}
+
+
+
+
+\def\burl#1{$\langle$\url{#1}$\rangle$}
+\begin{thebibliography}{10}
+\itemsep 1pt plus 1pt
+
+\bibitem{amo-nftaa-93}
+R.~K. Ahuja, T.~L. Magnanti, and J.~Orlin.
+\newblock \emph{Network Flows: Theory, Algorithms, and Applications}.
+\newblock Prentice Hall, 1993.
+
+\bibitem{b-epnfc-08}
+G.~Borradaile.
+\newblock \emph{Exploiting Planarity for Network Flow and Connectivity
+  Problems}.
+\newblock Ph.D. thesis, Brown University, May 2008.
+\newblock
+  \burl{http://www.cs.brown.edu/research/pubs/theses/phd/2008/glencora.pdf}.
+
+\bibitem{bdt-ptass-08}
+G.~Borradaile, E.~D. Demaine, and S.~Tazari.
+\newblock Polynomial-time approximation schemes for subset-connectivity
+  problems in bounded-genus graphs.
+\newblock \emph{Proc. 26th Int. Symp. Theoretical Aspects Comput. Sci.},
+  171--182, 2009. Dagstuhl Seminar Proceedings.
+\newblock \burl{http://drops.dagstuhl.de/opus/volltexte/2009/1835/}.
+
+\bibitem{bkk-ptass-07}
+G.~Borradaile, C.~Kenyon-Mathieu, and P.~N. Klein.
+\newblock A polynomial-time approximation scheme for {Steiner} tree in planar
+  graphs.
+\newblock \emph{Proc. 18th Ann. ACM-SIAM Symp. Discrete Algorithms},
+  1285--1294, 2007.
+
+\bibitem{bkk-stpg-07}
+G.~Borradaile, C.~Kenyon-Mathieu, and P.~N. Klein.
+\newblock Steiner tree in planar graphs: {An} {$O(n \log n)$} approximation
+  scheme with singly-exponential dependence on epsilon.
+\newblock \emph{Proc. 10th Ann. Workshop on Algorithms and Data Structures},
+  275--286, 2007.
+
+\bibitem{bk-tamfd-06}
+G.~Borradaile and P.~Klein.
+\newblock An {$O(n \log n)$}-time algorithm for maximum $st$-flow in a directed
+  planar graph.
+\newblock \emph{Proc. 17th Ann. ACM-SIAM Symp. Discrete Algorithms}, 524--533,
+  2006.
+
+\bibitem{bk-amfdp-09}
+G.~Borradaile and P.~Klein.
+\newblock An {$O(n\log n)$} algorithm for maximum $st$-flow in a directed
+  planar graph.
+\newblock \emph{J. ACM} $\!\!$, to appear, 2009.
+\newblock
+  \burl{http://www.math.uwaterloo.ca/~glencora/downloads/maxflow-full.pdf}.
+
+\bibitem{c-mdpg-06}
+S.~Cabello.
+\newblock Many distances in planar graphs.
+\newblock \emph{Proc. 17th Ann. ACM-SIAM Symp. Discrete Algorithms},
+  1213--1220, 2006.
+
+\bibitem{cc-msspg-07}
+S.~Cabello and E.~W. Chambers.
+\newblock Multiple source shortest paths in a genus $g$ graph.
+\newblock \emph{Proc. 18th Ann. ACM-SIAM Symp. Discrete Algorithms}, 89--97,
+  2007.
+
+\bibitem{cdem-fotc-08}
+S.~Cabello, M.~DeVos, J.~Erickson, and B.~Mohar.
+\newblock Finding one tight cycle.
+\newblock \emph{Proc. 19th Ann. ACM-SIAM Symp. Discrete Algorithms}, 527--531,
+  2008.
+
+\bibitem{cm-fsnsn-07}
+S.~Cabello and B.~Mohar.
+\newblock Finding shortest non-separating and non-contractible cycles for
+  topologically embedded graphs.
+\newblock \emph{Discrete Comput. Geom.} 37:213--235, 2007.
+
+\bibitem{ccelw-scsih-06}
+E.~W. Chambers, {\'E}.~{Colin de Verdi\`{e}re}, J.~Erickson, F.~Lazarus, and
+  K.~Whittlesey.
+\newblock Splitting (complicated) surfaces is hard.
+\newblock \emph{Proc. 22nd Ann. ACM Symp. Comput. Geom.}, 421--429, 2006.
+
+\bibitem{ccelw-scsih-08}
+E.~W. Chambers, {\'E}.~{Colin de Verdi{\`e}re}, J.~Erickson, F.~Lazarus, and
+  K.~Whittlesey.
+\newblock Splitting (complicated) surfaces is hard.
+\newblock \emph{Comput. Geom. Theory Appl.} 41(1--2):94--110, 2008.
+
+\bibitem{cen-hfcc-09}
+E.~W. Chambers, J.~Erickson, and A.~Nayyeri.
+\newblock Homology flows, cohomology cuts.
+\newblock \emph{Proc. 41st Ann. ACM Symp. Theory Comput.}, 2009.
+
+\bibitem{cf-qhc2-07}
+C.~Chen and D.~Freedman.
+\newblock Quantifying homology classes {II}: {L}ocalization and stability.
+\newblock Preprint, 2007.
+\newblock \burl{http://arxiv.org/abs/0709.2512v2}.
+
+\bibitem{cf-qhc-08}
+C.~Chen and D.~Freedman.
+\newblock Quantifying homology classes.
+\newblock \emph{Proc. 25th Ann. Symp. Theoretical Aspects Comp. Sci.},
+  169--180, 2008. Dagstuhl Seminar Proceedings.
+\newblock \burl{http://drops.dagstuhl.de/opus/volltexte/2008/1343/}.
+
+\bibitem{c-rcds-03}
+{\'E}.~{Colin de Verdi{\`e}re}.
+\newblock \emph{Raccourcissement de courbes et d{\'e}composition de surfaces
+  [Shortening of Curves and Decomposition of Surfaces]}.
+\newblock Ph.D. thesis, University of Paris 7, Dec. 2003.
+\newblock \burl{http://www.di.ens.fr/~colin/textes/these.html}.
+
+\bibitem{ce-tspcs-06}
+{\'E}.~{Colin de Verdi{\`e}re} and J.~Erickson.
+\newblock Tightening non-simple paths and cycles on surfaces.
+\newblock \emph{Proc. 17th Ann. ACM-SIAM Symp. Discrete Algorithms}, 192--201,
+  2006.
+
+\bibitem{cl-opdsh-03}
+{\'E}.~{Colin de Verdi{\`e}re} and F.~Lazarus.
+\newblock Optimal pants decompositions and shortest homotopic cycles on an
+  orientable surface.
+\newblock \emph{Proc. 11th Sympos. Graph Drawing}, 478--490, 2003. Lecture
+  Notes Comput. Sci. 2912.
+
+\bibitem{cl-oslos-05}
+{\'E}.~{Colin de Verdi{\`e}re} and F.~Lazarus.
+\newblock Optimal system of loops on an orientable surface.
+\newblock \emph{Discrete Comput. Geom.} 33(3):507--534, 2005.
+
+\bibitem{cl-opdsh-07}
+{\'E}.~{Colin de Verdi{\`e}re} and F.~Lazarus.
+\newblock Optimal pants decompositions and shortest homotopic cycles on an
+  orientable surface.
+\newblock \emph{J. ACM} 54(4), 2007.
+
+\bibitem{dhm-aacd-07}
+E.~D. Demaine, M.~Hajiaghayi, and B.~Mohar.
+\newblock Approximation algorithms via contraction decomposition.
+\newblock \emph{Proc. 18th Ann. ACM-SIAM Symp. Discrete Algorithms ACM-SIAM
+  symposium on Discrete algorithms}, 278--287, 2007.
+
+\bibitem{dls-chtl-07}
+T.~K. Dey, K.~Li, and J.~Sun.
+\newblock On computing handle and tunnel loops.
+\newblock \emph{IEEE Proc. Int. Conf. Cyberworlds}, 357--366, 2007.
+
+\bibitem{dlsc-cgaht-08}
+T.~K. Dey, K.~Li, J.~Sun, and D.~Cohen-Steiner.
+\newblock Computing geometry-aware handle and tunnel loops in {3D} models.
+\newblock \emph{ACM Trans. Graphics} 27(3):1--9, 2008.
+\newblock Proc. SIGGRAPH 2008.
+
+\bibitem{e-sipgr-99}
+D.~Eppstein.
+\newblock Subgraph isomorphism in planar graphs and related problems.
+\newblock \emph{J. Graph Algorithms and Applications} 3(3):1--27, 1999.
+
+\bibitem{e-dtmcg-00}
+D.~Eppstein.
+\newblock Diameter and treewidth in minor-closed graph families.
+\newblock \emph{Algorithmica} 27:275--291, 2000.
+
+\bibitem{eh-ocsd-04}
+J.~Erickson and S.~Har-Peled.
+\newblock Optimally cutting a surface into a disk.
+\newblock \emph{Discrete Comput. Geom.} 31(1):37--59, 2004.
+
+\bibitem{ew-gohhg-05}
+J.~Erickson and K.~Whittlesey.
+\newblock Greedy optimal homotopy and homology generators.
+\newblock \emph{Proc. 16th Ann. ACM-SIAM Symp. Discrete Algorithms},
+  1038--1046, 2005.
+
+\bibitem{ew-csec-08}
+J.~Erickson and P.~Worah.
+\newblock Computing the shortest essential cycle.
+\newblock Preprint, November 2008.
+\newblock \burl{http://www.cs.uiuc.edu/~jeffe/pubs/essential.html}.
+
+\bibitem{fr-pgnwe-06}
+J.~Fakcharoenphol and S.~Rao.
+\newblock Planar graphs, negative weight edges, shortest paths, and near linear
+  time.
+\newblock \emph{J. Comput. Syst. Sci.} 72(5):868--889, 2006.
+
+\bibitem{ff-mfn-56}
+L.~R. Ford and D.~R. Fulkerson.
+\newblock Maximal flow through a network.
+\newblock \emph{Canadian J. Math.} 8(399--404), 1956.
+
+\bibitem{f-faspp-87}
+G.~N. Frederickson.
+\newblock Fast algorithms for shortest paths in planar graphs with
+  applications.
+\newblock \emph{SIAM J. Comput.} 16(6):1004--1004, 1987.
+
+\bibitem{fgm-fmggi-88}
+M.~L. Furst, J.~L. Gross, and L.~A. McGeoch.
+\newblock Finding a maximum-genus graph imbedding.
+\newblock \emph{J. Assoc. Comput. Mach.} 35(3):523--534, 1988.
+
+\bibitem{gr-bfdb-98}
+A.~V. Goldberg and S.~Rao.
+\newblock Beyond the flow decomposition barrier.
+\newblock \emph{J. ACM} 45(5):783--797, 1998.
+
+\bibitem{gt-namfp-88}
+A.~V. Goldberg and R.~E. Tarjan.
+\newblock A new approach to the maximum-flow problem.
+\newblock \emph{J. Assoc. Comput. Mach.} 35(4):921--940, 1988.
+
+\bibitem{g-itegd-00}
+M.~Grohe.
+\newblock Isomorphism testing for embeddable graphs through definability.
+\newblock \emph{Proc. 32nd ACM Symp. Theory Comput.}, 63--72, 2000.
+
+\bibitem{gt-tgt-01}
+J.~L. Gross and T.~W. Tucker.
+\newblock \emph{Topological graph theory}.
+\newblock Dover Publications, 2001.
+
+\bibitem{gw-tnr-01}
+I.~Guskov and Z.~Wood.
+\newblock Topological noise removal.
+\newblock \emph{Proc. Graphics Interface}, 19--26, 2001.
+
+\bibitem{hr-fmern-55}
+T.~E. Harris and F.~S. Ross.
+\newblock Fundamentals of a method for evaluating rail net capacities.
+\newblock Tech. rep., The RAND Corporation, Santa Monica, California, October
+  24 1955.
+\newblock Cited in \cite{s-hco-05}.
+
+\bibitem{hj-oamfu-85}
+R.~Hassin and D.~B. Johnson.
+\newblock An {$O(n\log^2 n)$} algorithm for maximum flow in undirected planar
+  networks.
+\newblock \emph{SIAM J. Comput.} 14(3):612--624, 1985.
+
+\bibitem{h-at-01}
+A.~Hatcher.
+\newblock \emph{Algebraic Topology}.
+\newblock Cambridge University Press, 2001.
+\newblock \burl{http://www.math.cornell.edu/~hatcher/}.
+
+\bibitem{hkrs-fspap-97}
+M.~R. Henzinger, P.~Klein, S.~Rao, and S.~Subramanian.
+\newblock Faster shortest-path algorithms for planar graphs.
+\newblock \emph{J. Comput. Syst. Sci.} 55(1):3--23, 1997.
+
+\bibitem{hw-mstfkc-07}
+J.~M. Hochstein and K.~Weihe.
+\newblock Maximum $s$-$t$-flow with $k$ crossings in {$O(k^3n\log n)$} time.
+\newblock \emph{Proc. 18th Ann. ACM-SIAM Symp. Discrete Algorithms}, 843--847,
+  2007.
+
+\bibitem{hw-ltaip-74}
+J.~E. Hopcroft and J.~K. Wong.
+\newblock Linear time algorithm for isomorphism of planar graphs (preliminary
+  report).
+\newblock \emph{Proc. 6th ACM Symp. Theory Comput.}, 172--184, 1974.
+
+\bibitem{ii-espap-90}
+H.~Imai and K.~Iwano.
+\newblock Efficient sequential and parallel algorithms for planar minimum cost
+  flow.
+\newblock \emph{Proc. SIGAL Int. Symp. Algorithms}, 21--30, 1990. Lecture Notes
+  Comput. Sci. 450, Springer-Verlag.
+
+\bibitem{is-pebgg-07}
+P.~Indyk and A.~Sidiropoulos.
+\newblock Probabilistic embeddings of bounded genus graphs into planar graphs.
+\newblock \emph{Proc. 23rd Ann. ACM Symp. Comput. Geom.}, 204--209, 2007.
+
+\bibitem{is-mfpn-79}
+A.~Itai and Y.~Shiloach.
+\newblock Maximum flow in planar networks.
+\newblock \emph{SIAM J. Comput.} 8:135--150, 1979.
+
+\bibitem{jk-mcdpn-92}
+L.~Janiga and V.~Koubek.
+\newblock Minimum cut in directed planar networks.
+\newblock \emph{Kybernetika} 28(1):37--49, 1992.
+
+\bibitem{kr-ccnlt-07}
+K.~Kawarabayashi and B.~Reed.
+\newblock Computing crossing number in linear time.
+\newblock \emph{Proc. 39th Ann ACM Symp. Theory Comput.}, 382--390, 2007.
+
+\bibitem{k-msspp-05}
+P.~Klein.
+\newblock Multiple-source shortest paths in planar graphs.
+\newblock \emph{Proc. 16th Ann. ACM-SIAM Symp. Discrete Algorithms}, 146--155,
+  2005.
+
+\bibitem{kmw-spdpg-09}
+P.~Klein, S.~Mozes, and O.~Weimann.
+\newblock Shortest paths in directed planar graphs with negative lengths: {A}
+  linear-space {$O(n\log^2 n)$}-time algorithm.
+\newblock \emph{Proc. 20th Ann. ACM-SIAM Symp. Discrete Algorithms}, 236--245,
+  2009.
+
+\bibitem{k-csnco-06}
+M.~Kutz.
+\newblock Computing shortest non-trivial cycles on orientable surfaces of
+  bounded genus in almost linear time.
+\newblock \emph{Proc. 22nd Ann. ACM Symp. Comput. Geom.}, 430--438, 2006.
+
+\bibitem{lrt-gnd-79}
+R.~J. Lipton, D.~J. Rose, and R.~E. Tarjan.
+\newblock Generalized nested dissection.
+\newblock \emph{SIAM J. Numer. Anal.} 16:346--358, 1979.
+
+\bibitem{m-tltam-04}
+M.~Mare{\v s}.
+\newblock Two linear time algorithms for {MST} on minor closed graph classes.
+\newblock \emph{Archivum Mathematicum} 40(3):315--320, 2004.
+
+\bibitem{mrr-edofm-03}
+S.~T. McCormick, M.~R. Rao, and G.~Rinaldi.
+\newblock Easy and difficult objective functions for max cut.
+\newblock \emph{Math. Program., Ser. B} 94:459--466, 2003.
+
+\balancecolumns
+\itemsep 1.5pt
+
+\bibitem{m-itgbg-80}
+G.~L. Miller.
+\newblock Isomorphism testing for graphs of bounded genus.
+\newblock \emph{Proc. 12th ACM Symp. Theory Comput.}, 225--235, 1980.
+
+\bibitem{mn-fpgms-95}
+G.~L. Miller and J.~Naor.
+\newblock Flow in planar graphs with multiple sources and sinks.
+\newblock \emph{SIAM J. Comput.} 24(5):1002--10017, 1995.
+
+\bibitem{mt-gos-01}
+B.~Mohar and C.~Thomassen.
+\newblock \emph{Graphs on Surfaces}.
+\newblock Johns Hopkins University Press, 2001.
+
+\bibitem{mvv-memi-87}
+K.~Mulmuley, U.~Vazirani, and V.~Vazirani.
+\newblock Matching is as easy as matrix inversion.
+\newblock \emph{Combinatorica} 7:105--113, 1987.
+
+\bibitem{pr-fepss-93}
+V.~Y. Pan and J.~H. Reif.
+\newblock Fast and efficient parallel solution of sparse linear systems.
+\newblock \emph{SIAM J. Comput.} 22(6):1227--1250, 1993.
+
+\bibitem{p-omst-99}
+D.~Pe'er.
+\newblock On minimum spanning trees.
+\newblock Master's thesis, Hebrew University, 1998.
+\newblock \burl{http://www.math.ias.edu/~avi/STUDENTS/dpthesis.pdf}.
+
+\bibitem{r-mstcp-83}
+J.~Reif.
+\newblock Minimum $s$-$t$ cut of a planar undirected network in {$O(n\log^2
+  n)$} time.
+\newblock \emph{SIAM J. Comput.} 12:71--81, 1983.
+
+\bibitem{r-mct-74}
+G.~Ringel.
+\newblock \emph{Map Color Theorem}.
+\newblock Springer-Verlag, 1974.
+
+\bibitem{ry-shmcp-68}
+G.~Ringel and J.~W.~T. Youngs.
+\newblock Solution of the {Heawood} map-coloring problem.
+\newblock \emph{Proc. Nat. Acad. Sci. USA} 60:438--445, 1968.
+
+\bibitem{s-cape-03}
+A.~Schrijver.
+\newblock \emph{Combinatorial Optimization: Polyhedra and Efficiency}.
+\newblock Algorithms and Combinatorics~24. Springer-Verlag, 2003.
+
+\bibitem{s-hco-05}
+A.~Schrijver.
+\newblock On the history of combinatorial optimization (till 1960).
+\newblock \emph{Handbook of Discrete Optimization}, 1--68, 2005. Elsevier.
+
+\bibitem{st-dsdt-83}
+D.~D. Sleator and R.~E. Tarjan.
+\newblock A data structure for dynamic trees.
+\newblock \emph{J. Comput. Syst. Sci.} 26(3):362--391, 1983.
+
+\bibitem{s-ctcgt-93}
+J.~Stillwell.
+\newblock \emph{Classical Topology and Combinatorial Group Theory}, 2nd
+  edition.
+\newblock Graduate Texts in Mathematics~72. Springer-Verlag, 1993.
+
+\bibitem{tm-spltm-09}
+S.~Tazari and M.~M{\"u}ller-Hannemann.
+\newblock Shortest paths in linear time on minor-closed graph classes, with an
+  application to {Steiner} tree approximation.
+\newblock \emph{Discrete Appl. Math.} 157:673--684, 2009.
+
+\bibitem{t-egnsn-90}
+C.~Thomassen.
+\newblock Embeddings of graphs with no short noncontractible cycles.
+\newblock \emph{J. Comb. Theory Ser. B} 48(2):155--177, 1990.
+
+\bibitem{v-slpfm-89}
+P.~M. Vaidya.
+\newblock Speeding-up linear programming using fast matrix multiplication.
+\newblock \emph{Proc. 30th IEEE Symp. Found. Comput. Sci.}, 332--337, 1989.
+
+\bibitem{w-mstfp-97}
+K.~Weihe.
+\newblock Maximum $(s, t)$-flows in planar networks in {$O(|V|\log|V|)$}-time.
+\newblock \emph{J. Comput. Syst. Sci.} 55(3):454--476, 1997.
+
+\bibitem{z-tc-05}
+A.~Zomorodian.
+\newblock \emph{Topology and Computing}.
+\newblock Cambridge University Press, 2005.
+
+\bibitem{zc-lh-07}
+A.~Zomorodian and G.~Carlsson.
+\newblock Localized homology.
+\newblock \emph{Proc. IEEE Int Conf. Shape Modeling Appl. (SMI)}, 189--198,
+  2007.
+
+\end{thebibliography}
+
+
+\end{document}

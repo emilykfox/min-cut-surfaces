@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Global Minimum Cuts in Surface Embedded Graphs </title>
+</head>
+
+<body bgcolor="ffffff">
+
+<h2>Global minimum cuts in surface embedded graphs</h2>
+
+<p>
+Written with 
+<a href="http://www.cs.uiuc.edu/~kylefox2/">Kyle Fox</a>* and 
+<a href="http://cs.uiuc.edu/~nayyeri2/">Amir Nayyeri</a>*
+
+<p>
+<cite>Proceedings of the <a href="http://www.siam.org/meetings/da12/">23rd Annual ACM-SIAM Symposium on Discrete Algorithms</a></cite>, 1309–1318, 2012.
+
+
+<ul>
+<li>Download SODA version:
+	<a href="pdf/global.pdf">
+	<img src="pix/pdf.gif" alt=[PDF] width=22 height=24 border=1 align=absbottom></a> 
+
+<li>Download Kyle's SODA slides:
+	<a href="pdf/global-slides.pdf">
+	<img src="pix/pdf.gif" alt=[PDF] width=22 height=24 border=1 align=absbottom></a> 
+
+</ul>
+
+<hr>
+<blockquote>
+<b>Abstract:</b><br>
+<div align=justify>
+We give a deterministic algorithm to find the minimum cut in a surface-embedded graph in near-linear time.  Given an undirected graph embedded on an orientable surface of genus <i>g</i>, our algorithm computes the minimum cut in <i>g</i><sup>O(<i>g</i>)</sup><i>n</i> log&nbsp;log&nbsp;<i>n</i> time, matching the running time of the fastest algorithm known for planar graphs, due to Łącki and Sankowski, for any constant g. Indeed, our algorithm calls <a href="http://arxiv.org/abs/1104.4890">Łącki and Sankowski’s recent O(<i>n</i> log&nbsp;log&nbsp;<i>n</i>)-time planar algorithm</a> as a subroutine.
+
+<p>
+Previously, the best time bounds known for this problem followed from two algorithms for general sparse graphs: <a href="http://arxiv.org/abs/cs/9812007">a randomized algorithm of Karger</a> that runs in O(<i>n</i> log<sup>3</sup><i>n</i>) time and succeeds with high probability, and <a href="http://dx.doi.org/10.1137/0405004">a deterministic algorithm of Nagamochi and Ibaraki</a> that runs in O(<i>n</i><sup>2</sup> log&nbsp;<i>n</i>) time. We can also achieve a deterministic <i>g</i><sup>O(<i>g</i>)</sup><i>n</i><sup>2</sup>log&nbsp;log&nbsp;<i>n</i> time bound by repeatedly applying the best known algorithm for minimum (<i>s</i>,<i>t</i>)-cuts in surface graphs. The bulk of our work focuses on the case where the dual of the minimum cut splits the underlying surface into multiple components with positive genus.
+
+<p align=center><img src="pix/global.png"></p>
+
+<b>Note:</b> After we submitted the camera-ready version of this paper, we  simplified the algorithm considerably.  The simpler algorithm is sketched in <a href="pdf/global-slides.pdf">Kyle's SODA slides</a>; details will appear in the eventual journal version.
+</div>
+
+</blockquote>
+
+<!--------------------------------------------------------------------------------------->
+<hr>
+<address>
+	<img src="pix/jge.gif" align=left>
+	<a href="pubs.html">Publications</a> -
+	<a href="..">Jeff Erickson</a>
+	(<a href="mailto:jeffe@cs.uiuc.edu">jeffe@cs.uiuc.edu</a>)
+	<small>21 Jan 2012</small>
+</address>
+
+</body>
+</html>
+
