@@ -1,0 +1,30 @@
+
+%----------------------------------------------------------------------
+%  Make the bibliography a SUBsection and set it in small type.
+%  Use \bibsize to make it even smaller.
+%----------------------------------------------------------------------
+\def\bibsize#1{\def\@bibsize{#1}}
+\renewenvironment{thebibliography}[1]
+     {\subsection*{\refname
+        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}
+      \@bibsize
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\itemsep 2pt minus 2pt   % squeeze between items if necessary
+	    \parsep 0pt
+	    \settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+
+\bibsize{\small}

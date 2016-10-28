@@ -1,0 +1,302 @@
+% -----------------------------*- LaTeX -*------------------------------
+%
+%   jeffeproc.sty -- Macro package for ACM, IEEE, and SIAM two-column
+%   conference proceedings papers
+%   
+%   Jeff Erickson (jeffe@cs.uiuc.edu)
+%   Last modified 30 Jun 2000
+%   This is free; caveat emptor!
+%
+% ----------------------------------------------------------------------
+%
+%   - Sets margins and other spacing parameters according to 1997
+%     ACM and IEEE guidelines.  SIAM guidelines are almost the same.
+%
+%   - Unless [nocopyright] option is present, automatically inserts
+%     1.5 inches of space at the bottom of the first column of the
+%     first page.
+%
+%   - Makes \large, \Large, etc. type (for example, in titles and
+%     section headers) slightly smaller than LaTeX's default, which is
+%     too big for 10pt type anyway. 
+%
+%   - Inserts slightly less than the default space around section and
+%     subsection headings.
+%
+%   - Defines the abstract environment as an unnumbered section with
+%     smaller text (and reasonable line spacing!)
+%
+%   - Automatically removes the first page number.  If you want no
+%     page numbers anywhere, use \pagestyle{empty}.
+%
+%   - Makes bibliography an unnumbered SUBsection to save space, with
+%     options to shrink the type as well.
+%
+%   ACM changed its proceedings guidelines in 1999 to accomodate
+%   Microsoft Word users, and therefore the new guidelines suck.  If
+%   that's what you want, you're on your own.  This package work well
+%   with either the default Computer Modern fonts or Concrete Roman.
+%   I haven't tried it with Times Roman or other PostScript fonts.
+%
+% ----------------------------------------------------------------------
+%   Invoke as follows:
+%	\docummentclass[twocolumn]{article}	% use default 10pt type
+%	\usepackage{jeffe}			% optional, of course
+%	\usepackage[OPTIONS]{jeffeproc}
+%
+%   OPTIONS:
+%	[nocopyright]
+%		Do not insert the space for the copyright notice.  Use
+%		this option in SODA and FOCS papers, but not for STOC
+%		or SCG.  (Obviously, this option does NOT remove the
+%		paper's actual copyright!)
+%	[acmtitle]
+%		Following ACM guidelines, leave 2 inches of space for
+%		the title material, even if it isn't necessary.
+%	[siamtitle]
+%		Following SIAM style file, don't use so much vertical
+%		space before the title.
+%	[acmsections]
+%		Use ACM's official section formatting style.  All
+%		headers are normal size sans serif bold.
+%	[siamsections]
+%		Use SIAM's official section formatting style, which
+%		makes my eyes bleed.  All headers are at normal type
+%		size.  Sections headings are given almost no space.
+%		(Sub)subsections are given run-in headings.  You
+%		should add a period after (sub)subsection titles 
+%		\subsection{Like This.}
+%	[toppagenumbers]
+%		Put page numbers at the top instead of the bottom of
+%		each page; increases the top margin a little to
+%		compensate.  Use for SODA papers if you want to be nice. 
+%	[smallbib]
+%		Set bibliography in \small type
+%	[smallerbib]
+%		Set bibliography in \footnotesize type
+%	[smallestbib]
+%		Set bibliography in \striptsize type
+%	[tinybib]
+%		Set bibliography in \tiny type
+%
+% ----------------------------------------------------------------------
+
+\ProvidesPackage{jeffeproc}
+
+%
+%  Set page parameters (margins, etc.) according to ACM guidelines.
+%
+\topmargin -0.25in		% really 0.75in, since LaTeX adds an inch
+\headheight 0pt			% no headers
+\headsep 0in			% no headers
+\textheight 9.25in		% i.e., bottom margin = 1in
+				% = 11in - 1in - \topmargin - \textheight
+\oddsidemargin -0.25in		% really 0.75in, since LaTeX adds an inch
+\evensidemargin -0.25in		% really 0.75in, since LaTeX adds an inch
+\columnsep 0.3333334in
+\columnseprule 0pt		% no rule between columns.
+\textwidth 7in			% i.e., column width = 3.3333333in
+				% = (\textwidth - \columnsep)/2
+
+\hfuzz 1pt			% Don't bitch about lines only 1pt too long
+\hyphenpenalty 1000		% Don't hyphenate quite so much
+\tolerance 1000			% Don't squeeze so much into each line
+
+\parskip 1pt plus 2pt minus 1pt	% Allow some slack between paragraphs
+
+\dbltextfloatsep 14pt plus 2pt minus 4pt  % Less space around figures
+\textfloatsep 14pt plus 2pt minus 4pt
+%\abovecaptionskip 6pt minus 1pt
+
+%
+%  Automatically insert space at the bottom of the first column of the
+%  first page for the proceedings copyright.  The height of the
+%  copyright space is stored in the length variable \copyrightlength;
+%  This is 1.5in by default.
+%
+\newlength{\copyrightlength}
+\copyrightlength 1.5in
+\advance\copyrightlength by -\floatsep
+\advance\copyrightlength by -\textfloatsep
+\def\copyrightspace{\begin{figure}[b]\vspace{\copyrightlength}\end{figure}}
+\DeclareOption{nocopyright}{\def\copyrightspace{}}
+
+%
+%  Modified to remove first page number, add copyright space, and make
+%  [Ll]arge text smaller.
+%
+\def\maketitle{\par
+ \begingroup
+   \def\thefootnote{\fnsymbol{footnote}}
+   \twocolumn[\@maketitle]	% I know this is a two column document.
+   \copyrightspace
+   \thispagestyle{empty}\@thanks
+ \endgroup
+ \setcounter{footnote}{0}
+ \let\maketitle\relax
+ \let\@maketitle\relax
+ \gdef\@thanks{}\gdef\@author{}\gdef\@title{}\let\thanks\relax
+ \gdef\large{\@setsize\large{13pt}\xipt\@xipt}
+ \gdef\Large{\@setsize\large{14pt}\xiipt\@xiipt}
+ \gdef\LARGE{\@setsize\Large{18pt}\xivpt\@xivpt}
+ \gdef\huge{\@setsize\LARGE{22pt}\xviipt\@xviipt}
+ \gdef\Huge{\@setsize\huge{25pt}\xxpt\@xxpt}
+}
+
+%
+%  Set abstract in smaller type and insert the copyright space.
+%  The trailing \par is necessary to get correct line spacing.
+%
+\renewenvironment{abstract}{\subsection*{Abstract}\small}{\par}
+
+%
+%  Tighter section and subsection headings (same spacing as subsubsection)
+%
+\def\section{\@startsection{section}{1}{\z@}{-3.25ex plus-1ex
+    minus-.2ex}{1.5ex plus.2ex}{\normalfont\Large\bfseries}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-3.25ex plus
+    -1ex minus-.2ex}{1.5ex plus.2ex}{\normalfont\large\bfseries}}
+
+%
+%  SIAM wants all headers in normal-sized type, with run-in
+%  (sub)subsection headers.  Bleah.  Make sections bigger;
+%  isolate subsections headers
+%
+\DeclareOption{siamsections}
+{
+\def\section{\@startsection{section}
+	{1}{0pt}{-12pt}{3pt}{\normalfont\large\bfseries}} 
+\def\subsection{\@startsection{subsection}
+	{2}{0pt}{-12pt}{3pt}{\normalfont\normalsize\bfseries}} 
+\def\subsubsection{\@startsection{subsubsection}
+	{3}{0pt}{-12pt}{-1em}{\normalfont\normalsize\bfseries}}
+\def\paragraph{\@startsection{paragraph}
+	{4}{0pt}{1ex plus .2ex}{-5pt}{\normalfont\normalsize\bfseries}} 
+\def\subparagraph{\@startsection{subparagraph}
+	{5}{0pt}{1ex plus .2ex}{-5pt}{\normalfont\normalsize\bfseries}} 
+
+\renewenvironment{abstract}{\subsection*{Abstract}\small}{\par}
+}
+
+%
+%  SIAM wants page numbers at the top of each page.
+%  Move the text down 0.25in, put page numbers .75in from top
+%
+\DeclareOption{toppagenumbers}
+{
+\topmargin -0.5in		% really 0.5in, since LaTeX adds an inch
+\headheight 0.25in		% no headers
+\headsep 0.25in			% no headers
+\def\@oddhead{\textrm{\thepage}\hfill}
+\def\@evenhead{\hfill\textrm{\thepage}}
+\def\@oddfoot{}
+\def\@evenfoot{}
+}
+
+%
+%  Pre-1999 ACM wants all headers in normalsize sans serif bold.
+%  If you want ACM's current style (headers in 14pt Times Roman Bold),
+%  you're on your own.  Ick!
+%
+\DeclareOption{acmsections}
+{
+\def\section{\@startsection{section}{1}{\z@}{-2.5ex plus -.5ex minus
+    -.2ex}{1.5ex plus .2ex}{\normalsize\sffamily\bfseries\raggedright}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{-1.5ex plus
+   -.2ex}{1.5ex plus .2ex}{\normalsize\sffamily\bfseries\raggedright}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{-1.5ex plus 
+   -.2ex}{1.5ex plus .2ex}{\normalsize\sffamily\bfseries\raggedright}}
+\def\paragraph{\@startsection{paragraph}{4}{\z@}{1.5ex plus 
+     .2ex}{-1em}{\normalsize\sffamily\bfseries}}
+\def\subparagraph{\@startsection
+     {subparagraph}{5}{\z@}{1.5ex plus
+     .2ex}{-1em}{\normalsize\sffamily\bfseries\raggedright}}
+}
+
+%
+%  ACM wants the title information in a 2 inch box at the
+%  top of the title page, even if it uses less than 2 inches.
+%  Macros stolen from acmconf.sty.
+%
+\DeclareOption{acmtitle}
+{
+\newbox\@acmtitlebox
+\def\@maketitle{\newpage
+ \null
+ \setbox\@acmtitlebox\vbox{%
+   \vskip 2em                   % Vertical space above title.
+   \begin{center}
+    {\LARGE \@title \par}       % Title set in \LARGE size.
+    \vskip 1.5em                % Vertical space after title.
+    {\large                     % each author set in \large, in a
+     \lineskip .5em             % tabular environment
+     \begin{tabular}[t]{c}\@author
+     \end{tabular}\par}
+    \vskip 1.5em                % Vertical space after author.
+   \end{center}}
+ \dimen0=\ht\@acmtitlebox
+ \advance\dimen0 by -14.5pc\relax % Increased space for title box -- KBT
+ \unvbox\@acmtitlebox
+ \ifdim\dimen0<0.0pt\relax\vskip-\dimen0\fi}
+}
+
+%
+%  Although they don't advertise it, SIAM wants no extra space above
+%  titles of SODA papers.  Usually the printers shift the first page
+%  of every paper upwards by 1/4 inch.  This option makes that hack
+%  unnecessary, but they'll probably do it anyway.  This option also
+%  automatically ignores \date. 
+%
+\DeclareOption{siamtitle}
+{
+\def\@maketitle{%
+  \newpage
+  \null
+  \vskip 2em
+  \begin{center}
+    {\LARGE \@title \par}       % Title set in \LARGE size.
+    \vskip 1.5em                % Vertical space after title.
+    {\large                     % each author set in \large, in a
+     \lineskip .5em             % tabular environment
+     \begin{tabular}[t]{c}\@author
+     \end{tabular}\par}
+    \vskip 1.5em                % Vertical space after author.
+  \end{center}}
+}
+
+%----------------------------------------------------------------------
+%  Make the bibliography a SUBsection and set it in small type.
+%  Use \bibsize to make it even smaller.
+%----------------------------------------------------------------------
+\def\bibsize#1{\def\@bibsize{#1}}
+\renewenvironment{thebibliography}[1]
+     {\subsection*{\refname
+        \@mkboth{\MakeUppercase\refname}{\MakeUppercase\refname}}
+      \@bibsize
+      \list{\@biblabel{\@arabic\c@enumiv}}%
+           {\itemsep 2pt minus 2pt   % squeeze between items if necessary
+			\parsep 0pt
+			\settowidth\labelwidth{\@biblabel{#1}}%
+            \leftmargin\labelwidth
+            \advance\leftmargin\labelsep
+            \@openbib@code
+            \usecounter{enumiv}%
+            \let\p@enumiv\@empty
+            \renewcommand\theenumiv{\@arabic\c@enumiv}}%
+      \sloppy
+      \clubpenalty4000
+      \@clubpenalty \clubpenalty
+      \widowpenalty4000%
+      \sfcode`\.\@m}
+     {\def\@noitemerr
+       {\@latex@warning{Empty `thebibliography' environment}}%
+      \endlist}
+
+\DeclareOption{smallbib}{\bibsize{\small}}
+\DeclareOption{smallerbib}{\bibsize{\footnotesize}}
+\DeclareOption{smallestbib}{\bibsize{\scriptsize}}
+\DeclareOption{tinybib}{\bibsize{\tiny}}
+\bibsize{\normalsize}
+
+\ProcessOptions
+
