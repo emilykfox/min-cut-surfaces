@@ -5,6 +5,8 @@ In this section, we show that finding the minimum-weight even subgraph in a give
 
 Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result (by reduction from a special case of \textsc{Max2Sat}) for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{strictly simple cycle} in a given homology class is {NP}-hard.  Our proof closely follows a reduction of McCormick \etal~\cite{mrr-edofm-03} from \textsc{Min2Sat} to a special case of \textsc{MaxCut}.
 
+\note{Erin: Feel like we need to cite the totally unimodular Z-homology stuff at some point here too...}
+
 \begin{theorem}
 Computing the minimum-cost even subgraph in a given homology class on a surface without boundary is equivalent to computing a minimum-weight cut in an embedded edge-weighted graph $G$ whose negative-cost edges are dual to an even subgraph in $G^*$.
 \end{theorem}
@@ -50,3 +52,4 @@ Do we want to put that back in?}
 
 Finally, we emphasize that the {NP}-hardness of this problem relies crucially on the fact that we are using homology with coefficients taken from the finite field $\Z_2$.  The corresponding problem for homology with real or integer coefficients is a minimum-cost circulation problem, and thus can be solved in polynomial time.
 Chambers, Erickson and Nayyeri~\cite{cen-hfcc-12} show that this circulation problem can be solved in near-linear time for graphs of constant genus and polynomially bounded integer edge capacities using very different techniques.
+\note{Erin: Or cite Hirnani et al unimodular stuff here?}

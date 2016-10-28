@@ -1,9 +1,13 @@
 \section{Characterizing Homology}
 \label{sec:characterizing}
 
+\note{Erin: I think we don't want to say we fix directed - we really go back and forth!  Need to add language about how we work in both in different parts, and just state it up front, because I think it's confusing to just say "assume weight function is symmetric".}
+
 Throughout the paper, we fix a directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundaries.
 When considering undirected graphs, we assume the weight function is symmetric.
 Without loss of generality, we assume that the underlying surface $\Sigma$ has at least one boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
+
+\note{Erin: Really, we only seem to use the second one here.  3.1 is cited just once, in order to use paths, but it's not clear why it deserves this much detail.  Just to describe useful tool, or tradeoff?  Fine with keeping it, but  need to justify.}
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $\eta$ can be computed in $O(\beta)$ time per edge.
 Both methods characterize the homology class of any even subgraph using a vector of~$\beta$ bits.
@@ -14,6 +18,7 @@ In the second method, the vector is based on the crossings between~$\eta$ and a 
 The vectors from the second method are more easily described and computed than the ones in the first, so we opt to use the second method in the algorithm given in Section~\ref{sec:homcover}.
 
 
+\note{Erin: Why do we always put in boundary?  I think in some later sections, we don't even assume at least one boundary, so perhaps this is a legacy from one of the papers but not all three?  Again, need to detangle/clarify.}
 
 \subsection{Crossing parity vectors}
 \label{sec:characterizing_crossings}
@@ -27,6 +32,9 @@ A \EMPH{forest-cotree decomposition} of $G$ is any partition $(\partial\! G, F, 
 \item Each component of $F$ contains a single boundary vertex.
 \item $C^*$ is a spanning tree of $G^*\setminus (\partial G)^*$, that is, a subtree of $G^*$ that contains every vertex \emph{except} the dual boundary vertices $\delta_i^*$.
 \end{itemize}
+
+\note{Erin: Maybe being obvious, but can we explicitly say that $X$ is the rest of the edges?}
+
 Euler's formula implies that there are exactly $\beta$ edges in $X$; arbitrarily label these edges $e_1, e_2, \dots, e_\beta$.  For each edge $e_i\in X$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial loop from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of $F$ twice.  Cutting along the arcs $a_1, \dots, a_\beta$ transforms~$\Sigma$ into a topological disk. See Figure \ref{fig:forest-cotree}.
 
 \begin{figure}[htb]

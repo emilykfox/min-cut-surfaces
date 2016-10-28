@@ -10,9 +10,11 @@ used as a subroutine to compute minimum-cost even subgraphs in
 using a dynamic programming procedure described later in this section.
 Again, by Lemma~\ref{lem:surface-st-cut}, our algorithm can be used to find a minimum $s,t$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
 
+\note{Erin: This next paragraph feels funny - perhaps legacy of one of the papers?  Or didn't we already discuss the homology versus homotopy earlier?  I think just needs to be revised after revisions of earlier stuff.}
+
 The algorithm of the previous section constructs and searches several relevant finite portions of the (infinite) universal cover of the input surface.  One reason to suspect better tools exist is that even in undirected graphs, finding optimal cycles in a given homology class by enumerating homotopy classes seems to create unnecessary complications.  
 Instead of the universal cover, the algorithms of this section construct and search another canonical covering space, called the \emph{$\Z_2$-homology cover}; these techniques have also been used in other work on computing shortest non-trivial directed cycles~\cite{e-sncds-11,f-sntcd-13}.
-We also use a generalization of Klein's seminal multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded graphs \cite{cce-msspe-13}.
+We also use a generalization of Klein's multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded graphs \cite{cce-msspe-13}.
 
 
 \subsection{Constructing the $\Z_2$-homology cover}
@@ -75,7 +77,7 @@ Now let $(w,h')$ be the last vertex along $(\cycle,h)$ that is also a vertex of 
 
 We emphasize that the modified cycle $\cycle'$ may intersect~$\sigma$ arbitrarily many times; however, all such intersections lift to intersections between $(\cycle', h)$ and lifts of $\sigma$ other than $(\sigma, 0)$.
 
-Our algorithm uses a generalization of Klein's seminal multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
+Our algorithm uses a generalization of Klein's  multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
 
 \begin{lemma}[Chambers \etal~\cite{cce-msspe-13}]
 \label{lem:multishort}
@@ -91,6 +93,7 @@ Let $G$ be a directed graph with non-negative edge weights, cellularly embedded 
 We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we return the empty walk and halt.
 
 Next, we construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, as described in Section~\ref{sec:homcover_cover}, as well as the set $S$ of directed shortest paths described in Section~\ref{sec:characterizing_crossings}.
+\note{Erin: Ah - here's where 3.1 appears.  Should add forward citation from there to here, so that it's clear we use it.}
 Any cycle homologous with~$\cycle$ must intersect at least one member of~$S$ as if~$\cycle$ is not null-homologous.
 We look for the shortest path in $\Gbar$ of the canonical form described in Lemma~\ref{lem:nocross}, by considering each shortest path $\sigma\in S$ in turn as follows.
 
@@ -106,7 +109,7 @@ By running this algorithm $2^\beta$ times, we can compute the shortest directed 
 Given a directed graph $G$ with $n$ vertices with non-negative edge weights, cellularly embedded on a surface with genus~$g$, we can compute the shortest directed cycle in $G$ that is non-separating in $\Sigma$ in $O(64^g g^2 n\log n)$ time.
 \end{corollary}
 
-Note however, that a recent algorithm of Erickson~\cite{e-sncds-11} improves this running time further to~$O(g^2 n \log n)$ by using similar similar techniques in a different covering space known as the cyclic double cover.
+Note however, that a more recent algorithm of Erickson~\cite{e-sncds-11} improves this running time further to~$O(g^2 n \log n)$ by using similar similar techniques in a different covering space known as the cyclic double cover.
 Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shortest \emph{non-contractible} cycle in an embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time.  Our approach does not lead to a faster algorithm for this problem;  contractibility is inherently  a property of \emph{homotopy}, not homology.
 
 % --------------------------------------------------------------------------------
@@ -115,6 +118,7 @@ Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shorte
 
 We now apply our algorithm for computing $\Z_2$-minimal cycles to the problem of computing $\Z_2$-minimal even subgraphs in \emph{undirected} surface embedded graphs.
 \note{TODO(kylejfox): Emphasize here or in the intro that we cannot use these techniques to do directed minimum cut.}
+\note{Erin: Another place where we need to clarify that we're not always in directed case.  Emphasizing my vote to rewrite that assumption out of the prelims now...}
 Theorem~\ref{thm:min-cycle} immediately implies that we can compute a minimum-weight \emph{cycle} in every $\Z_2$-homology class in $O(8^\beta \beta^2\, n\log n)$ time.  However, the minimum weight \emph{even subgraph} in a given homology class may not be (the carrier of) a $\Z_2$-minimal cycle.  In particular, if a $\Z_2$-minimal cycle $\gamma$ traverses any edge more than once, then every minimum-weight even subgraph with signature $[\gamma]$ \emph{must} be disconnected.
 
 However, any \emph{connected} $\Z_2$-minimal even subgraph is the carrier of a $\Z_2$-minimal cycle, and the components of any $\Z_2$-minimal even subgraph are themselves $\Z_2$-minimal even subgraphs.  Thus, we can assemble a $\Z_2$-minimal even subgraph in any homology class from a subset of the $\Z_2$-minimal cycles we have already computed.  The following lemma puts an upper bound on the number of cycles we need.

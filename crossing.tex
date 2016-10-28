@@ -14,7 +14,7 @@ By Lemma~\ref{lem:surface-st-cut}, our algorithm can be used to find a minimum $
 
 Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a network of shortest paths as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each shortest path in the decomposition network $O(g+b)$ times.  We quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles, which we easily enumerate.  Within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern using an improvement by Italiano \etal~\cite{insw-iamcmf-11} to an algorithm of Kutz \cite{k-csnco-06}.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
-\note{TODO(kylejfox): Assume uniqueness of shortest paths in the prelims.}
+
 
 \subsection{Crossing bound}
 
@@ -45,6 +45,8 @@ We emphasize that different cycle decompositions of the same even subgraph may l
 
 We may now describe our algorithm.
 We can cut our combinatorial surface $\Sigma\setminus P$ into a $2\beta$-gon, or \emph{abstract polygonal schema}, by cutting along each path in $P$ and replacing each copy of each path in the cut surface with a single edge.  Thus, each path in $P$ corresponds to two edges of this polygon. The vertices correspond to copies of the common basepoint of $P$ if $\Sigma$ has no boundary, or to boundary paths between endpoints of $P$ otherwise.
+
+\note{Erin: Again, we say everything has boundary earlier.  Need to clarify.}
 
 We dualize the abstract polygonal schema by replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Any collection of non-crossing, non-self-crossing cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08}, where we draw an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of loops.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, a weighted triangulation corresponds to a collection of non-crossing, non-self-crossing cycles as long as corresponding vertices are incident to edges of equal total weight.  Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.
 
