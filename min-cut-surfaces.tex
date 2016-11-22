@@ -130,13 +130,13 @@ Portions of this work were presented in preliminary form, by different subsets o
 Let $G$ be an edge-weighted directed graph with $n$ vertices embedded on an orientable surface of genus $g$.
 We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global minimum cuts of~$G$.
 \note{TODO(kylejfox): Rewrite abstract.}
+\end{abstract}
 
 
 \bigskip
-\noindent
+\begin{TODO}\noindent
 Jeff to do for next week:
-\begin{itemize}
-\item Merge into one .tex file
+\begin{itemize}\itemsep0pt
 \item Rewrite story
 \item Normalize notation/terminology/assumptions ???
 \item Assume unique shortest paths (enforce via isolation)
@@ -145,7 +145,7 @@ Jeff to do for next week:
 \item Check missing citations
 \item Cite new work since conference papers
 \end{itemize}
-\end{abstract}
+\end{TODO}
 
 \noindent
 
@@ -169,9 +169,24 @@ This paper describes the first algorithms to compute minimum cuts in surface-emb
 Two of these algorithms are designed to solve the minimum $(s,t)$-cut problem; the remaining algorithm solves the global minimum cut problem.
 Before describing our results in detail, we first review several related results; technical terms are defined in Section \ref{sec:prelims}.
 
-\fakeparagraph{Planar minimum cuts.}
-\note{TODO(Kyle): Make sure we do not use ``minimum cut'' when we specifically mean ``minimum $(s,t)$-cut''.}
-Recall that for any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subset of the edges of $G$ that intersects every path from $s$ to $t$.  A \emph{minimum} $(s,t)$-cut is an $(s,t)$-cut of minimum size, or minimum total weight if the edges of $G$ are weighted.
+\begin{TODO}
+\noindent
+Things to double-check throughout the paper:
+\begin{itemize}\itemsep0pt
+\item
+Don’t write “minimum cut” when we mean “minimum $(s,t)$-cut”.
+\item
+Edges have \emph{weights}, not capacities or costs.
+\item
+Notation: $X$ is a cut; $C$ is a co-tree; $L$ is the set of leftover edges in a forest-coforest decomposition.  $w(e)$ is weight.
+\end{itemize}
+\end{TODO}
+
+\subsection{Past Results}
+
+\subsubsection*{Minimum Cuts in Planar Graphs}
+
+For any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subset of the edges of $G$ that intersects every path from $s$ to $t$.  A \emph{minimum} $(s,t)$-cut is an $(s,t)$-cut with the smallest number of edges, or with minimum total weight if the edges of $G$ are weighted.
 
 Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum cut by cutting the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
 
@@ -188,7 +203,8 @@ A \emph{minimum} cut is a cut of minimum size, or minimum total weight if the ed
 To differentiate between minimum $(s,t)$-cuts and minimum cuts, we sometimes refer to the latter as global minimum cuts.
 Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity. Their algorithm runs in~$O(n \log^2 n)$ time. Their algorithm was later improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.
 
-\fakeparagraph{Generalizations of planar graphs.}
+\subsubsection*{Generalizations of Planar Graphs}
+
 Surprisingly little is known about the complexity of computing maximum flows or minimum cuts in generalizations of planar graphs.  In particular, we know of no algorithm to compute minimum cuts in non-planar graphs that does not first compute a maximum flow.
 
 By combining a technique of Miller and Naor \cite{mn-fpgms-95} with the planar directed flow algorithm of Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}, one can compute maximum (single-commodity) flows in a planar graph with $k$ sources and sinks in $O(k^2 n\log n)$ time.  A recent algorithm of Hochstein and Weihe \cite{hw-mstfkc-07} computes a maximum flow in a planar graph with $k$ additional edges in $O(k^3n\log n)$ time, using a clever simulation of Goldberg and Tarjan's push-relabel algorithm~\cite{gt-namfp-88}.
@@ -198,34 +214,49 @@ Their algorithm computes minimum-cost flows in graphs with small balanced separa
 Their algorithm can be adapted to compute maximum flows (and therefore minimum cuts) in any graph of constant genus in time $O(n^{1.595}\log C)$, where $C$ is the sum of integer edge weights.
 However, this algorithm is slower than more recent and more general algorithms \cite{gr-bfdb-98}.
 Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} describe maximum flow algorithms that are tailored specifically for graphs of constant genus.
-Given a graph embedded on a surface of genus~$g$, their algorithms can compute a maximum flow in time $O(g^8 n \log^2 n \log^2 C)$ where $C$ is the sum of integer edge weights and time $g^{O(g)}n^{3/2}$ when edge weights are arbitrary positive real numbers.  Their key insight is that it suffices to optimize the relative \emph{real} homology class of the flow, rather than directly optimizing the flow itself.
+Given a graph embedded on a surface of genus~$g$, their algorithms compute a maximum flow in  $O(g^8 n \log^2 n \log^2 C)$ time where $C$ is the sum of integer edge weights and in $g^{O(g)}n^{3/2}$ arithmetic operations when edge weights are arbitrary positive real numbers.  Their key insight is that it suffices to optimize the \emph{homology class} of the flow, rather than directly optimizing the flow itself.
 
 Euler's formula implies that a simple $n$-vertex graph embedded on a surface of genus $O(n)$ has at most $O(n)$ edges.
 The fastest known combinatorial maximum-flow algorithm for sparse graphs, due to Orlin~\cite{o-mfotl-13}, runs in time $O(n^2 / \log n)$.
-The fastest algorithm known for small integer capacities, due to Goldberg and Rao \cite{gr-bfdb-98}, runs in time $O(n^{3/2}\log n\log U)$, where $U$ is an upper bound on the integer edge capacities.
-\note{Kyle: We use weight almost everywhere except for a few times when we use capacity (or cost! —Jeff).
-I think we should stick with weight unless we're talking about flows, or try harder to use only one or the other.}
+The fastest algorithm known for small integer capacities, due to Goldberg and Rao \cite{gr-bfdb-98}, runs in time $O(n^{3/2}\log n\log U)$, where $U$ is an upper bound on the integer edge weights.
+
 Finally, the fastest known algorithm for computing global minimum cuts for sparse graphs, due to Karger~\cite{k-mcnlt-00}, runs in~$O(n \log^3 n)$ time.
 
 For further background on maximum flows, minimum cuts, and related problems, we refer the reader to monographs by Ahuja \etal\ \cite{amo-nftaa-93} and Schrijver \cite{s-cape-03}.
 
-\fakeparagraph{Short interesting cycles.}
+\subsubsection*{Short Interesting Cycles}
+
 Many different problems, such as finding approximate traveling salesman tours  \cite{dhm-aacd-07} and Steiner trees~\cite{bdt-ptass-08} in surface embedded graphs, embedding high-genus graphs into the plane with low distortion \cite{is-pebgg-07} or with few crossings \cite{kr-ccnlt-07}, and feature detection and simplification in meshes \cite{gw-tnr-01,dlsc-cgaht-08}, require algorithms to find short but topologically nontrivial cycles.  These problems are closely connected to that of finding cuts on surface-embedded graphs, since any minimum cut will form a small set of cycles separating the vertices.
 
-Thomassen described the first efficient algorithm to find the shortest non-contractible or non-separating cycle \cite{t-egnsn-90, mt-gs-01}.  After many intermediate improvements \cite{c-mdpg-06, cm-fsnsn-07, eh-ocsd-04, k-csnco-06,cc-msspg-07,cce-msspe-13,insw-iamcmf-11}, Fox~\cite{f-sntcd-13} described the fastest algorithm currently known for this problem, which runs in $2^{O(g)} n \log \log n$ time.
+Thomassen described the first efficient algorithm to find the shortest non-contractible or non-separating cycle \cite{t-egnsn-90, mt-gs-01}.  After many intermediate improvements \cite{c-mdpg-06, cm-fsnsn-07, eh-ocsd-04, k-csnco-06,cc-msspg-07,insw-iamcmf-11}, the fastest such algorithms for various values of $G$ and $n$ run in $O(n^2\log n)$ time \cite{eh-ocsd-04}, $O(g^2n\log n)$ time \cite{cce-msspe-13}, and $2^{O(g)} n \log \log n$ time~\cite{f-sntcd-13}.
+
 Splitting cycles are non-contractible and separating; finding the shortest such cycle is {NP}-hard, although there is an $O(n \log \log n)$-time algorithm for graphs of any fixed genus \cite{ccelw-scsih-06, ccelw-scsih-08,insw-iamcmf-11}.  Colin de Verdi\`ere and Erickson~\cite{ce-tspcs-06} prove that the shortest path or cycle in a given homotopy class can be computed in polynomial time, improving earlier results of Colin de Verdi\`ere and Lazarus \cite{c-rcds-03, cl-oslos-05, cl-opdsh-07}.  Erickson and Whittlesey describe a greedy algorithm to find a minimum-length set of cycles that generate the first homology group of a surface \cite{ew-gohhg-05}.
-Finally, Cabello, Colin de Verdi\`ere, and Lazarus~\cite{ccl-fsncd-10} described the first efficient algorithms to find the shortest \emph{directed} non-contractible or non-separating cycle in a directed surface embedded graph.
-Erickson~\cite{e-sncds-11} and Fox~\cite{f-sntcd-13} describe improvements to their algorithm that find the shortest non-separating cycle in~$O(g^2 n \log n)$ time and the shortest non-contractible cycle in~$O(g^3 n \log n)$ time respectively.
+
+Finally, the first algorithms to find optimal \emph{directed} cycles in \emph{directed} surface graphs were proposed by Cabello, Colin de Verdi\`ere, and Lazarus~\cite{ccl-fsncd-10}.  Erickson~\cite{e-sncds-11} and Fox~\cite{f-sntcd-13} describe improvements to their algorithm that find the shortest non-separating cycle in~$O(g^2 n \log n)$ time and the shortest non-contractible cycle in~$O(g^3 n \log n)$ time respectively.
 
 Several practical heuristics have been developed for finding short cycles that work well in practice, although they have no theoretical guarantees.  For example, Guskov and Wood \cite{gw-tnr-01} describe an algorithm to find and remove intersecting pairs of short non-contractible cycles (`topological noise') from surface meshes.  Zomorodian and Carlsson \cite{zc-lh-07} define the \emph{localized} homology of an arbitrary topological case with respect to a subspace covering; they also describe algorithms to compute localized homology generators of simplicial complexes using persistent homology; however, they do not describe how to compute covers that would lead to cycles of minimum size.  Chen and Friedman \cite{cf-qhc2-07, cf-qhc-08} describe a polynomial-time algorithm to compute a cycle of minimum \emph{radius} in a given homology class, in an arbitrary edge-weighted simplicial complex; however, the length of this cycle could be arbitrarily longer than optimal.
 
-Dey \etal~\cite{dls-chtl-07, dlsc-cgaht-08} describe algorithms to find short \emph{handle} and \emph{tunnel} cycles in surface meshes embedded in $\Real^3$.  Any embedded surface subdivides $\Real^3$ into an inner handlebody $I$ and an outer handlebody $O$; handle cycles are null-homologous in $I$, while tunnel cycles are null-homologous in~$O$.  The algorithm of Dey \etal\ finds $g$ short handle cycles and $g$ short tunnel cycles that collectively generate the first homology group of the input surface.  Their algorithm uses several heuristics to reduce the length of the output cycles, in part because no algorithm is known to find the shortest cycle in a given homology class.
+Dey \etal~\cite{dls-chtl-07, dlsc-cgaht-08} describe algorithms to find short \emph{handle} and \emph{tunnel} cycles in surface meshes embedded in $\Real^3$.  Any embedded surface subdivides $\Real^3$ into an inner handlebody $I$ and an outer handlebody $O$; handle cycles are null-homologous in $I$, while tunnel cycles are null-homologous in~$O$.  The algorithm of Dey \etal\ finds $g$ short handle cycles and $g$ short tunnel cycles that collectively generate the first homology group of the input surface.  Their algorithm uses several heuristics to reduce the length of the output cycles, in part because no fast algorithm was yet known to find the shortest cycle in a given homology class.
 
-\subsection{New results and organization}
+\subsection{New Results and Organization}
 
-\textcolor{BrickRed}{\textsf{\textbf{High-level overview:}
-Our new results are based on a simple topological characterization.  By definition, a set $C$ of edges defines an $(s,t)$-cut in a graph $G$ if and only if deleting those edges leaves a disconnected graph, with $s$ and $t$ in different components.  If $G$ is embedded on a surface, than deleting the corresponding edges $C^*$ in the dual graph $G^*$ 
-}}
+\note{New story starts here.} \color{PineGreen} Our new algorithms are based on generalization of Itai and Shiloach \cite{is-mfpn-79}’s characterization of minimum cuts in planar graphs.  By definition, a set $C$ of edges defines an $(s,t)$-cut in a graph $G$ if and only if deleting those edges leaves a disconnected graph, with $s$ and $t$ in different components.  If $G$ is embedded on a surface, than the corresponding edges $C^*$ in the dual graph $G^*$ separate the faces of $G^*$ into two disconnected subcomplexes, one containing the dual face $s^*$ and the other containing the dual face $t^*$.  
+
+In Section \ref{SS:duality}, we formalize this characterization in terms of \emph{homology}, a standard equivalence relation from algebraic topology; briefly, two subgraphs of a surface graph are \emph{homologous}, or in the same \emph{homology class}, if and only if their symmetric difference is the boundary of a subset of faces.  In light of this characterization, finding minimum $(s,t)$-cuts in surface graphs becomes a special case of finding the minimum-weight subgraph of a surface graph in a given homology class.  Indeed, both of our algorithms for finding minimum $(s,t)$-cuts solve this more general problem, which is sometimes called \emph{homology localization}.
+
+Unlike in planar graphs, where minimum cuts are always dual to a simple cycle, minimum cuts in surface graphs may be the union of several disjoint cycles.  More generally, the minimum-weight subgraph in any homology class may be disconnected, even when the homology class is specified by a simple cycle; see Figure \ref{F:homology2}.  Dealing with disconnected “cycles” is a significant complication in our algorithms.
+
+In Section \ref{S:tree-cotree}, we describe two techniques for preprocessing graphs on surfaces with boundary so that we can quickly compute the homology class of any subgraph.  Both techniques are natural generalizations of a similar algorithm of Eppstein \cite{e-dgteg-03} for surfaces without boundary.
+
+Our first algorithm for finding minimum $(s,t)$-cuts is described in Section~\ref{sec:crossing}.  \note{Universal cover.  Crossing sequences.  Ultimately reduces to minimum cut in planar graphs.  For undirected graphs, improved to $O(n\log\log n)$ time by Italiano.}
+
+Section~\ref{S:homcover}, we describe our second algorithm for finding minimum $(s,t)$-cuts, which jas  better (but still exponential) dependence on $g$ but slightly worse dependence on $n$.  \note{Homology cover.  Crossing \emph{vectors}.  Ultimately reduces to multiple-source shortest paths \cite{cce-msspe-13}.}
+
+In Section~\ref{S:homcover}, we prove that the homology localization problem is NP-hard, which implies that the exponential dependence on $g$ in our algorithms is unavoidable.
+
+
+\color{Black}
+\textbf{\textsf{Old text, which will eventually be absorbed.}}
 
 The input to our first algorithm is an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.  Given vertices $s$ and $t$, our algorithm computes a minimum-weight $(s,t)$-cut in $g^{O(g)}n\log \log n$ time.
 For any fixed positive genus, this result improves the best previous time bound of Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} by a factor of $\min\set{ \sqrt{n} / \log \log n, \log^2 n / \log \log n \log^2 C}$ (compared to minimum cut algorithms for general sparse graphs, the improvement is $\min\set{n / ( \log n \log \log n),\allowbreak
@@ -234,7 +265,7 @@ The bottleneck for our algorithm is the time it takes to compute a minimum weigh
 For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
 
 Our minimum-cut algorithm is a special case of a more general algorithm to compute a minimum-cost \emph{subgraph} in a given $\Z_2$-homology class.  Even when the homology class is specified by a simple cycle, the output representative may be the union of several cycles; see Figure \ref{F:homology2}.  For surfaces with genus $g$ and $b$ boundary components, our algorithm runs in $(g+b)^{O(g+b)}n\log\log n$ time.
-We give this algorithm in Section~\ref{sec:crossing}.
+We give this algorithm in 
 In Section~\ref{sec:hardness}, we show that this more general problem is strongly NP-hard, even if the input homology class is specified by a simple cycle; thus, the exponential dependence on the topology of the surface is unavoidable unless {P}={NP}.  We are not aware of any previous algorithmic results for our more general problem.
 
 The input to our second algorithm is a \emph{directed} edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.
@@ -275,6 +306,7 @@ We begin by recalling several useful definitions related to surface-embedded gra
 \note{Erin and Kyle: Assume uniqueness of shortest paths somewhere in the prelims!  Cite appropriate stuff.}
 
 \subsection{Surfaces and curves}
+\label{SS:surfaces}
 
 A \EMPH{surface} (more formally, a \emph{2-manifold with boundary}) is a compact Hausdorff space in which every point has an open neighborhood homeomorphic to either the plane $\Real^2$ or a closed halfplane $\set{(x,y)\in \Real^2\mid x\ge 0}$.  The points with halfplane neighborhoods make up the \EMPH{boundary} of the surface; every component of the boundary is homeomorphic to a circle.
 A surface is \EMPH{non-orientable} if it contains a subset homeomorphic to
@@ -311,6 +343,7 @@ Orientable surfaces with~$b$ boundary components are differentiated by their \EM
 
 
 \subsection{Graph embeddings}
+\label{SS:embeddings}
 
 An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
@@ -367,6 +400,7 @@ The dual of any dart with face~$f$ to its left and~$g$ to its right is~$f^* \arc
 Note that the duality of darts is \emph{not} an involution the way we have specified the orientation of the dual dart here.
 
 \subsection{Homotopy and homology}
+\label{SS:homology}
 
 Two paths~$p$ and~$q$ in $\Sigma$ are \EMPH{homotopic} if one can be
 continuously deformed into the other without changing their endpoints.
@@ -410,6 +444,8 @@ Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cy
 \end{figure}
 
 \subsection{Cut-even subgraph duality}
+\label{SS:duality}
+
 \note{Kyle: The lemma below is key to the algorithms working, but there doesn't appear to be enough there to make them their own section. Where should we put them?}
 
 \note{Erin: I don't like it in the prelims, since it is not previous work.  One thought: perhaps the beginning of section 4, as a new subsection?  Then we can cite it in 4.2 as why this solves the min cut problem.}
@@ -432,6 +468,7 @@ Conversely, let $C^*$ be an arbitrary even subgraph of $G^*$ homologous to $\par
 
 
 \subsection{Covering spaces and cutting}
+\label{SS:covering}
 
 A continuous map~$\pi : \Sigma' \to \Sigma$ between two surfaces is called a
 \EMPH{covering map} if each point~$x \in \Sigma$ lies in an open
@@ -466,7 +503,7 @@ Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \sn
 
 % ===============================================================================================
 \section{Characterizing Homology}
-\label{sec:characterizing}
+\label{S:tree-cotree}
 
 \note{Erin: I think we don't want to say we fix directed - we really go back and forth!  Need to add language about how we work in both in different parts, and just state it up front, because I think it's confusing to just say "assume weight function is symmetric".}
 
@@ -690,7 +727,7 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 
 % ===============================================================================================
 \section{The $\Z_2$-Homology Cover}
-\label{sec:homcover}
+\label{S:homcover}
 
 Now, let~$G$ be directed, and let $h$
 be a homology signature.  In this section, we describe an
