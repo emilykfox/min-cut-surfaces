@@ -118,6 +118,7 @@ Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shorte
 
 We now apply our algorithm for computing $\Z_2$-minimal cycles to the problem of computing $\Z_2$-minimal even subgraphs in \emph{undirected} surface embedded graphs.
 \note{TODO(kylejfox): Emphasize here or in the intro that we cannot use these techniques to do directed minimum cut.}
+\note{Jeff: WHY NOT?}
 \note{Erin: Another place where we need to clarify that we're not always in directed case.  Emphasizing my vote to rewrite that assumption out of the prelims now...}
 Theorem~\ref{thm:min-cycle} immediately implies that we can compute a minimum-weight \emph{cycle} in every $\Z_2$-homology class in $O(8^\beta \beta^2\, n\log n)$ time.  However, the minimum weight \emph{even subgraph} in a given homology class may not be (the carrier of) a $\Z_2$-minimal cycle.  In particular, if a $\Z_2$-minimal cycle $\gamma$ traverses any edge more than once, then every minimum-weight even subgraph with signature $[\gamma]$ \emph{must} be disconnected.
 
