@@ -1,138 +1,50 @@
-% ============================-*- LaTeX -*-=============================
+% ======================-*- LaTeX -*-=======================
 %
 %   jeffe.sty -- macros I use everywhere
 %
 %   Jeff Erickson (jeffe@cs.uiuc.edu)
-%   Last modified 22 May 2010
+%   Last modified 10 April 2015
 %   This is free; caveat emptor!
-%
-%   Requirements that may not be part of every TeX distribution: 
-%   (1) The standard AMS math packages amsmath and amssymb.  These are
-%       absolutely vital to anyone who typesets mathematics of any
-%       kind.  If you don't have them, get them NOW!!
-%   (2) The stmaryrd package.  Cosmetic only.
-%   (3) Knuth's manual font `manfnt'.  Cosmetic only.
-%
-% ======================================================================
+% ========================================================
 \RequirePackage{latexsym,amsmath,amssymb}
 \RequirePackage[dvipsnames,usenames]{color}
-\RequirePackage[colorlinks=true,urlcolor=Blue,citecolor=Green,linkcolor=BrickRed]{hyperref}
-\RequirePackage{stmaryrd}		% comment out if unavailable
+%\PassOptionsToPackage{hyphens}{url}
+\RequirePackage{hyperref}
+\hypersetup{colorlinks=true, urlcolor=Blue, citecolor=Green, linkcolor=BrickRed, breaklinks, unicode}
+\RequirePackage{stmaryrd}
+%\RequirePackage[l2tabu, orthodox]{nag}
+%\RequirePackage[mathlines, pagewise]{lineno}
+\usepackage[english=usenglishmax]{hyphsubst}
 
-\urlstyle{same}
 
-\hyphenation{co-or-din-ate co-or-din-ates half-plane half-space stereo-iso-mers
-stereo-iso-mer Round-table homol-ogous homol-ogy}
+% Fix incompaitibility between {nag} and {babel}
+% original is \renewcommand\thenag@c{\roman{nag@c}}
+%\renewcommand\thenag@c{\romannumeral\c@nag@c}
+
+\urlstyle{same}		% dammit
+
+\hyphenation{co-or-din-ate co-or-din-ates half-plane half-space stereo-iso-mers stereo-iso-mer Round-table homol-ogous homol-ogy poly-hedron poly-hedra homeo-morphic homeo-morph-ism sub-sequence super-sequence}
 
 \pdfstringdefDisableCommands{\let\boldmath\relax} % allow \boldmath in section titles
 
 % ----------------------------------------------------------------------
-%  Common abbreviations and words with accents
+%  Common Latin abbreviations, AT MOST one of which is actually kosher
 % ----------------------------------------------------------------------
 
-% ---- LATIN ----
-\def\etal{\emph{et~al.}}			% and others
+\def\etal{\emph{et~al.}}		% and others
 %\def\ie{\emph{i.e.}}			% that is
 \def\ie{\textcolor{red}{that is}}
 %\def\eg{\emph{e.g.}}			% for example
 \def\eg{\textcolor{red}{for example}}
-\def\vitae{vit\ae{}}
-\def\apriori{\emph{a~priori}}
-\def\aposteriori{\emph{a~posteriori}}
-
-% ---- FRENCH ----
-\def\naive{na\"{\i}ve}
-\def\Naive{Na\"{\i}ve}
-\def\naively{na\"{\i}vely}	% Okay, I know, this isn't French.
-\def\Naively{Na\"{\i}vely}
-\def\cafe{caf\'e}
-
-% ---- GERMAN ----
-\def\fur{f\"ur}
-\def\Universitat{Universit\"at}
-\def\Saarbrucken{Saar\-br\"ucken}	% Bypass TeX hyphenation
-\def\Zurich{Z\"urich}
-
-% ---- PORTUGESE (Hi Jorge!) ----
-\def\Computacao{Computa\c{c}\~ao}
-
-% ---- PROPER NAMES (because I'm lazy) ----
-\def\Benes{Bene\v{s}}		% ...network
-\def\Bezier{B\'ezier}		% ...spline/curve/surface
-\def\Bjorner{Bj\"orner}
-\def\Bochis{Bochi\c{s}}		% Daciana
-\def\Boruvka{Bor\.uvka}		% ...'s MST algorithm
-\def\Bragger{Br\"agger}
-\def\Bronnimann{Br\"onnimann}   \def\Herve{Herv\'e}
-\def\Bruckner{Br\"uckner}
-\def\Caratheodory{Carath\'eodory}	% Constantin
-\def\Chvatal{Chv\'atal}         \def\Vasek{Va\v{s}ek}
-				\def\Joao{Jo\~ao}	% Compa
-\def\Cortes{Cort\'es}		% Carmen
-\def\Dujmovic{Dujmovi\'c}	% Vida
-				\def\Fredo{Fr\'edo}	% Durand
-\def\Erdos{Erd\H{o}s}           \def\Pal{P\'al}
-\def\Frechet{Fr\'echet}
-\def\Furedi{F\"uredi}           \def\Zoltan{Zolt\'an}
-\def\Grobner{Gr\"obner}		% ... basis
-\def\Grunbaum{Gr\"unbaum}	% Branko
-\def\Hanoi{Hano\"\i}		% Tower of...
-\def\Jarnik{Jarn\a'{\i}k}	% ...'s (`Prim's') MST algorithm
-\def\Komlos{Koml\'os}
-\def\Kovari{K\"ov\'ari}
-\def\Lovasz{Lov\'asz}           \def\Laszlo{L\'aszl\'o}
-\def\Matousek{Matou\v{s}ek}     \def\Jiri{Ji\v{r}\'\i}
-\def\Mnev{Mn\"ev}
-\def\Mobius{M\"obius}		% ... strip/transformation/function
-\def\Mucke{M\"ucke}		% Ernst
-\def\ODunliang{\'O'D\'unliang}
-\def\Oleinik{Ole\u{\i}nik}
-                                \def\Janos{J\'anos}     % Pach
-\def\Palasti{Pal\'asti}
-				\def\Belen{Bel\'en}	% Palop
-\def\Petrovskii{Petrovski\u{\i}}
-\def\Pinar{P\i nar}		% Ali
-\def\Plucker{Pl\"ucker}		% ... coordinates
-\def\Poincare{Poincar\'e}	% ... duality/halfplane
-                                \def\Gunter{G\"unter}   % Rote, Ziegler
-\def\Sacristan{Sacrist\'an}	% Vera
-\def\Saskin{\v{S}a\v{s}kin}
-\def\Schomer{Sch\"omer}
-\def\Schonhardt{Sch\"onhardt}	% ... polyhedron
-\def\Sos{S\'os}
-\def\Stackel{St\"ackel}		% Paul
-\def\Szekely{Sz\'ekely}
-\def\Szemeredi{Szemer\'edi}
-\def\Toth{T\'{o}th}		% Geza
-\def\Turan{Tur\'an}
-\def\Ungor{\"Ung\"or}		% Alper
-\def\Voronoi{Vorono\"i}		% ... diagram [for francophile pedants only]
-
-% Other
-\def\Cplusplus{C\raisebox{0.5ex}{\tiny\textbf{++}}}
 
 % ----------------------------------------------------------------------
 %  Simple math stuff
 % ----------------------------------------------------------------------
 
 % ---- SYMBOLS ----
-\let\e\varepsilon               % a ``real'' epsilon
+\let\e\varepsilon		% a “real” epsilon — better yet, just use Unicode ε.
 
-%\def\Integer{\mathsf{Z\hspace{-0.4em}Z}}
-%\def\Natural{\mathrm{I\!N}}
-%\def\Real{\mathrm{I\!R}}
-%\def\Proj{\mathrm{I\!P}}		% projective space
-%\def\Hyper{\mathrm{I\!H}}	% hyperbolic space
-%
-%%
-%%  These two look okay in Computer Modern 11pt, or Concrete Roman
-%%  12pt, but they need serious work in other sizes.  I need to figure
-%%  out how to draw a vertical bar, or better yet a shallow arc, inside
-%%  the bowls.  Or maybe I need to learn METAFONT.  Or maybe I should just
-%%  hold my nose and use \mathbb.
-%%
-%\def\Complex{\mathrm{\,\raise 0.33ex\hbox{\scriptsize\bf(}\!\!\!C}}
-%\def\Rational{\mathrm{\,\raise 0.33ex\hbox{\scriptsize\bf(}\!\!\!Q}}
+\def\range#1#2{#1\,..\,#2}
 
 %
 %  I give up.  These are in the wrong font, but my kludged versions 
@@ -162,9 +74,10 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 \def\Aut{\operatorname{Aut}}		% Automorphism group
 \def\card{\operatorname{card}}	% cardinality, deprecated for \abs
 \def\conv{\operatorname{conv}}	
-\def\E{\operatorname{E}}			% Expectation: $\E[X]$ (like \Pr)
+\def\diam{\operatorname{diam}}	
+\def\E{\operatorname{E}}		% Expectation: $\E[X]$ (like \Pr)
 \def\EE{\operatornamewithlimits{E}}
-\def\Hom{\operatorname{Hom}}		% Homomorphism group
+\def\Hom{\operatorname{Hom}}	% Homomorphism group
 \def\id{\operatorname{id}}		% identity
 \def\im{\operatorname{im}}		% image
 \def\lcm{\operatorname{lcm}}
@@ -172,24 +85,27 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 \def\poly{\operatorname{poly}}
 \def\polylog{\operatorname{polylog}}
 \def\rank{\operatorname{rank}}
-\def\rel{\operatorname{rel\,}}	% relative (interior, boundary, etc.)
+\def\rel{\operatorname{rel\,}}		% relative (interior, boundary, etc.)
 \def\sgn{\operatorname{sgn}}
 \def\vol{\operatorname{vol}}		% volume
 
 \def\fp#1{^{\underline{#1}}}		% falling powers: $n\fp{d}$
 \def\rp#1{^{\overline{#1}}}		% rising powers:  $n\rp{d}$
 
-
 % --- Darts and fences ---
+
 % less nice replacements for stmaryrd characters
 \@ifundefined{shortrightarrow}{\let\shortrightarrow\rightarrow}{}
 \@ifundefined{shortleftarrow}{\let\shortleftarrow\leftarrow}{}
 \@ifundefined{shortuparrow}{\let\shortuparrow\uparrow}{}
 \@ifundefined{shortdownarrow}{\let\shortdownarrow\downarrow}{}
 
+\def\shortleftrightarrow{{\rlap{$\mathord\shortleftarrow$}\,\mathord\shortrightarrow}}
 \def\arcto{\mathord\shortrightarrow}
+\def\arcfrom{\mathord\shortleftarrow}
 \def\arc#1#2{#1\arcto#2}
 \def\cra#1#2{#1\mathord\shortleftarrow#2}
+\def\biarc#1#2{#1\mathord\shortleftrightarrow#2}
 \def\fence#1#2{#1\mathord\shortuparrow#2}
 \def\ecnef#1#2{#1\mathord\shortdownarrow#2}
 
@@ -207,9 +123,9 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 
 % ---- RELATORS ----
 \def\deq{\stackrel{\scriptscriptstyle\triangle}{=}}	% Use := instead.
-\def\into{\DOTSB\hookrightarrow}		% = one-to-one
-\def\onto{\DOTSB\twoheadrightarrow}
-\def\inonto{\DOTSB\lhook\joinrel\twoheadrightarrow}
+\def\into{\DOTSB\hookrightarrow}			% injection = one-to-one
+\def\onto{\DOTSB\twoheadrightarrow}		% surjection
+\def\unto{\DOTSB\lhook\joinrel\twoheadrightarrow} % bijection (“Do unto others...”)
 \def\from{\leftarrow}
 \def\tofrom{\leftrightarrow}
 \def\mapsfrom{\mathrel{\reflectbox{$\mapsto$}}}
@@ -220,10 +136,10 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 \def\ceil#1{\lceil #1 \rceil}
 \def\seq#1{\langle #1 \rangle}
 \def\set#1{\{ #1 \}}
-\def\abs#1{\mathopen| #1 \mathclose|}			% use instead of $|x|$ 
-\def\norm#1{\mathopen\| #1 \mathclose\|}		% use instead of $\|x\|$ 
-\def\indic#1{\big[#1\big]}		% indicator variable; Iverson notation
-								% e.g., Kronecker delta = [x=0]
+\def\abs#1{\mathopen| #1 \mathclose|}		% use instead of $|x|$ 
+\def\norm#1{\mathopen\| #1 \mathclose\|}	% use instead of $\|x\|$ 
+\def\indic#1{\big[#1\big]}			% indicator variable; Iverson notation
+							% e.g., Kronecker delta = [x=0]
 
 % --- Self-scaling delmiter pairs ---
 \def\Floor#1{\left\lfloor #1 \right\rfloor}
@@ -252,7 +168,7 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 			{{\fbox{\ensuremath{\scriptstyle #1}}}}
 			{{\fbox{\ensuremath{\scriptscriptstyle #1}}}}}
 
-% ---- ``ACCENTS'' ----
+% ---- “ACCENTS” ----
 %   NB: Commands equivalent to \lrarrowfill and \overlrarrow are
 %       already defined in amstex!
 \def\lrarrowfill{$\m@th\mathord\leftarrow\mkern-6mu%
@@ -277,7 +193,7 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 %  the abstract!
 % ----------------------------------------------------------------------
 \newenvironment{bigabstract}%
-{\medskip\noindent\centerline{\textbf{\large\abstractname}}\begin{quotation}}%
+{\begin{center}\large\textbf{\abstractname}\end{center}\begin{quotation}}%
 {\end{quotation}}
 
 % ----------------------------------------------------------------------
@@ -297,13 +213,14 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
    \fi}
 \dbltextfloatsep 18pt plus 2pt minus 4pt	% was 20pt plus 2pt minus 4pt
 \textfloatsep 18pt plus 2pt minus 4pt		% was 20pt plus 2pt minus 4pt
-\abovecaptionskip 6pt					% was 10pt
+\abovecaptionskip 6pt				% was 10pt
 
 % ----------------------------------------------------------------------
 %  Revised theorem environment:
 %  Add a period after the theorem number, and make theorems slanted
-%  instead of italic to help distinguish text from math.  Use
-%  \boldmath in theorem label in case it includes math.
+%  instead of italic to help distinguish text from math.  (But XCharter
+%  makes slanted = italic!) Use \boldmath in theorem label in case
+%  it includes math.
 % ----------------------------------------------------------------------
 \def\@opargbegintheorem#1#2#3{\trivlist
 	\item[\hskip\labelsep{\bfseries\boldmath #1\ #2\ (#3).}]\slshape}
@@ -312,7 +229,7 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 
 % ----------------------------------------------------------------------
 %  \newproof{type}{text}(style)[post]:
-%  Define a new type of unnumbered ``theorem'' environment.  The last
+%  Define a new type of unnumbered “theorem” environment.  The last
 %  two arguments are optional; most environments will not use them.
 %
 %  To change label style, put new style command in label:
@@ -346,7 +263,7 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 \newproof{sketch}{Proof Sketch\global\needqedtrue}[\qed]
 
 %
-%  'Fake' proof environment, for use with wrapfig and similar packages
+%  Fake proof environment, for use with wrapfig and similar packages
 %
 \newenvironment{rawproof}%
    {\begin{trivlist}\item[\hskip\labelsep\textbf{Proof:}\global\needqedtrue]}%
@@ -354,35 +271,29 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 
 %
 %  If the proof ends with a displayed equation, use \aftermath just
-%  before \end{proof} to put the halmos in the ``right'' place.  
-%  Doesn't work worth a damn. 
+%  before \end{proof} to put the halmos in (sort of) the “right” place.
 %
-\def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\parskip}\vspace{-\baselineskip}}
+\def\aftermath{\par\vspace{-\belowdisplayskip}\vspace{-\baselineskip}}
 
 % ----------------------------------------------------------------------
-%  One-shot theoremish environment.  For named things like ``Zorn's
-%  Lemma'' or ``The Death Leap Principle'' or ``The Zone Theorem''.
+%  One-shot theoremish environment.  For named things like “Zorn's
+%  Lemma” or “The Death Leap Principle” or “The Zone Theorem”.
 %  To get one-shot proofish environment, put \normalfont inside.
 %  New improved version stolen from Erik Demaine.
 % ----------------------------------------------------------------------
 \newenvironment{oneshot}[1]{\@begintheorem{#1}{\unskip}}{\@endtheorem}
 
+\newenvironment{proofof}[1]
+{\begin{oneshot}{Proof of #1}\normalfont\global\needqedtrue}
+{\qed\end{oneshot}}
 
 % ----------------------------------------------------------------------
-%  Algorithm and code environments -- Algorithms are set in normal
-%  text, with 2em indenting, surrounded by a box.  Code is set in
-%  typewriter text, with 4 space indenting, and no box.  I've never
-%  actually used the code environment.
-%
-%  WARNING!  The true width of the minipage environment is determined
-%  by the contents of the longest line, because the minipage environment
-%  contains a tabbing environment and nothing else.  It's a HaX!
-%
-%  Both environments really need optional line numbering and a better
-%  comment macros.  But bold keywords are just distracting, so if you
-%  want them, you're on you own,
+%  Algorithm environment -- Normal text, with 2em indenting,
+%  surrounded by a box.  Really needs optional line numbering and
+%  a better comment macro.  But bold keywords make the baby
+%  Jesus cry, so if you want them, you're on your own.
 % ----------------------------------------------------------------------
-\def\begin@lgo{\begin{minipage}{1in}\begin{tabbing}
+\def\begin@lgo{\begin{minipage}{1in}\normalfont\begin{tabbing}
         \quad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\qquad\=\kill}
 \def\end@lgo{\end{tabbing}\end{minipage}}
 
@@ -395,24 +306,19 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 {\end{algorithm}\end{center}}
 
 % Meh.
-\def\Comment#1{\textsf{\textsl{$\langle\!\langle$#1\/$\rangle\!\rangle$}}}
-
-\def\beginc@de{\noindent\begin{center}\begin{minipage}{1in}\tt
-        \begin{tabbing}~~~~\=~~~~\=~~~~\=~~~~\=~~~~\=~~~~\=~~~~\=\kill}
-\def\endc@de{\end{tabbing}\end{minipage}\end{center}}
-
-\newenvironment{code}{\beginc@de}{\endc@de}
+\def\Comment#1{\textsf{\textsl{\textcolor{BrickRed}{$\langle\!\langle$#1\/$\rangle\!\rangle$}}}}
 
 %
 %  These only work with <1 line of text.  Use sparingly!!
+%  Better yet, use the soul package!
 %
-\def\textul#1{\underline{\smash{#1}\vphantom{.}}}
-\def\strike#1{\ensuremath{\overline{\text{\smash{#1}\vphantom{.}}}}}
+\def\textul#1{\ensuremath{\underline{\smash{\text{#1}}\vphantom{.}}}}
+\def\strike#1{\ensuremath{\overline{\smash{\text{{#1}}\vphantom{.}}}}}
 
 % ----------------------------------------------------------------------
 %  Include a file verbatim.  Searches the TEXINPUTS path for the file,
 %  even though that's probably not what you really want.  Stolen from
-%  ``verbatimfiles.sty'' by Chris Rowley and others.  [Don't use their 
+%  “verbatimfiles.sty” by Chris Rowley and others.  [Don't use their 
 %  \vertbatimlisting macro; it has some bizarre side-effects!]
 % ----------------------------------------------------------------------
 \def\verbinput#1{
@@ -449,16 +355,20 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 \def\n@te#1{\textsf{\boldmath \textbf{$\langle\!\langle$#1$\rangle\!\rangle$}}\leavevmode}
 \def\n@tew@rn{\GenericWarning{}{AUTHOR WARNING: Unresolved \protect\note}}
 
-\def\n@ten@te#1{\marginpar
-	[\hfill\llap{\textcolor{red}{\textcircled{#1}$\!\Longrightarrow$}}]
-	{\rlap{\textcolor{red}{$\Longleftarrow\!$\textcircled{#1}}}}}
+\def\n@ten@te{\marginpar
+	[\hfill\llap{\textcolor{red}{$\rhd\!\!\rhd\!\!\rhd\!\!\rhd\!\!\rhd$}}]
+	{\rlap{\textcolor{red}{$\lhd\!\!\lhd\!\!\lhd\!\!\lhd\!\!\lhd$}}}}
 
 % Warning: The textcomp and mathdesign packages are incompatible!
-\def\n@tedingb@t{\@ifundefined{textmusicalnote}
-			{$\maltese$}			% if you don't have textcomp
-			{\textmusicalnote}}	% if you do have textcomp
+%\def\n@tedingb@t{\@ifundefined{textmusicalnote}
+%			{$\maltese$}			% if you don't have textcomp
+%			{\textmusicalnote}}		% if you do have textcomp
 
-\def\note#1{\textcolor{red}{\n@tew@rn\n@te{\n@ten@te{\n@tedingb@t}#1}}}
+%\def\n@tedingb@t{\textcircled{\tiny$\maltese$}}
+%\def\n@tedingb@t{$\bigstar$}
+
+%\def\note#1{\textcolor{red}{\n@tew@rn\n@te{\n@ten@te{\n@tedingb@t}#1}}}
+\def\note#1{\textcolor{red}{\n@tew@rn\n@te{\n@ten@te {#1}}}}
 
 \def\sidenote#1{\marginpar{\tiny\textsf{#1}}}
 
@@ -470,18 +380,35 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 \addtolength{\marginparwidth}{-1.0in}
 
 %----------------------------------------------------------------------
+%  TODO sets enclosed text in a gray rectangle with a red border
+%  with small sans-serif text.
+%----------------------------------------------------------------------
+\definecolor{TODOcolor}{cmyk}{0.05,0,0,0}
+\definecolor{TODOtxtcolor}{cmyk}{0,1,1,0}
+
+\newenvironment{TODO}
+   {\fboxrule1.5pt\begin{center}
+     \marginpar{\LARGE\color{Red}$\bigstar\bigstar\bigstar$}
+     \begin{lrbox}{\@tempboxa}
+     \begin{minipage}{0.9\columnwidth}
+     \small\sffamily\parindent1.5em\color{TODOtxtcolor}}
+   {\end{minipage}
+    \end{lrbox}
+    \fcolorbox{TODOtxtcolor}{TODOcolor}{\usebox{\@tempboxa}}\end{center}}
+
+%----------------------------------------------------------------------
 %  Bibliography aliases, so I can use mnemonic citation keys and
 %  geom.bib at the same time.  \bibalias{foo}{bar} makes \cite{foo}
-%  act (almost) exactly like \cite{bar}.
+%  act (almost) exactly like \cite{bar}.  I don’t actually use this.
 %----------------------------------------------------------------------
 \def\bibalias#1#2{%
     \global\@namedef{b@#1}{%
         {\@ifundefined{b@#2}{\textsf{?}}{}\csname b@#2\endcsname}}}
 
 %----------------------------------------------------------------------
-%  Flag bad citations and refernces in the margin.  Dangerous if you
+%  Flag bad citations and references in the margin.  Dangerous if you
 %  have lots of undefined refs; use batchmode the first time.
-%  Incompatible with some document classes.
+%  Incompatible with some document classes.  I don’t actually use this.
 %----------------------------------------------------------------------
 \DeclareOption{flagerrors}
 {
@@ -516,7 +443,6 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
   \fi}
 }
 
-
 % ----------------------------------------------------------------------
 %  Draft notice.  Put \DRAFT on the title page, in place of \date.
 % ----------------------------------------------------------------------
@@ -528,65 +454,11 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 \let\@evenfoot\@oddfoot
 }
 
-% ----------------------------------------------------------------------
-%  Dingbats from the TeX/METAFONT-book manual font
-%  Use only with 11 or 12 pt text.
-%  Doesn't work with TeXtures, which doesn't know about manfnt.
-% ----------------------------------------------------------------------
-\font\manual=manfnt
-\def\goodcube{{\manual\char28}}	% possible cube from MF-book
-\def\badcube{{\manual\char29}}	% impossible cube from MF-book
-\def\starknot{{\manual\char30}}	% 2,5 torus knot from MF-book
-\def\target{{\manual\char36}}	% concentric circles from MF-book
-\def\xflower{{\manual\char38}}	% X flower dingbat from MF-book
-\def\tflower{{\manual\char39}}	% + flower dingbat from MF-book
-\def\changeto{{\manual\char121}}	% change arrow
-\def\dbend{{\manual\char127}}	% dangerous bend sign
-
-% ----------------------------------------------------------------------
-%  Dangerous bend environments, stolen from TeXbook and slightly
-%  massaged.
-%
-%  Invoke as \begin{[d]danger}...\end{[d]danger}.  The enclosed text
-%  is offset just like any other list (theorem, proof, etc.)  Puts
-%  sign[s] in front of first two lines of first paragraph, which are
-%  (supposedly) never split by a page boundary.  Does NOT shrink or
-%  otherwise modify the text.
-% ----------------------------------------------------------------------
-%  The dangerous bend signs are the correct size to match two lines of
-%  Computer Modern 9pt type.  I really ought to scale them up to
-%  fit whatever size we're using, but I won't.  Unfortunately, manfnt
-%  thinks it's a 10pt font, so if we want to match 11pt Computer
-%  Modern, we have to scale manfnt to 12.222222pt!  Thanks, Don.
-%
-%  TeX is a FuXing HaX.
-% ----------------------------------------------------------------------
-
-% Single danger
-\def\danger{\begin{trivlist}\item[]\noindent%
-\begingroup\hangindent=2.5pc\hangafter=-2\clubpenalty=10000%
-\def\par{\endgraf\endgroup}%
-\hbox to 0pt{\hskip-\hangindent\dbend\hfill}\ignorespaces}
-\def\enddanger{\end{trivlist}}
-
-% Double danger
-\def\ddanger{\begin{trivlist}\item[]\noindent%
-\begingroup\hangindent=4pc\hangafter=-2\clubpenalty=10000%
-\def\par{\endgraf\endgroup}%
-\hbox to 0pt{\hskip-\hangindent\dbend\kern2pt\dbend\hfill}\ignorespaces}
-\def\endddanger{\end{trivlist}}
-
 %----------------------------------------------------------------------
 % 'cramped' list style, stolen from Jeff Vitter.  Doesn't always work.
 %----------------------------------------------------------------------
 \def\cramped
   {\parskip\@outerparskip\@topsep\parskip\@topsepadd2pt\itemsep0pt
-%  \settowidth{\labelwidth}{\@itemlabel}
-%  \advance\leftmargin-\labelsep
-%  \advance\leftmargin-\labelwidth
-%  \advance\@totalleftmargin-\leftmargin
-%  \advance\linewidth\leftmargin
-%  \parshape1\@totalleftmargin\linewidth
 }
 
 %----------------------------------------------------------------------
@@ -598,7 +470,7 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
    \mathparagraph\mathparagraph \else\@ctrerr\fi}}
 
 %----------------------------------------------------------------------
-%  TeXbook style quotations -- I should really use the right font, tho.
+%  TeXbook-style quotations
 %----------------------------------------------------------------------
 \newenvironment{rightquote}[1]
 {\flushright\begin{minipage}{#1\textwidth}
@@ -609,6 +481,50 @@ stereo-iso-mer Round-table homol-ogous homol-ogy}
 %----------------------------------------------------------------------
 %  Creative Commons license
 %----------------------------------------------------------------------
-\def\CCLicense#1{\vfill\vbox to 0pt{\centering\tiny\sffamily \textcopyright\ Copyright \number\year\ Jeff Erickson. \quad Released under a Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License (\url{http://creativecommons.org/licenses/by-nc-sa/3.0/}).\\  Free distribution is strongly encouraged; commercial distribution is expressly forbidden.\quad  See {#1} for the most recent revision.\vss}}
+\def\CCLicense#1{{\vbox to 1ex{\centering\tiny\sffamily
+\textcopyright\ Copyright \number\year\ Jeff Erickson.
+\\
+This work is licensed under a Creative Commons License (\url{http://creativecommons.org/licenses/by-nc-sa/4.0/}).
+\\
+Free distribution is strongly encouraged; commercial distribution is expressly forbidden.
+\\
+See {#1} for the most recent revision.
+\vss}}}
 
+% ----------------------------------------------------------------------
+%  Line numbers (be nice to the referee).  Add \LineNumbers.
+% ----------------------------------------------------------------------
+%\ifx\LineNumbers\undefined
+%	\newcommand{\InLineNumbers}[1]{}
+%\else
+%	\newcommand{\InLineNumbers}[1]{#1}
+%\fi
+%
+%\InLineNumbers{
+%	\linenumbers
+%	\renewcommand\linenumberfont{\normalfont\tiny\sffamily\color{Gray}}
+%	\setlength\linenumbersep{2em}
+%	
+%	% Make amsmath environments play well with lineno
+%	% Thanks to tex.stackexchange
+%	\newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+%	 \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+%	 \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+%	 \renewenvironment{#1}%
+%	 {\linenomath\csname old#1\endcsname}%
+%	 {\csname oldend#1\endcsname\endlinenomath}}% 
+%	\newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+%	 \patchAmsMathEnvironmentForLineno{#1}%
+%	 \patchAmsMathEnvironmentForLineno{#1*}}%
+%	\AtBeginDocument{%
+%	\patchBothAmsMathEnvironmentsForLineno{equation}%
+%	\patchBothAmsMathEnvironmentsForLineno{align}%
+%	\patchBothAmsMathEnvironmentsForLineno{flalign}%
+%	\patchBothAmsMathEnvironmentsForLineno{alignat}%
+%	\patchBothAmsMathEnvironmentsForLineno{gather}%
+%	\patchBothAmsMathEnvironmentsForLineno{multline}%
+%	}
+%}
+
+% ----------------------------------------------------------------------
 \ProcessOptions
