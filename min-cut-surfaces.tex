@@ -1,3 +1,6 @@
+%!TEX TS-program = pdflatex
+%!TEX encoding = UTF-8 Unicode
+%!TEX spellcheck = English (Aspell)
 \documentclass[11pt,twoside]{article}
 
 %\documentclass{sig-alternate}
@@ -8,7 +11,7 @@
 \usepackage{marvosym}
 \usepackage{cite}
 \usepackage{verbatim}
-\usepackage{color}
+\usepackage[cmyk,dvipsnames]{xcolor}
 
 %-----------------------------------------------------------------------
 %  These packages are purely cosmetic.
@@ -16,8 +19,7 @@
 %-----------------------------------------------------------------------
 \usepackage{microtype}
 \usepackage[charter]{mathdesign}
-\def\sfdefault{fvs}
-\def\ttdefault{fvm}
+\usepackage{berasans,beramono}
 \usepackage[mathcal]{euscript}
 \usepackage{stmaryrd}
 
@@ -184,7 +186,7 @@ Don’t write “minimum cut” when we mean “minimum $(s,t)$-cut”.
 \item
 Edges have \emph{weights}, not capacities or costs.
 \item
-Notation: $X$ is a cut; $C$ is a co-tree; $L$ is the set of leftover edges in a forest-coforest decomposition.  $w(e)$ is weight.
+Notation proposal: $X$ or $K$ is a cut; $C$ is a co-tree; $L$ is the set of leftover edges in a blargh-coblurgh decomposition.  $w(e)$ is the weight of edge $e$.
 \end{itemize}
 \end{TODO}
 
@@ -284,7 +286,7 @@ Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result 
 
 The input to our first algorithm is an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.  Given vertices $s$ and $t$, our algorithm computes a minimum-weight $(s,t)$-cut in $g^{O(g)}n\log \log n$ time.
 For any fixed positive genus, this result improves the best previous time bound of Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} by a factor of $\min\set{ \sqrt{n} / \log \log n, \log^2 n / \log \log n \log^2 C}$ (compared to minimum cut algorithms for general sparse graphs, the improvement is $\min\set{n / ( \log n \log \log n),\allowbreak
- \sqrt{n} \log n / \log \log n \log C}$). \note{What is $C$?}
+ \sqrt{n} \log n / \log \log n \log C}$), where $C$ is the maximum capacity. \note{Ugh.  State maxflow algorithm's running time directly; somehow that got deleted in the mix.}
 The bottleneck for our algorithm is the time it takes to compute a minimum weight $(s,t)$-cut in a \emph{planar} embedded graph.
 For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
 
