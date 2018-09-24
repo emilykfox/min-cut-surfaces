@@ -135,9 +135,10 @@ We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global mi
 
 \bigskip
 \begin{TODO}\noindent
-Jeff to do for “next week” (ha ha):
+To do:
 \begin{itemize}\itemsep0pt
-\item Rewrite story
+\item Optimal homology representatives
+\item Rewrite story — Section 1.2
 \item Normalize notation/terminology/assumptions ???
 \item Assume unique shortest paths (enforce via isolation)
 \item Check conditions for orientable
@@ -260,31 +261,30 @@ Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12}: minimum-cost homologous circ
 \item
 Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11}: optimal $(d-1)$-chains (with $\Z$ coefficients) in orientable $d$-manifold simplicial complexes via minimum-cost flows / total unimodularity
 \item
-Grochaw and Tucker-Foltz** (unpublished): Unique-Games-complete for $\Z_q$ coefficients, for sufficiently large $q$.  Thus, no PTAS for any $q$ unless UCG is false.
+Grochaw and Tucker-Foltz** (SOCG 2018): Unique-Games-complete for $\Z_q$ coefficients, for sufficiently large $q$.  Thus, no PTAS for any $q$ unless UCG is false.
 \end{itemize}
 \end{TODO}
 
 \subsection{New Results and Organization}
 
-\note{New story starts here.} \color{PineGreen}
+\note{New story starts here.  For most of the paper we consider only undirected graphs.  However, the results in Section \ref{S:homcover} generalize easily to directed graphs as well; see Section \ref{S:???}.} \color{PineGreen}
 
 In Section \ref{S:tree-cotree}, we describe two techniques for preprocessing graphs on surfaces with boundary so that we can quickly compute the homology class of any subgraph.  Both techniques are natural generalizations of a similar algorithm of Eppstein \cite{e-dgteg-03} for surfaces without boundary.  For the minimum $(s,t)$-cut problem, we can assume without loss of generality that underlying surface has no boundary; however, our dual homology characterization remove the dual faces $s^*$ and $t^*$, leaving a surface with two boundary components.
 
 Our first algorithm for finding minimum $(s,t)$-cuts is described in Section~\ref{sec:crossing}.  \note{Universal cover.  Crossing sequences.  Ultimately reduces to minimum cut in planar graphs.  For undirected graphs, improved to $O(n\log\log n)$ time by Italiano.}
 
-In Section~\ref{S:homcover}, we describe our second algorithm for finding minimum $(s,t)$-cuts, which jas  better (but still exponential) dependence on $g$ but slightly worse dependence on $n$.  \note{Homology cover.  Crossing \emph{vectors}.  Ultimately reduces to multiple-source shortest paths \cite{cce-msspe-13}.  No known improvement to $O(n\log\log n)$ time.}
+In Section~\ref{S:homcover}, we describe our second algorithm for finding minimum $(s,t)$-cuts, which jas  better (but still exponential) dependence on $g$ but slightly worse dependence on $n$.  \note{Homology cover.  Crossing \emph{vectors}.  Ultimately reduces to multiple-source shortest paths \cite{cce-msspe-13}.  No known improvement to $O(n\log\log n)$ time, perhaps because the algorithm actually works for directed graphs.}
 
 In Section~\ref{S:NPhard}, we prove that the homology localization problem is NP-hard, which implies that the exponential dependence on $g$ in our algorithms is unavoidable.
 Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result (by reduction from a special case of \textsc{Max2Sat}) for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{simple cycle} in a given homology class is {NP}-hard.  
-\note{Erin: Feel like we need to cite the totally unimodular Z-homology stuff at some point here too...}
 
 
-\color{Black}
+\color{Purple}
 \textbf{\textsf{Old text, which will eventually be absorbed.}}
 
 The input to our first algorithm is an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.  Given vertices $s$ and $t$, our algorithm computes a minimum-weight $(s,t)$-cut in $g^{O(g)}n\log \log n$ time.
 For any fixed positive genus, this result improves the best previous time bound of Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} by a factor of $\min\set{ \sqrt{n} / \log \log n, \log^2 n / \log \log n \log^2 C}$ (compared to minimum cut algorithms for general sparse graphs, the improvement is $\min\set{n / ( \log n \log \log n),\allowbreak
- \sqrt{n} \log n / \log \log n \log C}$).
+ \sqrt{n} \log n / \log \log n \log C}$). \note{What is $C$?}
 The bottleneck for our algorithm is the time it takes to compute a minimum weight $(s,t)$-cut in a \emph{planar} embedded graph.
 For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
 
@@ -292,11 +292,11 @@ Our minimum-cut algorithm is a special case of a more general algorithm to compu
 In Section~\ref{sec:hardness}, we show that this more general problem is strongly NP-hard, even if the input homology class is specified by a simple cycle; thus, the exponential dependence on the topology of the surface is unavoidable unless {P}={NP}.  We are not aware of any previous algorithmic results for our more general problem.
 
 The input to our second algorithm is a \emph{directed} edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.
-\begin{TODO}
-\textbf{Kyle:} Does the surface need to be orientable?
-
-\textbf{Jeff:} Directed graphs on non-orientable surfaces don’t have well-defined directed duals.  I think we can find optimal homology representatives for non-orientable directed surface graphs, but at best we can compute minimum cuts in \emph{undirected} graphs on non-orientable surfaces.  Let’s just stick to orientable surfaces.
-\end{TODO}
+%\begin{TODO}
+%\textbf{Kyle:} Does the surface need to be orientable?
+%
+%\textbf{Jeff:} Directed graphs on non-orientable surfaces don’t have well-defined directed duals.  I think we can find optimal homology representatives for non-orientable directed surface graphs, but at best we can compute minimum cuts in \emph{undirected} graphs on non-orientable surfaces.  Let’s just stick to orientable surfaces.
+%\end{TODO}
 This algorithm computes a shortest directed \emph{cycle} in a specified $\Z_2$-homology class in $2^{O(g)}n\log n$ time using different techniques from the algorithm above.
 We are unaware of any previously published algorithm for this specific problem; however, an algorithm of Chambers \etal~\cite{ccelw-scsih-08} can be modified to find shortest homologous cycles in \emph{undirected} graphs in $g^{O(g)} n\log n \log n$ time.
 This problem can be shown to be {NP}-hard, even for undirected graphs, by a reduction from the traveling salesman problem in grid graphs~\cite{ccelw-scsih-08}.
@@ -316,6 +316,7 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 %As mentioned, Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} describe algorithms to compute a maximum flow in surface embedded graphs, using very different techniques from this paper.  Specifically, given a directed graph embedded on an orientable surface of genus~$g$, with two specified vertices $s$ and $t$, they can compute a maximum $(s,t)$-flow in $O(g^8 n\log^2 n\log^2 C)$ time for integer capacities that sum to $C$, or in $g^{O(g)}n^{3/2}$ time for real capacities.  Their key insight is that it suffices to optimize the relative \emph{real} homology class of the flow, rather than directly optimizing the flow itself.
 %\note{Kyle: These no longer look like sister papers, but I like mentioning the real homology part. Where should we put this paragraph?}
 
+\color{Black}
 
 % ===============================================================================================
 \section{Notation and Terminology}
@@ -330,7 +331,7 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 We begin by recalling several useful definitions related to surface-embedded graphs.  For further background, we refer the reader to Gross and Tucker \cite{gt-tgt-01} or Mohar and Thomassen~\cite{mt-gs-01} for topological graph theory, and to Hatcher~\cite{h-at-02} or Stillwell~\cite{s-ctcgt-93} for surface topology and homology.
 
 
-\note{Erin and Kyle: Assume uniqueness of shortest paths somewhere in the prelims!  Cite appropriate stuff.}
+\note{Erin and Kyle: Assume uniqueness of shortest paths somewhere in the prelims!  Cite appropriate stuff~\cite{cce-msspe-13, holiest}}
 
 \subsection{Surfaces and curves}
 \label{SS:surfaces}
@@ -338,7 +339,7 @@ We begin by recalling several useful definitions related to surface-embedded gra
 A \EMPH{surface} (more formally, a \emph{2-manifold with boundary}) is a compact Hausdorff space in which every point has an open neighborhood homeomorphic to either the plane $\Real^2$ or a closed halfplane $\set{(x,y)\in \Real^2\mid x\ge 0}$.  The points with halfplane neighborhoods make up the \EMPH{boundary} of the surface; every component of the boundary is homeomorphic to a circle.
 A surface is \EMPH{non-orientable} if it contains a subset homeomorphic to
 the M\"obius band, and \EMPH{orientable} otherwise. In this paper, we consider only compact, connected, and orientable surfaces.
-\note{Kyle: I guess we can do non-orientable, at least for computing minimal directed cycles, although the Betti numbers get nastier.}
+\note{Kyle: I guess we can do non-orientable, at least for computing minimal directed cycles, although the Betti numbers get nastier.  Jeff and Erin: Nope, only orientable please.}
 
 A \EMPH{path} in a surface $\Sigma$ is a continuous function $p\colon [0,1]\to\Sigma$.
 A \EMPH{loop} is a path whose endpoints~$p(0)$ and~$p(1)$ coincide;
@@ -389,8 +390,8 @@ Note that cycles may contain the same vertex or edge more than once.
 
 \begin{figure}[t]
 \centering
-\includegraphics[height=0.9in]{Fig/primal}\quad
-\includegraphics[height=0.9in]{Fig/dual}
+\includegraphics[height=1.25in]{Fig/primal}\quad
+\includegraphics[height=1.25in]{Fig/dual}
 \caption{Graph duality.  One edge $uv$ and its dual $(uv)^* =
 f^*g^*$ are emphasized.} \label{fig:prelims_primaldual}
 \end{figure}
@@ -453,19 +454,19 @@ Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ 
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{F:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{F:homology2}.
 
-\note{Erin: No mention of Betti number, but we do use it later.  Add here?}
+\note{Erin: No mention of Betti number, but we do use it later.  Add here.  Homollogy classes define a vector space over $\Z_2$ whose rank is called the (first) eBetti number of the surface.}
 
 \begin{figure}[htb]
 \centering
-\includegraphics[height=0.75in]{Fig/homologous3}\\[2ex]
-\includegraphics[height=0.75in]{Fig/homologous2}
+\includegraphics[height=1in]{Fig/homologous3}\qquad
+\includegraphics[height=1in]{Fig/homologous2}
 \caption{Homologous pairs of cycles that are not homotopic.  (Lighter portions of the curves are on the back side of the surface.)}
 \label{F:homology}
 \end{figure}
 
 \begin{figure}[htb]
 \centering
-\includegraphics[height=0.75in]{Fig/homologous1}
+\includegraphics[height=1in]{Fig/homologous1}
 \caption{Each cycle is homologous to the union of the other two.}
 \label{F:homology2}
 \end{figure}
@@ -475,9 +476,7 @@ Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cy
 
 \note{Kyle: The lemma below is key to the algorithms working, but there doesn't appear to be enough there to make them their own section. Where should we put them?}
 
-\note{Erin: I don't like it in the prelims, since it is not previous work.  One thought: perhaps the beginning of section 4, as a new subsection?  Then we can cite it in 4.2 as why this solves the min cut problem.}
-
-A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.
+A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.  \note{generalizes Whitney’s planar cycle-cut duality; see Itai-Shiloach}
 We formalize this equivalence in the following lemma.
 
 \begin{lemma}
@@ -488,7 +487,7 @@ Let $G$ be an edge-weighted graph embedded on a surface $\Sigma$ without boundar
 \begin{proof}
 Let $\partial s^*$ denote the boundary of $s^*$, and let $\Sigma'$ denote the surface $\Sigma\setminus {(s^*\cup t^*)}$.
 
-Let $C$ be an arbitrary $(s,t)$-cut in $G$.  This cut partitions the vertices of $G$ into two disjoint subsets, $S$ and $T$, respectively containing vertices $s$ and $t$.  Thus, the dual subgraph $C^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $C^*$ is the boundary of the union of the faces in $S^*$, which implies that $C^*$ is null-homologous in $\Sigma$.  The subgraph $C^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus,  $C^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $C^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
+Let $C$ be an arbitrary $(s,t)$-cut in $G$.  This cut partitions the vertices of $G$ into two disjoint subsets~$S$ and $T$, respectively containing vertices $s$ and $t$.  Thus, the dual subgraph $C^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $C^*$ is the boundary of the union of the faces in $S^*$, which implies that $C^*$ is null-homologous in $\Sigma$.  The subgraph $C^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus,  $C^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $C^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
 
 Conversely, let $C^*$ be an arbitrary even subgraph of $G^*$ homologous to $\partial s^*$ in $\Sigma'$.  The subgraph $C^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  This immediately implies that $C^*$ is null-homologous in $\Sigma$; moreover, faces $s^*$ and $t^*$ are on opposite sides of $C^*$.   any path from $s$ to $t$ in the original graph $G$ must traverse at least one edge of $C$.  We conclude that $C$ is an $(s,t)$-cut.
 \end{proof}
@@ -532,17 +531,15 @@ Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \sn
 \section{Characterizing Homology}
 \label{S:tree-cotree}
 
-\note{Erin: I think we don't want to say we fix directed - we really go back and forth!  Need to add language about how we work in both in different parts, and just state it up front, because I think it's confusing to just say "assume weight function is symmetric".}
+\note{Undirected everywhere by default; only the homology cover algorithms works for directed graphs; explain diffs there.}
 
-Throughout the paper, we fix a directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundaries.
-When considering undirected graphs, we assume the weight function is symmetric.
+Throughout the paper, we fix an \EMPH{undirected} directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundaries.
+%When considering undirected graphs, we assume the weight function is symmetric.
 Without loss of generality, we assume that the underlying surface $\Sigma$ has at least one boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
-
-\note{Erin: Really, we only seem to use the second one here.  3.1 is cited just once, in order to use paths, but it's not clear why it deserves this much detail.  Just to describe useful tool, or tradeoff?  Fine with keeping it, but  need to justify.}
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $\eta$ can be computed in $O(\beta)$ time per edge.
 
-\note{“These are both straightforward generalization of existing methods for measuring homology in surfaces without boundary cite cite cite.  We include the details here because we are unaware of any existing description elsewhere in the literature.“  Give a few details about boundary-free case, tree-cotree decompositions, etc.  Everything in this section works for non-orientable surfaces.}
+\note{“These are both straightforward generalizations of existing methods for measuring homology in surfaces without boundary cite cite cite.  We include the details here because we are unaware of any existing description elsewhere in the literature.“  Give a few details about boundary-free case, tree-cotree decompositions, etc.  Everything in this section works for non-orientable surfaces.}
 
 Both methods characterize the homology class of any even subgraph using a vector of~$\beta$ bits.
 The vectors are computed using a one of two natural generalizations of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
@@ -551,8 +548,7 @@ By carefully selecting these arcs, we can place a bound on the number of times a
 In the second method, the vector is based on the crossings between~$\eta$ and a set of~$\beta$ \emph{dual} paths.
 The vectors from the second method are more easily described and computed than the ones in the first, so we opt to use the second method in the algorithm given in Section~\ref{sec:homcover}.
 
-
-\note{Erin: Why do we always put in boundary?  I think in some later sections, we don't even assume at least one boundary, so perhaps this is a legacy from one of the papers but not all three?  Again, need to detangle/clarify.}
+%\note{Erin: Why do we always put in boundary?  I think in some later sections, we don't even assume at least one boundary, so perhaps this is a legacy from one of the papers but not all three?  Again, need to detangle/clarify.}
 
 \subsection{Crossing parity vectors}
 \label{sec:characterizing_crossings}
@@ -565,9 +561,10 @@ A \EMPH{forest-cotree decomposition} of $G$ is any partition $(\partial\! G, F, 
 \item $F$ is a spanning forest of $G$, that is, an acyclic subgraph of $G$ that contains every vertex.
 \item Each component of $F$ contains a single boundary vertex.
 \item $C^*$ is a spanning tree of $G^*\setminus (\partial G)^*$, that is, a subtree of $G^*$ that contains every vertex \emph{except} the dual boundary vertices $\delta_i^*$.
+\item Finally, $X$ contains the remaining edges $E \setminus (\partial\!G \cup F \cup C^*)$
 \end{itemize}
 
-\note{Erin: Maybe being obvious, but can we explicitly say that $X$ is the rest of the edges?}
+\note{Jeff: We’re overloading the variable $C$ a lot.  I propose $C =$ cotree, $L =$ leftover edges in tree-coforest or forest-cotree decomposition, $X$ or $K =$ cut}
 
 Euler's formula implies that there are exactly $\beta$ edges in $X$; arbitrarily label these edges $e_1, e_2, \dots, e_\beta$.  For each edge $e_i\in X$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial loop from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of $F$ twice.  Cutting along the arcs $a_1, \dots, a_\beta$ transforms~$\Sigma$ into a topological disk. See Figure \ref{fig:forest-cotree}.
 
@@ -582,7 +579,7 @@ Right: The resulting system of arcs.  Compare with Figure \ref{fig:tree-coforest
 \label{fig:forest-cotree}
 \end{figure}
 
-We can easily construct an \emph{arbitrary} forest-cotree decomposition in $O(n)$ time using whatever-first search, but we require a decomposition with a particular forest $F$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex $x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97} \note{Does Henzinger \etal\ work when we contract the boundaries?  Jeff: Yes, with some minor tweaking.  Henziger assumes bounded degree, which is easy to enforce on the original surface graph.  To “contract” the boundaries, change the edge weights to zero, and then connect the boundaries with a new zero-weight tree, and call one of the tree verrtices the source.  See/cite Hazari and Müller-Hannemann}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at $x$ in $O(n)$ time.  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.  With the shortest-path forest $F$ in hand, we can easily construct the rest of the forest-cotree decomposition in $O(n)$ time.
+We can easily construct an \emph{arbitrary} forest-cotree decomposition in $O(n)$ time using whatever-first search, but we require a decomposition with a particular forest $F$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex~$x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97} \note{UGLY TECHNICAL DETAILS!  Does Henzinger \etal\ work when we contract the boundaries?  Jeff: Yes, with some minor tweaking.  Henzinger \etal\ assume bounded degree, which is easy to enforce on the original surface graph: expand every high-degree vertex into a tree.  To “contract” the boundaries, change the edge weights to zero, and then connect the boundaries with a new zero-weight tree, and call one of the tree vertices the source.  New graph embeds on a surface of genus $O(\beta)$, so same separator results provided $\beta = O(n^{1-\e})$; where do we assume that?}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at $x$ in $O(n)$ time.  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.  With the shortest-path forest $F$ in hand, we can easily construct the rest of the forest-cotree decomposition in $O(n)$ time.
 
 Finally, for each edge $e_i\in X$, let $\sigma_i$ and $\tau_i$ denote the unique directed paths in $F$ from the boundary of~$G$ to the endpoints of $e_i$, and let $S := \set{\sigma\!_1, \dots, \sigma\!_\beta, \allowbreak \tau_1, \dots, \tau_\beta}$.  By construction of $F$, every element of~$S$ is a (possibly empty) shortest directed path.  Moreover, because $a_i = \sigma_i \cdot e_i \cdot \rev(\tau_i)$ for each index $i$, every non-null-homologous cycle in $G$ must intersect at least one path in $S$.  We can easily compute each path in $S$ in $O(n)$ time.
 
@@ -837,6 +834,7 @@ Our algorithm uses a generalization of Klein's  multiple-source shortest path al
 \begin{lemma}[Chambers \etal~\cite{cce-msspe-13}]
 \label{lem:multishort}
 Let $G$ be a directed graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of $G$.  We can preprocess $G$ in $O(gn\log n)$ time and $O(n)$ space so that the length of the shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$ time.
+\note{\dots with high probability, or in $O(g^2n \log n)$ \cite{holiest} or $O(gn\log^2 n)$ in the worst case}
 \end{lemma}
 
 \begin{theorem}
