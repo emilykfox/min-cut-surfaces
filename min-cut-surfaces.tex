@@ -698,14 +698,13 @@ Two cycles $\cycle$ and $\cycle'$ in $G$ are $\Z_2$-homologous in $\Sigma$ if an
 \label{sec:crossing}
 
 
-Let~$G$ be undirected \note{All graphs in this paper are undirected}, and let $H$ be an even subgraph of $G$.  In this section, we describe an
-algorithm to compute the minimum-weight even subgraph homologous with
+In this section, we describe an
+algorithm to compute the minimum-weight even subgraph homologous with any specified even subgraph 
 $H$ in $(g+b)^{O(g+b)}n\log \log n$ time.  In fact, our algorithm can be
 modified easily to compute a minimum-weight representative in
 \emph{every} homology class in the same asymptotic running time;
 there are exactly $2^{2g+\max\set{b-1,0}}$ such classes.
 Lemma~\ref{lem:cut-duality} implies our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time.
-\note{Erin: This lemma is cited several times in 4 and 5, but does not appear to exist.  I assume we mean what is currently lemma 2.1?  If so, need to search and replace.  Jeff: The correct label is \texttt{\textbackslash label\{lem:cut-duality\}}.}
 
 Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
@@ -740,19 +739,21 @@ We emphasize that different cycle decompositions of the same even subgraph $H$ m
 \subsection{Triangulations and crossing sequences}
 \label{SS:homotopy-triangulation}
 
-\note{$P$ is a greedy system of arcs.  We assume boundary wlog, delete a face otherwise.}
 
-We can cut our combinatorial surface $\Sigma\setminus P$ into a $2\beta$-gon, or \emph{abstract polygonal schema}, by cutting along each arc in $P$ and replacing each copy of each arc in the cut surface with a single edge.  Thus, each arc in $P$ corresponds to two edges of this polygon.
+We can now describe our algorithm.  First, recall that we have a combinatorial surface $\Sigma$ along with an associated greedy system of arcs on that surface; if  $\Sigma$ had no boundary, we can delete a face without loss of generality and proceed, as described in Section~\ref{S:tree-cotree}.
+We will cut the combinatorial surface $\Sigma$ along our greedy system of arcs into a $2\beta$-gon, or \emph{abstract polygonal schema}.  This construction cuts along each path in the greedy system; we then have two copies of each path,  and replace each copy  with a single edge.  Thus, each path in our greedy system of arcs will correspond to two edges in the polygon.
 
-We dualize the abstract polygonal schema by replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Any collection of non-crossing, non-self-crossing cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08}, where we draw an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of loops.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, a weighted triangulation corresponds to a collection of non-crossing, non-self-crossing cycles as long as corresponding vertices are incident to edges of equal total weight.  Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.
+We next dualize the abstract polygonal schema by replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Any collection of non-crossing, non-self-crossing cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08}, where we draw an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of loops.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, a weighted triangulation corresponds to a collection of non-crossing, non-self-crossing cycles as long as corresponding vertices are incident to edges of equal total weight.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.  Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.
 
 
 \begin{figure}[htb]
 \centering\includegraphics[height=1.45in]{Fig/triangulation}
 \caption{Two disjoint simple cycles on a surface of genus 2, and the corresponding weighted triangulation.}
+\label{fig:weightedtriangulation}
 \end{figure}
+=======
 
-For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths in $P$.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time, by gluing together $x$ copies of the planar surface $\Sigma\setminus P$ into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
+For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths from our greedy system of arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time; this proceeds by cutting $\Sigma$ along the greedy system of arcs, and then gluing together $x$ copies of the resulting planar surface into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
 Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $(s,t)$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
 Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log \log n)$ time.
 
@@ -780,7 +781,11 @@ in $(g+b)^{O(g+b)}n \log n$ time. Our algorithm can be
 used as a subroutine to compute minimum-weight even subgraphs in
 \emph{any} homology class if the graph is undirected in the same asymptotic running time
 using a dynamic programming procedure described later in this section.
+<<<<<<< HEAD
 Again, by Lemma~\ref{lem:cut-duality}, our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
+=======
+Again, by Lemma~\ref{lem:cut-duality}, \note{Erin:  check that I'm citing the right one in next pass} our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
+>>>>>>> a615461d6d82508ec4d137171a32fe8ff20f76dd
 
 \note{Erin: This next paragraph feels funny - perhaps legacy of one of the papers?  Or didn't we already discuss the homology versus homotopy earlier?  I think just needs to be revised after revisions of earlier stuff.}
 
