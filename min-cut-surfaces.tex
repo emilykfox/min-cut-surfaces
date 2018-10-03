@@ -659,9 +659,9 @@ Right: The resulting system of dual arcs.  Compare with Figure \ref{fig:forest-c
 \label{fig:tree-coforest}
 \end{figure}
 
-Finally, for each edge $e$ in $G$, we define its signature \EMPH{$[e]$} to be the $\beta$-bit vector whose $i$th bit is equal to $1$ if and only if $e$ crosses $\dualarc_i$ (that is, if $\dualarc_i$ traverses the dual edge $e^*$) exactly once.  The signature $[\eta]$ of an even subgraph $\eta$ is the bitwise exclusive-or of the signatures of its edges.  Similarly, the signature~$[\cycle]$ of a cycle $\cycle$ is the bitwise exclusive-or of the signatures of the edges that $\cycle$ traverses an odd number of times.
+Finally, for each edge $e$ in $G$, we define its signature \EMPH{$[e]$} to be the $\beta$-bit vector whose $i$th bit is equal to $1$ if and only if $e$ crosses $\dualarc_i$ (that is, if $\dualarc_i$ traverses the dual edge $e^*$) exactly once.  The signature $[H]$ of an even subgraph $H$ is the bitwise exclusive-or of the signatures of its edges.  Similarly, the signature~$[\cycle]$ of a cycle $\cycle$ is the bitwise exclusive-or of the signatures of the edges that $\cycle$ traverses an odd number of times.
 
-Let \EMPH{$h \oplus h'$} denote the bitwise exclusive-or of two homology signatures $h$ and $h'$, or equivalently, their sum as elements of the homology group~$(\Z_2)^\beta$.  The identities $[\eta \oplus \eta'] = [\eta] \oplus [\eta']$ and $[\cycle\cdot\cycle'] = [\cycle] \oplus [\cycle']$ follow directly from the definitions.
+Let \EMPH{$h \oplus h'$} denote the bitwise exclusive-or of two homology signatures $h$ and $h'$, or equivalently, their sum as elements of the homology group~$(\Z_2)^\beta$.  The identities $[H \oplus H'] = [H] \oplus [H']$ and $[\cycle\cdot\cycle'] = [\cycle] \oplus [\cycle']$ follow directly from the definitions.
 
 \begin{lemma}
 \label{lem:sign}
@@ -669,24 +669,24 @@ We can preprocess $G$ in $O(\beta n)$ time, so that the signature $[\cycle]$ of 
 \end{lemma}
 
 \begin{proof}
-A tree-coforest decomposition can be computed in $O(n)$ time as follows.  First construct a graph~$H$ by identifying all the dual boundary vertices in $G^*$ to a single vertex.  Compute a spanning tree of $H$ by whatever-first search; the edges of this spanning tree define an appropriate dual spanning forest~$F^*$.  Construct the subgraph $G\setminus F$ and compute a spanning tree $T$ via whatever-first search.  Finally, let $L = G\setminus (T\cup F)$.  With the decomposition in hand, it is straightforward to compute each path $\dualarc_i$ in $O(n)$ time, and then compute each edge signature in $O(\beta)$ time.
+A tree-coforest decomposition can be computed in $O(n)$ time as follows.  First construct a graph~$G’$ by identifying all the dual boundary vertices in $G^*$ to a single vertex.  Compute a spanning tree of $G’$ by whatever-first search; the edges of this spanning tree define an appropriate dual spanning forest~$F^*$.  Construct the subgraph $G\setminus F$ and compute a spanning tree $T$ via whatever-first search.  Finally, let $L = G\setminus (T\cup F)$.  With the decomposition in hand, it is straightforward to compute each path $\dualarc_i$ in $O(n)$ time, and then compute each edge signature in $O(\beta)$ time.
 \end{proof}
 
 \begin{lemma}
-An even subgraph $\eta$ of $G$ is null-homologous in $\Sigma$ if and only if $[\eta] = 0$.
+An even subgraph $H$ of $G$ is null-homologous in $\Sigma$ if and only if $[H] = 0$.
 \end{lemma}
 
 \begin{proof}
-Let $\eta$ be a null-homologous even subgraph of $G$.  Then by definition, $\eta$ is the boundary of the union of a subset~$Y$ of faces of $G$.  The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.  It follows immediately that $[\eta] = [\bigoplus_{f\in Y} \partial f] = \bigoplus_{f\in Y} [\partial f] = 0$.
+Let $H$ be a null-homologous even subgraph of $G$.  Then by definition, $H$ is the boundary of the union of a subset~$Y$ of faces of $G$.  The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.  It follows immediately that $[H] = [\bigoplus_{f\in Y} \partial f] = \bigoplus_{f\in Y} [\partial f] = 0$.
 
-Conversely, suppose $\eta$ crosses each arc $\dualarc_i$ an even number of times, so $[\eta]=0$.  Let $x$ and $y$ be two intersection points between $\eta$ and some arc $\dualarc_i$, and let $\dualarc_i[x,y]$ be the subpath of $\dualarc_i$ between those two points.  Replacing tiny segments of $\eta$ through~$x$ and~$y$ with two copies of $\dualarc_i[x,y]$ does not change the homology class of $\eta$, but does reduce the number of intersection points between $\eta$ and $\dualarc_i$.  It follows by induction that~$\eta$ is homologous to another even graph $\eta'$ that does not intersect any path~$\dualarc_i$ at all.  This even graph lies entirely within the disk $\Sigma\setminus \bigcup_i\dualarc_i$, and is therefore null-homologous.
+Conversely, suppose $H$ crosses each arc $\dualarc_i$ an even number of times, so $[H]=0$.  Let $x$ and $y$ be two intersection points between $H$ and some arc $\dualarc_i$, and let $\dualarc_i[x,y]$ be the subpath of $\dualarc_i$ between those two points.  Replacing tiny segments of $H$ through~$x$ and~$y$ with two copies of $\dualarc_i[x,y]$ does not change the homology class of $H$, but does reduce the number of intersection points between $H$ and $\dualarc_i$.  It follows by induction that~$H$ is homologous to another even graph $H'$ that does not intersect any path~$\dualarc_i$ at all.  This even graph lies entirely within the disk $\Sigma\setminus \bigcup_i\dualarc_i$, and is therefore null-homologous.
 \end{proof}
 
 
 The following corollaries are now immediate.
 
 \begin{corollary}
-Two even subgraphs $\eta$ and $\eta'$ of $G$ are $\Z_2$-homologous in $\Sigma$ if and only if $[\eta] = [\eta']$.
+Two even subgraphs $H$ and $H'$ of $G$ are $\Z_2$-homologous in $\Sigma$ if and only if $[H] = [H']$.
 \end{corollary}
 
 \begin{corollary}
