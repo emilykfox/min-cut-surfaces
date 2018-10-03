@@ -199,16 +199,14 @@ For any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subs
 
 Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum cut by cutting the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
 
-Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2 n)$ using a divide-and-conquer strategy.  Reif's algorithm was extended by Hassin and Johnson to compute the actual maximum flow in $O(n\log n)$ additional time, using a carefully structured dual shortest-path computation \cite{hj-oamfu-85}.  Frederickson~\cite{f-faspp-87} subsequently improved the running time of Reif's algorithm to $O(n\log n)$ using a balanced separator decomposition to speed up the shortest-path computations.  Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-time algorithm to directed planar graphs\footnote{Unfortunately, their minimum cut algorithm has a subtle
-error~\cite{kn-mcupg-11} which may lead to an incorrect result when the
-minimum $t,s$-cut is smaller than the minimum $s,t$-cut.}.
+Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2 n)$ using a divide-and-conquer strategy.  Reif's algorithm was extended by Hassin and Johnson to compute the actual maximum flow in $O(n\log n)$ additional time, using a carefully structured dual shortest-path computation \cite{hj-oamfu-85}.  Frederickson~\cite{f-faspp-87} subsequently improved the running time of Reif's algorithm to $O(n\log n)$ using a balanced separator decomposition to speed up the shortest-path computations.  Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-time algorithm to directed planar graphs; however, their  algorithm has a subtle error~\cite{kn-mcupg-11} which may lead to an incorrect result when the minimum $(t,s)$-cut is smaller than the minimum $(s,t)$-cut.
 
 Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obtain an $O(n)$-time planar shortest-path algorithm; using this algorithm in place of Dijkstra's algorithm improves the running times of both Reif's and Janiga and Koubek's algorithms to $O(n\log n)$.  The same improvement can also be obtained using more recent multiple-source shortest path algorithms by Klein~\cite{k-msspp-05} and Cabello and Chambers \cite{cc-msspg-07}.
 
 Minimum $(s,t)$-cuts in directed planar graphs can also be obtained in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (if the graph satisfies certain connectivity restrictions) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
 
 A \EMPH{cut} (without specified $s$ and $t$) is a subset of edges of $G$ that separate $G$ into two non-empty sets of vertices.
-A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of $G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time. Their algorithm was later improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.
+A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time. Their algorithm was later improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.
 
 \subsubsection*{Generalizations of Planar Graphs}
 
@@ -287,7 +285,7 @@ Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result 
 
 The input to our first algorithm is an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.  Given vertices $s$ and $t$, our algorithm computes a minimum-weight $(s,t)$-cut in $g^{O(g)}n\log \log n$ time.
 For any fixed positive genus, this result improves the best previous time bound of Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} by a factor of $\min\set{ \sqrt{n} / \log \log n, \log^2 n / \log \log n \log^2 C}$ (compared to minimum cut algorithms for general sparse graphs, the improvement is $\min\set{n / ( \log n \log \log n),\allowbreak
- \sqrt{n} \log n / \log \log n \log C}$), where $C$ is the maximum capacity. \note{Ugh.  State maxflow algorithm's running time directly; somehow that got deleted in the mix.}
+ \sqrt{n} \log n / \log \log n \log C}$), where $C$ is the maximum edge capacity. \note{Ugh.  State maxflow algorithm's running time directly; somehow that got deleted in the mix.}
 The bottleneck for our algorithm is the time it takes to compute a minimum weight $(s,t)$-cut in a \emph{planar} embedded graph.
 For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
 
@@ -312,7 +310,7 @@ Again, the bottleneck for this algorithm is the time it takes to compute a globa
 For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
 We present the global minimum cut algorithm in Section~\ref{sec:global}.
 
-As in the case of computing minimum-weight $(s,t)$-cuts, our algorithm for global minimum cuts depends upon our more general algorithm for minimum-cost subgraphs in given $\Z_2$-homology classes.
+As in the case of computing minimum-weight $(s,t)$-cuts, our algorithm for global minimum cuts depends upon our more general algorithm for minimum-weight subgraphs in given $\Z_2$-homology classes.
 The more general problem is NP-hard, but of course, both versions of the original minimum-cut problem are not NP-hard!
 We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum cuts can both be computed in time $O(g^c n\log \log n)$ for some small constant $c$.
 
@@ -356,7 +354,7 @@ We say a loop~$\ell$ and a cycle~$\gamma$ are \EMPH{equivalent} if, for some
 real number~$\delta$, we have~$\ell(t) = \gamma(t + \delta)$ for
 all~$t \in [0,1]$.
 We collectively refer to paths, loops, arcs, and cycles as \EMPH{curves}.
-A curve is \EMPH{simple} if it is injective; we usually do not distinguish between simple curves and their images in $\Sigma$.
+A~curve is \EMPH{simple} if it is injective; we usually do not distinguish between simple curves and their images in~$\Sigma$.
 A simple curve~$p$ is \EMPH{separating} if~$\Sigma \setminus p$ is disconnected.
 
 The \EMPH{reversal}~$\rev(p)$ of a path~$p$ is defined by
@@ -378,7 +376,7 @@ Orientable surfaces with~$b$ boundary components are differentiated by their \EM
 
 An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
-An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plane; in particular, in any cellular embedding, each component of the boundary of $\Sigma$ must be covered by a cycle of edges in $G$.  Euler's formula implies that any cellularly embedded graph with $n$ vertices, $m$ edges, and $f$ faces lies on a surface with Euler characteristic $\chi = n-m+f$, which implies that $m = O(n+g)$ and $f=O(n+g)$
+An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plane; in particular, in any cellular embedding, each component of the boundary of $\Sigma$ must be covered by a cycle of edges in~$G$.  Euler's formula implies that any cellularly embedded graph with $n$ vertices, $m$ edges, and $f$ faces lies on a surface with Euler characteristic $\chi = n-m+f$, which implies that $m = O(n+g)$ and $f=O(n+g)$
 if the graph is simple.
 We consider only such
 cellular embeddings of genus $g=O(n^{1-\eps})$, so that the overall complexity of the embedding is $O(n)$.
@@ -388,8 +386,7 @@ by a \EMPH{rotation system}, which records the counterclockwise order of edges
 incident to each vertex.
 Two paths or cycles in a combinatorial surface \EMPH{cross} if no continuous infinitesimal perturbation makes them disjoint; if such a perturbation exists, then the paths are \EMPH{non-crossing}.
 
-We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph. 
-Note that cycles may contain the same vertex or edge more than once.
+We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may contain the same vertex or edge more than once.
 
 \begin{figure}[t]
 \centering
@@ -452,12 +449,25 @@ cf-qhc-08, dls-chtl-07, dlsc-cgaht-08,e-sncds-11,f-sntcd-13}, we will consider o
 one-dimensional cellular homology with coefficients in the finite
 field $\Z_2$; this restriction allows us to radically simplify our
 definitions.
-Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the union of edge-disjoint cycles.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, every separating cycle is a boundary subgraph.
+Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, every separating cycle is a boundary subgraph.
 
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{F:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{F:homology2}.
 
 \note{Erin: No mention of Betti number, but we do use it later.  Add here.  Homollogy classes define a vector space over $\Z_2$ whose rank is called the (first) eBetti number of the surface.}
+
+We define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing cycles whose union is $H$.
+\begin{lemma}
+\label{lem:decomposition}
+Every even subgraph of an embedded graph has a cycle decomposition.
+\end{lemma}
+
+\begin{proof}
+Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.  
+\end{proof}
+
+We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
+
 
 \begin{figure}[htb]
 \centering
@@ -582,24 +592,14 @@ Right: The resulting system of arcs.  Compare with Figure \ref{fig:tree-coforest
 \label{fig:forest-cotree}
 \end{figure}
 
-We can easily construct an \emph{arbitrary} forest-cotree decomposition in $O(n)$ time using whatever-first search, but we require a decomposition with a particular forest $F$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex~$x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97} \note{UGLY TECHNICAL DETAILS!  Does Henzinger \etal\ work when we contract the boundaries?  Jeff: Yes, with some minor tweaking.  Henzinger \etal\ assume bounded degree, which is easy to enforce on the original surface graph: expand every high-degree vertex into a tree.  To “contract” the boundaries, change the edge weights to zero, and then connect the boundaries with a new zero-weight tree, and call one of the tree vertices the source.  New graph embeds on a surface of genus $O(\beta)$, so same separator results provided $\beta = O(n^{1-\e})$; where do we assume that?}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at $x$ in $O(n)$ time.  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.  With the shortest-path forest $F$ in hand, we can easily construct the rest of the forest-cotree decomposition in $O(n)$ time.
+We can easily construct an \emph{arbitrary} forest-cotree decomposition in $O(n)$ time using whatever-first search, but we require a decomposition with a particular forest $F$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex~$x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97} \note{UGLY TECHNICAL DETAILS!  Does Henzinger \etal\ work when we contract the boundaries?  Jeff: Yes, with some minor tweaking.  Henzinger \etal\ assume bounded degree, which is easy to enforce on the original surface graph: expand every high-degree vertex into a tree.  To “contract” the boundaries, change the edge weights to zero, and then connect the boundaries with a new zero-weight tree, and call one of the tree vertices the source.  New graph embeds on a surface of genus $O(\beta)$, so same separator results provided $\beta = O(n^{1-\e})$, which we need anyway since otherwise the off-the-shelf $O(n^2)$ time algorithms are faster.  Where do we assume that?}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at $x$ in $O(n)$ time.  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.  With the shortest-path forest $F$ in hand, we can easily construct the rest of the forest-cotree decomposition in $O(n)$ time.
 
 Finally, for each edge $e_i\in X$, let $\sigma_i$ and $\tau_i$ denote the unique directed paths in $F$ from the boundary of~$G$ to the endpoints of $e_i$, and let $S := \set{\sigma\!_1, \dots, \sigma\!_\beta, \allowbreak \tau_1, \dots, \tau_\beta}$.  By construction of $F$, every element of~$S$ is a (possibly empty) shortest directed path.  Moreover, because $a_i = \sigma_i \cdot e_i \cdot \rev(\tau_i)$ for each index $i$, every non-null-homologous cycle in $G$ must intersect at least one path in $S$.  We can easily compute each path in $S$ in $O(n)$ time.
+\note{Revisit this.  bold-emphasize greedy system of arcs when it’s actually defined.}
 
 For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements.
 
-Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph.  Instead, we partition the even subgraph into a well-behaved collection of cycles, and then consider the total number of crossings between a path and the cycles in that collection.  Specifically, we define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
-\begin{lemma}
-\label{lem:decomposition}
-Every even subgraph of an embedded graph has a cycle decomposition.
-\end{lemma}
-
-\begin{proof}
-Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex $v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.  
-\end{proof}
-
-We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
-Further, crossing vectors are not well-defined for arbitrary even subgraphs; different cycle decompositions can yield different crossing numbers.  However, the \emph{parity} of the crossing numbers is independent of the cycle decomposition.  The \EMPH{crossing parity vector} of any even subgraph $H$ is the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses (any cycle decomposition of) $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
+Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; however, the \emph{parity} of the crossing number is independent of the cycle decomposition.  The \EMPH{crossing parity vector} of any even subgraph $H$ is the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses (any cycle decomposition of) $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
 
 \begin{lemma}
 Two even subgraphs are $\Z_2$-homologous if and only if their crossing parity vectors are equal.
@@ -610,7 +610,7 @@ Every boundary subgraph is the symmetric difference of facial cycles.  Any non-c
 \end{proof}
 
 \begin{lemma}
-We can compute the crossing parity vector of any even subgraph in $O(\beta)$ time per edge after computing~$P$.
+We can compute the crossing parity vector of any even subgraph in $O(\beta)$ time per edge after computing any system of arcs.
 \end{lemma}
 
 \begin{proof}
@@ -683,35 +683,35 @@ Two cycles $\cycle$ and $\cycle'$ in $G$ are $\Z_2$-homologous in $\Sigma$ if an
 \label{sec:crossing}
 
 
-Let~$G$ be undirected, and let $H$
-be an even subgraph of $G$.  In this section, we describe an
-algorithm to compute the minimum-cost even subgraph homologous with
+Let~$G$ be undirected \note{All graphs in this paper are undirected}, and let $H$ be an even subgraph of $G$.  In this section, we describe an
+algorithm to compute the minimum-weight even subgraph homologous with
 $H$ in $(g+b)^{O(g+b)}n\log \log n$ time.  In fact, our algorithm can be
-modified easily to compute a minimum-cost representative in
+modified easily to compute a minimum-weight representative in
 \emph{every} homology class in the same asymptotic running time;
 there are exactly $2^{2g+\max\set{b-1,0}}$ such classes.
-By Lemma~\ref{lem:surface-st-cut}, our algorithm can be used to find a minimum $s,t$-cut in~$G^*$ in the same amount of time.
-\note{Erin: This lemma is cited several times in 4 and 5, but does not appear to exist.  I assume we mean what is currently lemma 2.1?  If so, need to search and replace.}
+Lemma~\ref{lem:cut-duality} implies our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time.
+\note{Erin: This lemma is cited several times in 4 and 5, but does not appear to exist.  I assume we mean what is currently lemma 2.1?  If so, need to search and replace.  Jeff: The correct label is\texttt{\textbackslash label{lem:cut-duality}}.}
 
-Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a network of shortest paths as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each shortest path in the decomposition network $O(g+b)$ times.  We quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles, which we easily enumerate.  Within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern using an improvement by Italiano \etal~\cite{insw-iamcmf-11} to an algorithm of Kutz \cite{k-csnco-06}.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
+Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
 
 
 \subsection{Crossing bound}
+\label{SS:homotopy-crossing}
 
 Our main technical lemma for this section establishes an upper bound on the number of crossings between an arbitrary shortest path and the minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that the shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
 
-As mentioned in Section~\ref{sec:characterizing}, we cannot consistently define when a shortest path crosses an even subgraph.  Instead, we consider the total number of crossings between a shortest path and the cycles in a cycle decomposition.
+As mentioned in Section~\ref{sec:characterizing_crossings}, we cannot consistently define when a shortest path crosses an even subgraph.  Instead, we consider the total number of crossings between a shortest path and the cycles in an arbitrary cycle decomposition.
 
 \begin{lemma}
 \label{lem:crossing}
-Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be a cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
+Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
 \end{lemma}
 
 \begin{proof}
 Let $\sigma(y,z)$ denote the shortest path between any two vertices $y$ and~$z$, and let $\sigma = \sigma(u,v)$ for some vertices $u$ and~$v$.  Uniqueness of shortest paths implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.  Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
 
-Consider the graph $G/\sigma$ obtained from $G$ by contracting $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of $x_i$ simple non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.
+Consider the graph $G/\sigma$ obtained from $G$ by contracting $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ simple non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.
 
 Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$ whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$ is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover, the uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.  But this contradicts our assumption that $H $ has minimum weight in its homology class.
 
@@ -720,14 +720,15 @@ Now suppose some pair of loops $\ell_i$ and $\ell_j$ are homotopic; by definitio
 We conclude that the loops $\ell_1, \ell_2, \dots, \ell_x$ lie in distinct nontrivial homotopy classes.  Thus, these loops define an embedding of a single-vertex graph with $x$ edges onto $\Sigma$, where no face of the embedding is a disk bounded by less than three edges.  Euler's formula now implies that $x\le 6g+2b-3$~\cite[Lemma~2.1]{ccelw-scsih-08}.
 \end{proof}
 
-We emphasize that different cycle decompositions of the same even subgraph may lead to different numbers of crossings.  Our crossing bound applies to \emph{any} cycle decomposition.
+We emphasize that different cycle decompositions of the same even subgraph $H$ may lead to different numbers of crossings.  Our crossing bound applies to \emph{every} cycle decomposition of $H$.
 
 \subsection{Triangulations and crossing sequences}
+\label{SS:homotopy-triangulation}
+
+\note{$P$ is a greedy system of arcs.  We assume boundary wlog, delete a face otherwise.}
 
 We may now describe our algorithm.
-We can cut our combinatorial surface $\Sigma\setminus P$ into a $2\beta$-gon, or \emph{abstract polygonal schema}, by cutting along each path in $P$ and replacing each copy of each path in the cut surface with a single edge.  Thus, each path in $P$ corresponds to two edges of this polygon. The vertices correspond to copies of the common basepoint of $P$ if $\Sigma$ has no boundary, or to boundary paths between endpoints of $P$ otherwise.
-
-\note{Erin: Again, we say everything has boundary earlier.  Need to clarify.}
+We can cut our combinatorial surface $\Sigma\setminus P$ into a $2\beta$-gon, or \emph{abstract polygonal schema}, by cutting along each path in $P$ and replacing each copy of each path in the cut surface with a single edge.  Thus, each path in $P$ corresponds to two edges of this polygon.
 
 We dualize the abstract polygonal schema by replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Any collection of non-crossing, non-self-crossing cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08}, where we draw an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of loops.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, a weighted triangulation corresponds to a collection of non-crossing, non-self-crossing cycles as long as corresponding vertices are incident to edges of equal total weight.  Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.
 
@@ -737,14 +738,15 @@ We dualize the abstract polygonal schema by replacing each edge with a vertex, a
 \caption{Two disjoint simple cycles on a surface of genus 2, and the corresponding weighted triangulation.}
 \end{figure}
 
+\note{Move high-level overview to beginning of section?}
 For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths in $P$.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time, by gluing together $x$ copies of the planar surface $\Sigma\setminus P$ into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
-Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $s,t$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
+Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $(s,t)$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
 Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log \log n)$ time.
 
 \begin{theorem}
 Let $G$ be an undirected graph with positively weighted edges embedded on a surface with genus
 $g$ and $b$ boundary components, and let $H$ be an even subgraph of $G$.
-We can compute the minimum-cost even subgraph homologous with $H$ in
+We can compute the minimum-weight even subgraph homologous with $H$ in
 $(g+b)^{O(g+b)} n\log \log n$ time.
 \end{theorem}
 
@@ -760,10 +762,10 @@ Now, let~$G$ be directed, and let $h$
 be a homology signature.  In this section, we describe an
 algorithm to compute a $\Z_2$-minimal \emph{cycle} with signature~$h$
 in $(g+b)^{O(g+b)}n \log n$ time. Our algorithm can be
-used as a subroutine to compute minimum-cost even subgraphs in
+used as a subroutine to compute minimum-weight even subgraphs in
 \emph{any} homology class if the graph is undirected in the same asymptotic running time
 using a dynamic programming procedure described later in this section.
-Again, by Lemma~\ref{lem:surface-st-cut}, our algorithm can be used to find a minimum $s,t$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
+Again, by Lemma~\ref{lem:surface-st-cut}, our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
 
 \note{Erin: This next paragraph feels funny - perhaps legacy of one of the papers?  Or didn't we already discuss the homology versus homotopy earlier?  I think just needs to be revised after revisions of earlier stuff.}
 
@@ -912,25 +914,25 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 \end{corollary}
 
 % ===============================================================================================
-\section{NP-Hardness}
+\section{{NP}-Hardness}
 \label{S:NPhard}
 
-In this section, we show that finding the minimum-weight even subgraph in a given homology class is {NP}-hard, even when the underlying surface has no boundary.  Our proof closely follows a reduction of McCormick \etal~\cite{mrr-edofm-03} from \textsc{Min2Sat} to a special case of \textsc{MaxCut}.
+In this section, we show that finding the minimum-cost even subgraph in a given homology class is {NP}-hard, even when the underlying surface has no boundary.  Our proof closely follows a reduction of McCormick \etal~\cite{mrr-edofm-03} from \textsc{Min2Sat} to a special case of \textsc{MaxCut}.
 
 \begin{theorem}
-Computing the minimum-cost even subgraph in a given homology class on a surface without boundary is equivalent to computing a minimum-weight cut in an embedded edge-weighted graph $G$ whose negative-cost edges are dual to an even subgraph in $G^*$.
+Computing the minimum-weight even subgraph in a given homology class on a surface without boundary is equivalent to computing a minimum-weight cut in an embedded edge-weighted graph $G$ whose negative-weight edges are dual to an even subgraph in $G^*$.
 \end{theorem}
 
 \begin{proof}
-Fix a graph $G$ embedded on a surface $\Sigma$ without boundary, together with a cost function $c\colon E\to \Real$.  For any even subgraph $H$ of $G$, let $c(H) = \sum_{e\in H} c(e)$, and let $\textsc{MinHom}(H,c)$ denote the even subgraph of minimum cost in the homology class of $H$.
+Fix a graph $G$ embedded on a surface $\Sigma$ without boundary, together with a weight function $c\colon E\to \Real$.  For any even subgraph $H$ of $G$, let $c(H) = \sum_{e\in H} c(e)$, and let $\textsc{MinHom}(H,c)$ denote the even subgraph of minimum weight in the homology class of $H$.
 
-Consider the \emph{residual cost} function $c_H\colon E\to \Real$ defined by setting $c_H(e) = c(e)$ for each edge $e\not\in H$, and $c_H(e) = -c(e)$ for each edge $e\in H$.  For any subgraph $H'$ of $G$, we have $c(H') = c_H(H\oplus H') + c(H)$, which immediately implies that
+Consider the \emph{residual weight} function $c_H\colon E\to \Real$ defined by setting $c_H(e) = c(e)$ for each edge $e\not\in H$, and $c_H(e) = -c(e)$ for each edge $e\in H$.  For any subgraph $H'$ of $G$, we have $c(H') = c_H(H\oplus H') + c(H)$, which immediately implies that
 \(
     \textsc{MinHom}(H,c) ~=~
     H \oplus \textsc{MinHom}(\varnothing, c_H).
 \)
 
-Every null-homologous even subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the cost function $c_H$.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost is empty.
+Every null-homologous even subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the weight function $c_H$.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost is empty.
 
 In fact, our reduction is reversible.  Suppose we want to find the minimum cut in an embedded graph $G = (V, E)$ with respect to the cost function $c\colon E\to \Real$, where every face of $G$ is incident to an even number of edges with negative cost.  Let $H = \set{{e\in E}\mid {c(e)<0}}$ be the subgraph of negative-cost edges, and let $X$ denote the (possibly empty) set of edges in the minimum cut of $G$.  Consider the \emph{absolute cost} function $\abs{c}\colon E^*\to \Real$ defined as $\abs{c}(e^*) = \abs{c(e)}$.  Then $(H\oplus X)^*$ is the even subgraph of $G^*$ of minimum absolute cost that is homologous to $H^*$.
 \end{proof}
@@ -991,7 +993,7 @@ Then~$C^*$ is a minimum weight separating subgraph of~$G^*$.
   a \emph{proper, non-empty} subset of faces.  Let $s^*$ and $t^*$ be faces
   of $G^*$ on either side of $C^*$.  Any path from~$s$ to~$t$ in the primal
   graph~$G$ must traverse at least one edge of~$C$.  We conclude that~$C$ is
-  a cut (in particular, an $s,t$-cut).
+  a cut (in particular, an $(s,t)$-cut).
 \end{proof}
 
 Fix an undirected graph~$G=(V,E)$, a non-negative weight function ${w\colon E\to \Real}$, and a cellular embedding of~$G$ on a surface~$\Sigma$ of genus~$g$ with at least two faces.  In light of Lemma \ref{lem:mincut-z2}, we focus our attention on finding a minimum weight separating subgraph of~$G$. 
@@ -1153,7 +1155,7 @@ In this case,~$\gamma$ is simply one of the cycles in~$\sigma$'s decomposition. 
 Let~$\eta$ be a shortest even subgraph homologous to~$\gamma$.
 By Lemma~\ref{lem:global_split-nocross}, we may assume without loss of generality that~$\eta$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Assume for now that our algorithm knows~$\eta$. We will remove this assumption later in the proof.
 
-Our algorithm picks an arbitrary edge~$e = h_1 | h_2$ of~$\eta$. At least one of~$h_1$ and~$h_2$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Our algorithm computes minimum weight subgraphs separating~$h_1$ from~$f$ and~$h_2$ from~$f$ using the minimum $s,t$-cut algorithm of Section~\ref{sec:crossing}. It then returns the cheaper of these two subgraphs, which weighs no more than~$\sigma$.
+Our algorithm picks an arbitrary edge~$e = h_1 | h_2$ of~$\eta$. At least one of~$h_1$ and~$h_2$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Our algorithm computes minimum weight subgraphs separating~$h_1$ from~$f$ and~$h_2$ from~$f$ using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}. It then returns the cheaper of these two subgraphs, which weighs no more than~$\sigma$.
 
 We now remove the assumption that our algorithm knows~$\eta$. Non-separating even subgraph~$\eta$ is shortest for one of~$2^{2g}-1$ homology classes. Our algorithm enumerates all~$2^{2g}-1$ homology classes by sampling subsets of cycles from a homology basis~\cite{e-dgteg-03}. For each homology class~$x$, it finds the shortest even subgraph~$\eta_x$ and runs the subroutine described in the previous paragraph assuming~$\eta = \eta_x$. If a there exists no subgraph separating the arbitrarily picked edge~$e \in \eta_x$ from~$f$ (in other words,~$e = f | f$), then the subroutine correctly returns nothing for that choice of homology class.
 The algorithm returns the least weight separating subgraph returned by any instantiation of the subroutine or nothing if no instantiation returns a separating subgraph.
