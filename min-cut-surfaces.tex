@@ -541,14 +541,14 @@ a \EMPH{lift} of~$p$, such that~$p'(0) = x'$ and~$\pi \circ p' = p$. We also
 say that~$p$ \EMPH{lifts} to~$p'$. Conversely, for any path~$p'$ in~$\Sigma'$,
 the path~$\pi \circ p'$ is called a \EMPH{projection} of~$p'$.
 
-We define a lift of a cycle~$\gamma : S^1 \to \Sigma$ to be the infinite
-path~$\gamma' : \R \to \Sigma'$ such that
-${\pi(\gamma'(t)) = \gamma(t \mod 1)}$
-for all real~$t$. We call the path obtained by restricting~$\gamma'$ to any
-unit interval a \EMPH{single-period lift} of~$\gamma$; equivalently, a
-single-period lift of~$\gamma$ is a lift of any loop equivalent to~$\gamma$.
-We informally say that a cycle is the~\EMPH{projection} of any of its
-single-period lifts.
+%We define a lift of a cycle~$\gamma \colon S^1 \to \Sigma$ to be the infinite
+%path~$\gamma' \to \R \to \Sigma'$ such that
+%${\pi(\gamma'(t)) = \gamma(t \mod 1)}$
+%for all real~$t$. We call the path obtained by restricting~$\gamma'$ to any
+%unit interval a \EMPH{single-period lift} of~$\gamma$; equivalently, a
+%single-period lift of~$\gamma$ is a lift of any loop equivalent to~$\gamma$.
+%We informally say that a cycle is the~\EMPH{projection} of any of its
+%single-period lifts.
 
 \EMPH{Cutting} a combinatorial surface along a cycle or  arc modifies both the surface and the embedded graph.
 For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
@@ -701,7 +701,7 @@ algorithm to compute the minimum-weight even subgraph homologous with any specif
 $H$ in $(g+b)^{O(g+b)}n\log \log n$ time.  In fact, our algorithm can be
 modified easily to compute a minimum-weight representative in
 \emph{every} homology class in the same asymptotic running time;
-there are exactly $2^{2g+\max\set{b-1,0}}$ such classes.
+there are exactly $2^{2g+b-1}$ such classes.
 Lemma~\ref{lem:cut-duality} implies our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time.
 
 Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
@@ -749,7 +749,6 @@ We next dualize the abstract polygonal schema by replacing each edge with a vert
 \caption{Two disjoint simple cycles on a surface of genus 2, and the corresponding weighted triangulation.}
 \label{fig:weightedtriangulation}
 \end{figure}
-=======
 
 For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths from our greedy system of arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time; this proceeds by cutting $\Sigma$ along the greedy system of arcs, and then gluing together $x$ copies of the resulting planar surface into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
 Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $(s,t)$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
@@ -770,27 +769,49 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 \section{The $\Z_2$-Homology Cover}
 \label{sec:homcover}
 
-\note{This section needs more work!!}
-
-Now, let~$G$ be directed, \note{No it isn’t} and let $h$
-be a homology signature.  In this section, we describe an
-algorithm to compute a $\Z_2$-minimal \emph{cycle} with signature~$h$
-in $(g+b)^{O(g+b)}n \log n$ time. Our algorithm can be
-used as a subroutine to compute minimum-weight even subgraphs in
-\emph{any} homology class if the graph is undirected in the same asymptotic running time
-using a dynamic programming procedure described later in this section.
-Again, by Lemma~\ref{lem:cut-duality}, \note{Erin:  check that I'm citing the right one in next pass} our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
-
-\note{Erin: This next paragraph feels funny - perhaps legacy of one of the papers?  Or didn't we already discuss the homology versus homotopy earlier?  I think just needs to be revised after revisions of earlier stuff.}
-
-The algorithm of the previous section constructs and searches several relevant finite portions of the (infinite) universal cover of the input surface.  One reason to suspect better tools exist is that even in undirected graphs, finding optimal cycles in a given homology class by enumerating homotopy classes seems to create unnecessary complications.  
-Instead of the universal cover, the algorithms of this section construct and search another canonical covering space, called the \emph{$\Z_2$-homology cover}; these techniques have also been used in other work on computing shortest non-trivial directed cycles~\cite{e-sncds-11,f-sntcd-13}.
+At a very high level, our algorithms in Section 4 find the minimum-weight subgraph in a given homology class by enumerating possible \emph{homotopy} classes of the cycles in a cycle decomposition, and then finding the shortest cycle in each homotopy class by searching a finite portion of the universal cover of the surface~$\Sigma$.  In this section, we describe a more direct algorithm, which finds the shortest cycle in each \emph{homology} class, by constructing and searching a different canonical  covering space, which we call the \emph{$\Z_2$-homology cover}.
+Specifically, given a homology signature $h\in \Z_2^\beta$, our algorithm computes the shortest cycle in with signature $h$ in $(g+b)^{O(g+b)} n \log n$ time.
+In fact, because there are only $2^\beta$ homology classes, we can compute the shortest cycle in \emph{every} homology class in the same running time.
+We then assemble the minimum-weight \emph{even subgraph} in any given homology class from these $\Z_2$-minimal cycles using dynamic programming.
+ 
+ \note{Include this somewhere:}
+ These techniques have also been used in other work on computing shortest non-trivial directed cycles~\cite{e-sncds-11,f-sntcd-13}.
 We also use a generalization of Klein's multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded graphs \cite{cce-msspe-13}.
+%
+%\note{Rewrite this paragraph.}
+%
+%
+%these techniques have also been used in other work on computing shortest non-trivial directed cycles~\cite{e-sncds-11,f-sntcd-13}.
+%
+%
+%Our algorithm can be
+%used as a subroutine to compute minimum-weight even subgraphs in
+%\emph{any} homology class if the graph is undirected in the same asymptotic running time
+%using a dynamic programming procedure described later in this section.
+%Again, by Lemma~\ref{lem:cut-duality}, \note{Erin:  check that I'm citing the right one in next pass} our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
+%
+%\note{Erin: This next paragraph feels funny - perhaps legacy of one of the papers?  Or didn't we already discuss the homology versus homotopy earlier?  I think just needs to be revised after revisions of earlier stuff.}
+%
+%The algorithm of the previous section constructs and searches several relevant finite portions of the (infinite) universal cover of the input surface.  However, finding optimal cycles in a given \emph{homology} class by enumerating \emph{homotopy} classes seems unnecessarily complicated.  
+%Instead of the universal cover, the algorithms of this section construct and search another canonical covering space, called the \emph{$\Z_2$-homology cover}; 
+%
 
-
-\subsection{Constructing the $\Z_2$-homology cover}
+\subsection{Definition and Construction}
 \label{sec:homcover_cover}
-After computing homology signatures for each edge, the $\Z_2$-homology cover of a combinatorial surface can be defined using a standard~\emph{voltage construction}~\cite[Chapter 4]{gt-tgt-01}, as follows.  Let $\Gbar$ denote the graph whose vertices are all ordered pairs $(v, h)$ where $v$ is a vertex of $G$ and $h$ is an element of $(\Z_2)^\beta$, and whose edges are the ordered pairs $(\arc{u}{v}, h) := (u, h)\arcto(v, h\oplus [u\arcto v])$ for all edges $\arc{u}{v}$ of $G$ and all homology classes $h \in (\Z_2)^\beta$.  Let $\pi\colon \Gbar\to G$ denote the covering map $\pi(v, h) = v$; this map projects any cycle in $\Gbar$ to a cycle in $G$.  To define a cellular embedding of~$\Gbar$, we declare a cycle in $\Gbar$ to be a face if and only if its projection is a face of $G$.  The combinatorial surface defined by this embedding is the $\Z_2$-homology cover $\Sigmabar$.
+
+\begin{TODO}
+\begin{itemize}\cramped
+\item We’re considering only undirected graphs, but we still need to talk about darts.
+\item Consistent notation for system of (dual) arcs?  And everything else.
+\item Recall $\oplus$ and $\beta$
+\end{itemize}
+\end{TODO}
+
+After computing homology signatures for each edge, the $\Z_2$-homology cover of a combinatorial surface can be defined using a standard~\emph{voltage construction}~\cite[Chapter 4]{gt-tgt-01}, as follows.
+
+We first define the covering graph $\Gbar$.  As in many previous papers \cite{lots, stuff, blah, blurg}, we regard every edge $uv$ of $G$ as a pair of oppositely oriented \emph{darts} $\arc{u}{v}$ and $\arc{v}{u}$.  The vertices of $\Gbar$ are all ordered pairs $(v, h)$ where $v$ is a vertex of $G$ and $h$ is an element of $(\Z_2)^\beta$.  The darts of $\Gbar$ are the ordered pairs $(\arc{u}{v}, h) := (u, h)\arcto(v, h\oplus [uv])$ for all edges $\arc{u}{v}$ of $G$ and all homology classes $h \in (\Z_2)^\beta$, and the reversal of any dart $(\arc{u}{v}, h)$ is the dart $(\arc{v}{u}, h\oplus[uv])$.
+
+Now let $\pi\colon \Gbar\to G$ denote the covering map $\pi(v, h) = v$; this map projects any cycle in $\Gbar$ to a cycle in $G$.  To define a cellular embedding of~$\Gbar$, we declare a cycle in $\Gbar$ to be a face if and only if its projection is a face of $G$.  The combinatorial surface defined by this embedding is the $\Z_2$-homology cover $\Sigmabar$.
 
 Our construction can be interpreted more topologically as follows.  Let $\dualarc_1, \dots, \dualarc_\beta$ denote the system of dual arcs used to define the homology signatures $[e]$.  The surface $D := \Sigma\setminus(\dualarc_1\cup\cdots\cup \dualarc_\beta)$ is a topological disk.  Each arc $\dualarc_i$ appears on the boundary of $D$ as two segments $\dualarc^+_i$ and~$\dualarc^-_i$.  For each signature $h\in (\Z_2)^\beta$, we create a disjoint copy $(D,h)$ of $D$; for each index~$i$, let $(\dualarc^+_i, h)$ and $(\dualarc^-_i, h)$ denote the copies of $\dualarc^+_i$ and $\dualarc^-_i$ in the disk $(D, h)$.  For each index~$i$, let~$b_i$ denote the $\beta$-bit vector whose $i$th bit is equal $1$ and whose other $\beta-1$ bits are all equal to~$0$.  The $\Z_2$-homology cover $\Sigmabar$ is constructed by gluing the~$2^\beta$ copies of $D$ together by identifying boundary paths $(\dualarc^+_i,h)$ and $(\dualarc^-_i, h\oplus b_i)$, for every index $i$ and homology class $h$.  See Figure \ref{fig:cover-ex} for an example.
 
@@ -927,7 +948,7 @@ This recurrence has two base cases: $C(0, k) = 0$ for any integer $k$, and for a
 Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$ and $b$ boundary components, and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $O(16^g g^2 n \log n)$ time.
 \end{corollary}
 
-% ===============================================================================================
+% ==================================================================================
 \section{{NP}-Hardness}
 \label{S:NPhard}
 
