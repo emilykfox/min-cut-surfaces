@@ -3,8 +3,6 @@
 %!TEX spellcheck = English (Aspell)
 \documentclass[11pt,twoside]{article}
 
-%\documentclass{sig-alternate}
-
 \usepackage{jeffe,graphicx,hyperref}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
@@ -22,7 +20,6 @@
 \usepackage{berasans,beramono}
 \usepackage[mathcal]{euscript}
 \usepackage{stmaryrd}
-
 
 %-----------------------------------------------------------------------
 %  Local definitions
@@ -471,16 +468,17 @@ Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ 
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{F:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{F:homology2}.
 
-\note{Erin: No mention of Betti number, but we do use it later.  Add here.  Homollogy classes define a vector space over $\Z_2$ whose rank is called the (first) eBetti number of the surface.}
+\note{Erin: No mention of Betti number, but we do use it later.  Add here.  Homology classes define a vector space over $\Z_2$ whose rank is called the (first) Betti number of the surface.}
 
-We define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing cycles whose union is $H$.
+\note{Define weakly simple \cite{weak} as perturbable into simple.  We don’t need to worry about “forks” and “spurs”.}
+We define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
 \begin{lemma}
 \label{lem:decomposition}
 Every even subgraph of an embedded graph has a cycle decomposition.
 \end{lemma}
 
 \begin{proof}
-Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.  
+Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.
 \end{proof}
 
 We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
@@ -781,11 +779,7 @@ in $(g+b)^{O(g+b)}n \log n$ time. Our algorithm can be
 used as a subroutine to compute minimum-weight even subgraphs in
 \emph{any} homology class if the graph is undirected in the same asymptotic running time
 using a dynamic programming procedure described later in this section.
-<<<<<<< HEAD
-Again, by Lemma~\ref{lem:cut-duality}, our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
-=======
 Again, by Lemma~\ref{lem:cut-duality}, \note{Erin:  check that I'm citing the right one in next pass} our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time if~$G$ is undirected.
->>>>>>> a615461d6d82508ec4d137171a32fe8ff20f76dd
 
 \note{Erin: This next paragraph feels funny - perhaps legacy of one of the papers?  Or didn't we already discuss the homology versus homotopy earlier?  I think just needs to be revised after revisions of earlier stuff.}
 
