@@ -128,9 +128,10 @@ Amir Nayyeri%
 
 \maketitle
 \begin{abstract}
+\note{Status: Unwritten}
+
 Let $G$ be an edge-weighted directed graph with $n$ vertices embedded on an orientable surface of genus $g$.
 We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global minimum cuts of~$G$.
-\note{TODO(kylejfox): Rewrite abstract.}
 \end{abstract}
 
 
@@ -141,11 +142,11 @@ To do:
 \item Optimal homology representatives
 \item Rewrite story — Section 1.2
 \item Normalize notation/terminology/assumptions ???
-\item Assume unique shortest paths (enforce via isolation)
-\item Check conditions for orientable
-\item Check conditions for directed
+\item Check conditions for orientable -- NO
+\item Check conditions for directed -- NO
 \item Check missing citations
 \item Cite new work since conference papers
+\item Notation: $\snip$ vs $\setminus$ vs $\setminus\!\!\setminus$
 \end{itemize}
 \end{TODO}
 
@@ -159,6 +160,9 @@ To do:
 % ===============================================================================================
 \section{Introduction}
 \label{sec:intro}
+
+\note{Status (excluding subsections): Beta}
+
 
 Planar graphs have been a natural focus of study for algorithms research for decades, both because they accurately model many real-world networks, and because they often admit simpler and/or more efficient algorithms for many problems than general graphs.  Most planar-graph algorithms either apply immediately or have been quickly generalized to larger families of graphs, such as graphs of higher genus, graphs with forbidden minors, or graphs with small separators.  Examples include minimum spanning trees \cite{p-omst-99, m-tltam-04}; single-source and multiple-source shortest paths \cite{cc-msspg-07, fr-pgnwe-06, hkrs-fspap-97, k-msspp-05, kmw-spdpg-09, lrt-gnd-79, tm-spltm-09}; graph and subgraph isomorphism \cite{g-itegd-00, hw-ltaip-74, m-itgbg-80, e-sipgr-99, e-dtmcg-00}; and approximation algorithms for the traveling salesman problem, Steiner trees, and other NP-hard problems~\cite{bdt-ptass-08, bkk-ptass-07, bkk-stpg-07, dhm-aacd-07, e-dtmcg-00}.
 
@@ -190,6 +194,8 @@ Notation proposal: $X$ is a cut; $C$ is a co-tree; $L$ is the set of leftover ed
 \end{TODO}
 
 \subsection{Past Results}
+
+\note{Status: Incomplete; existing parts are okay but may need modernization}
 
 \subsubsection*{Minimum Cuts in Planar Graphs}
 
@@ -266,6 +272,9 @@ Grochaw and Tucker-Foltz** (SOCG 2018): Unique-Games-complete for $\Z_q$ coeffic
 
 \subsection{New Results and Organization}
 
+\note{Status: Unwritten}
+
+
 \note{New story starts here.  For most of the paper we consider only undirected graphs.  However, the results in Section \ref{S:homcover} generalize easily to directed graphs as well; see Section \ref{S:???}.} \color{PineGreen}
 
 In Section \ref{S:tree-cotree}, we describe two techniques for preprocessing graphs on surfaces with boundary so that we can quickly compute the homology class of any subgraph.  Both techniques are natural generalizations of a similar algorithm of Eppstein \cite{e-dgteg-03} for surfaces without boundary.  For the minimum $(s,t)$-cut problem, we can assume without loss of generality that underlying surface has no boundary; however, our dual homology characterization remove the dual faces $s^*$ and $t^*$, leaving a surface with two boundary components.
@@ -277,11 +286,12 @@ In Section~\ref{S:homcover}, we describe our second algorithm for finding minimu
 In Section~\ref{S:NPhard}, we prove that the homology localization problem is NP-hard, which implies that the exponential dependence on $g$ in our algorithms is unavoidable.
 Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result (by reduction from a special case of \textsc{Max2Sat}) for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{simple cycle} in a given homology class is {NP}-hard.  
 
+\bigskip
 
 \color{Purple}
 \textbf{\textsf{Old text, which will eventually be absorbed.}}
 
-The input to our first algorithm is an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.  Given vertices $s$ and $t$, our algorithm computes a minimum-weight $(s,t)$-cut in $g^{O(g)}n\log \log n$ time.
+The input to our first algorithm is an undirected edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.  \note{We assume shortest paths are unique; see section 2.x for details.}  Given vertices $s$ and $t$, our algorithm computes a minimum-weight $(s,t)$-cut in $g^{O(g)}n\log \log n$ time.
 For any fixed positive genus, this result improves the best previous time bound of Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} by a factor of $\min\set{ \sqrt{n} / \log \log n, \log^2 n / \log \log n \log^2 C}$ (compared to minimum cut algorithms for general sparse graphs, the improvement is $\min\set{n / ( \log n \log \log n),\allowbreak
  \sqrt{n} \log n / \log \log n \log C}$), where $C$ is the maximum edge capacity. \note{Ugh.  State maxflow algorithm's running time directly; somehow that got deleted in the mix.}
 The bottleneck for our algorithm is the time it takes to compute a minimum weight $(s,t)$-cut in a \emph{planar} embedded graph.
@@ -321,11 +331,11 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 \section{Notation and Terminology}
 \label{sec:prelims}
 
+\note{Status: Inconsistent -- Revisit after the rest of the paper is finished}
+
 % Initially taken from Kyle's dissertation.
 
 % Temporary definition to allow compilation of lazily copied prelim section:
-
-\note{Jeff: Revisit after the rest of the paper is finished.}
 
 We begin by recalling several useful definitions related to surface-embedded graphs.  For further background, we refer the reader to Gross and Tucker \cite{gt-tgt-01} or Mohar and Thomassen~\cite{mt-gs-01} for topological graph theory, and to Hatcher~\cite{h-at-02} or Stillwell~\cite{s-ctcgt-93} for surface topology and homology.
 
@@ -409,16 +419,16 @@ f^*g^*$ are emphasized.} \label{fig:prelims_primaldual}
 \end{figure}
 
 
-Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdi\`ere~\cite{octagons}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that $e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from $\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{F:duality}.  (Duality can be extended to directed graphs~\cite{surflow}, but our results do not require this extension.)
+Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdi\`ere~\cite{octagons}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{F:duality}.  (Duality can be extended to directed graphs~\cite{surflow}, but our results do not require this extension.)
 
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.45]{Fig/pants}
 \caption{A cellularly embedded graph $G$ (solid lines) on a pair of pants (genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
-\label{fig:duality}
+\label{F:duality}
 \end{figure}
-
-For any subgraph $F = (U,D)$ of $G = (V,E)$, we write \EMPH{$G\setminus F$} to denote the edge-complement $(V, E\setminus D)$.  Also, when the graph $G$ is fixed, we abuse notation by writing~$F^*$ to denote the subgraph of $G^*$ corresponding to a subgraph $F$ of~$G^*$; each edge in $F^*$ is the dual of a unique edge in~$F$.  In particular, we have the identity $(G\setminus F)^* = G^* \setminus F^*$.
+ 
+For any subgraph $F = (U,D)$ of $G = (V,E)$, we write \EMPH{$G\setminus F$} to denote the edge-complement $(V, {E\setminus D})$.  Also, when the graph $G$ is fixed, we abuse notation by writing~$F^*$ to denote the subgraph of $G^*$ corresponding to a subgraph $F$ of~$G^*$; each edge in $F^*$ is the dual of a unique edge in~$F$.  In particular, we have the identity $(G\setminus F)^* = G^* \setminus F^*$.
 
 Further, we may sometimes use~$D$ to refer to an edge set or the subgraph~$F = (V, D)$,
 but it should be clear which we mean from context.
@@ -556,11 +566,18 @@ For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\ga
 Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$.
 
 
+\subsection{Uniqueness of Shortest Paths}
+\label{SS:unique}
+
+\note{dig out citations}
+To simplify our presentation, as in many earlier papers \cite{blah,blah,blah}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  This assumption can be enforced if necessary by symbolic perturbation, with a small penalty in the running time of our algorithms.  
+Cabello \etal~\cite{multishort} describe two such perturbation schemes.  The first is a randomized scheme based on the Isolation Lemma of Mulmuley \etal~\cite{??}, which increases the running times of our algorithms at most a constant factor \emph{with high probability}.  The second is an efficient implementation of lexicographic perturbation \cite{??} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Fox \etal \cite{holiest} describe a perturbation scheme based on integer homology that increases the worst-case running times by a factor of $O(g)$.
+
 % ===============================================================================================
 \section{Characterizing Homology}
 \label{S:tree-cotree}
 
-\note{I think this is okay, but read from scratch.}
+\note{Status: Beta -- reread from scratch after rest of paper done}
 
 Throughout the paper, we fix an \EMPH{undirected} directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundaries.
 %When considering undirected graphs, we assume the weight function is symmetric.
@@ -697,6 +714,7 @@ Two cycles $\cycle$ and $\cycle'$ in $G$ are $\Z_2$-homologous in $\Sigma$ if an
 \section{Crossing Bounds and Triangulations}
 \label{sec:crossing}
 
+\note{Status: Beta}
 
 In this section, we describe an
 algorithm to compute the minimum-weight even subgraph homologous with any specified even subgraph 
@@ -723,7 +741,7 @@ Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ b
 \end{lemma}
 
 \begin{proof}
-Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths\note{!} implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.  Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
+Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.  Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
 
 Consider the graph $G/\sigma$ obtained from $G$ by contracting $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ simple\note{Here we assume the cycles $\gamma_i$ are simple} non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
 
@@ -770,6 +788,8 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 % ===============================================================================================
 \section{The $\Z_2$-Homology Cover}
 \label{sec:homcover}
+
+\note{Status: close to beta}
 
 At a very high level, our algorithms in Section 4 find the minimum-weight subgraph in a given homology class by enumerating possible \emph{homotopy} classes of the cycles in a cycle decomposition, and then finding the shortest cycle in each possible homotopy class by searching a finite portion of the universal cover of the surface~$\Sigma$.  In this section, we describe a more direct algorithm, which finds the shortest cycle in each \emph{homology} class, by constructing and searching a different canonical  covering space, which we call the \emph{$\Z_2$-homology cover}.
 Specifically, given a homology signature $h\in (\Z_2)^\beta$, our algorithm computes the shortest cycle in with signature $h$ in $(g+b)^{O(g+b)} n \log n$ time.
@@ -853,8 +873,6 @@ Every lift of a shortest path in $G$ is a shortest path in $\Gbar$.
 A loop $\ell$ in $G$ with basepoint $v$ is $\Z_2$-minimal if and only if, for every homology class $h\in (\Z_2)^\beta$, the lifted path $(\ell,h)$ is a shortest path in $\Gbar$ from $(v,h)$ to $(v,h\oplus[\ell])$.
 \end{lemma}
 
-\note{Jeff and Erin are here.}
-
 % --------------------------------------------------------------------------------
 \subsection{Computing $\Z_2$-minimal cycles}
 \label{sec:homcover_cycles}
@@ -880,7 +898,6 @@ Our algorithm uses a generalization of Klein's  multiple-source shortest path al
 \begin{lemma}[Chambers \etal~\cite{cce-msspe-13}]
 \label{lem:multishort}
 Let $G$ be a directed graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of $G$.  We can preprocess $G$ in $O(gn\log n)$ time and $O(n)$ space so that the length of the shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$ time.
-\note{\dots with high probability, or in $O(g^2n \log n)$ \cite{holiest} or $O(gn\log^2 n)$ in the worst case}
 \end{lemma}
 
 \begin{theorem}
@@ -892,7 +909,6 @@ Let $G$ be a directed graph with non-negative edge weights, cellularly embedded 
 We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we return the empty walk and halt.
 
 Next, we construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, as described in Section~\ref{sec:homcover_cover}, as well as the set $S$ of directed shortest paths described in Section~\ref{sec:characterizing_crossings}.
-\note{Erin: Ah - here's where 3.1 appears.  Should add forward citation from there to here, so that it's clear we use it.}
 Any cycle homologous with~$\cycle$ must intersect at least one member of~$S$ as if~$\cycle$ is not null-homologous.
 We look for the shortest path in $\Gbar$ of the canonical form described in Lemma~\ref{lem:nocross}, by considering each shortest path $\sigma\in S$ in turn as follows.
 
@@ -901,7 +917,7 @@ Let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arc
 Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $\cycle$ intersects $\sigma$, then some $\Z_2$-minimal cycle homologous to $\cycle$ is the projection of a shortest path in $\Sigmabar\snip(\sigma,0)$ from some vertex $(v_i,h_i)^\pm$ to the corresponding vertex $(v_i, h_i\oplus[\cycle])$.  To compute these shortest paths, we implicitly compute the shortest path in $\Sigmabar\snip(\sigma,0)$ from every vertex on the boundary of $f_{(\sigma,0)}$ to \emph{every} vertex of $\Sigmabar\snip(\sigma,0)$, using Lemma~\ref{lem:multishort}.  The resulting algorithm runs in $O(\gbar\,\nbar \log \nbar) = O(4^\beta \beta^2\, n\log n)$ time, by Lemma \ref{lem:cover-cxy}.
 \end{proof}
 
-By running this algorithm $2^\beta$ times, we can compute the shortest directed cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.  In particular, we can compute the shortest directed cycle in~$\Sigma$ that has nontrivial $\Z_2$-homology.  When the original surface has no boundary, this is just the shortest \emph{non-separating} cycle in $\Sigma$.  Recently,\note{You keep using that word.} Cabello \etal~\cite{ccl-fsncd-10} described an algorithm to compute the shortest non-separating cycle in any surface-embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time; our algorithm is faster whenever $g \le (\lg n)/13$.
+By running this algorithm $2^\beta$ times, we can compute the shortest directed cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.  In particular, we can compute the shortest directed cycle in~$\Sigma$ that has nontrivial $\Z_2$-homology.  When the original surface has no boundary, this is just the shortest \emph{non-separating} cycle in $\Sigma$.  Cabello \etal~\cite{ccl-fsncd-10} described an algorithm to compute the shortest non-separating cycle in any surface-embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time; our algorithm is faster whenever $g \le (\lg n)/13$.
 
 \begin{corollary}
 \label{C:nonsep}
@@ -915,10 +931,10 @@ Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shorte
 \subsection{Minimum cuts from the homology cover}
 \label{sec:homcover_mincut}
 
-We now apply our algorithm for computing $\Z_2$-minimal cycles to the problem of computing $\Z_2$-minimal even subgraphs in \emph{undirected} surface embedded graphs.
-\note{TODO(kylejfox): Emphasize here or in the intro that we cannot use these techniques to do directed minimum cut.}
-\note{Jeff: WHY NOT?}
-\note{Erin: Another place where we need to clarify that we're not always in directed case.  Emphasizing my vote to rewrite that assumption out of the prelims now...}
+We now apply our algorithm for computing $\Z_2$-minimal cycles to the problem of computing $\Z_2$-minimal even subgraphs in undirected surface embedded graphs.
+%\note{TODO(kylejfox): Emphasize here or in the intro that we cannot use these techniques to do directed minimum cut.}
+%\note{Jeff: WHY NOT?}
+%\note{Erin: Another place where we need to clarify that we're not always in directed case.  Emphasizing my vote to rewrite that assumption out of the prelims now...}
 Theorem~\ref{thm:min-cycle} immediately implies that we can compute a minimum-weight \emph{cycle} in every $\Z_2$-homology class in $O(8^\beta \beta^2\, n\log n)$ time.  However, the minimum weight \emph{even subgraph} in a given homology class may not be (the carrier of) a $\Z_2$-minimal cycle.  In particular, if a $\Z_2$-minimal cycle $\gamma$ traverses any edge more than once, then every minimum-weight even subgraph with signature $[\gamma]$ \emph{must} be disconnected.
 
 However, any \emph{connected} $\Z_2$-minimal even subgraph is the carrier of a $\Z_2$-minimal cycle, and the components of any $\Z_2$-minimal even subgraph are themselves $\Z_2$-minimal even subgraphs.  Thus, we can assemble a $\Z_2$-minimal even subgraph in any homology class from a subset of the $\Z_2$-minimal cycles we have already computed.  The following lemma puts an upper bound on the number of cycles we need.
@@ -936,7 +952,7 @@ Now let $\eta$ be an even subgraph of $G$ with more than $g+b-1$ components.  Ea
 
 \begin{theorem}
 \label{thm:min-even}
-Let $G$ be an \textbf{undirected} graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$.  A minimum-weight even subgraph of $G$ in each $\Z_2$-homology class can be computed in $O(8^\beta \beta^2\, n\log n)$ time.
+Let $G$ be an undirected graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$.  A minimum-weight even subgraph of $G$ in each $\Z_2$-homology class can be computed in $O(8^\beta \beta^2\, n\log n)$ time.
 \end{theorem}
 
 \begin{proof}
@@ -944,7 +960,7 @@ Our algorithm computes a minimum-weight cycle~$\gamma_h$ in every $\Z_2$-homolog
 
 For each homology class $h\in (\Z_2)^\beta$ and each integer $1\le k\le g+b-1$, let \EMPH{$C(h,k)$} denote the minimum total weight of any set of at most $k$ cycles in $G$ whose homology classes sum to $h$.  Lemma~\ref{lem:even-comps} implies that the minimum weight of any even subgraph in homology class~$h$ is exactly $C(h, g+b-1)$.  This function obeys the following straightforward recurrence:
 \[
-	C(h,k) = \min\Setbar{C(h_1,k-1) + C(h_2, 1)}{h_1\oplus h_2 = h}.
+	C(h,k) = \min\Setbar{C(h_1,k-1) + C(h_2, 1)\strut}{h_1\oplus h_2 = h}.
 \]
 This recurrence has two base cases: $C(0, k) = 0$ for any integer $k$, and for any homology class $h$, the value $C(h,1)$ is just the length of $\gamma_h$.  A standard dynamic programming algorithm computes $C(h, g+b-1)$ for all $2^\beta$ homology classes $h$ in $O(4^\beta \beta)$ time.  We can then assemble the actual minimum-weight even subgraphs in each homology class in $O(\beta n)$ time.  The total time for this phase of the algorithm is $O(4^\beta \beta + 2^\beta \beta n)$, which is dominated by the time to compute all the $\Z_2$-minimal cycles.
 \end{proof}
@@ -957,6 +973,8 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 % ==================================================================================
 \section{{NP}-Hardness}
 \label{S:NPhard}
+
+\note{Status: Beta.}
 
 In this section, we show that finding the minimum-cost even subgraph in a given homology class is {NP}-hard, even when the underlying surface has no boundary.  Our proof closely follows a reduction of McCormick \etal~\cite{mrr-edofm-03} from \textsc{Min2Sat} to a special case of \textsc{MaxCut}.
 
@@ -980,9 +998,9 @@ In fact, our reduction is reversible.  Suppose we want to find the minimum cut i
 
 We now prove that this special case of the minimum cut problem is {NP}-hard, by  reduction from \textsc{MinCut} in graphs with negative edges.  This problem includes \textsc{MaxCut} as a special case (when every edge has negative cost), but many other special cases are also {NP}-hard~\cite{mrr-edofm-03}.  The output of our reduction is a simple triangulation; the reduction can be simplified if graphs with loops and parallel edges are allowed.
 
-Suppose we are given an \emph{arbitrary} graph $G = (V,E)$ with $n$ vertices and an \emph{arbitrary} cost function $c\colon E\to \Real$.  We begin by computing a cellular embedding of $G$ on some surface.  If we don't care whether the surface is orientable, we can simply impose a cyclic order on the edges incident to each vertex.
-\note{kylejfox: Won't picking an arbitrary rotation system give us an orientable embedding?}
-The maximum-genus \emph{orientable} cellular embedding can be computed in polynomial time~\cite{fgm-fmggi-88}.  Alternately, we can add zero-length edges to make the graph complete and then use classical results of Ringel, Youngs, and others \cite{ry-shmcp-68,r-mct-74} to compute a minimum-genus orientable embedding of $K_n$ in polynomial time.  Once we have an embedding, we add vertices and zero-cost edges to obtain a triangulation.
+Suppose we are given an \emph{arbitrary} graph $G = (V,E)$ with $n$ vertices and an \emph{arbitrary} cost function $c\colon E\to \Real$.  We begin by computing a cellular embedding of $G$ on some orientable surface, by imposing an arbitrary cyclic order on the edges incident to each vertex.
+%\note{kylejfox: Won't picking an arbitrary rotation system give us an orientable embedding?}
+(We can compute the maximum-genus orientable cellular embedding  in polynomial time~\cite{fgm-fmggi-88}.)  Alternately, we can add zero-length edges to make the graph complete and then use classical results of Ringel, Youngs, and others \cite{ry-shmcp-68,r-mct-74} to compute a minimum-genus orientable embedding of $K_n$ in polynomial time.  Once we have an embedding, we add vertices and zero-cost edges to obtain a triangulation.
 
 Let $C$ be the sum of the absolute values of the edge costs: $C:= \sum_e \abs{c(e)}$.  We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{F:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
 
@@ -999,17 +1017,18 @@ Given an even subgraph $H$ of an edge-weighted graph $G$ embedded on a surface w
 \end{theorem}
 
 Our reduction can be modified further to impose other desirable properties on the output instances, for example, that the graph is unweighted, every vertex has degree $3$, or the input subgraph $H$ is a simple cycle.
-\note{kylejfox: There's a commented out note about how we can further reduce to $3^g$ instances of minimum $(s,t)$-cut in a graph of genus $O(g)$.
-Do we want to put that back in?}
+%\note{kylejfox: There's a commented out note about how we can further reduce to $3^g$ instances of minimum $(s,t)$-cut in a graph of genus $O(g)$. Do we want to put that back in?}
 %Interestingly, any instance built by our reduction can be further reduced to $3^g$ instances of minimum $(s,t)$-cut in a graph of genus $O(g)$.  For each edge cocycle, we guess which sides of the cut contains its vertex triangles.  If they lie on different sides, we remove the handle, join the vertices on one vertex triangle to a common supersource~$s$, and join the vertices of the other vertex triangle to a common supersink~$t$.  (If they lie on the same side, we do nothing to the cocycle.)  After modifying the graph, we compute the minimum-cost $(s,t)$-cut.
 
 Finally, we emphasize that the {NP}-hardness of this problem relies crucially on the fact that we are using homology with coefficients taken from the finite field $\Z_2$.  The corresponding problem for homology with real or integer coefficients is a minimum-cost circulation problem, and thus can be solved in polynomial time.
 Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} show that this circulation problem can be solved in near-linear time for graphs of constant genus and polynomially bounded integer edge capacities using very different techniques.
-\note{Erin: cite Hirani et al unimodular stuff here?}
+
 
 % ===============================================================================================
 \section{Global Minimum Cut}
 \label{sec:global}
+
+\note{Status: Jeff and Erin are here.  Normalize notation/terminology}
 
 Let~$G$ be undirected. We now turn our attention computing the global minimum cut of~$G$.
 To work with topology in computing a minimum cut, we use the following lemma which is similar very similar to Lemma~\ref{lem:cut-duality}.
