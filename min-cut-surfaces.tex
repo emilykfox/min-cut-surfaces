@@ -340,8 +340,6 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 We begin by recalling several useful definitions related to surface-embedded graphs.  For further background, we refer the reader to Gross and Tucker \cite{gt-tgt-01} or Mohar and Thomassen~\cite{mt-gs-01} for topological graph theory, and to Hatcher~\cite{h-at-02} or Stillwell~\cite{s-ctcgt-93} for surface topology and homology.
 
 
-\note{Erin and Kyle: Assume uniqueness of shortest paths somewhere in the prelims!  Cite appropriate stuff~\cite{cce-msspe-13, holiest}}
-
 \subsection{Surfaces and curves}
 \label{SS:surfaces}
 
@@ -571,7 +569,7 @@ Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \sn
 
 \note{dig out citations}
 To simplify our presentation, as in many earlier papers \cite{blah,blah,blah}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  This assumption can be enforced if necessary by symbolic perturbation, with a small penalty in the running time of our algorithms.  
-Cabello \etal~\cite{multishort} describe two such perturbation schemes.  The first is a randomized scheme based on the Isolation Lemma of Mulmuley \etal~\cite{??}, which increases the running times of our algorithms at most a constant factor \emph{with high probability}.  The second is an efficient implementation of lexicographic perturbation \cite{??} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Fox \etal \cite{holiest} describe a perturbation scheme based on integer homology that increases the worst-case running times by a factor of $O(g)$.
+Cabello \etal~\cite{cce-msspe-13} describe two such perturbation schemes.  The first is a randomized scheme based on the Isolation Lemma of Mulmuley \etal~\cite{??}, which increases the running times of our algorithms at most a constant factor \emph{with high probability}.  The second is an efficient implementation of lexicographic perturbation \cite{??} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Fox \etal \cite{holiest} describe a perturbation scheme based on integer homology that increases the worst-case running times by a factor of $O(g)$.
 
 % ===============================================================================================
 \section{Characterizing Homology}
