@@ -17,7 +17,12 @@
 %-----------------------------------------------------------------------
 \usepackage{microtype}
 \usepackage[charter]{mathdesign}
-\usepackage{berasans,beramono}
+%\usepackage{berasans,beramono} %-- bold too heavy
+\usepackage[semibold]{sourcesanspro}
+%\usepackage[scale=0.95]{ClearSans}
+%\usepackage[scale=0.9]{GoSans,GoMono} -- Too narrow
+%\usepackage{inconsolata}
+
 \usepackage[mathcal]{euscript}
 \usepackage{stmaryrd}
 
@@ -38,21 +43,31 @@
 \def\Real{\mathbb{R}}
 \def\Q{\mathbb{Q}}
 \def\reverse#1{\smash{\overline{#1}}}
-\def\snip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\Rightscissors}\!}}}
-\def\subsnip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\footnotesize\Rightscissors}\!}}}
-\def\Gsnip{\mathord{G_{\subsnip}}}
-\def\Sigmasnip{\mathord{\Sigma_{\subsnip}}}
-\def\gammasnip{\mathord{\gamma_{\subsnip}}}
 \let\eps\varepsilon
 
 % needs marvosym package:
 \def\snip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\Rightscissors}\!}}}
+\def\snip{\mathbin{\backslash\!\!\backslash}}
+
+\def\subsnip{\mathbin{\raisebox{0.15ex}{\rotatebox[origin=c]{60}{\footnotesize\Rightscissors}\!}}}
+\def\Gsnip{\mathord{G_{\subsnip}}}
+\def\Sigmasnip{\mathord{\Sigma_{\subsnip}}}
+\def\gammasnip{\mathord{\gamma_{\subsnip}}}
+
+\def\Gsnip{G’}
+\def\Fsnip{F’}
+\def\Sigmasnip{\Sigma’}
+\def\gammasnip{\gamma’}
+
+
+
 \let\unlhd\trianglelefteq	% fix mathdesign font bug
 
 \def\cycle{\gamma}
 \def\path{p}
 %\let\primalarc{\alpha}
 \def\dualarc{\alpha}
+\def\Cut{X}
 
 \def\Sigmabar{\overline{\smash{\Sigma}\vphantom{t}}}
 \def\SIGMABAR{\boldsymbol{\overline{\smash{\Sigma}\vphantom{x}}}}
@@ -176,7 +191,7 @@ Our algorithms are based on a natural generalization of the duality between cuts
 
 We formalize this characterization in terms of \emph{homology}, a standard equivalence relation from algebraic topology; specifically, we use cellular homology with coefficients in $\Z_2$.  Briefly, two subgraphs of a surface graph are \emph{homologous}, or in the same \emph{homology class}, if and only if their symmetric difference is the boundary of a subset of faces.  In light of this characterization, finding minimum $(s,t)$-cuts in surface graphs becomes a special case of finding the minimum-weight subgraph of a surface graph in a given homology class.  Indeed, both of our algorithms for computing minimum $(s,t)$-cuts solve this more general problem, which is sometimes called \emph{homology localization}~\cite{cf-qhc-08,cf-hrhl-10}.
 
-Unlike in planar graphs, where every minimal cut is  dual to a simple cycle \cite{w-pg-33}, the dual of a minimum cut in a surface graph may consist of several disjoint cycles.  More generally, the minimum-weight subgraph in any homology class may be disconnected, even when the homology class is specified by a simple cycle; see Figure \ref{F:homology2}.  Dealing with disconnected “cycles” is a significant complication in our algorithms.
+Unlike in planar graphs, where every minimal cut is  dual to a simple cycle \cite{w-pg-33}, the dual of a minimum cut in a surface graph may consist of several disjoint cycles.  More generally, the minimum-weight subgraph in any homology class may be disconnected, even when the homology class is specified by a simple cycle; see Figure \ref{fig:homology2}.  Dealing with disconnected “cycles” is a significant complication in our algorithms.
 
 Before describing our results in further detail, we first review several related results; technical terms are defined in Section \ref{sec:prelims}.
 
@@ -297,7 +312,7 @@ For any fixed positive genus, this result improves the best previous time bound 
 The bottleneck for our algorithm is the time it takes to compute a minimum weight $(s,t)$-cut in a \emph{planar} embedded graph.
 For any fixed positive genus, our algorithm's running time matches the best known for planar graphs, and will continue to do so as algorithms for planar graphs improve.
 
-Our minimum-cut algorithm is a special case of a more general algorithm to compute a minimum-cost \emph{subgraph} in a given $\Z_2$-homology class.  Even when the homology class is specified by a simple cycle, the output representative may be the union of several cycles; see Figure \ref{F:homology2}.  For surfaces with genus $g$ and $b$ boundary components, our algorithm runs in $(g+b)^{O(g+b)}n\log\log n$ time.
+Our minimum-cut algorithm is a special case of a more general algorithm to compute a minimum-cost \emph{subgraph} in a given $\Z_2$-homology class.  Even when the homology class is specified by a simple cycle, the output representative may be the union of several cycles; see Figure \ref{fig:homology2}.  For surfaces with genus $g$ and $b$ boundary components, our algorithm runs in $(g+b)^{O(g+b)}n\log\log n$ time.
 In Section~\ref{sec:hardness}, we show that this more general problem is strongly NP-hard, even if the input homology class is specified by a simple cycle; thus, the exponential dependence on the topology of the surface is unavoidable unless {P}={NP}.  We are not aware of any previous algorithmic results for our more general problem.
 
 The input to our second algorithm is a \emph{directed} edge-weighted graph~$G$ embedded on an orientable surface of genus~$g$.
@@ -417,13 +432,13 @@ f^*g^*$ are emphasized.} \label{fig:prelims_primaldual}
 \end{figure}
 
 
-Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdi\`ere~\cite{octagons}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{F:duality}.  (Duality can be extended to directed graphs~\cite{surflow}, but our results do not require this extension.)
+Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdi\`ere~\cite{octagons}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{fig:duality}.  (Duality can be extended to directed graphs~\cite{surflow}, but our results do not require this extension.)
 
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.45]{Fig/pants}
-\caption{A cellularly embedded graph $G$ (solid lines) on a pair of pants (genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
-\label{F:duality}
+\caption{A cellularly embedded graph \emph{G}$G$ (solid lines) on a pair of pants (genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
+\label{fig:duality}
 \end{figure}
  
 For any subgraph $F = (U,D)$ of $G = (V,E)$, we write \EMPH{$G\setminus F$} to denote the edge-complement $(V, {E\setminus D})$.  Also, when the graph $G$ is fixed, we abuse notation by writing~$F^*$ to denote the subgraph of $G^*$ corresponding to a subgraph $F$ of~$G^*$; each edge in $F^*$ is the dual of a unique edge in~$F$.  In particular, we have the identity $(G\setminus F)^* = G^* \setminus F^*$.
@@ -475,7 +490,7 @@ definitions.
 Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, every separating cycle is a boundary subgraph.
 
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
-Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{F:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{F:homology2}.
+Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}.
 
 \note{Erin: No mention of Betti number, but we do use it later.  Add here.  Homology classes define a vector space over $\Z_2$ whose rank is called the (first) Betti number of the surface.}
 
@@ -498,14 +513,14 @@ We emphasize that each cycle in a cycle decomposition may visit vertices multipl
 \includegraphics[height=1in]{Fig/homologous3}\qquad
 \includegraphics[height=1in]{Fig/homologous2}
 \caption{Homologous pairs of cycles that are not homotopic.  (Lighter portions of the curves are on the back side of the surface.)}
-\label{F:homology}
+\label{fig:homology}
 \end{figure}
 
 \begin{figure}[htb]
 \centering
 \includegraphics[height=1in]{Fig/homologous1}
 \caption{Each cycle is homologous to the union of the other two.}
-\label{F:homology2}
+\label{fig:homology2}
 \end{figure}
 
 \subsection{Cut-even subgraph duality}
@@ -518,22 +533,22 @@ We formalize this equivalence in the following lemma.
 
 \begin{lemma}
 \label{lem:cut-duality}
-Let $G$ be an edge-weighted graph embedded on a surface $\Sigma$ without boundary, and let $s$ and~$t$ be vertices of~$G$.  Finally, let $C$ be the minimum-weight $(s,t)$-cut in~$G$.  Then~$C^*$ is the minimum-weight even subgraph of $G^*$ homologous with the boundary of $s^*$ in the surface $\Sigma\setminus(s^*\cup t^*)$.
+Let $G$ be an edge-weighted graph embedded on a surface $\Sigma$ without boundary, and let $s$ and~$t$ be vertices of~$G$.  Finally, let $\Cut$ be the minimum-weight $(s,t)$-cut in~$G$.  Then~$\Cut^*$ is the minimum-weight even subgraph of $G^*$ homologous with the boundary of $s^*$ in the surface $\Sigma\setminus(s^*\cup t^*)$.
 \end{lemma}
 
 \begin{proof}
 Let $\partial s^*$ denote the boundary of $s^*$, and let $\Sigma'$ denote the surface $\Sigma\setminus {(s^*\cup t^*)}$.
 
-Let $C$ be an arbitrary $(s,t)$-cut in $G$.  This cut partitions the vertices of $G$ into two disjoint subsets~$S$ and $T$, respectively containing vertices $s$ and $t$.  Thus, the dual subgraph $C^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $C^*$ is the boundary of the union of the faces in $S^*$, which implies that $C^*$ is null-homologous in $\Sigma$.  The subgraph $C^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus,  $C^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $C^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
+Let $\Cut$ be an arbitrary $(s,t)$-cut in $G$.  This cut partitions the vertices of $G$ into two disjoint subsets~$S$ and $T$, respectively containing vertices $s$ and $t$.  Thus, the dual subgraph $\Cut^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $\Cut^*$ is the boundary of the union of the faces in $S^*$, which implies that $\Cut^*$ is null-homologous in $\Sigma$.  The subgraph $\Cut^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus, $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $\Cut^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
 
-Conversely, let $C^*$ be an arbitrary even subgraph of $G^*$ homologous to $\partial s^*$ in $\Sigma'$.  The subgraph $C^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  This immediately implies that $C^*$ is null-homologous in $\Sigma$; moreover, faces $s^*$ and $t^*$ are on opposite sides of $C^*$.   any path from $s$ to $t$ in the original graph $G$ must traverse at least one edge of $C$.  We conclude that $C$ is an $(s,t)$-cut.
+Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\partial s^*$ in $\Sigma'$.  The subgraph $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  This immediately implies that $X^*$ is null-homologous in $\Sigma$; moreover, faces $s^*$ and $t^*$ are on opposite sides of $X^*$.  Any path from $s$ to $t$ in the original graph $G$ must traverse at least one edge of $\Cut$.  We conclude that $\Cut$ is an $(s,t)$-cut.
 \end{proof}
 
 
 \subsection{Covering spaces and cutting}
 \label{SS:covering}
 
-A continuous map~$\pi : \Sigma' \to \Sigma$ between two surfaces is called a
+A continuous map~$\pi \colon \Sigma' \to \Sigma$ between two surfaces is called a
 \EMPH{covering map} if each point~$x \in \Sigma$ lies in an open
 neighborhood~$U$ such that (1)~$\pi^{-1}(U)$ is a countable union of disjoint
 open sets~$U_1 \cup U_2 \cup \cdots$ and (2) for each~$i$, the
@@ -567,9 +582,7 @@ Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \sn
 \subsection{Uniqueness of Shortest Paths}
 \label{SS:unique}
 
-\note{dig out citations}
-To simplify our presentation, as in many earlier papers \cite{blah,blah,blah}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  This assumption can be enforced if necessary by symbolic perturbation, with a small penalty in the running time of our algorithms.  
-Cabello \etal~\cite{cce-msspe-13} describe two such perturbation schemes.  The first is a randomized scheme based on the Isolation Lemma of Mulmuley \etal~\cite{??}, which increases the running times of our algorithms at most a constant factor \emph{with high probability}.  The second is an efficient implementation of lexicographic perturbation \cite{??} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Fox \etal \cite{holiest} describe a perturbation scheme based on integer homology that increases the worst-case running times by a factor of $O(g)$.
+To simplify our presentation, as in many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10, eh-ocsd-04} \note{enough? too much?}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  If necessary, this assumption can be enforced \emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.  Alternatively, we can enforce genericity using either of two deterministic perturbation schemes.  Cabello \etal~\cite{cce-msspe-13} describe an efficient implementation of lexicographic perturbation \cite{c-odlp-52,dow-gsmml-55,hm-apmcb-94} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Erickson \etal \cite{efl-hmcpf-18} describe a deterministic perturbation scheme based on integer homology that increases our worst-case running times by a factor of $O(g)$.
 
 % ===============================================================================================
 \section{Characterizing Homology}
@@ -577,9 +590,9 @@ Cabello \etal~\cite{cce-msspe-13} describe two such perturbation schemes.  The f
 
 \note{Status: Beta -- reread from scratch after rest of paper done}
 
-Throughout the paper, we fix an \EMPH{undirected} directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundaries.
+Throughout the paper, we fix an \EMPH{undirected} directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundary cycles.
 %When considering undirected graphs, we assume the weight function is symmetric.
-Without loss of generality, we assume that the underlying surface $\Sigma$ has at least one boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
+Except where explicitly indicated otherwise, we assume without loss of generality  that the underlying surface $\Sigma$ has non-empty boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}; we include the details here because we are unaware of a detailed description elsewhere in the literature.  All results in this section extend without modification to nonorientable surfaces.
 
@@ -674,7 +687,7 @@ Right: The resulting system of dual arcs.  Compare with Figure \ref{fig:forest-c
 \label{fig:tree-coforest}
 \end{figure}
 
-Finally, for each edge $e$ in $G$, we define its signature \EMPH{$[e]$} to be the $\beta$-bit vector whose $i$th bit is equal to $1$ if and only if $e$ crosses $\dualarc_i$ (that is, if $\dualarc_i$ traverses the dual edge $e^*$) exactly once. \note{Not “an odd number of times”?} The signature $[H]$ of an even subgraph $H$ is the bitwise exclusive-or of the signatures of its edges.  Similarly, the signature~$[\cycle]$ of a cycle $\cycle$ is the bitwise exclusive-or of the signatures of the edges that $\cycle$ traverses an odd number of times.
+Finally, for each edge $e$ in $G$, we define its signature \EMPH{$[e]$} to be the $\beta$-bit vector whose $i$th bit is equal to~$1$ if and only if $e$ crosses $\dualarc_i$ (that is, if $\dualarc_i$ traverses the dual edge $e^*$) exactly once. \note{Not “an odd number of times”?} The signature $[H]$ of an even subgraph $H$ is the bitwise exclusive-or of the signatures of its edges.  Similarly, the signature~$[\cycle]$ of a cycle $\cycle$ is the bitwise exclusive-or of the signatures of the edges that $\cycle$ traverses an odd number of times.
 
 Let \EMPH{$h \oplus h'$} denote the bitwise exclusive-or of two homology signatures $h$ and $h'$, or equivalently, their sum as elements of the homology group~$(\Z_2)^\beta$.  The identities $[H \oplus H'] = [H] \oplus [H']$ and $[\cycle\cdot\cycle'] = [\cycle] \oplus [\cycle']$ follow directly from the definitions.
 
@@ -945,7 +958,7 @@ Every $\Z_2$-minimal even subgraph of $G$ has at most $g+b-1$ components.
 \begin{proof}
 Let $\gamma_1, \dots, \gamma_{g+b}$ be disjoint simple cycles on an \emph{abstract} surface $\Sigma$ of genus $g$ with $b$ boundaries, and consider the surface $\Sigma' = \Sigma \setminus (\gamma_1 \cup \cdots \cup \gamma_{g+b})$.  The definition of genus implies that $\Sigma'$ cannot be connected; indeed, $\Sigma'$ must have at least $b+1$ components.  So the pigeonhole principle implies that some component $\Sigma''$ of~$\Sigma$ does not contain any of the boundary cycles of $\Sigma$.  The boundary of $\Sigma''$ is therefore null-homologous.
 
-Now let $\eta$ be an even subgraph of $G$ with more than $g+b-1$ components.  Each component has a cycle decomposition, so $\eta$ must have a cycle decomposition with more than $g+b-1$ elements.  Thus, the argument in the first paragraph implies that some subgraph of $\eta$ must be null-homologous.  We conclude that $\eta$ is not $\Z_2$-minimal.
+Now let $H$ be an even subgraph of $G$ with more than $g+b-1$ components.  Each component has a cycle decomposition, so $H$ must have a cycle decomposition with more than $g+b-1$ elements.  Thus, the argument in the first paragraph implies that some subgraph of $H$ must be null-homologous.  We conclude that $H$ is not $\Z_2$-minimal.
 \end{proof}
 
 \begin{theorem}
@@ -1000,12 +1013,12 @@ Suppose we are given an \emph{arbitrary} graph $G = (V,E)$ with $n$ vertices and
 %\note{kylejfox: Won't picking an arbitrary rotation system give us an orientable embedding?}
 (We can compute the maximum-genus orientable cellular embedding  in polynomial time~\cite{fgm-fmggi-88}.)  Alternately, we can add zero-length edges to make the graph complete and then use classical results of Ringel, Youngs, and others \cite{ry-shmcp-68,r-mct-74} to compute a minimum-genus orientable embedding of $K_n$ in polynomial time.  Once we have an embedding, we add vertices and zero-cost edges to obtain a triangulation.
 
-Let $C$ be the sum of the absolute values of the edge costs: $C:= \sum_e \abs{c(e)}$.  We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{F:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
+Let $C$ be the sum of the absolute values of the edge costs: $C:= \sum_e \abs{c(e)}$.  We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{fig:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
 
 \begin{figure}[hbt]
-\centering\includegraphics[height=2.25in]{Fig/addhandle3}
+\centering\includegraphics[scale=0.4]{Fig/addhandle3}
 \caption{Adding a handle to transform a negative edge into a negative cocycle.  Thick (blue) edges have cost $C$; dashed edges have cost zero.}
-\label{F:addhandle}
+\label{fig:addhandle}
 \end{figure}
 
 Let $G'$ denote the transformed graph and $c'\colon E(G')\to \Real$ its associated cost function.  The minimum cut in $G'$ cannot contain any edge of an endpoint triangle.  Thus, for each edge cocycle, either all six edges cross the cut, or none of them cross the cut.  It follows that the minimum cut in $G'$ corresponds to a cut with equal cost in the original graph $G$.  Conversely, any cut in $G$ can be transformed into a cut in~$G'$ of equal cost.  Thus, computing the minimum cut in $G'$ is equivalent to computing the minimum cut in $G$.
@@ -1026,61 +1039,74 @@ Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} show that this circulation pr
 \section{Global Minimum Cut}
 \label{sec:global}
 
-\note{Status: Jeff and Erin are here.  Normalize notation/terminology}
+\note{Status: Alpha}
 
-Let~$G$ be undirected. We now turn our attention computing the global minimum cut of~$G$.
-To work with topology in computing a minimum cut, we use the following lemma which is similar very similar to Lemma~\ref{lem:cut-duality}.
-We say a null-homologous even subgraph~$\eta$ is a \EMPH{separating subgraph} if it contains at least one edge.
+Finally, we describe our algorithm to compute \emph{global} minimum cuts in surface-embedded graphs, where no source and target vertices are specified in advance.  As in previous sections, it is convenient to work in the dual graph.  We cannot apply Lemma \ref{lem:cut-duality} directly, but the following lemma similarly characterizes global minimum cuts in any surface graph in terms of homology in the dual graph.  A \EMPH{separating subgraph} is any non-empty boundary subgraph, or equivalently, the boundary of the union of a \emph{proper, non-empty} set of faces.
+
+\note{Unlike earlier sections, we need to assume the underlying surface does \textul{not} have boundary.}
 
 \begin{lemma}
 \label{lem:mincut-z2}
-Let~$G$ be an edge-weighted undirected graph embedded on a surface~$\Sigma$ without boundary, and let~$C$ be a minimum cut in~$G$.
-Then~$C^*$ is a minimum weight separating subgraph of~$G^*$.
+Let~$G$ be an undirected edge-weighted graph embedded on a surface~$\Sigma$ without boundary and let~$\Cut$ be a minimum cut in~$G$.  Then~$\Cut^*$ is a minimum-weight separating subgraph of~$G^*$.
 \end{lemma}
 
 \begin{proof}
-  Let~$C$ be an arbitrary cut in~$G$.  The cut partitions the vertices of $G$
-  into two disjoint subsets~$S$ and~$T$. Therefore, the dual subgraph~$C^*$
+  Let~$\Cut$ be an arbitrary cut in~$G$.  The cut partitions the vertices of $G$
+  into two disjoint subsets~$S$ and~$T$. Therefore, the dual subgraph~$\Cut^*$
   partitions the faces of~$G^*$ into two disjoint subsets~$S^*$ and~$T^*$.
-  Further,~$C^*$ is the boundary of the union of faces in~$S^*$, implying
-  that~$C^*$ is null-homologous in~$\Sigma$ and therefore separating.
+  Further,~$\Cut^*$ is the boundary of the union of faces in~$S^*$, implying
+  that~$\Cut^*$ is null-homologous in~$\Sigma$ and therefore separating.
 
-  Conversely, let~$C^*$ be an arbitrary separating subgraph of~$G^*$.
-  As~$C^*$ is null-homologous, it is the boundary of a subset of the faces
-  of~$G^*$.  Moreover, because $C^*$ is non-empty, it must be the boundary of
+  Conversely, let~$\Cut^*$ be any separating subgraph of~$G^*$.
+  As~$\Cut^*$ is null-homologous, it is the boundary of a subset of the faces
+  of~$G^*$.  Moreover, because $\Cut^*$ is non-empty, it must be the boundary of
   a \emph{proper, non-empty} subset of faces.  Let $s^*$ and $t^*$ be faces
-  of $G^*$ on either side of $C^*$.  Any path from~$s$ to~$t$ in the primal
-  graph~$G$ must traverse at least one edge of~$C$.  We conclude that~$C$ is
+  of $G^*$ on either side of $\Cut^*$.  Any path from~$s$ to~$t$ in the primal
+  graph~$G$ must traverse at least one edge of~$\Cut$.  We conclude that~$\Cut$ is
   a cut (in particular, an $(s,t)$-cut).
 \end{proof}
 
-Fix an undirected graph~$G=(V,E)$, a non-negative weight function ${w\colon E\to \Real}$, and a cellular embedding of~$G$ on a surface~$\Sigma$ of genus~$g$ with at least two faces.  In light of Lemma \ref{lem:mincut-z2}, we focus our attention on finding a minimum weight separating subgraph of~$G$. 
-
-Our algorithm separately considers two cases, illustrated in Figure~\ref{fig:global_cases}. Exactly one of these cases must apply to the minimum weight separating subgraph.
-\begin{enumerate}
-  \item
-    Some minimum weight separating subgraph consists of a single contractible simple cycle.
-  \item
-    Every minimum weight separating subgraph can be decomposed into non-contractible simple cycles.
-\end{enumerate}
+In light of this lemma, the remainder of this section describes an algorithm to find a minimum-weight separating subgraph in a given surface-embedded graph $G$ with non-negative edge weights.
 %
+%To simplify notation, we shift our focus from the original primal graph to its dual.
+%\note{Check consistency.}
+%Fix an undirected graph~$G=(V,E)$, a non-negative weight function ${w\colon E\to \Real}$, and a cellular embedding of~$G$ on a surface~$\Sigma$ of genus~$g$ with at least two faces.  In light of Lemma \ref{lem:mincut-z2}, we focus our attention on finding a minimum weight separating subgraph of~$G$. 
+
+Let $H$ be any minimum-weight separating subgraph.  If $H$ is connected and has a contractible Euler tour, then $H$ must be a \emph{simple} contractible cycle  \note{because the shortest contractible cycle is simple, by the 3-path condition}.  Otherwise, every cycle decomposition of $H$ consists of one or more cycles, each of which is non-contractible.  See Figure~\ref{fig:global_cases}.
+
 \begin{figure}[ht]
 \centering
 \includegraphics[height=1in]{Fig/shortcon2}\qquad
 \includegraphics[height=1in]{Fig/homologous1}
-\caption{Two types of minimum weight separating subgraphs: a contractible cycle and otherwise.}
+\caption{Two types of minimum-weight separating subgraphs: a simple contractible cycle and otherwise.}
 \label{fig:global_cases}
 \end{figure}
-%
 
-Throughout the rest of this section, we describe two subroutines to find minimum weight separating subgraphs that are designed with their corresponding condition in mind. If the corresponding condition does hold, the subroutine will return a separating subgraph with weight at most that of the minimum weight separating subgraph. Otherwise, the subroutine may return a higher weight separating subgraph. By running both subroutines and returning the best result, we find a minimum weight separating subgraph no matter which category it falls into.
+Thus, in principle, we can find a minimum-weight separating subgraph by first computing a shortest contractible cycle, then computing a minimum-weight separating collection of non-contractible cycles, and finally returning the lighter of these two subgraphs.  Unfortunately, we do not know how to solve either of these subproblems in our stated time bounds \note{Really?}, so our algorithm takes a more subtle approach. 
+
+In Section \ref{sec:global_contractible}, we describe an algorithm that computes a minimum-weight separating subgraph \emph{if} any minimum-weight separating subgraph is a simple contractible cycle.  Similarly, in Section \ref{sec:global_non-contractible}, we describe an algorithm that computes a minimum-weight separating subgraph \emph{if} any minimum-weight separating subgraph can be decomposed into non-contractible cycles.  In both cases, if no minimum-weight separating subgraph satisfies the corresponding condition, the algorithm still returns a boundary subgraph, but this subgraph could be empty or have large weight.  By running both subroutines and returning the best result, we are guaranteed to find a minimum-weight separating subgraph, no matter which category it falls into.
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Contractible cycle}
 \label{sec:global_contractible}
 
-We begin by describing an algorithm to handle the case where some minimum weight separating subgraph is a contractible simple cycle.
+ 
+\begin{TODO}
+\noindent
+Notation issues:
+\begin{itemize}\cramped
+\item No scissors.  But $\snip$ for “snip” and $\Gsnip$ for $G$-after-cutting are  macros, so we can revert if necessary.
+\item Are $\alpha$ and $\gamma$ the right notation for a simple cycle and its projection,  in Lemma 7.4?
+\item Define $e = f|g$ in the prelims.
+\item Is $P$ the greedy system of arcs?  What if the surface has no boundary?
+\item $\gamma_1$ and $\gamma_2$ for simple cycles is OK.
+\item Later: Don’t use $\sigma$ for minimum-weight separating subgraph when it isn’t a cycle.
+\end{itemize}
+\end{TODO}
+
+We begin by describing an algorithm to handle the case where some minimum weight separating subgraph is a simple contractible cycle.
 We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.
 
 \begin{lemma}[Cabello~\cite{c-fscss-10}]
@@ -1116,11 +1142,11 @@ ${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any null
 \end{lemma}
 \begin{proof}
 Let~$\gammasnip$ be an arbitrary null-homologous even subgraph in~$\Gsnip$ and let~$\gamma$ be its projection in~$G$.
-Subgraph~$\gamma$ bounds a subset of faces~$F_{\subsnip}$ in~$\Gsnip$. 
-Let~$F$ be the projection of~$F_{\subsnip}$ into~$G$.
+Subgraph~$\gamma$ bounds a subset of faces~$\Fsnip$ in~$\Gsnip$. 
+Let~$F$ be the projection of~$\Fsnip$ into~$G$.
 We will argue that~$\gamma$ bounds~$F$, proving the lemma.
 
-Consider any edge~$e = f | g$ on the boundary of~$F$. If~$f$ and~$g$ still lie adjacent along~$e$ in~$\Gsnip$, then~$e$ bounds~$F_{\subsnip}$ and appears in~$\gamma$. If~$e$ separates a face~$f$ from the boundary of~$\Gsnip$, then~$e$ still appears in~$\gamma$.
+Consider any edge~$e = f | g$ \note{define} on the boundary of~$F$. If~$f$ and~$g$ still lie adjacent along~$e$ in~$\Gsnip$, then~$e$ bounds~$\Fsnip$ and appears in~$\gamma$. If~$e$ separates a face~$f$ from the boundary of~$\Gsnip$, then~$e$ still appears in~$\gamma$.
 
 Now consider any edge~$e$ in~$\gammasnip$. Suppose~$e$ does not lie along~$\alpha$ so that its projection appears in~$\gamma$. Edge~$e$ separates two faces~$f$ and~$g$ in~$\Gsnip$, and exactly one of those faces appears in~$F$. Now suppose~$e$ does lie along~$\alpha$. Edge~$e$ separates face~$f \in F$ from the boundary of~$\Gsnip$. The projection of~$e$ may separate~$f$ from another face~$g$. If~$g$ exists and is also in~$F$, then there exists another edge~$e'$ in~$\Gsnip$ that separates~$g$ from the boundary of~$\Gsnip$. The projections of~$e$ and~$e'$ cancel each other when taking the symmetric difference so their projection does not appear in~$\gamma$. Finally, if~$g$ does not exist or~$g$ is not a member of~$F$, then there is not another edge that shares a projection with~$e$. The projection of~$e$ will exist in~$\gamma$.
 \end{proof}
@@ -1151,51 +1177,52 @@ Let~$\gamma$ be the shorter of the cycles~$\gamma_1$ and $\gamma_2$.  By multipl
 Our algorithm returns the symmetric difference over all edges in~$\gamma'$. The outer face of $\Gsnip$ is the only face that is not also a face of~$G$.
 It follows that the only separating cycle in $\Gsnip$ that is not a separating subgraph in $G$ is the boundary of outer face.  Because $\gamma$ avoids at least one edge of the outer face, the carrier of $\gamma'$ must be non-empty. If our algorithm returns anything, it must return a separating subgraph.
 
-Now, suppose some minimum weight separating subgraph of~$G$ is a contractible simple cycle. Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply that some shortest contractible simple cycle $\sigma$ in $G$ crosses neither~$P$ nor $\alpha$.  (We emphasize that our algorithm does not necessarily compute~$\sigma$.)  This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that avoids at least one of the edges $e_1$ or $e_2$.  Thus, $\sigma$ cannot be shorter than $\gamma$, and our algorithm returns a minimum weight separating subgraph.
+Now, suppose some minimum weight separating subgraph of~$G$ is a contractible simple cycle. Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply that some shortest contractible simple cycle $\sigma$ in $G$ crosses neither~$P$ nor~$\alpha$.  (We emphasize that our algorithm does not necessarily compute~$\sigma$.)  This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that avoids at least one of the edges $e_1$ or $e_2$.  Thus, $\sigma$ cannot be shorter than $\gamma$, and our algorithm returns a minimum weight separating subgraph.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \subsection{Non-contractible components}
 \label{sec:global_non-contractible}
-Next, we consider the case where all minimum weight separating subgraphs contain components that are non-contractible. The following lemma is the key result of this section and could likely have applications beyond this work.
+
+Next we consider the case where every minimum-weight separating subgraph contains a noncontractible cycles.  The following lemma is the key result of this section and could likely have applications beyond this work.
 \begin{lemma}
 \label{lem:global_split-nocross}
-Let~$\sigma$ be a minimum weight separating subgraph, and let~$f$ be any face of~$G$.
-Let~$\gamma$ be a closed walk on~$G$ that lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$, and let~$\eta$
+Let~$\sigma$ be a minimum-weight separating subgraph, and let~$f$ be any face of~$G$.
+Let~$\gamma$ be a closed walk on~$G$ that lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$, and let~$H$
 be a shortest even subgraph homologous to~$\gamma$.
 There exists a minimum weight separating subgraph~$\sigma'$ (possibly~$\sigma$) such
-that~$\eta$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma'$. (See Figure~\ref{fig:global_nonsep-vs-shortsep}.)
+that~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma'$. (See Figure~\ref{fig:global_nonsep-vs-shortsep}.)
 \end{lemma}
 \begin{figure}[ht]
 \centering
 \includegraphics[height=1.2in]{Fig/nonsep-vs-shortsep}
-\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$\eta$ is separated from face~$f$ by a minimum weight separating subgraph~$\sigma'$.}
+\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$H$ is separated from face~$f$ by a minimum weight separating subgraph~$\sigma'$.}
 \label{fig:global_nonsep-vs-shortsep}
 \end{figure}
 \begin{proof}
-If~$\sigma$ fits the requirement that~$\eta$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$, then we are done. Assume otherwise.
-The subgraph~$\sigma$ separates the faces of~$G$ into two non-empty sets.  Call the faces in the component of~$\Sigma \setminus \sigma$ containing~$f$ the \emph{far} faces and call the rest of the faces  \emph{near}.  Similarly, the even subgraph $\eta \oplus \gamma$ is null-homologous and separates the faces of $G$ into two subsets; call the faces in the subset containing~$f$ \emph{black} and the others \emph{white}.
+If~$\sigma$ fits the requirement that~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$, then we are done. Assume otherwise.
+The subgraph~$\sigma$ separates the faces of~$G$ into two non-empty sets.  Call the faces in the component of~$\Sigma \setminus \sigma$ containing~$f$ the \emph{far} faces and call the rest of the faces  \emph{near}.  Similarly, the even subgraph $H \oplus \gamma$ is null-homologous and separates the faces of $G$ into two subsets; call the faces in the subset containing~$f$ \emph{black} and the others \emph{white}.
 
 Let~$\sigma'$ be the boundary of the union of the far black faces in $G$.
-By definition,~$\sigma'$ is a null-homologous even subgraph.  By assumption, $\eta$ has edges that are incident to two far faces, but $\gamma$ does not; thus, there is at least one far black face~$f$.  Since there is also at least one near face, $\sigma'$ is non-empty. 
-No edge of~$\eta$ lies between two far black faces so~$\eta$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma'$. We claim~$\sigma'$ is a minimum weight even subgraph.
+By definition,~$\sigma'$ is a null-homologous even subgraph.  By assumption, $H$ has edges that are incident to two far faces, but $\gamma$ does not; thus, there is at least one far black face~$f$.  Since there is also at least one near face, $\sigma'$ is non-empty. 
+No edge of~$H$ lies between two far black faces so~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma'$. We claim~$\sigma'$ is a minimum weight even subgraph.
 
 For the sake of contradiction, suppose~$\sigma'$ is not a minimum weight even subgraph.
-Because both~$\sigma'$ and $\sigma$ are null-homologous, the even subgraph $\eta' = \eta \oplus \sigma' \oplus \sigma$ is homologous to $\eta$, and therefore to $\gamma$.
+Because both~$\sigma'$ and $\sigma$ are null-homologous, the even subgraph $H' = H \oplus \sigma' \oplus \sigma$ is homologous to $H$, and therefore to $\gamma$.
 
-For any subgraph~$H$ of $G$, let $w(H)$ denote the sum of the weights of the edges of $H$.  We now prove that $w(\sigma') + w(\eta') \leq w(\eta) + w(\sigma)$ by bounding the contribution of each edge $e \in E(G)$ to both sides of the inequality.  Note that both $\sigma'$ and $\eta'$ are subgraphs of $\sigma\cup \eta$; moreover, $\sigma' \oplus \eta' = \sigma \oplus \eta$.  There are three cases to consider.
+For any subgraph~$H$ of $G$, let $w(H)$ denote the sum of the weights of the edges of $H$.  We now prove that $w(\sigma') + w(H') \leq w(H) + w(\sigma)$ by bounding the contribution of each edge $e \in E(G)$ to both sides of the inequality.  Note that both $\sigma'$ and $H'$ are subgraphs of $\sigma\cup H$; moreover, $\sigma' \oplus H' = \sigma \oplus H$.  There are three cases to consider.
 \begin{itemize}
 \item
-If $e \not\in \eta \cup \sigma$, then $e$ contributes $0$ to both sides of the inequality.
+If $e \not\in H \cup \sigma$, then $e$ contributes $0$ to both sides of the inequality.
 \item
-If $e \in \sigma \oplus \eta$, then $e \in \sigma' \oplus \eta'$.  In this case, $e$ contributes $w(e)$ to both sides of the inequality.
+If $e \in \sigma \oplus H$, then $e \in \sigma' \oplus H'$.  In this case, $e$ contributes $w(e)$ to both sides of the inequality.
 \item
-If $e \in \sigma \cap \eta$, then $e$ contributes exactly $2w(e)$ to the right side of the inequality.  Trivially, $e$ contributes at most $2w(e)$ to the left side.
+If $e \in \sigma \cap H$, then $e$ contributes exactly $2w(e)$ to the right side of the inequality.  Trivially, $e$ contributes at most $2w(e)$ to the left side.
 \end{itemize}
 
 On the other hand, because $\sigma'$ is not a minimum weight separating subgraph, we must have $w(\sigma') > w(\sigma)$. 
-It immediately follows that $w(\eta') < w(\eta)$, which contradicts the minimality of $\eta$.
+It immediately follows that $w(H') < w(H)$, which contradicts the minimality of $H$.
 \end{proof}
 
 We now present the main result of this section, concluding the description of our algorithm for computing minimum weight separating subgraphs and minimum cuts.
@@ -1210,14 +1237,14 @@ We argue that there exists a non-separating closed walk~$\gamma$ in~$G$ that lie
 By assumption,~$\sigma$ can be decomposed into simple cycles, each of which is non-contractible. Suppose~$\sigma$ consists of more than one cycle. None of the cycles are null-homologous, because we could remove a single null-homologous cycle from~$\sigma$ to lower its cost without changing it homology class.
 In this case,~$\gamma$ is simply one of the cycles in~$\sigma$'s decomposition. Now, assume~$\sigma$ consists of a single simple cycle. Cycle~$\sigma$ is not contractible by assumption, so neither component of $\Sigma \setminus \sigma$ is planar. The closure of the component opposite~$f$ has non-zero genus and therefore contains a non-separating closed walk in~$\Sigma$.
 
-Let~$\eta$ be a shortest even subgraph homologous to~$\gamma$.
-By Lemma~\ref{lem:global_split-nocross}, we may assume without loss of generality that~$\eta$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Assume for now that our algorithm knows~$\eta$. We will remove this assumption later in the proof.
+Let~$H$ be a shortest even subgraph homologous to~$\gamma$.
+By Lemma~\ref{lem:global_split-nocross}, we may assume without loss of generality that~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Assume for now that our algorithm knows~$H$. We will remove this assumption later in the proof.
 
-Our algorithm picks an arbitrary edge~$e = h_1 | h_2$ of~$\eta$. At least one of~$h_1$ and~$h_2$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Our algorithm computes minimum weight subgraphs separating~$h_1$ from~$f$ and~$h_2$ from~$f$ using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}. It then returns the cheaper of these two subgraphs, which weighs no more than~$\sigma$.
+Our algorithm picks an arbitrary edge~$e = h_1 | h_2$ of~$H$. At least one of~$h_1$ and~$h_2$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Our algorithm computes minimum weight subgraphs separating~$h_1$ from~$f$ and~$h_2$ from~$f$ using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}. It then returns the cheaper of these two subgraphs, which weighs no more than~$\sigma$.
 
-We now remove the assumption that our algorithm knows~$\eta$. Non-separating even subgraph~$\eta$ is shortest for one of~$2^{2g}-1$ homology classes. Our algorithm enumerates all~$2^{2g}-1$ homology classes by sampling subsets of cycles from a homology basis~\cite{e-dgteg-03}. For each homology class~$x$, it finds the shortest even subgraph~$\eta_x$ and runs the subroutine described in the previous paragraph assuming~$\eta = \eta_x$. If a there exists no subgraph separating the arbitrarily picked edge~$e \in \eta_x$ from~$f$ (in other words,~$e = f | f$), then the subroutine correctly returns nothing for that choice of homology class.
+We now remove the assumption that our algorithm knows~$H$. Non-separating even subgraph~$H$ is shortest for one of~$2^{2g}-1$ homology classes. Our algorithm enumerates all~$2^{2g}-1$ homology classes by sampling subsets of cycles from a homology basis~\cite{e-dgteg-03}. For each homology class~$x$, it finds the shortest even subgraph~$H_x$ and runs the subroutine described in the previous paragraph assuming~$H = H_x$. If a there exists no subgraph separating the arbitrarily picked edge~$e \in H_x$ from~$f$ (in other words,~$e = f | f$), then the subroutine correctly returns nothing for that choice of homology class.
 The algorithm returns the least weight separating subgraph returned by any instantiation of the subroutine or nothing if no instantiation returns a separating subgraph.
-One of the homology classes contains~$\eta$, so the algorithm will eventually find the minimum weight separating subgraph assuming every minimum weight separating subgraph can be decomposed into non-contractible simple cycles.
+One of the homology classes contains~$H$, so the algorithm will eventually find the minimum weight separating subgraph assuming every minimum weight separating subgraph can be decomposed into non-contractible simple cycles.
 \end{proof}
 
 By running the algorithms described in Lemmas~\ref{lem:contractible-alg} and~\ref{lem:global_split-alg}, we get the main results of this section.
