@@ -157,11 +157,11 @@ To do:
 \item Optimal homology representatives
 \item Rewrite story — Section 1.2
 \item Normalize notation/terminology/assumptions ???
-\item Check conditions for orientable -- NO
-\item Check conditions for directed -- NO
+\item Check conditions for orientable? -- NO!  Assume orientable
+\item Check conditions for directed? -- NO! Assume undirected (except comment in hom cover section)
 \item Check missing citations
 \item Cite new work since conference papers
-\item Notation: $\snip$ vs $\setminus$ vs $\setminus\!\!\setminus$
+\item Notation: $\snip$ vs $\setminus$ vs $\setminus\!\!\setminus$ vs $\fatbslash$
 \end{itemize}
 \end{TODO}
 
@@ -705,7 +705,7 @@ An even subgraph $H$ of $G$ is null-homologous in $\Sigma$ if and only if $[H] =
 \end{lemma}
 
 \begin{proof}
-Let $H$ be a null-homologous even subgraph of $G$.  Then by definition, $H$ is the boundary of the union of a subset~$Y$ of faces of $G$.  The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.  It follows immediately that $[H] = [\bigoplus_{f\in Y} \partial f] = \bigoplus_{f\in Y} [\partial f] = 0$.
+Let $H$ be a boundary subgraph of $G$.  Then by definition, $H$ is the boundary of the union of a subset~$Y$ of faces of $G$.  The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.  It follows immediately that $[H] = [\bigoplus_{f\in Y} \partial f] = \bigoplus_{f\in Y} [\partial f] = 0$.
 
 Conversely, suppose $H$ crosses each arc $\dualarc_i$ an even number of times, so $[H]=0$.  Let $x$ and $y$ be two intersection points between $H$ and some arc $\dualarc_i$, and let $\dualarc_i[x,y]$ be the subpath of $\dualarc_i$ between those two points.  Replacing tiny segments of $H$ through~$x$ and~$y$ with two copies of $\dualarc_i[x,y]$ does not change the homology class of $H$, but does reduce the number of intersection points between $H$ and $\dualarc_i$.  It follows by induction that~$H$ is homologous to another even graph $H'$ that does not intersect any path~$\dualarc_i$ at all.  This even graph lies entirely within the disk $\Sigma\setminus \bigcup_i\dualarc_i$, and is therefore null-homologous.
 \end{proof}
@@ -1002,7 +1002,7 @@ Consider the \emph{residual weight} function $c_H\colon E\to \Real$ defined by s
     H \oplus \textsc{MinHom}(\varnothing, c_H).
 \)
 
-Every null-homologous even subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the weight function $c_H$.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost is empty.
+Every boundary subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the weight function $c_H$.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost is empty.
 
 In fact, our reduction is reversible.  Suppose we want to find the minimum cut in an embedded graph $G = (V, E)$ with respect to the cost function $c\colon E\to \Real$, where every face of $G$ is incident to an even number of edges with negative cost.  Let $H = \set{{e\in E}\mid {c(e)<0}}$ be the subgraph of negative-cost edges, and let $X$ denote the (possibly empty) set of edges in the minimum cut of $G$.  Consider the \emph{absolute cost} function $\abs{c}\colon E^*\to \Real$ defined as $\abs{c}(e^*) = \abs{c(e)}$.  Then $(H\oplus X)^*$ is the even subgraph of $G^*$ of minimum absolute cost that is homologous to $H^*$.
 \end{proof}
@@ -1084,6 +1084,8 @@ Let $H$ be any minimum-weight separating subgraph.  If $H$ is connected and has 
 
 Thus, in principle, we can find a minimum-weight separating subgraph by first computing a shortest contractible cycle, then computing a minimum-weight separating collection of non-contractible cycles, and finally returning the lighter of these two subgraphs.  Unfortunately, we do not know how to solve either of these subproblems in our stated time bounds \note{Really?}, so our algorithm takes a more subtle approach. 
 
+\note{Yes, really. Cabello \etal\ reduce finding the shortest contractible closed walk that encloses at least one face to finding a global minimum cut in a planar graph $O(n\log n)$ time \cite{cdem-fotc-10}.  At the time, the fastest planar mincut algorithm ran in $O(n \log^2 n)$ time~\cite{cfn-dnlta-04}, but the more recent algorithm of \L\c{a}cki and Sankowski runs in $O(n \log \log n)$  time~\cite{ls-mcsc-11}.  However, as we (Kyle) already point(s) out, the resulting closed walk may self-overlap everywhere, making the resulting graph in $G$ empty.}
+
 In Section \ref{sec:global_contractible}, we describe an algorithm that computes a minimum-weight separating subgraph \emph{if} any minimum-weight separating subgraph is a simple contractible cycle.  Similarly, in Section \ref{sec:global_non-contractible}, we describe an algorithm that computes a minimum-weight separating subgraph \emph{if} any minimum-weight separating subgraph can be decomposed into non-contractible cycles.  In both cases, if no minimum-weight separating subgraph satisfies the corresponding condition, the algorithm still returns a boundary subgraph, but this subgraph could be empty or have large weight.  By running both subroutines and returning the best result, we are guaranteed to find a minimum-weight separating subgraph, no matter which category it falls into.
 
 
@@ -1097,8 +1099,8 @@ In Section \ref{sec:global_contractible}, we describe an algorithm that computes
 \noindent
 Notation issues:
 \begin{itemize}\cramped
-\item No scissors.  But $\snip$ for “snip” and $\Gsnip$ for $G$-after-cutting are  macros, so we can revert if necessary.
-\item Are $\alpha$ and $\gamma$ the right notation for a simple cycle and its projection,  in Lemma 7.4?
+\item No scissors; $\snip$ for “snip” and $\Gsnip$ for $G$-after-cutting are  macros, so we can revert if Amir or Kyle object.
+\item Are $\alpha$ and $\gamma$ the right notation for a simple cycle and its projection, in Lemma 7.4?
 \item Define $e = f|g$ in the prelims.
 \item Is $P$ the greedy system of arcs?  What if the surface has no boundary?
 \item $\gamma_1$ and $\gamma_2$ for simple cycles is OK.
@@ -1111,37 +1113,42 @@ We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.
 
 \begin{lemma}[Cabello~\cite{c-fscss-10}]
 \label{lem:disjoint-tight-arc}
-Let $\alpha$ be a tight arc or tight cycle on $G$.  There exists a shortest contractible simple cycle that does not cross $\alpha$.
+Let $\alpha$ be a tight arc or tight cycle on $G$.  There exists a shortest simple contractible cycle that does not cross $\alpha$.
 \end{lemma}
 
 \begin{corollary}
 \label{cor:disjoint-sep-cycle}
-The shortest contractible simple cycle and the shortest non-separating cycle in $G$ do not cross.
+The shortest simple contractible cycle and the shortest non-separating cycle in $G$ do not cross.
 \end{corollary}
 
 \begin{figure}[ht]
 \centering
 \includegraphics[height=1.2in]{Fig/shortcon-vs-shortnonsep}
-\caption{A shortest contractible simple cycle does not cross some shortest non-separating cycle.}
+\caption{A shortest simple contractible cycle does not cross some shortest non-separating cycle.}
 \label{fig:global_shortcon-vs-shortnonsep}
 \end{figure}
 
-Cabello~\cite{c-fscss-10} uses these observations in order to compute a shortest contractible simple cycle in a surface embedded graph.
-Unfortunately his algorithm takes~$\Omega(n^2)$ time, because his algorithm must return a shortest contractible simple cycle even if it is not a minimum weight separating subgraph.
-Cabello \etal~\cite{cdem-fotc-10} use a similar procedure to find a shortest \emph{enclosing cycle} which bounds a non-empty set of faces.
-While this procedure can be modified to run in~$g^{O(g)} n \log \log n$ time, it may return a cycle that is actually trivial after taking the symmetric difference over all its edges with multiplicity.
-The cycle returned may not be a separating subgraph as per our definition.
+Cabello~\cite{c-fscss-10} uses these observations to compute a shortest simple contractible cycle in a surface embedded graph; unfortunately, his algorithm runs in $O(n^2\log n)$ time.
+Cabello \etal~\cite{cdem-fotc-10} use the same observations to find a shortest contractible \emph{closed walk} that encloses a non-empty set of faces in $O(n\log n)$ time (with no dependence on $g$).%
+%
+\footnote{Cabello \etal\ reduce this problem to finding a global minimum cut in a planar graph in $O(n \log n)$ time~\cite{cdem-fotc-10}.  They used the planar minimum-cut algorithm of Chalermsook \etal~\cite{cfn-dnlta-04} to derive a running time of $O(n\log^2 n)$; the \L\c{a}cki and Sankowski runs in $O(n \log \log n)$  time~\cite{ls-mcsc-11}.}
+%
+However, the resulting closed walk $W$ might traverse some edges of~$G$ more than once.  The set of edges that $W$ traverses an odd number of times does constitute a boundary subgraph; unfortunately, this subgraph could be disconnected or even empty.
+
+\begin{TODO}
+Compare our algorithm with \cite[Theorem 5.4]{cdem-fotc-10}.  Is the only difference that we’re insisting that the cycle avoid at least one copy of one edge of one arc?  If so, this phase already runs in $O(n \log n)$ time, with no $g$-dependence.  If not, add text to describe difference.
+\end{TODO}
 
 Our algorithm will make use of the cutting operation ($\snip$) along tight cycles and arcs in~$G$.
-\note{TODO: Define $\snip$ in the prelims.}
-The following lemma implies it is safe for our algorithm to find minimum weight separating subgraphs in snipped copies of~$\Sigma$.
+\note{Define $\snip$ in the prelims.}
+The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
 \begin{lemma}
 \label{lem:global_null-homologous-projections}
 Let~$\alpha$ be an arbitrary simple cycle or arc in~$G$. Let
-${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any null-homologous even subgraph~$\gammasnip$ in~$\Gsnip$ projects to a null-homologous even subgraph in~$G$.
+${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any boundary subgraph~$\gammasnip$ in~$\Gsnip$ projects to a boundary subgraph in~$G$.
 \end{lemma}
 \begin{proof}
-Let~$\gammasnip$ be an arbitrary null-homologous even subgraph in~$\Gsnip$ and let~$\gamma$ be its projection in~$G$.
+Let~$\gammasnip$ be an arbitrary boundary subgraph in~$\Gsnip$ and let~$\gamma$ be its projection in~$G$.
 Subgraph~$\gamma$ bounds a subset of faces~$\Fsnip$ in~$\Gsnip$. 
 Let~$F$ be the projection of~$\Fsnip$ into~$G$.
 We will argue that~$\gamma$ bounds~$F$, proving the lemma.
@@ -1154,7 +1161,7 @@ Now consider any edge~$e$ in~$\gammasnip$. Suppose~$e$ does not lie along~$\alph
 We now present the main result of this section.
 \begin{lemma}
 \label{lem:contractible-alg}
-There exists a~$g^{O(g)} n \log \log n$ time algorithm that computes a minimum weight separating subgraph if any such subgraph is a contractible simple cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
+There exists a~$g^{O(g)} n \log \log n$ time algorithm that computes a minimum weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
 
 \begin{proof}
@@ -1164,7 +1171,7 @@ It then computes a system $P$ of tight arcs anchored on $\alpha'$ and $\alpha''$
 \note{Again, verify that the set of arcs can be computed in linear time this way.}
 Let $\Gsnip$ denote the planar graph $G \snip (\alpha \cup P)$; this graph has $O(gn)$ vertices.
 
-Pick an arbitrary edge $e$ of $\alpha$, and let $e_1$ and $e_2$ be distinct copies of $e$ in~$\Gsnip$.  Let $\gamma_1$ and $\gamma_2$ be the shortest simple cycles in the  subgraphs $\Gsnip \backslash e_1$ and $\Gsnip \backslash e_2$, respectively.  Our algorithm computes both~$\gamma_1$ and~$\gamma_2$ in $O(gn \log\log n)$ time using the algorithm of \L\c{a}cki and Sankowski~\cite{ls-mcsc-11}. Note that graphs~$\Gsnip \backslash e_1$ and~$\Gsnip \backslash e_2$ may not contain any cycles. In this case,~$\Gsnip$ contains no simple cycles. Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply~$G$ does not contains any contractible simple cycles to begin with and our algorithm returns nothing. For the rest of this section, we assume~$\gamma_1$ and~$\gamma_2$ are well defined.
+Pick an arbitrary edge $e$ of $\alpha$, and let $e_1$ and $e_2$ be distinct copies of $e$ in~$\Gsnip$.  Let $\gamma_1$ and $\gamma_2$ be the shortest simple cycles in the  subgraphs $\Gsnip \backslash e_1$ and $\Gsnip \backslash e_2$, respectively.  Our algorithm computes both~$\gamma_1$ and~$\gamma_2$ in $O(gn \log\log n)$ time using the algorithm of \L\c{a}cki and Sankowski~\cite{ls-mcsc-11}. Note that graphs~$\Gsnip \backslash e_1$ and~$\Gsnip \backslash e_2$ may not contain any cycles. In this case,~$\Gsnip$ contains no simple cycles. Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply~$G$ does not contains any simple contractible cycles to begin with and our algorithm returns nothing. For the rest of this section, we assume~$\gamma_1$ and~$\gamma_2$ are well defined.
 
 \begin{figure}[ht]
 \centering
@@ -1177,7 +1184,7 @@ Let~$\gamma$ be the shorter of the cycles~$\gamma_1$ and $\gamma_2$.  By multipl
 Our algorithm returns the symmetric difference over all edges in~$\gamma'$. The outer face of $\Gsnip$ is the only face that is not also a face of~$G$.
 It follows that the only separating cycle in $\Gsnip$ that is not a separating subgraph in $G$ is the boundary of outer face.  Because $\gamma$ avoids at least one edge of the outer face, the carrier of $\gamma'$ must be non-empty. If our algorithm returns anything, it must return a separating subgraph.
 
-Now, suppose some minimum weight separating subgraph of~$G$ is a contractible simple cycle. Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply that some shortest contractible simple cycle $\sigma$ in $G$ crosses neither~$P$ nor~$\alpha$.  (We emphasize that our algorithm does not necessarily compute~$\sigma$.)  This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that avoids at least one of the edges $e_1$ or $e_2$.  Thus, $\sigma$ cannot be shorter than $\gamma$, and our algorithm returns a minimum weight separating subgraph.
+Now, suppose some minimum weight separating subgraph of~$G$ is a simple contractible cycle. Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply that some shortest simple contractible cycle $\sigma$ in $G$ crosses neither~$P$ nor~$\alpha$.  (We emphasize that our algorithm does not necessarily compute~$\sigma$.)  This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that avoids at least one of the edges $e_1$ or $e_2$.  Thus, $\sigma$ cannot be shorter than $\gamma$, and our algorithm returns a minimum weight separating subgraph.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1185,66 +1192,72 @@ Now, suppose some minimum weight separating subgraph of~$G$ is a contractible si
 \subsection{Non-contractible components}
 \label{sec:global_non-contractible}
 
-Next we consider the case where every minimum-weight separating subgraph contains a noncontractible cycles.  The following lemma is the key result of this section and could likely have applications beyond this work.
+\def\minSS{S}
+
+Next we consider the case where every minimum-weight separating subgraph consists of noncontractible cycles.  The following lemma, which is the main result of this section, might be of independent interest.\note{If we think this may have further applications, say why.} (See Figure~\ref{fig:global_nonsep-vs-shortsep}.)
+
+\note{Observe that $\Sigma \setminus \minSS$ has only two components?}
+
 \begin{lemma}
 \label{lem:global_split-nocross}
-Let~$\sigma$ be a minimum-weight separating subgraph, and let~$f$ be any face of~$G$.
-Let~$\gamma$ be a closed walk on~$G$ that lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$, and let~$H$
+Let~$\minSS$ be a minimum-weight separating subgraph, and let~$f$ be any face of~$G$.
+Let~$\gamma$ be a closed walk on~$G$ that lies in the closure of the component of~$\Sigma \setminus \minSS$ not containing $f$, and let~$H$
 be a shortest even subgraph homologous to~$\gamma$.
-There exists a minimum weight separating subgraph~$\sigma'$ (possibly~$\sigma$) such
-that~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma'$. (See Figure~\ref{fig:global_nonsep-vs-shortsep}.)
+There is a minimum weight separating subgraph~$\minSS'$ (possibly~$\minSS$) such
+that~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS’$ not containing $f$. 
 \end{lemma}
 \begin{figure}[ht]
 \centering
 \includegraphics[height=1.2in]{Fig/nonsep-vs-shortsep}
-\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$H$ is separated from face~$f$ by a minimum weight separating subgraph~$\sigma'$.}
+\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$H$ is separated from face~$f$ by a minimum weight separating subgraph~$\minSS'$.}
 \label{fig:global_nonsep-vs-shortsep}
 \end{figure}
 \begin{proof}
-If~$\sigma$ fits the requirement that~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$, then we are done. Assume otherwise.
-The subgraph~$\sigma$ separates the faces of~$G$ into two non-empty sets.  Call the faces in the component of~$\Sigma \setminus \sigma$ containing~$f$ the \emph{far} faces and call the rest of the faces  \emph{near}.  Similarly, the even subgraph $H \oplus \gamma$ is null-homologous and separates the faces of $G$ into two subsets; call the faces in the subset containing~$f$ \emph{black} and the others \emph{white}.
+Assume that~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS$ not containing $f$, then we are done, so assume otherwise.
 
-Let~$\sigma'$ be the boundary of the union of the far black faces in $G$.
-By definition,~$\sigma'$ is a null-homologous even subgraph.  By assumption, $H$ has edges that are incident to two far faces, but $\gamma$ does not; thus, there is at least one far black face~$f$.  Since there is also at least one near face, $\sigma'$ is non-empty. 
-No edge of~$H$ lies between two far black faces so~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma'$. We claim~$\sigma'$ is a minimum weight even subgraph.
+The subgraph~$\minSS$ separates the faces of~$G$ into two non-empty sets.  Call the faces in the component of~$\Sigma \setminus \minSS$ containing~$f$ the \emph{far} faces and call the rest of the faces  \emph{near}.  Similarly, the even subgraph $H \oplus \gamma$ is null-homologous and therefore separates the faces of $G$ into two subsets; call the faces in the subset containing~$f$ \emph{black} and the others \emph{white}.  (If $H = \gamma$, then every face of $G$ is black.)
 
-For the sake of contradiction, suppose~$\sigma'$ is not a minimum weight even subgraph.
-Because both~$\sigma'$ and $\sigma$ are null-homologous, the even subgraph $H' = H \oplus \sigma' \oplus \sigma$ is homologous to $H$, and therefore to $\gamma$.
+Let~$\minSS'$ be the boundary of the union of the far black faces in $G$.
+By definition,~$\minSS'$ is a boundary subgraph.  By assumption, $H$ has edges that are incident to two far faces, but $\gamma$ does not; thus, there is at least one far black face~$f$.  Since there is also at least one near face, $\minSS'$ is non-empty. 
+No edge of~$H$ lies between two far black faces so~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \minSS'$. We claim~$\minSS'$ is a minimum weight even subgraph.
 
-For any subgraph~$H$ of $G$, let $w(H)$ denote the sum of the weights of the edges of $H$.  We now prove that $w(\sigma') + w(H') \leq w(H) + w(\sigma)$ by bounding the contribution of each edge $e \in E(G)$ to both sides of the inequality.  Note that both $\sigma'$ and $H'$ are subgraphs of $\sigma\cup H$; moreover, $\sigma' \oplus H' = \sigma \oplus H$.  There are three cases to consider.
+For the sake of contradiction, suppose~$\minSS'$ is not a minimum weight even subgraph.
+Because both~$\minSS'$ and $\minSS$ are null-homologous, the even subgraph $H' = H \oplus \minSS' \oplus \minSS$ is homologous to $H$, and therefore to $\gamma$.
+
+For any subgraph~$H$ of $G$, let $w(H)$ denote the sum of the weights of the edges of $H$.  We now prove that $w(\minSS') + w(H') \leq w(H) + w(\minSS)$ by bounding the contribution of each edge $e \in E(G)$ to both sides of the inequality.  Note that both $\minSS'$ and $H'$ are subgraphs of $\minSS\cup H$; moreover, $\minSS' \oplus H' = \minSS \oplus H$.  There are three cases to consider.
 \begin{itemize}
 \item
-If $e \not\in H \cup \sigma$, then $e$ contributes $0$ to both sides of the inequality.
+If $e \not\in H \cup \minSS$, then $e$ contributes $0$ to both sides of the inequality.
 \item
-If $e \in \sigma \oplus H$, then $e \in \sigma' \oplus H'$.  In this case, $e$ contributes $w(e)$ to both sides of the inequality.
+If $e \in \minSS \oplus H$, then $e \in \minSS' \oplus H'$.  In this case, $e$ contributes $w(e)$ to both sides of the inequality.
 \item
-If $e \in \sigma \cap H$, then $e$ contributes exactly $2w(e)$ to the right side of the inequality.  Trivially, $e$ contributes at most $2w(e)$ to the left side.
+If $e \in \minSS \cap H$, then $e$ contributes exactly $2w(e)$ to the right side of the inequality.  Trivially, $e$ contributes at most $2w(e)$ to the left side.
 \end{itemize}
 
-On the other hand, because $\sigma'$ is not a minimum weight separating subgraph, we must have $w(\sigma') > w(\sigma)$. 
+On the other hand, because $\minSS'$ is not a minimum weight separating subgraph, we must have $w(\minSS') > w(\minSS)$. 
 It immediately follows that $w(H') < w(H)$, which contradicts the minimality of $H$.
 \end{proof}
 
 We now present the main result of this section, concluding the description of our algorithm for computing minimum weight separating subgraphs and minimum cuts.
 \begin{lemma}
   \label{lem:global_split-alg}
-  There exists a~$g^{O(g)} n \log \log n$ time algorithm that computes a minimum weight separating subgraph if every minimum weight separating subgraph can be decomposed into non-contractible simple cycles. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
+  There exists a~$g^{O(g)} n \log \log n$ time algorithm that computes a minimum weight separating subgraph if every minimum weight separating subgraph can be decomposed into non-simple contractible cycles. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
 \begin{proof}
-Our algorithm begins by picking an arbitrary face~$f$ of~$G$. Let~$\sigma$ be an arbitrary minimum weight separating subgraph.
-We argue that there exists a non-separating closed walk~$\gamma$ in~$G$ that lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$.
+Our algorithm begins by picking an arbitrary face~$f$ of~$G$. Let~$\minSS$ be an arbitrary minimum weight separating subgraph.
+We argue that there exists a non-separating closed walk~$\gamma$ in~$G$ that lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \minSS$.
 
-By assumption,~$\sigma$ can be decomposed into simple cycles, each of which is non-contractible. Suppose~$\sigma$ consists of more than one cycle. None of the cycles are null-homologous, because we could remove a single null-homologous cycle from~$\sigma$ to lower its cost without changing it homology class.
-In this case,~$\gamma$ is simply one of the cycles in~$\sigma$'s decomposition. Now, assume~$\sigma$ consists of a single simple cycle. Cycle~$\sigma$ is not contractible by assumption, so neither component of $\Sigma \setminus \sigma$ is planar. The closure of the component opposite~$f$ has non-zero genus and therefore contains a non-separating closed walk in~$\Sigma$.
+By assumption,~$\minSS$ can be decomposed into simple cycles, each of which is non-contractible. Suppose~$\minSS$ consists of more than one cycle. None of the cycles are null-homologous, because we could remove a single null-homologous cycle from~$\minSS$ to lower its cost without changing it homology class.
+In this case,~$\gamma$ is simply one of the cycles in~$\minSS$'s decomposition. Now, assume~$\minSS$ consists of a single simple cycle. Cycle~$\minSS$ is not contractible by assumption, so neither component of $\Sigma \setminus \minSS$ is planar. The closure of the component opposite~$f$ has non-zero genus and therefore contains a non-separating closed walk in~$\Sigma$.
 
 Let~$H$ be a shortest even subgraph homologous to~$\gamma$.
-By Lemma~\ref{lem:global_split-nocross}, we may assume without loss of generality that~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Assume for now that our algorithm knows~$H$. We will remove this assumption later in the proof.
+By Lemma~\ref{lem:global_split-nocross}, we may assume without loss of generality that~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \minSS$. Assume for now that our algorithm knows~$H$. We will remove this assumption later in the proof.
 
-Our algorithm picks an arbitrary edge~$e = h_1 | h_2$ of~$H$. At least one of~$h_1$ and~$h_2$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \sigma$. Our algorithm computes minimum weight subgraphs separating~$h_1$ from~$f$ and~$h_2$ from~$f$ using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}. It then returns the cheaper of these two subgraphs, which weighs no more than~$\sigma$.
+Our algorithm picks an arbitrary edge~$e = h_1 | h_2$ of~$H$. At least one of~$h_1$ and~$h_2$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \minSS$. Our algorithm computes minimum weight subgraphs separating~$h_1$ from~$f$ and~$h_2$ from~$f$ using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}. It then returns the cheaper of these two subgraphs, which weighs no more than~$\minSS$.
 
 We now remove the assumption that our algorithm knows~$H$. Non-separating even subgraph~$H$ is shortest for one of~$2^{2g}-1$ homology classes. Our algorithm enumerates all~$2^{2g}-1$ homology classes by sampling subsets of cycles from a homology basis~\cite{e-dgteg-03}. For each homology class~$x$, it finds the shortest even subgraph~$H_x$ and runs the subroutine described in the previous paragraph assuming~$H = H_x$. If a there exists no subgraph separating the arbitrarily picked edge~$e \in H_x$ from~$f$ (in other words,~$e = f | f$), then the subroutine correctly returns nothing for that choice of homology class.
 The algorithm returns the least weight separating subgraph returned by any instantiation of the subroutine or nothing if no instantiation returns a separating subgraph.
-One of the homology classes contains~$H$, so the algorithm will eventually find the minimum weight separating subgraph assuming every minimum weight separating subgraph can be decomposed into non-contractible simple cycles.
+One of the homology classes contains~$H$, so the algorithm will eventually find the minimum weight separating subgraph assuming every minimum weight separating subgraph can be decomposed into non-simple contractible cycles.
 \end{proof}
 
 By running the algorithms described in Lemmas~\ref{lem:contractible-alg} and~\ref{lem:global_split-alg}, we get the main results of this section.
