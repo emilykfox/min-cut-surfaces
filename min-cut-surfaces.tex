@@ -1194,48 +1194,61 @@ Now, suppose some minimum weight separating subgraph of~$G$ is a simple contract
 
 \def\minSS{S}
 
-Next we consider the case where every minimum-weight separating subgraph consists of noncontractible cycles.  The following lemma, which is the main result of this section, might be of independent interest.\note{If we think this may have further applications, say why.} (See Figure~\ref{fig:global_nonsep-vs-shortsep}.)
+Next we consider the case where every minimum-weight separating subgraph consists of noncontractible cycles.  The following lemma, which is the main result of this section, might be of independent interest. \note{Wishy washy.  If we really think this may have further applications, say why.} 
 
-\note{Observe that $\Sigma \setminus \minSS$ has only two components?}
+\begin{TODO}
+\noindent
+Subtleties we may want to make more explicit:
+\begin{itemize}\cramped
+\item
+If $\Sigma\setminus X$ has three components $A$, $B$, and $C$, then the boundary of $A\cup B$ has smaller weight than $X$.  Thus, $\Sigma \setminus \minSS$ has exactly two components.
+\item
+The proof assumes every edge has two distinct sides; otherwise refine $G$ with infinite-weight edges.
+\end{itemize}
+\end{TODO}
 
 \begin{lemma}
 \label{lem:global_split-nocross}
 Let~$\minSS$ be a minimum-weight separating subgraph, and let~$f$ be any face of~$G$.
-Let~$\gamma$ be a closed walk on~$G$ that lies in the closure of the component of~$\Sigma \setminus \minSS$ not containing $f$, and let~$H$
+Let~$\gamma$ be a closed walk in~$G$ that lies in the closure of the component of~$\Sigma \setminus \minSS$ not containing $f$, and let~$H$
 be a shortest even subgraph homologous to~$\gamma$.
 There is a minimum weight separating subgraph~$\minSS'$ (possibly~$\minSS$) such
 that~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS’$ not containing $f$. 
 \end{lemma}
+
+\begin{proof}
+If~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS$ not containing $f$, then we are done, so assume otherwise.  See Figure \ref{fig:global_nonsep-vs-shortsep}.
+
+
 \begin{figure}[ht]
 \centering
-\includegraphics[height=1.2in]{Fig/nonsep-vs-shortsep}
-\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$H$ is separated from face~$f$ by a minimum weight separating subgraph~$\minSS'$.}
+\includegraphics[height=1.25in]{Fig/nonsep-vs-shortsep-2}
+\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$H$ is separated from face~$f$ by a minimum weight separating subgraph~$\minSS'$. \textbf{Yes, I know this is too crowded.}}
 \label{fig:global_nonsep-vs-shortsep}
 \end{figure}
-\begin{proof}
-Assume that~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS$ not containing $f$, then we are done, so assume otherwise.
+
 
 The subgraph~$\minSS$ separates the faces of~$G$ into two non-empty sets.  Call the faces in the component of~$\Sigma \setminus \minSS$ containing~$f$ the \emph{far} faces and call the rest of the faces  \emph{near}.  Similarly, the even subgraph $H \oplus \gamma$ is null-homologous and therefore separates the faces of $G$ into two subsets; call the faces in the subset containing~$f$ \emph{black} and the others \emph{white}.  (If $H = \gamma$, then every face of $G$ is black.)
 
 Let~$\minSS'$ be the boundary of the union of the far black faces in $G$.
-By definition,~$\minSS'$ is a boundary subgraph.  By assumption, $H$ has edges that are incident to two far faces, but $\gamma$ does not; thus, there is at least one far black face~$f$.  Since there is also at least one near face, $\minSS'$ is non-empty. 
-No edge of~$H$ lies between two far black faces so~$H$ lies in the closure of the opposite component of~$f$ in~$\Sigma \setminus \minSS'$. We claim~$\minSS'$ is a minimum weight even subgraph.
+By definition,~$\minSS'$ is a boundary subgraph.  By assumption, $H$ contains at least one edge in the component of $\Sigma\setminus \minSS$ containing $f$; this edge is on the boundary of two far faces \note{because facewidth $>1$}.  On the other hand, each edge of $\gamma$ has a far face on at most one side.  Thus, there is at least one far black face~$f’$.  There is also at least one near face, because $\minSS$ is separating.  We conclude that $\minSS'$ is non-empty.  No edge of~$H$ has black faces on both sides, so~$H$ lies in the closure of the  component of~$\Sigma \setminus \minSS'$ that does not contain $f$.
 
-For the sake of contradiction, suppose~$\minSS'$ is not a minimum weight even subgraph.
-Because both~$\minSS'$ and $\minSS$ are null-homologous, the even subgraph $H' = H \oplus \minSS' \oplus \minSS$ is homologous to $H$, and therefore to $\gamma$.
+It remains to argue that~$\minSS'$ is a minimum-weight separating subgraph of $G$.
 
-For any subgraph~$H$ of $G$, let $w(H)$ denote the sum of the weights of the edges of $H$.  We now prove that $w(\minSS') + w(H') \leq w(H) + w(\minSS)$ by bounding the contribution of each edge $e \in E(G)$ to both sides of the inequality.  Note that both $\minSS'$ and $H'$ are subgraphs of $\minSS\cup H$; moreover, $\minSS' \oplus H' = \minSS \oplus H$.  There are three cases to consider.
+For any subgraph~$A$ of $G$, let $w(A)$ denote the sum of the weights of the edges of $A$.\note{Define this earlier.}  Because both~$\minSS'$ and $\minSS$ are null-homologous, the even subgraph $H' = H \oplus \minSS' \oplus \minSS$ is homologous to $H$, and therefore to $\gamma$.  we immediately have $w(H') \ge w(H)$, because $H$ is $\Z_2$-minimal.  Similarly, because $\minSS$ is a minimum-weight separating subgraph, we immediately have $w(\minSS') \ge w(\minSS)$.
+
+\note{JEFF IS HERE:}
+  We now prove that $w(\minSS') + w(H') \leq w(H) + w(\minSS)$ by bounding the contribution of each edge $e \in E(G)$ to both sides of the inequality.  Both $\minSS'$ and $H'$ are subgraphs of $\minSS\cup H$; moreover, $\minSS' \oplus H' = \minSS \oplus H$.  There are three cases to consider.
 \begin{itemize}
 \item
-If $e \not\in H \cup \minSS$, then $e$ contributes $0$ to both sides of the inequality.
+If $e \not\in \minSS\cup H$, then $e$ contributes $0$ to both sides of the inequality.
 \item
 If $e \in \minSS \oplus H$, then $e \in \minSS' \oplus H'$.  In this case, $e$ contributes $w(e)$ to both sides of the inequality.
 \item
 If $e \in \minSS \cap H$, then $e$ contributes exactly $2w(e)$ to the right side of the inequality.  Trivially, $e$ contributes at most $2w(e)$ to the left side.
 \end{itemize}
 
-On the other hand, because $\minSS'$ is not a minimum weight separating subgraph, we must have $w(\minSS') > w(\minSS)$. 
-It immediately follows that $w(H') < w(H)$, which contradicts the minimality of $H$.
+We conclude that $\minSS’$ is also a minimum-weight seprating subgraph, completing the proof of the lemma.
 \end{proof}
 
 We now present the main result of this section, concluding the description of our algorithm for computing minimum weight separating subgraphs and minimum cuts.
