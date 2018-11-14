@@ -218,14 +218,16 @@ For any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subs
 
 Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum cut by cutting the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
 
-Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2 n)$ using a divide-and-conquer strategy.  Reif's algorithm was extended by Hassin and Johnson to compute the actual maximum flow in $O(n\log n)$ additional time, using a carefully structured dual shortest-path computation \cite{hj-oamfu-85}.  Frederickson~\cite{f-faspp-87} subsequently improved the running time of Reif's algorithm to $O(n\log n)$ using a balanced separator decomposition to speed up the shortest-path computations.  Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-time algorithm to directed planar graphs; however, their  algorithm has a subtle error~\cite{kn-mcupg-11} which may lead to an incorrect result when the minimum $(t,s)$-cut is smaller than the minimum $(s,t)$-cut.
+Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2 n)$ using a divide-and-conquer strategy.  Reif's algorithm was extended by Hassin and Johnson to compute the actual maximum flow in $O(n\log n)$ additional time, using a carefully structured dual shortest-path computation \cite{hj-oamfu-85}.  The running time was improved to $O(n\log n)$ by Frederickson~\cite{f-faspp-87}, and more recently to $O(n\log\log n)$ by Italiano \etal~\cite{insw-iamcmf-11}, by using a balanced separator decomposition to speed up the shortest-path computations.
+
+Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-time algorithm to directed planar graphs; however, their  algorithm has a subtle error~\cite{kn-mcupg-11} which may lead to an incorrect result when the minimum $(t,s)$-cut is smaller than the minimum $(s,t)$-cut.  \note{But Borradaile-Klein.}
 
 Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obtain an $O(n)$-time planar shortest-path algorithm; using this algorithm in place of Dijkstra's algorithm improves the running times of both Reif's and Janiga and Koubek's algorithms to $O(n\log n)$.  The same improvement can also be obtained using more recent multiple-source shortest path algorithms by Klein~\cite{k-msspp-05} and Cabello and Chambers \cite{cc-msspg-07}.
 
-Minimum $(s,t)$-cuts in directed planar graphs can also be obtained in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (if the graph satisfies certain connectivity restrictions) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
+Minimum $(s,t)$-cuts in directed planar graphs can also be obtained in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (if the graph satisfies certain connectivity restrictions \note{which can be enforced in $O(n\log n)$ time; cite recent paper}) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
 
 A \EMPH{cut} (without specified $s$ and $t$) is a subset of edges of $G$ that separate $G$ into two non-empty sets of vertices.
-A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time. Their algorithm was later improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.
+A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time. Their algorithm was later improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  \note{Mozes \etal\ directed}
 
 \subsubsection*{Generalizations of Planar Graphs}
 
@@ -1135,10 +1137,6 @@ Cabello \etal~\cite{cdem-fotc-10} use the same observations to find a shortest c
 %
 However, the resulting closed walk $W$ might traverse some edges of~$G$ more than once.  The set of edges that $W$ traverses an odd number of times does constitute a boundary subgraph; unfortunately, this subgraph could be disconnected or even empty.
 
-\begin{TODO}
-Compare our algorithm with \cite[Theorem 5.4]{cdem-fotc-10}.  Is the only difference that we’re insisting that the cycle avoid at least one copy of one edge of one arc?  If so, this phase already runs in $O(n \log n)$ time, with no $g$-dependence.  If not, add text to describe difference.
-\end{TODO}
-
 Our algorithm will make use of the cutting operation ($\snip$) along tight cycles and arcs in~$G$.
 \note{Define $\snip$ in the prelims.}
 The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
@@ -1163,6 +1161,49 @@ We now present the main result of this section.
 \label{lem:contractible-alg}
 There exists a~$g^{O(g)} n \log \log n$ time algorithm that computes a minimum weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
+
+\begin{TODO}
+\noindent
+\textbf{\boldmath I think we can get rid of the $g^{O(g)}$ factor in the running time.}  Cabello \etal~find a shortest enclosing cycle in a surface without boundary~\cite[Theorem 5.4]{cdem-fotc-10} as follows.  (Numbered lemmas and theorems are from Cabello \etal~\cite{cdem-fotc-10}.)
+\smallskip
+\begin{itemize}
+\item
+\textbf{Theorem 4.3:} Compute a tight non-separating cycle $\alpha$ in $G$.  This takes Cabello \etal~$O(n\log n)$ time, but $O(n\log\log n)$ is possible:
+
+\begin{itemize}\cramped
+\item
+Compute the shortest non-separating loop $\ell$ through any vertex.  This takes $O(n\log n)$ time via Erickson--Har-Peled (or Erickson-Whittlesey), but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
+
+\item
+\textbf{Lemma 4.1:} Compute the shortest cycle $\alpha$ that is homotopic to $\ell$ in $\Sigma\snip\ell$.
+
+\begin{itemize}\cramped
+\item
+Let $\Sigma’$ be the combinatorial surface obtained by gluing a disk over one boundary of $\Sigma\snip\ell$.
+
+\item 
+\textbf{Lemma 3.4:} (Implicitly) compute a greedy system of (tight) arcs in $\Sigma’$.  This takes $O(n\log n)$ time via Erickson-Whittlesey, but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
+
+\item
+\textbf{Lemma 3.4:} Cut $\Sigma\snip\ell$ along the \emph{union} of these greedy arcs to obtain a combinatorial annulus~$A$.  This takes $O(n)$ time.  The union of the arcs is a greedy cut graph; we don’t have to compute the individual arcs (but we do need them for the correctness proof).
+
+\item
+Let $\alpha$ be the shortest generating cycle in $A$, computing via planar minimum $(s,t)$-cut.  Cabello \etal\ used Frederickson’s $O(n\log n)$ time algorithms, but  Italiano \etal~improve the time bound to $O(n\log \log n)$~\cite{insw-iamcmf-11}.
+
+\end{itemize}
+
+\end{itemize}
+
+\item
+Cut the surface $G\snip \alpha$ along a greedy cut graph, again in $O(n)$ time.
+
+\item
+Finally, compute a minimum cut in the dual of $\Gsnip$.  When that paper was published, the best min-cut algorithm ran in $O(n\log^2 n)$ time~\cite{cfn-dnlta-04}, but this is now $O(n\log\log n)$ \cite{ls-mcsc-11}.
+\end{itemize}
+\smallskip\noindent
+The \text{only} significant differences in our algorithm are that (1) we compute the \emph{shortest} non-separating cycle, and (2) we insist that the enclosing cycle avoid at least one edge on the boundary of $\Gsnip$.  Our Lemma~7.2 implies (1) is unnecessary and enforcing (2) only requires calling the planar min-cut algorithm twice instead of once.
+\end{TODO}
+
 
 \begin{proof}
 Our algorithm begins by computing a shortest non-separating cycle~$\alpha$ in $G$ in $g^{O(g)}n \log \log n$ time, using a modification of an algorithm of Kutz~\cite{k-csnco-06} by Italiano \etal~\cite{insw-iamcmf-11} or using a recent $2^{O(g)}n \log \log n$ time algorithm of Fox~\cite{f-sntcd-13}.  The surface $\Sigma \snip \alpha$ has two boundary cycles $\alpha'$ and $\alpha''$.
