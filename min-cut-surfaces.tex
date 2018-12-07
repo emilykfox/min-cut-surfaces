@@ -54,10 +54,10 @@
 \def\Sigmasnip{\mathord{\Sigma_{\subsnip}}}
 \def\gammasnip{\mathord{\gamma_{\subsnip}}}
 
-\def\Gsnip{G’}
-\def\Fsnip{F’}
-\def\Sigmasnip{\Sigma’}
-\def\gammasnip{\gamma’}
+\def\Gsnip{G'}
+\def\Fsnip{F'}
+\def\Sigmasnip{\Sigma'}
+\def\gammasnip{\gamma'}
 
 
 
@@ -200,7 +200,7 @@ Before describing our results in further detail, we first review several related
 Things to double-check throughout the paper:
 \begin{itemize}\itemsep0pt
 \item
-Don’t write “minimum cut” when we mean “minimum $(s,t)$-cut”.
+Don't write “minimum cut” when we mean “minimum $(s,t)$-cut”.
 \item
 Edges have \emph{weights}, not capacities or costs.  (Ugh.)
 \item
@@ -220,7 +220,7 @@ Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a p
 
 Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2 n)$ using a divide-and-conquer strategy.  Reif's algorithm was extended by Hassin and Johnson to compute the actual maximum flow in $O(n\log n)$ additional time, using a carefully structured dual shortest-path computation \cite{hj-oamfu-85}.  The running time was improved to $O(n\log n)$ by Frederickson~\cite{f-faspp-87}, and more recently to $O(n\log\log n)$ by Italiano \etal~\cite{insw-iamcmf-11}, by using a balanced separator decomposition to speed up the shortest-path computations.
 
-Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-time algorithm to directed planar graphs; however, their  algorithm has a subtle error~\cite{kn-mcupg-11} which may lead to an incorrect result when the minimum $(t,s)$-cut is smaller than the minimum $(s,t)$-cut.  \note{But Borradaile-Klein.}
+Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-time algorithm to directed planar graphs; however, their  algorithm has a subtle error~\cite{kn-mcupg-11} which may lead to an incorrect result when the minimum $(t,s)$-cut is smaller than the minimum $(s,t)$-cut.
 
 Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obtain an $O(n)$-time planar shortest-path algorithm; using this algorithm in place of Dijkstra's algorithm improves the running times of both Reif's and Janiga and Koubek's algorithms to $O(n\log n)$.  The same improvement can also be obtained using more recent multiple-source shortest path algorithms by Klein~\cite{k-msspp-05} and Cabello and Chambers \cite{cc-msspg-07}.
 
@@ -233,7 +233,7 @@ A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if
 
 Surprisingly little is known about the complexity of computing maximum flows or minimum cuts in generalizations of planar graphs.  In particular, we know of no previous algorithm to compute minimum cuts in non-planar graphs that does not first compute a maximum flow.
 
-By combining a technique of Miller and Naor \cite{mn-fpgms-95} with the planar directed flow algorithm of Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09, e-mfpsp-10}, one can compute maximum (single-commodity) flows in a planar graph with $k$ sources and sinks in $O(k^2 n\log n)$ time.  Very recently, Borradaile \etal~\cite{bkmnw-msmsm-17} described an algorithm to compute maximum flows in planar graphs with an arbitrary number of soures and sinks in $O(n\log^3 n)$ time.  An algorithm of Hochstein and Weihe \cite{hw-mstfkc-07} computes maximum flows in planar graphs with $k$ additional edges in $O(k^3n\log n)$ time, using a clever simulation of Goldberg and Tarjan's push-relabel algorithm~\cite{gt-namfp-88}.  Borradaile \etal~\cite{bkmnw-msmsm-17} extend Hochstein and Weihe’s framework to compute maximum flows in planar graphs with $k$ apices in $O(k^3n\log^3 n)$ time.
+By combining a technique of Miller and Naor \cite{mn-fpgms-95} with the planar directed flow algorithm of Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09, e-mfpsp-10}, one can compute maximum (single-commodity) flows in a planar graph with $k$ sources and sinks in $O(k^2 n\log n)$ time.  Very recently, Borradaile \etal~\cite{bkmnw-msmsm-17} described an algorithm to compute maximum flows in planar graphs with an arbitrary number of soures and sinks in $O(n\log^3 n)$ time.  An algorithm of Hochstein and Weihe \cite{hw-mstfkc-07} computes maximum flows in planar graphs with $k$ additional edges in $O(k^3n\log n)$ time, using a clever simulation of Goldberg and Tarjan's push-relabel algorithm~\cite{gt-namfp-88}.  Borradaile \etal~\cite{bkmnw-msmsm-17} extend Hochstein and Weihe's framework to compute maximum flows in planar graphs with $k$ apices in $O(k^3n\log^3 n)$ time.
 
 Chambers and Eppstein \cite{ce-focmf-13} describe an algorithm to compute maximum flows in $O(n\log n)$ time if the input graph forbids a fixed minor that can be drawn in the plane with one crossing.  Another related result is the algorithm of Hagerup \etal~\cite{hknr-cmfnc-98} to compute maximum flows in graphs of constant treewidth in $O(n)$ time.
 
@@ -321,7 +321,7 @@ The input to our second algorithm is a \emph{directed} edge-weighted graph~$G$ e
 %\begin{TODO}
 %\textbf{Kyle:} Does the surface need to be orientable?
 %
-%\textbf{Jeff:} Directed graphs on non-orientable surfaces don’t have well-defined directed duals.  I think we can find optimal homology representatives for non-orientable directed surface graphs, but at best we can compute minimum cuts in \emph{undirected} graphs on non-orientable surfaces.  Let’s just stick to orientable surfaces.
+%\textbf{Jeff:} Directed graphs on non-orientable surfaces don't have well-defined directed duals.  I think we can find optimal homology representatives for non-orientable directed surface graphs, but at best we can compute minimum cuts in \emph{undirected} graphs on non-orientable surfaces.  Let's just stick to orientable surfaces.
 %\end{TODO}
 This algorithm computes a shortest directed \emph{cycle} in a specified $\Z_2$-homology class in $2^{O(g)}n\log n$ time using different techniques from the algorithm above.
 We are unaware of any previously published algorithm for this specific problem; however, an algorithm of Chambers \etal~\cite{ccelw-scsih-08} can be modified to find shortest homologous cycles in \emph{undirected} graphs in $g^{O(g)} n\log n \log n$ time.
@@ -344,11 +344,57 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 
 \color{Black}
 
+\subsection{Followup Results}
+
+Since the preliminary version of our results 
+
+
+\begin{TODO}
+\begin{itemize}
+\item In preliminary version of Section 5, shortest non-separating cycle in directed graphs.  Past results by Cabello \etal~\cite{ccl-fsncd-10}; since improved by others \cite{e-sncds-11, f-sntcd-13}.
+\end{itemize}
+\end{TODO}
+
+\color{Gray}
+In particular, we can compute the shortest directed cycle in~$\Sigma$ that has nontrivial $\Z_2$-homology.  When the original surface has no boundary, this is just the shortest \emph{non-separating} cycle in $\Sigma$.  Cabello \etal~\cite{ccl-fsncd-10} described an algorithm to compute the shortest non-separating cycle in any surface-embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time; our algorithm is faster whenever $g \le (\lg n)/13$.
+
+\begin{corollary}
+\label{C:nonsep}
+Given a directed graph $G$ with $n$ vertices with non-negative edge weights, cellularly embedded on a surface with genus~$g$, we can compute the shortest directed cycle in $G$ that is non-separating in $\Sigma$ in $O(64^g g^2 n\log n)$ time.
+\end{corollary}
+
+Note however, that a more recent algorithm of Erickson~\cite{e-sncds-11} improves this running time further to~$O(g^2 n \log n)$ by using similar similar techniques in a different covering space known as the cyclic double cover.
+Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shortest \emph{non-contractible} cycle in an embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time.  Our approach does not lead to a faster algorithm for this problem;  contractibility is inherently  a property of \emph{homotopy}, not homology.
+
+\color{Black}
+
 % ===============================================================================================
+\newpage
 \section{Notation and Terminology}
 \label{sec:prelims}
 
-\note{Status: Inconsistent -- Revisit after the rest of the paper is finished}
+
+\begin{TODO}
+\noindent
+\textbf{Things to include:}
+\begin{itemize}\cramped
+\item Fix undirected throughout.  (But comment that Section 5 works for directed.)
+\item Fix orientable everywhere.  (Can we \emph{quickly} generalize to non-orientable surfaces via the oriented double cover (like \cite{cen-hfcc-12})?
+\item Paths, cycles, loop, contractible, tight, concatenation 
+\item Free homotopy
+\item Combinatorial surface
+\item Embeddings on surfaces with boundary
+\item Slicing $\snip$
+\item Weakly simple
+\item $\Z_2$-homology vector space; even subgraphs mod boundary subgraphs; Betti numbers; $\oplus$; $\Z_2$-homologous; $\Z_2$-minimal
+\end{itemize}
+\noindent
+\textbf{Things to exclude (cite textbooks):}
+\begin{itemize}\cramped
+\item Formal definition of covering space
+\item Fundamental group!
+\end{itemize}
+\end{TODO}
 
 % Initially taken from Kyle's dissertation.
 
@@ -413,9 +459,15 @@ Two paths or cycles in a combinatorial surface \EMPH{cross} if no continuous inf
 
 We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may contain the same vertex or edge more than once.
 
+
+\EMPH{Cutting} a combinatorial surface along a cycle or  arc modifies both the surface and the embedded graph.
+For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
+Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. \note{Do we use this?}
+
+
 \subsection{Duality}
 
-\note{This needs cleanup}
+\note{This needs cleanup — It does??}
 
 Any undirected graph~$G$ embedded on a surface~$\Sigma$ without boundary has a
 \EMPH{dual graph}~$G^*$, which has a vertex~$f^*$ for each face~$f$ of~$G$,
@@ -439,7 +491,7 @@ Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMP
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.45]{Fig/pants}
-\caption{A cellularly embedded graph \emph{G}$G$ (solid lines) on a pair of pants (genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
+\caption{A cellularly embedded graph $G$ (solid lines) on a pair of pants (genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
 \label{fig:duality}
 \end{figure}
  
@@ -475,12 +527,11 @@ continuously deformed into the other without changing their endpoints.
 More formally, a \EMPH{homotopy} between~$p$ and~$q$ is a
 continuous map $h\colon {[0,1]\times [0,1] \to \Sigma}$ such that $h(0,\cdot) = p$, $h(1,\cdot) = q$, $h(\cdot, 0)=p(0)=q(0)$, and $h(\cdot,1)=p(1)=q(1)$.
 Homotopy defines an equivalence relation over the set of paths with any
-fixed pair of endpoints. The set of homotopy classes of loops in~$\Sigma$
-with basepoint~$x_0$ defines a group~$\pi_i(\Sigma,x_0)$ under concatenation,
-called the \EMPH{fundamental group} of~$\Sigma$. (For all basepoints~$x_0$
-and~$x_1$, the groups~$\pi_i(\Sigma,x_0)$ and~$\pi_i(\Sigma,x_1)$ are
-isomorphic.) A cycle is \EMPH{contractible} if it is homotopic to a constant
-map.
+fixed pair of endpoints.
+%
+%The set of homotopy classes of loops in~$\Sigma$ with basepoint~$x_0$ defines a group~$\pi_1(\Sigma,x_0)$ under concatenation, called the \EMPH{fundamental group} of~$\Sigma$. (For all basepoints~$x_0$ and~$x_1$, the groups~$\pi_1(\Sigma,x_0)$ and~$\pi_1(\Sigma,x_1)$ are isomorphic.)
+%
+A cycle is \EMPH{contractible} if it is homotopic to a constant map.
 Given a weight function on the darts of~$G$, we say a directed path or cycle is \EMPH{tight} if it has minimum total weight (counting edges with multiplicity) for its homotopy class.
 
 Homology is a coarser equivalence relation than homotopy, with nicer
@@ -496,8 +547,9 @@ Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cy
 
 \note{Erin: No mention of Betti number, but we do use it later.  Add here.  Homology classes define a vector space over $\Z_2$ whose rank is called the (first) Betti number of the surface.}
 
-\note{Define weakly simple \cite{weak} as perturbable into simple.  We don’t need to worry about “forks” and “spurs”.}
+\note{Define weakly simple \cite{weak} as perturbable into simple.  We don't need to worry about “forks” and “spurs”.}
 We define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
+
 \begin{lemma}
 \label{lem:decomposition}
 Every even subgraph of an embedded graph has a cycle decomposition.
@@ -505,6 +557,7 @@ Every even subgraph of an embedded graph has a cycle decomposition.
 
 \begin{proof}
 Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.
+\note{double-check weakly simple}
 \end{proof}
 
 We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
@@ -530,7 +583,7 @@ We emphasize that each cycle in a cycle decomposition may visit vertices multipl
 
 \note{Kyle: The lemma below is key to the algorithms working, but there doesn't appear to be enough there to make them their own section. Where should we put them?}
 
-A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.  \note{generalizes Whitney’s planar cycle-cut duality; see Itai-Shiloach}
+A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.  \note{generalizes Whitney's planar cycle-cut duality; see Itai-Shiloach}
 We formalize this equivalence in the following lemma.
 
 \begin{lemma}
@@ -550,22 +603,11 @@ Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\
 \subsection{Covering spaces and cutting}
 \label{SS:covering}
 
-A continuous map~$\pi \colon \Sigma' \to \Sigma$ between two surfaces is called a
-\EMPH{covering map} if each point~$x \in \Sigma$ lies in an open
-neighborhood~$U$ such that (1)~$\pi^{-1}(U)$ is a countable union of disjoint
-open sets~$U_1 \cup U_2 \cup \cdots$ and (2) for each~$i$, the
-restriction~$\pi |_{U_i} : U_i \to U$ is a homeomorphism. If there is a covering
-map~$\pi$ from~$\Sigma'$ to~$\Sigma$, we call~$\Sigma'$ a \EMPH{covering space}
-of~$\Sigma$. The \EMPH{universal cover}~$\tilde{\Sigma}$ is the unique
-simply-connected covering space of~$\Sigma$ (up to homeomorphism).
-The universal cover is so named because it covers every path-connected
-covering space of~$\Sigma$.
+\note{Don't need formal definition; just cite textbook.}
 
-For any path~$p : [0,1] \to \Sigma$ such that~$\pi(x') = p(0)$ for some
-point~$x' \in \Sigma'$, there is a unique path~$p'$ in~$\Sigma'$, called
-a \EMPH{lift} of~$p$, such that~$p'(0) = x'$ and~$\pi \circ p' = p$. We also
-say that~$p$ \EMPH{lifts} to~$p'$. Conversely, for any path~$p'$ in~$\Sigma'$,
-the path~$\pi \circ p'$ is called a \EMPH{projection} of~$p'$.
+A continuous map~$\pi \colon \Sigma' \to \Sigma$ between two surfaces is called a \EMPH{covering map} if each point~$x \in \Sigma$ lies in an open neighborhood~$U$ such that (1)~$\pi^{-1}(U)$ is a countable union of disjoint open sets~$U_1 \cup U_2 \cup \cdots$ and (2) for each~$i$, the restriction~$\pi |_{U_i} : U_i \to U$ is a homeomorphism. If there is a covering map~$\pi$ from~$\Sigma'$ to~$\Sigma$, we call~$\Sigma'$ a \EMPH{covering space} of~$\Sigma$.  The \EMPH{universal cover}~$\tilde{\Sigma}$ is the unique simply-connected covering space of~$\Sigma$ (up to homeomorphism).  The universal cover is so named because it covers every path-connected covering space of~$\Sigma$.
+
+For any path~$p : [0,1] \to \Sigma$ such that~$\pi(x') = p(0)$ for some point~$x' \in \Sigma'$, there is a unique path~$p'$ in~$\Sigma'$, called a \EMPH{lift} of~$p$, such that~$p'(0) = x'$ and~$\pi \circ p' = p$.  We also say that~$p$ \EMPH{lifts} to~$p'$. Conversely, for any path~$p'$ in~$\Sigma'$, the path~$\pi \circ p'$ is called a \EMPH{projection} of~$p'$.
 
 %We define a lift of a cycle~$\gamma \colon S^1 \to \Sigma$ to be the infinite
 %path~$\gamma' \to \R \to \Sigma'$ such that
@@ -575,10 +617,6 @@ the path~$\pi \circ p'$ is called a \EMPH{projection} of~$p'$.
 %single-period lift of~$\gamma$ is a lift of any loop equivalent to~$\gamma$.
 %We informally say that a cycle is the~\EMPH{projection} of any of its
 %single-period lifts.
-
-\EMPH{Cutting} a combinatorial surface along a cycle or  arc modifies both the surface and the embedded graph.
-For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
-Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$.
 
 
 \subsection{Uniqueness of Shortest Paths}
@@ -699,7 +737,7 @@ We can preprocess $G$ in $O(\beta n)$ time, so that the signature $[\cycle]$ of 
 \end{lemma}
 
 \begin{proof}
-A tree-coforest decomposition can be computed in $O(n)$ time as follows.  First construct a graph~$G’$ by identifying all the dual boundary vertices in $G^*$ to a single vertex.  Compute a spanning tree of $G’$ by whatever-first search; the edges of this spanning tree define an appropriate dual spanning forest~$F^*$.  Construct the subgraph $G\setminus F$ and compute a spanning tree $T$ via whatever-first search.  Finally, let $L = G\setminus (T\cup F)$.  With the decomposition in hand, it is straightforward to compute each path $\dualarc_i$ in $O(n)$ time, and then compute each edge signature in $O(\beta)$ time.
+A tree-coforest decomposition can be computed in $O(n)$ time as follows.  First construct a graph~$G'$ by identifying all the dual boundary vertices in $G^*$ to a single vertex.  Compute a spanning tree of $G'$ by whatever-first search; the edges of this spanning tree define an appropriate dual spanning forest~$F^*$.  Construct the subgraph $G\setminus F$ and compute a spanning tree $T$ via whatever-first search.  Finally, let $L = G\setminus (T\cup F)$.  With the decomposition in hand, it is straightforward to compute each path $\dualarc_i$ in $O(n)$ time, and then compute each edge signature in $O(\beta)$ time.
 \end{proof}
 
 \begin{lemma}
@@ -737,7 +775,7 @@ modified easily to compute a minimum-weight representative in
 there are exactly $2^{2g+b-1}$ such classes.
 Lemma~\ref{lem:cut-duality} implies our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time.
 
-Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
+Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \note{free} \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
 
 
@@ -833,14 +871,6 @@ We also use a generalization of Klein's multiple-source shortest path algorithm~
 \subsection{Definition and Construction}
 \label{sec:homcover_cover}
 
-\begin{TODO}
-\begin{itemize}\cramped
-\item Define “$\Z_2$-minimal”
-\item Consistent notation!!!!!!
-\item Recall $\oplus$ and $\beta$
-\end{itemize}
-\end{TODO}
-
 \note{Recall from Section 2.3....}
 After computing homology signatures for each edge, the $\Z_2$-homology cover of a combinatorial surface can be defined using a standard~\emph{voltage construction}~\cite[Chapter 4]{gt-tgt-01}, as follows.
 
@@ -909,12 +939,12 @@ Our algorithm uses a generalization of Klein's  multiple-source shortest path al
 
 \begin{lemma}[Chambers \etal~\cite{cce-msspe-13}]
 \label{lem:multishort}
-Let $G$ be a directed\note{!?} graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of~$G$.  We can preprocess $G$ in $O(gn\log n)$ time and $O(n)$ space so that the length of the shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$ time.
+Let $G$ be a graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of~$G$.  We can preprocess $G$ in $O(gn\log n)$ time and $O(n)$ space so that the length of the shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$ time.
 \end{lemma}
 
 \begin{theorem}
 \label{thm:min-cycle}
-Let $G$ be a directed\note{!?} graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest directed cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 4^\beta \beta^2\, n\log n)$ time.
+Let $G$ be a  graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 4^\beta \beta^2\, n\log n)$ time.
 \end{theorem}
 
 \begin{proof}
@@ -929,24 +959,9 @@ Let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arc
 Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $\cycle$ intersects $\sigma$, then some $\Z_2$-minimal cycle homologous to $\cycle$ is the projection of a shortest path in $\Sigmabar\snip(\sigma,0)$ from some vertex $(v_i,h_i)^\pm$ to the corresponding vertex $(v_i, h_i\oplus[\cycle])$.  To compute these shortest paths, we implicitly compute the shortest path in $\Sigmabar\snip(\sigma,0)$ from every vertex on the boundary of $f_{(\sigma,0)}$ to \emph{every} vertex of $\Sigmabar\snip(\sigma,0)$, using Lemma~\ref{lem:multishort}.  The resulting algorithm runs in $O(\gbar\,\nbar \log \nbar) = O(4^\beta \beta^2\, n\log n)$ time, by Lemma \ref{lem:cover-cxy}.
 \end{proof}
 
-By running this algorithm $2^\beta$ times, we can compute the shortest directed\note{!?} cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.
+By running this algorithm $2^\beta$ times, we can compute the shortest cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.
 
-\begin{TODO}
-Omit the rest of Section 5.2, except possibly to point to more recent and better results \cite{e-sncds-11, f-sntcd-13}.
-\end{TODO}
-
-\color{Gray}
-In particular, we can compute the shortest directed cycle in~$\Sigma$ that has nontrivial $\Z_2$-homology.  When the original surface has no boundary, this is just the shortest \emph{non-separating} cycle in $\Sigma$.  Cabello \etal~\cite{ccl-fsncd-10} described an algorithm to compute the shortest non-separating cycle in any surface-embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time; our algorithm is faster whenever $g \le (\lg n)/13$.
-
-\begin{corollary}
-\label{C:nonsep}
-Given a directed graph $G$ with $n$ vertices with non-negative edge weights, cellularly embedded on a surface with genus~$g$, we can compute the shortest directed cycle in $G$ that is non-separating in $\Sigma$ in $O(64^g g^2 n\log n)$ time.
-\end{corollary}
-
-Note however, that a more recent algorithm of Erickson~\cite{e-sncds-11} improves this running time further to~$O(g^2 n \log n)$ by using similar similar techniques in a different covering space known as the cyclic double cover.
-Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shortest \emph{non-contractible} cycle in an embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time.  Our approach does not lead to a faster algorithm for this problem;  contractibility is inherently  a property of \emph{homotopy}, not homology.
-
-\color{Black}
+\note{Actually this last result works for directed graphs as well.  We really don’t need to say much here.}
 
 % --------------------------------------------------------------------------------
 \subsection{Minimum cuts from the homology cover}
@@ -1123,12 +1138,11 @@ In Section \ref{sec:global_contractible}, we describe an algorithm that computes
 \noindent
 Notation issues:
 \begin{itemize}\cramped
-\item No scissors; $\snip$ for “snip” and $\Gsnip$ for $G$-after-cutting are  macros, so we can revert if Amir or Kyle object.
 \item Are $\alpha$ and $\gamma$ the right notation for a simple cycle and its projection, in Lemma 7.4?
-\item Define $e = f|g$ in the prelims.
+\item Define $e = f|g$ in the prelims?  Or just use dual edges?
 \item Is $P$ the greedy system of arcs?  What if the surface has no boundary?
 \item $\gamma_1$ and $\gamma_2$ for simple cycles is OK.
-\item Later: Don’t use $\sigma$ for minimum-weight separating subgraph when it isn’t a cycle.
+\item Later: Don't use $\sigma$ for minimum-weight separating subgraph when it isn't a cycle.
 \end{itemize}
 \end{TODO}
 
@@ -1159,19 +1173,23 @@ Cabello \etal~\cite{cdem-fotc-10} use the same observations to find a shortest c
 %
 However, the resulting closed walk $W$ might traverse some edges of~$G$ more than once.  The set of edges that $W$ traverses an odd number of times does constitute a boundary subgraph; unfortunately, this subgraph could be disconnected or even empty.
 
-Our algorithm will make use of the cutting operation ($\snip$) along tight cycles and arcs in~$G$.
-\note{Define $\snip$ in the prelims.}
-The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
+Our algorithm will make use of the cutting operation ($\snip$) along tight cycles and arcs in~$G$.  The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
+
+\note{This lemma needs work!!!  Better to write: Any bounding closed walk in $\Gsnip$ projects to a bounding closed walk in $G$.}
+
 \begin{lemma}
 \label{lem:global_null-homologous-projections}
 Let~$\alpha$ be an arbitrary simple cycle or arc in~$G$. Let
-${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any boundary subgraph~$\gammasnip$ in~$\Gsnip$ projects to a boundary subgraph in~$G$.
+${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any boundary subgraph~$\gammasnip$ in~$\Gsnip$ projects \note{define!} to a boundary subgraph in~$G$.
 \end{lemma}
+
 \begin{proof}
 Let~$\gammasnip$ be an arbitrary boundary subgraph in~$\Gsnip$ and let~$\gamma$ be its projection in~$G$.
 Subgraph~$\gamma$ bounds a subset of faces~$\Fsnip$ in~$\Gsnip$. 
 Let~$F$ be the projection of~$\Fsnip$ into~$G$.
-We will argue that~$\gamma$ bounds~$F$, proving the lemma.
+We will argue that~$\gamma$ is the boundary of~$F$, proving the lemma.
+
+Consider any edge $e$ on the boundary of $F$, which separates two faces $f^+\in F$ and $f^-\not\in F$ in $G$.  Then in $\Gsnip$, either $e$ still separates faces $f^+$ and $f^-$, or $e$ separates one of those two faces from the boundary of $\Gsnip$.
 
 Consider any edge~$e = f | g$ \note{define} on the boundary of~$F$. If~$f$ and~$g$ still lie adjacent along~$e$ in~$\Gsnip$, then~$e$ bounds~$\Fsnip$ and appears in~$\gamma$. If~$e$ separates a face~$f$ from the boundary of~$\Gsnip$, then~$e$ still appears in~$\gamma$.
 
@@ -1207,16 +1225,16 @@ Compute the shortest non-separating loop $\ell$ through any vertex.  This takes 
 
 \begin{itemize}\cramped
 \item
-Let $\Sigma’$ be the combinatorial surface obtained by gluing a disk over one boundary of $\Sigma\snip\ell$.
+Let $\Sigma'$ be the combinatorial surface obtained by gluing a disk over one boundary of $\Sigma\snip\ell$.
 
 \item 
-\textbf{Lemma 3.4:} (Implicitly) compute a greedy system of (tight) arcs in $\Sigma’$.  This takes $O(n\log n)$ time via Erickson-Whittlesey, but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
+\textbf{Lemma 3.4:} (Implicitly) compute a greedy system of (tight) arcs in $\Sigma'$.  This takes $O(n\log n)$ time via Erickson-Whittlesey, but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
 
 \item
-\textbf{Lemma 3.4:} Cut $\Sigma\snip\ell$ along the \emph{union} of these greedy arcs to obtain a combinatorial annulus~$A$.  This takes $O(n)$ time.  (Kutz~\cite{k-csnco-06} did the same thing earlier.)  The union of the arcs is a greedy cut graph; we don’t have to compute the individual arcs (but we do need them for the correctness proof).
+\textbf{Lemma 3.4:} Cut $\Sigma\snip\ell$ along the \emph{union} of these greedy arcs to obtain a combinatorial annulus~$A$.  This takes $O(n)$ time.  (Kutz~\cite{k-csnco-06} did the same thing earlier.)  The union of the arcs is a greedy cut graph; we don't have to compute the individual arcs (but we do need them for the correctness proof).
 
 \item
-Let $\alpha$ be the shortest generating cycle in $A$, computing via planar minimum $(s,t)$-cut.  Cabello \etal\ used Frederickson’s $O(n\log n)$ time algorithms, but  Italiano \etal~improve the time bound to $O(n\log \log n)$~\cite{insw-iamcmf-11}.
+Let $\alpha$ be the shortest generating cycle in $A$, computing via planar minimum $(s,t)$-cut.  Cabello \etal\ used Frederickson's $O(n\log n)$ time algorithms, but  Italiano \etal~improve the time bound to $O(n\log \log n)$~\cite{insw-iamcmf-11}.
 
 \end{itemize}
 
@@ -1274,7 +1292,7 @@ Let~$\minSS$ be a minimum-weight separating subgraph, and let~$f$ be any face of
 Let~$\gamma$ be a closed walk in~$G$ that lies in the closure of the component of~$\Sigma \setminus \minSS$ not containing~$f$, and let~$H$
 be a shortest even subgraph homologous to~$\gamma$.
 There is a minimum weight separating subgraph~$\minSS'$ (possibly~$\minSS$) such
-that~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS’$ not containing $f$. 
+that~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS'$ not containing $f$. 
 \end{lemma}
 
 \begin{proof}
@@ -1283,14 +1301,14 @@ If $\gamma$ is null-homologous, then $H$ is empty and the lemma is trivial, so a
 \begin{figure}[ht]
 \centering
 \includegraphics[height=1.25in]{Fig/nonsep-vs-shortsep-2}
-\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$H$ is separated from face~$f$ by a minimum weight separating subgraph~$\minSS’$.}
+\caption{The setting of Lemma~\ref{lem:global_split-nocross}. A~$\Z_2$-minimal even subgraph~$H$ is separated from face~$f$ by a minimum weight separating subgraph~$\minSS'$.}
 \label{fig:global_nonsep-vs-shortsep}
 \end{figure}
 
 The subgraph~$\minSS$ separates the faces of~$G$ into two non-empty sets.  Call the faces in the component of~$\Sigma \setminus \minSS$ containing~$f$ the \emph{far} faces and call the rest of the faces  \emph{near}.  Similarly, the even subgraph $H \oplus \gamma$ is null-homologous and therefore separates the faces of $G$ into two subsets; call the faces in the subset containing~$f$ \emph{black} and the others \emph{white}.  (If $H = \gamma$, then every face of $G$ is black.)
 
 Let~$\minSS'$ be the boundary of the union of the far black faces in $G$.
-By definition,~$\minSS'$ is a boundary subgraph.  By assumption, $H$ contains at least one edge in the component of $\Sigma\setminus \minSS$ containing $f$; this edge is on the boundary of two far faces \note{because facewidth $>1$}.  On the other hand, each edge of $\gamma$ has a far face on at most one side.  Thus, there is at least one far black face~$f’$.  There is also at least one near face, because $\minSS$ is separating.  We conclude that $\minSS'$ is non-empty.  No edge of~$H$ has black faces on both sides, so~$H$ lies in the closure of the  component of~$\Sigma \setminus \minSS'$ that does not contain $f$.
+By definition,~$\minSS'$ is a boundary subgraph.  By assumption, $H$ contains at least one edge in the component of $\Sigma\setminus \minSS$ containing $f$; this edge is on the boundary of two far faces \note{because facewidth $>1$}.  On the other hand, each edge of $\gamma$ has a far face on at most one side.  Thus, there is at least one far black face~$f'$.  There is also at least one near face, because $\minSS$ is separating.  We conclude that $\minSS'$ is non-empty.  No edge of~$H$ has black faces on both sides, so~$H$ lies in the closure of the  component of~$\Sigma \setminus \minSS'$ that does not contain $f$.
 
 It remains to argue that~$\minSS'$ is a minimum-weight separating subgraph of $G$.
 
@@ -1307,7 +1325,7 @@ If $e \in \minSS \oplus H$, then $e \in \minSS' \oplus H'$.  In this case, $e$ c
 If $e \in \minSS \cap H$, then $e$ contributes exactly $2w(e)$ to the right side of the inequality.  Trivially, $e$ contributes at most $2w(e)$ to the left side.
 \end{itemize}
 
-We conclude that $\minSS’$ is also a minimum-weight separating subgraph, completing the proof of the lemma.
+We conclude that $\minSS'$ is also a minimum-weight separating subgraph, completing the proof of the lemma.
 \end{proof}
 
 We now present the main result of this section, concluding the description of our algorithm for computing minimum weight separating subgraphs and minimum cuts.
@@ -1328,11 +1346,11 @@ Fix an arbitrary edge $e$ of $H_h$.  By assumption, $e$ lies on the boundary of 
 \item
 If $f_L\ne f$, compute a minimum-weight subgraph $\minSS_h$ of $G$ that separates $f$ and $f_L$, in $g^{O(g)}n\log\log n$ time, using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}.  Otherwise, $\minSS_h$ is undefined.
 \item
-If $f_R\ne f$, compute a minimum-weight subgraph $\minSS’_h$ of $G$ that separates $f$ and $f_R$, in $g^{O(g)}n\log\log n$ time, again using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}.  Otherwise, $\minSS’_h$ is undefined.
+If $f_R\ne f$, compute a minimum-weight subgraph $\minSS'_h$ of $G$ that separates $f$ and $f_R$, in $g^{O(g)}n\log\log n$ time, again using the minimum $(s,t)$-cut algorithm of Section~\ref{sec:crossing}.  Otherwise, $\minSS'_h$ is undefined.
 \end{itemize}
 Altogether we compute between $2^{2g}-1$ and $2^{2g+1}-2$ separating subgraphs of $G$ (some of which may coincide); the output of our algorithm is the smallest of these separating subgraphs.  The overall running time of our algorithm is $2^{O(g)} \cdot g^{O(g)}n\log\log n = g^{O(g)}n\log\log n$.
 
-It remains to prove that our algorithm is correct.  Let~$\minSS$ be any minimum-weight subgraph of~$G$ such that neither component of $\Sigma \setminus \minSS$ is a disk.  Let $\Sigma’$ be the closure of the component of $\Sigma \setminus \minSS$ that does not contain $f$.  Because $\Sigma’$ is not a disk, it contains a cycle $\gamma$ that is not separating in $\Sigma’$, and therefore not separating in $\Sigma$.  Let~$h$ be the homology class of $\gamma$ in $\Sigma$, and let $H_h$ be any minimum-weight even subgraph of $G$ that is homologous with $\gamma$ in $\Sigma$.  Lemma~\ref{lem:global_split-nocross} implies, without loss of generality, that~$H_h$ lies entirely in~$\Sigma’$.  Thus, every edge of $H_h$ is on the boundary of at least one face $f’$ in~$\Sigma’$; it follow that $\minSS$ is a minimum-weight even subgraph separating $f$ and $f’$.  We conclude that when our algorithm considers homology class $h$, either $\minSS_h$ or $\minSS’_h$ is a minimum-weight separating subgraph of $G$.
+It remains to prove that our algorithm is correct.  Let~$\minSS$ be any minimum-weight subgraph of~$G$ such that neither component of $\Sigma \setminus \minSS$ is a disk.  Let $\Sigma'$ be the closure of the component of $\Sigma \setminus \minSS$ that does not contain $f$.  Because $\Sigma'$ is not a disk, it contains a cycle $\gamma$ that is not separating in $\Sigma'$, and therefore not separating in $\Sigma$.  Let~$h$ be the homology class of $\gamma$ in $\Sigma$, and let $H_h$ be any minimum-weight even subgraph of $G$ that is homologous with $\gamma$ in $\Sigma$.  Lemma~\ref{lem:global_split-nocross} implies, without loss of generality, that~$H_h$ lies entirely in~$\Sigma'$.  Thus, every edge of $H_h$ is on the boundary of at least one face $f'$ in~$\Sigma'$; it follow that $\minSS$ is a minimum-weight even subgraph separating $f$ and $f'$.  We conclude that when our algorithm considers homology class $h$, either $\minSS_h$ or $\minSS'_h$ is a minimum-weight separating subgraph of $G$.
 \end{proof}
 
 %\begin{proof}
