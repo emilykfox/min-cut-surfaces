@@ -347,12 +347,10 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 \begin{itemize}\cramped
 \item Fix undirected throughout.  (But comment that Section 5 works for directed.)
 \item Fix orientable everywhere.  (Can we \emph{quickly} generalize to non-orientable surfaces via the oriented double cover (like \cite{cen-hfcc-12})?
-\item Paths, cycles, loop, contractible, tight, concatenation 
 \item Free homotopy
 \item Combinatorial surface
 \item Embeddings on surfaces with boundary
 \item Slicing $\snip$
-\item Weakly simple
 \item $\Z_2$-homology vector space; even subgraphs mod boundary subgraphs; Betti numbers; $\oplus$; $\Z_2$-homologous; $\Z_2$-minimal
 \end{itemize}
 \noindent
@@ -376,7 +374,7 @@ We begin by recalling several useful definitions related to surface-embedded gra
 A \EMPH{surface} (more formally, a \emph{2-manifold with boundary}) is a compact Hausdorff space in which every point has an open neighborhood homeomorphic to either the plane $\Real^2$ or a closed halfplane $\set{(x,y)\in \Real^2\mid x\ge 0}$.  The points with halfplane neighborhoods make up the \EMPH{boundary} of the surface; every component of the boundary is homeomorphic to a circle.
 A surface is \EMPH{non-orientable} if it contains a subset homeomorphic to
 the M\"obius band, and \EMPH{orientable} otherwise. In this paper, we consider only compact, connected, and orientable surfaces.
-\note{Kyle: I guess we can do non-orientable, at least for computing minimal directed cycles, although the Betti numbers get nastier.  Jeff and Erin: Nope, only orientable please.}
+\note{Erin: Change this later if we alter to include non-orientable double cover results, but for now only orientable}
 
 A \EMPH{path} in a surface $\Sigma$ is a continuous function $p\colon [0,1]\to\Sigma$.
 A \EMPH{loop} is a path whose endpoints~$p(0)$ and~$p(1)$ coincide;
@@ -422,6 +420,8 @@ Any cellular embedding on an orientable surface can be encoded combinatorially
 by a \EMPH{rotation system}, which records the counterclockwise order of edges
 incident to each vertex.
 Two paths or cycles in a combinatorial surface \EMPH{cross} if no continuous infinitesimal perturbation makes them disjoint; if such a perturbation exists, then the paths are \EMPH{non-crossing}.
+Similarly, we define a path or cycle in the graph as \emph{weakly simple} if it can be continuously and infinitesimally perturbed to be a simple cycle on the underlying surface $\Sigma$.
+
 
 We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may contain the same vertex or edge more than once.
 
@@ -509,10 +509,9 @@ Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ 
 
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}.
+Homology classes define a vector space over $\Z_2$, call the first homology group;  the rank of this group is  called the first \emph{Betti number} of the surface.
 
-\note{Erin: No mention of Betti number, but we do use it later.  Add here.  Homology classes define a vector space over $\Z_2$ whose rank is called the (first) Betti number of the surface.}
 
-\note{Define weakly simple \cite{weak} as perturbable into simple.  We don't need to worry about “forks” and “spurs”.}
 We define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
 
 \begin{lemma}
@@ -547,8 +546,8 @@ We emphasize that each cycle in a cycle decomposition may visit vertices multipl
 \label{SS:duality}
 
 
-A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.  \note{generalizes Whitney's planar cycle-cut duality; see Itai-Shiloach}
-We formalize this equivalence in the following lemma.
+A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.  This equivalence was first observed in planar graphs by Whitney \cite{w-pg-33} and was later used to compute minimum cuts in planar graphs by Itai and Shiloach \cite{is-mfpn-79}.
+We formalize the same equivalence on surface graphs in the following lemma:
 
 \begin{lemma}
 \label{lem:cut-duality}
