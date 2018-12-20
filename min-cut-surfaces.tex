@@ -186,7 +186,7 @@ We formalize this characterization in terms of \emph{homology}, a standard equiv
 
 Unlike in planar graphs, where every minimal cut is  dual to a simple cycle \cite{w-pg-33}, the dual of a minimum cut in a surface graph may consist of several disjoint cycles.  More generally, the minimum-weight subgraph in any homology class may be disconnected, even when the homology class is specified by a simple cycle; see Figure \ref{fig:homology2}.  Dealing with disconnected “cycles” is a significant complication in our algorithms.
 
-Before describing our results in further detail, we first review several related results; technical terms are defined in Section \ref{sec:prelims}.
+Before describing our results in further detail, we first review several related results; technical terms are more precisely defined in Section \ref{sec:prelims}.
 
 %\begin{TODO}
 %\noindent
@@ -286,7 +286,7 @@ This reduction implies that the exponential dependence on $g$ in our algorithms 
 Finally, in Section~\ref{sec:global}, we describe our algorithms for computing global minimum cuts.  Both algorithms ultimately reduce computing a global minimum cut to  $2^{O(g)}$ instances of computing minimum $(s,t)$-cuts; thus, our algorithms have the same asymptotic running times as the minimum $(s,t)$-cut algorithms from Sections \ref{sec:crossing} and \ref{sec:homcover}.
 
 We note with some amusement that our algorithms solve a problem with a well-known polynomial-time solution by reducing it to an exponential number (in $g$) of instances of an NP-hard (but fixed-parameter tractable) problem!  
-The authors are divided whether to conjecture that minimum cuts in surface graphs can  be computed in time $O(g^c n\polylog n)$ for some small constant $c$, or that the problem is “fixed-parameter quadratic” with respect to genus, just as diameter and radius are fixed-parameter quadratic with respect to treewidth \cite{aww-afpsa-16}.  
+The authors of this paper are divided on whether to conjecture that minimum cuts in surface graphs can  be computed in time $O(g^c n\polylog n)$ for some small constant $c$, or that the problem is “fixed-parameter quadratic” with respect to genus, just as diameter and radius are fixed-parameter quadratic with respect to treewidth \cite{aww-afpsa-16}.  
 Fomin \etal~\cite{flspw-fppcg-18} raise similar questions about the fixed-parameter efficiency of flows and cuts with respect to treewidth.
 
 
