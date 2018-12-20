@@ -17,11 +17,7 @@
 %-----------------------------------------------------------------------
 \usepackage{microtype}
 \usepackage[charter]{mathdesign}
-%\usepackage{berasans,beramono} %-- bold too heavy
 \usepackage[semibold]{sourcesanspro}
-%\usepackage[scale=0.95]{ClearSans}
-%\usepackage[scale=0.9]{GoSans,GoMono} -- Too narrow
-%\usepackage{inconsolata}
 
 \usepackage[mathcal]{euscript}
 \usepackage{stmaryrd}
@@ -224,10 +220,10 @@ Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-ti
 
 Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obtain an $O(n)$-time planar shortest-path algorithm; using this algorithm in place of Dijkstra's algorithm improves the running times of both Reif's and Janiga and Koubek's algorithms to $O(n\log n)$.  The same improvement can also be obtained using more recent multiple-source shortest path algorithms by Klein~\cite{k-msspp-05} and Cabello and Chambers \cite{cc-msspg-07}.
 
-Minimum $(s,t)$-cuts in directed planar graphs can also be obtained in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (if the graph satisfies certain connectivity restrictions \note{which can be enforced in $O(n\log n)$ time; cite recent paper}) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
+Minimum $(s,t)$-cuts in directed planar graphs can also be computed in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (after filtering out useless edges \cite{fls-fuadp-18}) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
 
 A \EMPH{cut} (without specified $s$ and $t$) is a subset of edges of $G$ that separate $G$ into two non-empty sets of vertices.
-A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time. Their algorithm was later improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  \note{Mozes \etal\ directed}
+A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time.  Their algorithm was improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  Mozes \etal~recently achieved the same $O(n \log \log n)$ running time for global minimum cuts in \emph{directed} planar graphs \cite{mnnw-mdpgo-18}.
 
 \subsubsection*{Generalizations of Planar Graphs}
 
@@ -271,21 +267,11 @@ Dey \etal~\cite{dls-chtl-07, dlsc-cgaht-08} describe algorithms to find short \e
 
 \subsubsection*{Optimal homology representatives}
 
-\begin{TODO}
-\noindent I think there are enough related results on this topic to pull out into a separate section.
-\begin{itemize}\cramped
-\item
-Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07}: NP-hard even to approximate in simplicial complexes with $\Z_2$ coefficients, via \textsc{Max2Sat}.
-\item
-Chambers \etal~\cite{ccelw-scsih-08}: Splitting cycles are NP-hard, modification implies shortest simple homologous cycles are NP-hard (arbitrary coefficients), via planar grid Hamiltonian cycle
-\item
-Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12}: minimum-cost homologous circulations ($\Real$ or $\Q$ or $\Z$ coefficients) in surface graphs
-\item
-Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11}: optimal $(d-1)$-chains (with $\Z$ coefficients) in orientable $d$-manifold simplicial complexes via minimum-cost flows / total unimodularity
-\item
-Grochaw and Tucker-Foltz** (SOCG 2018): Unique-Games-complete for $\Z_q$ coefficients, for sufficiently large $q$.  Thus, no PTAS for any $q$ unless UCG is false.
-\end{itemize}
-\end{TODO}
+Homology is a topological notion of equivalence nice algebraic properties.  Two subgraphs of a surface graph $G$ are \emph{homologous}, or in the same \emph{homology class}, if their difference is the sum of face boundaries, where summation is defined over some coefficient ring.  Our minimum-cut algorithms all reduce to the problem of finding a subgraph of \emph{minimum weight} in a given homology class (over the ring $\Z_2$).  Several previous authors have considered variants of this \emph{homology localization} problem.
+
+Most interesting variants of this problem are NP-hard.  In particular, results of Chambers \etal~\cite{ccelw-scsih-08} imply that finding the shortest \emph{simple} cycle in a given homology class in a surface graph is NP-hard.  Chen and Freedman \cite{cf-hrhl-10} proved that homology localization in arbitrary simplicial complexes is NP-hard even to approximate.  Very recently, Grochaw and Tucker-Foltz \cite{gt-ctugc-18} proved that homology localization in surface graphs, over a sufficiently large finite coefficient ring, is equivalent to Unique Games; in particular, there is no PTAS for \emph{any} finite coefficient ring unless the Unique Games Conjecture is false.
+
+On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem \cite{cen-hfcc-12}.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
 
 \subsection{New Results and Organization}
 
@@ -1072,7 +1058,7 @@ Finally, we describe our algorithm to compute \emph{global} minimum cuts in surf
 
 As in previous sections, it is convenient to work in the dual graph.  We cannot apply Lemma \ref{lem:cut-duality} directly, but the following lemma similarly characterizes global minimum cuts in any surface graph in terms of homology in the dual graph.  A \EMPH{separating subgraph} is any non-empty boundary subgraph, or equivalently, the boundary of the union of a \emph{proper, non-empty} set of faces.  Unlike previous sections, we assume throughout this section that the underlying surface does \emph{not} have boundary.
 
-\note{We do NOT assume generic edge weights in this section; in particular, we explicitly allow for multiple minimum-weight separating subgraphs, as well as multiple minimum-weight graphs in each homology class.}
+\note{We do not assume generic edge weights in this section; in particular, we explicitly allow for multiple minimum-weight separating subgraphs, as well as multiple minimum-weight graphs in each homology class.}
 
 \begin{lemma}
 \label{lem:mincut-z2}
