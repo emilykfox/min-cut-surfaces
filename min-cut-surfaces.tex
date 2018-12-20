@@ -372,7 +372,7 @@ We begin by recalling several useful definitions related to surface-embedded gra
 A \EMPH{surface} (more formally, a \emph{2-manifold with boundary}) is a compact Hausdorff space in which every point has an open neighborhood homeomorphic to either the plane $\Real^2$ or a closed halfplane $\set{(x,y)\in \Real^2\mid x\ge 0}$.  The points with halfplane neighborhoods make up the \EMPH{boundary} of the surface; every component of the boundary is homeomorphic to a circle.
 A surface is \EMPH{non-orientable} if it contains a subset homeomorphic to
 the M\"obius band, and \EMPH{orientable} otherwise. In this paper, we consider only compact, connected, and orientable surfaces.
-\note{Erin: Change this later if we alter to include non-orientable double cover results, but for now only orientable}
+%\note{Erin: Change this later if we alter to include non-orientable double cover results, but for now only orientable}
 
 A \EMPH{path} in a surface $\Sigma$ is a continuous function $p\colon [0,1]\to\Sigma$.
 A \EMPH{loop} is a path whose endpoints~$p(0)$ and~$p(1)$ coincide;
@@ -414,19 +414,15 @@ if the graph is simple.
 We consider only such
 cellular embeddings of genus $g=O(n^{1-\eps})$, so that the overall complexity of the embedding is $O(n)$.
 
+Any cellular embedding on an orientable surface can be encoded combinatorially by a \EMPH{rotation system}, which records the counterclockwise order of edges incident to each vertex.
+We also refer to the complex of vertices, edges, and faces induced by a cellular embedding as a \EMPH{combinatorial surface}.
+Every combinatorial surface with boundary can be obtained from a combinatorial surface without boundary by deleting the interiors of one or more faces.
 
-Any cellular embedding on an orientable surface can be encoded combinatorially
-by a \EMPH{rotation system}, which records the counterclockwise order of edges
-incident to each vertex.
-\note{add combinatorial surface here?}
-Two paths or cycles in a combinatorial surface \EMPH{cross} if no continuous infinitesimal perturbation makes them disjoint; if such a perturbation exists, then the paths are \EMPH{non-crossing}.
-Similarly, we define a path or cycle in the graph as \emph{weakly simple} if it can be continuously and infinitesimally perturbed to be a simple cycle on the underlying surface $\Sigma$.
+We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may traverse the same vertex or edge more than once.
 
+An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be continuously and infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle \cite{cex-dwsp-15}.  Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses} $\beta$.
 
-We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may contain the same vertex or edge more than once.
-
-
-\EMPH{Cutting} a combinatorial surface along a cycle or  arc modifies both the surface and the embedded graph.
+\EMPH{Slicing} a combinatorial surface along a cycle or arc modifies both the surface and the embedded graph.
 For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
 We define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
 
@@ -451,9 +447,7 @@ f^*g^*$ are emphasized.} \label{fig:prelims_primaldual}
 \end{figure}
 
 
-Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdi\`ere~\cite{octagons}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{fig:duality}.  (Duality can be extended to directed graphs~\cite{surflow}, but our results do not require this extension.)
-
-\note{double check boundary stuff is clear}
+Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdière~\cite{ce-tnpcs-10}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{fig:duality}.  (Duality can be extended to directed graphs~\cite{cen-hfcc-12}, but our results do not require this extension.)
 
 \begin{figure}[htb]
 \centering
@@ -489,12 +483,12 @@ but it should be clear which we mean from context.
 \subsection{Homotopy and homology}
 \label{SS:homology}
 
-Two paths~$p$ and~$q$ in $\Sigma$ are \EMPH{homotopic} if one can be
-continuously deformed into the other without changing their endpoints.
-More formally, a \EMPH{homotopy} between~$p$ and~$q$ is a
-continuous map $h\colon {[0,1]\times [0,1] \to \Sigma}$ such that $h(0,\cdot) = p$, $h(1,\cdot) = q$, $h(\cdot, 0)=p(0)=q(0)$, and $h(\cdot,1)=p(1)=q(1)$.
+Two paths~$p$ and~$q$ in $\Sigma$ are \EMPH{homotopic} if one can be continuously deformed into the other without changing their endpoints.
+More formally, a \EMPH{homotopy} between~$p$ and~$q$ is a continuous map $h\colon {[0,1]\times [0,1] \to \Sigma}$ such that $h(0,\cdot) = p$, $h(1,\cdot) = q$, $h(\cdot, 0)=p(0)=q(0)$, and $h(\cdot,1)=p(1)=q(1)$.
 Homotopy defines an equivalence relation over the set of paths with any
-fixed pair of endpoints. \note{add free homotopy here}
+fixed pair of endpoints.
+
+Similarly, two cycles $\alpha$ and $\beta$ in $\Sigma$ are \EMPH{homotopic} if one can be continuously deformed into the other without changing their endpoints
 %
 %The set of homotopy classes of loops in~$\Sigma$ with basepoint~$x_0$ defines a group~$\pi_1(\Sigma,x_0)$ under concatenation, called the \EMPH{fundamental group} of~$\Sigma$. (For all basepoints~$x_0$ and~$x_1$, the groups~$\pi_1(\Sigma,x_0)$ and~$\pi_1(\Sigma,x_1)$ are isomorphic.)
 %
@@ -760,7 +754,7 @@ Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ b
 \begin{proof}
 Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.  Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
 
-Consider the graph $G/\sigma$ obtained from $G$ by contracting $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
+Consider the graph $G/\sigma$ obtained from $G$ by contracting the path $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
 
 Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$ whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$ is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover, the uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.  But this contradicts our assumption that $H $ has minimum weight in its homology class.
 
