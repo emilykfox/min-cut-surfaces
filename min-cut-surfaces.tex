@@ -870,10 +870,9 @@ If $b>1$, then each boundary cycle $\delta_i$ has a non-zero homology signature;
 After computing the homology signatures for $\Sigma$ in $O(\beta n)$ time, following Lemma \ref{lem:sign}, it is straightforward to construct $\Sigmabar$ in $O(\nbar) = O(2^\beta n)$ time.
 \end{proof}
 
-\note{Not so formal about $\wbar$}
-For each edge $\ebar$ of $\Gbar$, we assign the weight $\wbar(\ebar) = w(e)$, where $e$ is the projection of $\ebar$ to the original graph $G$.  In other words, each  edge in $\Sigmabar$ inherits the weight of its projection in $\Sigma$.
 
-Now consider an arbitrary path $\path$ in $G$, with (possibly equal) endpoints $u$~and $v$.  A straightforward induction argument implies that for any homology class $h \in (\Z_2)^\beta$, the path~$\path$ is the projection of a unique path from $(u,h)$ to $(v,h\oplus[\path])$, which we denote \EMPH{$(\path,h)$}.  Moreover, this lifted path has the same length as its projection: $w(\path) = \wbar(\path,h)$.  The following lemmas are now immediate.
+Each edge in $\Gbar$  inherits the weight of its projection in  $G$.
+Now consider an arbitrary path $\path$ in $G$, with (possibly equal) endpoints $u$~and $v$.  A straightforward induction argument implies that for any homology class $h \in (\Z_2)^\beta$, the path~$\path$ is the projection of a unique path from $(u,h)$ to $(v,h\oplus[\path])$, which we denote \EMPH{$(\path,h)$}.  Moreover, this lifted path has the same length as its projection.  The following lemmas are now immediate.
 
 \begin{lemma}
 \label{lem:lift-shortest}
@@ -931,7 +930,8 @@ Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $
 
 By running this algorithm $2^\beta$ times, we can compute the shortest cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.
 
-\note{Actually this last result works for directed graphs as well.  We really don’t need to say much here.}
+We note that this result holds in directed graphs as well, as the construction of the $\Z_2$-homology cover ignores weights and the multiple source shortest path algorithm works on directed graphs.
+
 
 % --------------------------------------------------------------------------------
 \subsection{Minimum cuts from the homology cover}
