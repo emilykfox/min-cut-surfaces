@@ -1111,7 +1111,7 @@ Notation issues:
 \end{TODO}
 
 First we consider the case where some minimum weight separating subgraph $\minSS$ is contractible.  
-We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.
+We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.  Recall that an arc or cycle is \emph{tight} if it has minimum weight among all arcs or cycles in its homotopy class.
 
 \begin{lemma}[Cabello~\cite{c-fscss-10}]
 \label{lem:disjoint-tight-arc}
@@ -1133,11 +1133,14 @@ The shortest simple contractible cycle and the shortest non-separating cycle in 
 Cabello~\cite{c-fscss-10} uses these observations to compute a shortest simple contractible cycle in a surface embedded graph; unfortunately, his algorithm runs in $O(n^2\log n)$ time.
 Cabello \etal~\cite{cdem-fotc-10} use the same observations to find a shortest contractible \emph{closed walk} that encloses a non-empty set of faces in $O(n\log n)$ time (with no dependence on $g$).%
 %
-\footnote{Cabello \etal\ reduce this problem to finding a global minimum cut in a planar graph in $O(n \log n)$ time~\cite{cdem-fotc-10}.  They used the planar minimum-cut algorithm of Chalermsook \etal~\cite{cfn-dnlta-04} to derive a running time of $O(n\log^2 n)$; the \L\c{a}cki and Sankowski runs in $O(n \log \log n)$  time~\cite{ls-mcsc-11}.}
+\footnote{Cabello \etal\ reduce this problem to finding a global minimum cut in a planar graph in $O(n \log n)$ time~\cite{cdem-fotc-10}.  They used the planar minimum-cut algorithm of Chalermsook \etal~\cite{cfn-dnlta-04} to derive a running time of $O(n\log^2 n)$; the more recent algorithm of \L\c{a}cki and Sankowski runs in $O(n \log \log n)$  time~\cite{ls-mcsc-11}.}
 %
+\note{Remove footnote}
 However, the resulting closed walk $W$ might traverse some edges of~$G$ more than once.  The set of edges that $W$ traverses an odd number of times does constitute a boundary subgraph; unfortunately, this subgraph could be disconnected or even empty.
 
-Our algorithm will make use of the cutting operation ($\snip$) along tight cycles and arcs in~$G$.  The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
+Our algorithm closely follows the algorithm of Cabello \etal~\cite{cdem-fotc-10}, but with modifications to ensure that the resulting walk traverses at least one edge an odd number of times.
+
+We use the cutting operation ($\snip$) along tight cycles and arcs in~$G$.  The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
 
 \color{Red}\note{This lemma needs work!!!  Better to write: Any bounding closed walk in $\Gsnip$ projects to a bounding closed walk in $G$.}
 
@@ -1161,22 +1164,20 @@ Now consider any edge~$e$ in~$\gammasnip$. Suppose~$e$ does not lie along~$\alph
 \end{proof}
 
 \color{Black}
-The next lemma presents an algorithm to compute a tight non-separating cycle; this is a modification of an algorithm by  Cabello \etal~\cite[Theorem 5.4]{cdem-fotc-10}, where they give an algorithm that runs in $O(n \log n)$ time for the same problem.  
+
+The next lemma presents an algorithm to compute a tight non-separating cycle; this is a modification of an algorithm of Cabello \etal~\cite[Theorem 5.4]{cdem-fotc-10} for the same problem that runs in $O(n \log n)$ time.
 
 \begin{lemma}
 \label{lem:tightcycle}
-There exists an $O(n \log \log)$ algorithm that computes a tight non-separating cycle in a surface without boundary.
+Given a weighted undirected graph $G$ on any surface, we can find a tight non-separating cycle in $G$ in $O(n\log\log n)$ time.
 \end{lemma}
 
-
 \begin{proof}
+First, we compute a shortest non-separating loop $\ell$ through any vertex.  This takes $O(n\log n)$ time~\cite{eh-ocsd-04}; however, since we assume $g = o(\log n)$ throughout this paper, the running time for this step will be $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97}.
 
-First, we compute a shortest non-separating loop $ell$ through any vertex.  This takes $O(n\log n)$ time~\cite{eh-ocsd-04}; however, since we assume $g = o(\log n)$ throughout this paper, the running time for this step will be $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97}.
-
-Next, we compute the shortest cycle $\alpha$ that is homotopic to $\ell$ in $\Sigma\snip\ell$; we make two improvements to~\cite[Lemma 4.1]{cdem-fotc-10} to improve the running time from $O(n \log n)$ to $O(n \log \log n)$.  Their algorithm proceeds by gluing a disk over one boundary of $Sigma\snip\ell$, and then computing a greedy system of tight arcs.  We are able to do this in $O(n)$ time (again via Henzinger \etal~\cite{hkrs-fspap-97}, since $g = o(\log n)$). 
+Next, we compute the shortest cycle $\alpha$ that is homotopic to $\ell$ in $\Sigma\snip\ell$; we make two improvements to~\cite[Lemma 4.1]{cdem-fotc-10} to improve the running time from $O(n \log n)$ to $O(n \log \log n)$.  Their algorithm proceeds by gluing a disk over one boundary of $\Sigma\snip\ell$, and then computing a greedy system of tight arcs.  We are able to do this in $O(n)$ time (again via Henzinger \etal~\cite{hkrs-fspap-97}, since $g = o(\log n)$). 
 
 We then cut along the greedy cut graph, which is the union of the greedy system of arcs, to get a combinatorial annulus $A$; see Figure~\ref{fig:global_forbidden-pair}. While the greedy system of arcs as complexity $O(gn)$~\cite{cdem-fotc-10}, the \emph{union} of these arcs only has complexity $O(n)$.  Therefore, this operation takes $O(n)$ time and results in a planar graph.  Finally, we compute the shortest generating cycle in $A$ by computing a planar minimum $(s,t)$-cut; this takes $O(n \log \log n)$ time~\cite{insw-iamcmf-11}.
-
 \end{proof}
 
 
@@ -1187,7 +1188,7 @@ Finally, we can present the main result of this section.
 %\end{lemma}
 \begin{lemma}
 \label{lem:contractible-alg}
-There exists a~$O(n \log \log n)$ time algorithm that computes a minimum weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
+There exists an $O(n \log \log n)$-time algorithm that computes a minimum weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
 
 
