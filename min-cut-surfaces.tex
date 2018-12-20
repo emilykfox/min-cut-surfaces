@@ -150,14 +150,12 @@ We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global mi
 \begin{TODO}\noindent
 To do:
 \begin{itemize}\itemsep0pt
-\item Optimal homology representatives
 \item Rewrite story — Section 1.2
 \item Normalize notation/terminology/assumptions ???
 \item Check conditions for orientable? -- NO!  Assume orientable
 \item Check conditions for directed? -- NO! Assume undirected (except comment in hom cover section)
 \item Check missing citations
-\item Cite new work since conference papers
-\item Notation: $\snip$ vs $\setminus$ vs $\setminus\!\!\setminus$ vs $\fatbslash$
+\item Cite new work since conference papers — Section 1.3
 \end{itemize}
 \end{TODO}
 
@@ -179,9 +177,9 @@ Planar graphs have been a natural focus of study for algorithms research for dec
 
 The classical minimum cut problem and its dual, the maximum flow problem, are stark exceptions to this general pattern.  Flows and cuts were introduced in the 1950s as tools for studying transportation networks, which are naturally modeled as planar graphs \cite{hr-fmern-55}.  Ford and Fulkerson's seminal paper \cite{ff-mfn-56} includes an algorithm to compute maximum flows in planar networks where the source and target lie on the same face.  A long series of results eventually led to planar minimum-cut algorithms that run in near-linear time, first for undirected graphs \cite{r-mstcp-83, hj-oamfu-85, f-faspp-87, insw-iamcmf-11} and later for directed graphs \cite{jk-mcdpn-92, hkrs-fspap-97, mnnw-mdpgo-15}.
 
-In contrast, almost nothing is known about computing minimum cuts in even mild generalizations of planar graphs; in particular, except for the work reported in this paper, we are unaware of any algorithm to compute minimum-cuts in non-planar graphs that does not require first computing a maximum flow.  
+In contrast, prior to our work, almost nothing was known about computing minimum cuts in even mild generalizations of planar graphs; in particular, except for the work reported in this paper, we are unaware of any algorithm to compute minimum-cuts in non-planar graphs that does not require first computing a maximum flow.  
 
-This paper describes the first algorithms to compute minimum cuts in surface-embedded graphs of fixed genus in near-linear time.  Specifically, we describe algorithms to compute minimum $(s,t)$-cuts and global minimum cuts in undirected graphs in $g^{O(g)} n\log\log n$ time, and to compute minimum $(s,t)$-cuts in directed graphs in $2^{O(g)} n\log n$ time.  For all three algorithms, the input consists of an $n$-vertex graph with arbitrary real edge weights, embedded on an orientable surface of genus $g$.
+This paper describes the first algorithms to compute minimum cuts in surface-embedded graphs of fixed genus in near-linear time.  Specifically, we describe two algorithms to compute minimum $(s,t)$-cuts in undirected surface graphs, the first in $g^{O(g)} n\log\log n$ time, and the second in $2^{O(g)} n\log n$ time.  We also extend our first algorithm to find \emph{global} minimum cuts in undirected surface graphs in $g^{O(g)} n\log\log n$ time; our second algorithm actually works without modification in directed surface graphs.  For all our algorithms, the input consists of an $n$-vertex graph with arbitrary real edge weights, embedded on an orientable surface of genus $g$.
 
 Our algorithms are based on a natural generalization of the duality between cuts and cycles in planar graphs, first proposed by Whitney \cite{w-pg-33} and first exploited to compute minimum cuts in planar graphs by Itai and Shiloach \cite{is-mfpn-79}.  By definition, a set $C$ of edges defines an $(s,t)$-cut in a graph $G$ if and only if their complement $G\setminus C$ is a disconnected graph, with $s$ and $t$ in different components.  If $G$ is embedded on a surface, then the corresponding edges $C^*$ in the dual graph~$G^*$ separate the \emph{faces} of $G^*$ into two disconnected subcomplexes, one containing the dual face $s^*$ and the other containing the dual face $t^*$. 
 
@@ -223,7 +221,7 @@ Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obt
 Minimum $(s,t)$-cuts in directed planar graphs can also be computed in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (after filtering out useless edges \cite{fls-fuadp-18}) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
 
 A \EMPH{cut} (without specified $s$ and $t$) is a subset of edges of $G$ that separate $G$ into two non-empty sets of vertices.
-A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time.  Their algorithm was improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  Mozes \etal~recently achieved the same $O(n \log \log n)$ running time for global minimum cuts in \emph{directed} planar graphs \cite{mnnw-mdpgo-18}.
+A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time.  Their algorithm was improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  Mozes \etal~recently achieved the same $O(n \log \log n)$ running time for global minimum cuts in \emph{directed} planar graphs \cite{mnnw-mdpgo-18},  using techniques reported  a preliminary version of this paper \cite{en-mcsnc-11}, specifically, the $\Z_2$-homology covers described in Section \ref{sec-homcover}.
 
 \subsubsection*{Generalizations of Planar Graphs}
 
@@ -250,20 +248,23 @@ A more recent deterministic algorithm of Heznziger, Rao, and Wang \cite{hrw-lfpf
 Finally, the fastest algorithm known for global minimum cuts in arbitrary \emph{directed} graphs, due to Hao and Orlin \cite{ho-fafmd-94}, runs in $O(mn\log(n^2/m))$ time.
 
 For further background on maximum flows, minimum cuts, and related problems, we refer the reader to monographs by Ahuja \etal\ \cite{amo-nftaa-93} and Schrijver \cite{s-cape-03}.
-
-\subsubsection*{Short Interesting Cycles}
-
-Many different problems, such as finding approximate traveling salesman tours  \cite{dhm-aacd-07} and Steiner trees~\cite{bdt-ptass-08} in surface embedded graphs, embedding high-genus graphs into the plane with low distortion \cite{is-pebgg-07} or with few crossings \cite{kr-ccnlt-07}, and feature detection and simplification in meshes \cite{gw-tnr-01,dlsc-cgaht-08}, require algorithms to find short but topologically nontrivial cycles.  These problems are closely connected to that of finding cuts on surface-embedded graphs, since any minimum cut will form a small set of cycles separating the vertices.
-
-Thomassen described the first efficient algorithm to find the shortest non-contractible or non-separating cycle \cite{t-egnsn-90, mt-gs-01}.  After many intermediate improvements \cite{c-mdpg-06, cm-fsnsn-07, eh-ocsd-04, k-csnco-06,cc-msspg-07,insw-iamcmf-11}, the fastest such algorithms for various values of $G$ and $n$ run in $O(n^2\log n)$ time \cite{eh-ocsd-04}, $O(g^2n\log n)$ time \cite{cce-msspe-13}, and $2^{O(g)} n \log \log n$ time~\cite{f-sntcd-13}.
-
-Splitting cycles are non-contractible and separating; finding the shortest such cycle is {NP}-hard, although there is an $O(n \log \log n)$-time algorithm for graphs of any fixed genus \cite{ccelw-scsih-06, ccelw-scsih-08,insw-iamcmf-11}.  Colin de Verdi\`ere and Erickson~\cite{ce-tspcs-06} prove that the shortest path or cycle in a given homotopy class can be computed in polynomial time, improving earlier results of Colin de Verdi\`ere and Lazarus \cite{c-rcds-03, cl-oslos-05, cl-opdsh-07}.  Erickson and Whittlesey describe a greedy algorithm to find a minimum-length set of cycles that generate the first homology group of a surface \cite{ew-gohhg-05}.
-
-Finally, the first algorithms to find optimal \emph{directed} cycles in \emph{directed} surface graphs were proposed by Cabello, Colin de Verdi\`ere, and Lazarus~\cite{ccl-fsncd-10}.  Erickson~\cite{e-sncds-11} and Fox~\cite{f-sntcd-13} describe improvements to their algorithm that find the shortest non-separating cycle in~$O(g^2 n \log n)$ time and the shortest non-contractible cycle in~$O(g^3 n \log n)$ time respectively.
-
-Several practical heuristics have been developed for finding short cycles that work well in practice, although they have no theoretical guarantees.  For example, Guskov and Wood \cite{gw-tnr-01} describe an algorithm to find and remove intersecting pairs of short non-contractible cycles (`topological noise') from surface meshes.  Zomorodian and Carlsson \cite{zc-lh-07} define the \emph{localized} homology of an arbitrary topological case with respect to a subspace covering; they also describe algorithms to compute localized homology generators of simplicial complexes using persistent homology; however, they do not describe how to compute covers that would lead to cycles of minimum size.  Chen and Friedman \cite{cf-qhc2-07, cf-qhc-08} describe a polynomial-time algorithm to compute a cycle of minimum \emph{radius} in a given homology class, in an arbitrary edge-weighted simplicial complex; however, the length of this cycle could be arbitrarily longer than optimal.
-
-Dey \etal~\cite{dls-chtl-07, dlsc-cgaht-08} describe algorithms to find short \emph{handle} and \emph{tunnel} cycles in surface meshes embedded in $\Real^3$.  Any embedded surface subdivides $\Real^3$ into an inner handlebody $I$ and an outer handlebody $O$; handle cycles are null-homologous in $I$, while tunnel cycles are null-homologous in~$O$.  The algorithm of Dey \etal\ finds $g$ short handle cycles and $g$ short tunnel cycles that collectively generate the first homology group of the input surface.  Their algorithm uses several heuristics to reduce the length of the output cycles, in part because no fast algorithm was yet known to find the shortest cycle in a given homology class.
+%
+%\subsubsection*{Short Interesting Cycles}
+%
+%Many different problems, such as finding approximate traveling salesman tours  \cite{dhm-aacd-07} and Steiner trees~\cite{bdt-ptass-08} in surface embedded graphs, embedding high-genus graphs into the plane with low distortion \cite{is-pebgg-07} or with few crossings \cite{kr-ccnlt-07}, and feature detection and simplification in meshes \cite{gw-tnr-01,dlsc-cgaht-08}, require algorithms to find short but topologically nontrivial cycles.  These problems are closely connected to that of finding cuts on surface-embedded graphs, since any minimum cut will form a small set of cycles separating the vertices.
+%
+%Thomassen described the first efficient algorithm to find the shortest non-contractible or non-separating cycle \cite{t-egnsn-90, mt-gs-01}.  After many intermediate improvements \cite{c-mdpg-06, cm-fsnsn-07, eh-ocsd-04, k-csnco-06,cc-msspg-07,insw-iamcmf-11}, the fastest such algorithms for various values of $G$ and $n$ run in $O(n^2\log n)$ time \cite{eh-ocsd-04}, $O(g^2n\log n)$ time \cite{cce-msspe-13}, and $2^{O(g)} n \log \log n$ time~\cite{f-sntcd-13}.
+%
+%Splitting cycles are non-contractible and separating; finding the shortest such cycle is {NP}-hard, although there is an $O(n \log \log n)$-time algorithm for graphs of any fixed genus \cite{ccelw-scsih-06, ccelw-scsih-08,insw-iamcmf-11}.  Colin de Verdi\`ere and Erickson~\cite{ce-tspcs-06} prove that the shortest path or cycle in a given homotopy class can be computed in polynomial time, improving earlier results of Colin de Verdi\`ere and Lazarus \cite{c-rcds-03, cl-oslos-05, cl-opdsh-07}.  Erickson and Whittlesey describe a greedy algorithm to find a minimum-length set of cycles that generate the first homology group of a surface \cite{ew-gohhg-05}.
+%
+%Finally, the first algorithms to find optimal \emph{directed} cycles in \emph{directed} surface graphs were proposed by Cabello, Colin de Verdi\`ere, and Lazarus~\cite{ccl-fsncd-10}.  In the preliminary version of Section \ref{sec:homcover}~\cite{en-mcsnc-11}, we described an algorithm to compute the shortest non-separating cycle in a directed surface graph in $g^{O(g)} n \log n$ time.
+%
+%
+%Erickson~\cite{e-sncds-11} and Fox~\cite{f-sntcd-13} describe improvements to their algorithm that find the shortest non-separating cycle in~$O(g^2 n \log n)$ time and the shortest non-contractible cycle in~$O(g^3 n \log n)$ time respectively.
+%
+%Several practical heuristics have been developed for finding short cycles that work well in practice, although they have no theoretical guarantees.  For example, Guskov and Wood \cite{gw-tnr-01} describe an algorithm to find and remove intersecting pairs of short non-contractible cycles (`topological noise') from surface meshes.  Zomorodian and Carlsson \cite{zc-lh-07} define the \emph{localized} homology of an arbitrary topological case with respect to a subspace covering; they also describe algorithms to compute localized homology generators of simplicial complexes using persistent homology; however, they do not describe how to compute covers that would lead to cycles of minimum size.  Chen and Friedman \cite{cf-qhc2-07, cf-qhc-08} describe a polynomial-time algorithm to compute a cycle of minimum \emph{radius} in a given homology class, in an arbitrary edge-weighted simplicial complex; however, the length of this cycle could be arbitrarily longer than optimal.
+%
+%Dey \etal~\cite{dls-chtl-07, dlsc-cgaht-08} describe algorithms to find short \emph{handle} and \emph{tunnel} cycles in surface meshes embedded in $\Real^3$.  Any embedded surface subdivides $\Real^3$ into an inner handlebody $I$ and an outer handlebody $O$; handle cycles are null-homologous in $I$, while tunnel cycles are null-homologous in~$O$.  The algorithm of Dey \etal\ finds $g$ short handle cycles and $g$ short tunnel cycles that collectively generate the first homology group of the input surface.  Their algorithm uses several heuristics to reduce the length of the output cycles, in part because no fast algorithm was yet known to find the shortest cycle in a given homology class.
 
 \subsubsection*{Optimal homology representatives}
 
@@ -330,29 +331,9 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 
 \color{Black}
 
-\subsection{Followup Results}
-
-Since the preliminary version of our results 
+\subsection{Additional Results}
 
 
-\begin{TODO}
-\begin{itemize}
-\item In preliminary version of Section 5, shortest non-separating cycle in directed graphs.  Past results by Cabello \etal~\cite{ccl-fsncd-10}; since improved by others \cite{e-sncds-11, f-sntcd-13}.
-\end{itemize}
-\end{TODO}
-
-\color{Gray}
-In particular, we can compute the shortest directed cycle in~$\Sigma$ that has nontrivial $\Z_2$-homology.  When the original surface has no boundary, this is just the shortest \emph{non-separating} cycle in $\Sigma$.  Cabello \etal~\cite{ccl-fsncd-10} described an algorithm to compute the shortest non-separating cycle in any surface-embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time; our algorithm is faster whenever $g \le (\lg n)/13$.
-
-\begin{corollary}
-\label{C:nonsep}
-Given a directed graph $G$ with $n$ vertices with non-negative edge weights, cellularly embedded on a surface with genus~$g$, we can compute the shortest directed cycle in $G$ that is non-separating in $\Sigma$ in $O(64^g g^2 n\log n)$ time.
-\end{corollary}
-
-Note however, that a more recent algorithm of Erickson~\cite{e-sncds-11} improves this running time further to~$O(g^2 n \log n)$ by using similar similar techniques in a different covering space known as the cyclic double cover.
-Cabello \etal~\cite{ccl-fsncd-10} also described an algorithm to find the shortest \emph{non-contractible} cycle in an embedded directed graph in $O(g^{1/2} n^{3/2}\log n)$ time.  Our approach does not lead to a faster algorithm for this problem;  contractibility is inherently  a property of \emph{homotopy}, not homology.
-
-\color{Black}
 
 % ===============================================================================================
 \newpage
@@ -829,9 +810,13 @@ Specifically, given a homology signature $h\in (\Z_2)^\beta$, our algorithm comp
 In fact, because there are only $2^\beta$ homology classes, we can compute the shortest cycle in \emph{every} homology class in the same running time.
 We then assemble the minimum-weight \emph{even subgraph} in any given homology class from these $\Z_2$-minimal cycles using dynamic programming.
  
- \note{Include this somewhere:}
+\note{Include this somewhere:}
  These techniques have also been used in other work on computing shortest non-trivial directed cycles~\cite{e-sncds-11,f-sntcd-13}.
 We also use a generalization of Klein's multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded graphs \cite{cce-msspe-13}.
+
+\note{Merge with previous paragraph}
+In the preliminary version of this section~\cite{en-mcsnc-11}, we described an algorithm to compute the shortest non-separating cycle in a directed surface graph in $g^{O(g)} n \log n$ time, improving (for fixed $g$) an earlier algorithm of Cabello \etal~\cite{ccl-fsncd-10} that runs in $O(g^{1/2}n^{3/2}\log n)$ time.  However, more recently, Erickson~\cite{e-sncds-11} and Fox~\cite{f-sntcd-13} described even faster algorithms that find shortest non-separating cycles in~$O(g^2 n \log n)$ time and shortest non-contractible cycles in~$O(g^3 n \log n)$ time, respectively.  In light of these improvements, we omit discussion of our algorithm from this paper.
+
 %
 %\note{Rewrite this paragraph.}
 %
