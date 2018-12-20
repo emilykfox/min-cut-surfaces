@@ -1194,7 +1194,7 @@ Consider any edge~$e = f | g$ \note{define} on the boundary of~$F$. If~$f$ and~$
 Now consider any edge~$e$ in~$\gammasnip$. Suppose~$e$ does not lie along~$\alpha$ so that its projection appears in~$\gamma$. Edge~$e$ separates two faces~$f$ and~$g$ in~$\Gsnip$, and exactly one of those faces appears in~$F$. Now suppose~$e$ does lie along~$\alpha$. Edge~$e$ separates face~$f \in F$ from the boundary of~$\Gsnip$. The projection of~$e$ may separate~$f$ from another face~$g$. If~$g$ exists and is also in~$F$, then there exists another edge~$e'$ in~$\Gsnip$ that separates~$g$ from the boundary of~$\Gsnip$. The projections of~$e$ and~$e'$ cancel each other when taking the symmetric difference so their projection does not appear in~$\gamma$. Finally, if~$g$ does not exist or~$g$ is not a member of~$F$, then there is not another edge that shares a projection with~$e$. The projection of~$e$ will exist in~$\gamma$.
 \end{proof}
 
-We next need an algorithm to compute a tight non-separating cycle; this is a modification of an algorithm by  Cabello \etal~\cite[Theorem 5.4]{cdem-fotc-10}, where they give an algorithm that runs in $O(n \log n)$ time for the same problem.  
+The next lemma presents an algorithm to compute a tight non-separating cycle; this is a modification of an algorithm by  Cabello \etal~\cite[Theorem 5.4]{cdem-fotc-10}, where they give an algorithm that runs in $O(n \log n)$ time for the same problem.  
 
 \begin{lemma}
 \label{lem:tightcycle}
