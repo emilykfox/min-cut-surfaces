@@ -207,7 +207,7 @@ Before describing our results in further detail, we first review several related
 
 For any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subset of the edges of $G$ that intersects every path from $s$ to $t$.  A \emph{minimum} $(s,t)$-cut is an $(s,t)$-cut with the smallest number of edges, or with minimum total weight if the edges of $G$ are weighted.
 
-Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum $(s,t)$-cut by cutting the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
+Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum $(s,t)$-cut by slicing the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
 
 Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2 n)$ using a divide-and-conquer strategy.  Reif's algorithm was extended by Hassin and Johnson to compute the actual maximum flow in $O(n\log n)$ additional time, using a carefully structured dual shortest-path computation \cite{hj-oamfu-85}.  The running time was improved to $O(n\log n)$ by Frederickson~\cite{f-faspp-87}, and more recently to $O(n\log\log n)$ by Italiano \etal~\cite{insw-iamcmf-11}, by using a balanced separator decomposition to speed up the shortest-path computations.
 
@@ -621,7 +621,7 @@ A \EMPH{forest-cotree decomposition} of $G$ is any partition $(\partial\! G, F, 
 \end{itemize}
 
 \noindent
-Euler's formula implies that there are exactly $\beta$ leftover edges in $L$; arbitrarily label these edges $e_1, e_2, \dots, e_\beta$.  For each edge $e_i\in L$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial loop from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of $F$ twice.  Cutting along the arcs $a_1, \dots, a_\beta$ transforms~$\Sigma$ into a topological disk. See Figure \ref{fig:forest-cotree}.
+Euler's formula implies that there are exactly $\beta$ leftover edges in $L$; arbitrarily label these edges $e_1, e_2, \dots, e_\beta$.  For each edge $e_i\in L$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial loop from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of $F$ twice.  Slicing along the arcs $a_1, \dots, a_\beta$ transforms~$\Sigma$ into a topological disk. See Figure \ref{fig:forest-cotree}.
 
 \begin{figure}[htb]
 \centering\footnotesize\sf
@@ -675,7 +675,7 @@ We define a \EMPH{tree-coforest decomposition} of $G$ to be any partition $(T, L
 \item Finally, $L$ is the set of leftover edges $E \setminus (T\cup F)$.
 \end{itemize}
 %
-Euler's formula implies that there are exactly~$\beta$ edges in $L$; arbitrarily index these edges $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to $F^*$ creates a new dual path $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  We can treat each path $\dualarc_i$ as a simple arc in the \emph{abstract} surface $\Sigma$; cutting along these $\beta$ arcs transforms $\Sigma$ into a topological disk.
+Euler's formula implies that there are exactly~$\beta$ edges in $L$; arbitrarily index these edges $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to $F^*$ creates a new dual path $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  We can treat each path $\dualarc_i$ as a simple arc in the \emph{abstract} surface $\Sigma$; slicing along these $\beta$ arcs transforms $\Sigma$ into a topological disk.
 See Figure~\ref{fig:tree-coforest}.  We call the set $\set{\dualarc_1, \dualarc_2, \dots, \dualarc_\beta}$ a \EMPH{system of dual arcs}.
 
 \begin{figure}[htb]
@@ -781,7 +781,7 @@ We next dualize the abstract polygonal schema by replacing each edge with a vert
 \label{fig:weightedtriangulation}
 \end{figure}
 
-For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths from our greedy system of arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time; this proceeds by cutting $\Sigma$ along the greedy system of arcs, and then gluing together $x$ copies of the resulting planar surface into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
+For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths from our greedy system of arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time; this proceeds by slicing $\Sigma$ along the greedy system of arcs, and then gluing together $x$ copies of the resulting planar surface into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
 Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $(s,t)$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
 Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log \log n)$ time.
 
@@ -1138,7 +1138,7 @@ However, the resulting closed walk $W$ might traverse some edges of~$G$ more tha
 
 Our algorithm closely follows the algorithm of Cabello \etal~\cite{cdem-fotc-10}, but with modifications to ensure that the resulting walk traverses at least one edge an odd number of times.
 
-We use the cutting operation ($\snip$) along tight cycles and arcs in~$G$.  The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
+We use the slicing operation ($\snip$) along tight cycles and arcs in~$G$.  The following lemma implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies of~$\Sigma$.
 
 \color{Red}\note{This lemma needs work!!!  Better to write: Any bounding closed walk in $\Gsnip$ projects to a bounding closed walk in $G$.}
 
