@@ -274,24 +274,20 @@ On the other hand, for homology with real or integer coefficients, homology loca
 
 \subsection{New Results and Organization}
 
+In Section \ref{S:tree-cotree}, we develop two techniques to measure the homology class of a graph.  Both techniques are natural generalizations the tree-cotree decomposition, introduced by Eppstein \cite{e-dgteg-03} for surfaces without boundary.  This generalization is essential for our algorithms, as our dual homology characterization removes the dual faces $s^*$ and $t^*$, leaving a surface with two boundary components.
 
-\ref{sec:prelims}
+In Section~\ref{sec:crossing}, we give the first algorithm to compute optimal cycles in a homology class. 
+The technique is as follows: we first cut the surface into a disk and argue by exchange arguments that the shortest cycle cannot cross the boundary of the disk very often.  We then enumerate all cycles crossing the boundary that satisfy the bounds, and for each find the shortest graph with that crossing pattern.  Ultimately, this reduces the problem to finding the minimum cut in a planar graph.
 
-
-In Section \ref{S:tree-cotree}, we describe two techniques for preprocessing graphs on surfaces with boundary so that we can quickly compute the homology class of any subgraph.  Both techniques are natural generalizations of a similar algorithm of Eppstein \cite{e-dgteg-03} for surfaces without boundary.  For the minimum $(s,t)$-cut problem, we can assume without loss of generality that underlying surface has no boundary; however, our dual homology characterization remove the dual faces $s^*$ and $t^*$, leaving a surface with two boundary components.
-
-\color{PineGreen}
-
-Our first algorithm for finding minimum $(s,t)$-cuts is described in Section~\ref{sec:crossing}.  \note{Universal cover.  Crossing sequences.  Ultimately reduces to minimum cut in planar graphs.  For undirected graphs, improved to $O(n\log\log n)$ time by Italiano.}
-
-In Section~\ref{S:homcover}, we describe our second algorithm for finding minimum $(s,t)$-cuts, which has better (but still exponential) dependence on $g$ but slightly worse dependence on $n$.  \note{Homology cover.  Crossing \emph{vectors}.  Ultimately reduces to multiple-source shortest paths \cite{cce-msspe-13}.  No known improvement to $O(n\log\log n)$ time, perhaps because the algorithm actually works for directed graphs.}
-
-In Section~\ref{S:NPhard}, we prove that the homology localization problem is NP-hard, which implies that the exponential dependence on $g$ in our algorithms is unavoidable.
+In Section~\ref{sec:homcover}, we then give a different algorithm for the same problem which has a better but still exponential dependance on $g$, but a worse dependence on $n$. For this approach, instead of considering the sequence of crossings with the boundary, we instead count the number of crossings with each edge, building a structure called the $\Z_2$-homology cover.  This reduces the problem of finding the shortest cycles in a homology class to a multiple source shortest path problem in this cover.
 
 
-Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result (by reduction from a special case of \textsc{Max2Sat}) for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{simple cycle} in a given homology class is {NP}-hard.  
+In Section~\ref{S:NPhard}, we prove that finding a minimum even subgraph in a given homology class in NP-Hard. 
+Unlike Chen and Freedman \cite{cf-hrhl-10}, this reduction is done on a 2-manifold, and unlike Chambers \etal~\cite{ccelw-scsih-08}, the subgraph does not need to be a simple cycle.
+This reduction implies that the exponential dependence on $g$ in our algorithms is unavoidable.  
 
-\bigskip
+Finally, in Section~\ref{sec:global}, we describe an algorithm to compute the global minimum cut in a weighted surface graph.  This approach combines techniques from our earlier algorithms with a planar global minimum cut algorithm .  
+
 
 \color{Purple}
 \textbf{\textsf{Old text, which will eventually be absorbed.}}
@@ -334,7 +330,7 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 
 
 
-% ===============================================================================================
+% ===================================================================================
 \newpage
 \section{Notation and Terminology}
 \label{sec:prelims}
