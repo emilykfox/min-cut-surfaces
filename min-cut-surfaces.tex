@@ -351,7 +351,6 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 \noindent
 \textbf{Things to exclude (cite textbooks):}
 \begin{itemize}\cramped
-\item Formal definition of covering space
 \item Fundamental group!
 \end{itemize}
 \end{TODO}
@@ -425,7 +424,7 @@ We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose end
 
 \EMPH{Cutting} a combinatorial surface along a cycle or  arc modifies both the surface and the embedded graph.
 For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
-Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
+We define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
 
 
 \subsection{Duality}
@@ -562,15 +561,15 @@ Let $\Cut$ be an arbitrary $(s,t)$-cut in $G$.  This cut partitions the vertices
 Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\partial s^*$ in $\Sigma'$.  The subgraph $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  This immediately implies that $X^*$ is null-homologous in $\Sigma$; moreover, faces $s^*$ and $t^*$ are on opposite sides of $X^*$.  Any path from $s$ to $t$ in the original graph $G$ must traverse at least one edge of $\Cut$.  We conclude that $\Cut$ is an $(s,t)$-cut.
 \end{proof}
 
-
-\subsection{Covering spaces and cutting}
-\label{SS:covering}
-
-\note{Don't need formal definition; just cite textbook.}
-
-A continuous map~$\pi \colon \Sigma' \to \Sigma$ between two surfaces is called a \EMPH{covering map} if each point~$x \in \Sigma$ lies in an open neighborhood~$U$ such that (1)~$\pi^{-1}(U)$ is a countable union of disjoint open sets~$U_1 \cup U_2 \cup \cdots$ and (2) for each~$i$, the restriction~$\pi |_{U_i} : U_i \to U$ is a homeomorphism. If there is a covering map~$\pi$ from~$\Sigma'$ to~$\Sigma$, we call~$\Sigma'$ a \EMPH{covering space} of~$\Sigma$.  The \EMPH{universal cover}~$\tilde{\Sigma}$ is the unique simply-connected covering space of~$\Sigma$ (up to homeomorphism).  The universal cover is so named because it covers every path-connected covering space of~$\Sigma$.
-
-For any path~$p : [0,1] \to \Sigma$ such that~$\pi(x') = p(0)$ for some point~$x' \in \Sigma'$, there is a unique path~$p'$ in~$\Sigma'$, called a \EMPH{lift} of~$p$, such that~$p'(0) = x'$ and~$\pi \circ p' = p$.  We also say that~$p$ \EMPH{lifts} to~$p'$. Conversely, for any path~$p'$ in~$\Sigma'$, the path~$\pi \circ p'$ is called a \EMPH{projection} of~$p'$.
+%
+%\subsection{Covering spaces and cutting}
+%\label{SS:covering}
+%
+%\note{Don't need formal definition; just cite textbook.}
+%
+%A continuous map~$\pi \colon \Sigma' \to \Sigma$ between two surfaces is called a \EMPH{covering map} if each point~$x \in \Sigma$ lies in an open neighborhood~$U$ such that (1)~$\pi^{-1}(U)$ is a countable union of disjoint open sets~$U_1 \cup U_2 \cup \cdots$ and (2) for each~$i$, the restriction~$\pi |_{U_i} : U_i \to U$ is a homeomorphism. If there is a covering map~$\pi$ from~$\Sigma'$ to~$\Sigma$, we call~$\Sigma'$ a \EMPH{covering space} of~$\Sigma$.  The \EMPH{universal cover}~$\tilde{\Sigma}$ is the unique simply-connected covering space of~$\Sigma$ (up to homeomorphism).  The universal cover is so named because it covers every path-connected covering space of~$\Sigma$.
+%
+%For any path~$p : [0,1] \to \Sigma$ such that~$\pi(x') = p(0)$ for some point~$x' \in \Sigma'$, there is a unique path~$p'$ in~$\Sigma'$, called a \EMPH{lift} of~$p$, such that~$p'(0) = x'$ and~$\pi \circ p' = p$.  We also say that~$p$ \EMPH{lifts} to~$p'$. Conversely, for any path~$p'$ in~$\Sigma'$, the path~$\pi \circ p'$ is called a \EMPH{projection} of~$p'$.
 
 %We define a lift of a cycle~$\gamma \colon S^1 \to \Sigma$ to be the infinite
 %path~$\gamma' \to \R \to \Sigma'$ such that
@@ -804,7 +803,7 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 
 \note{Status: close to beta}
 
-At a very high level, our algorithms in Section 4 find the minimum-weight subgraph in a given homology class by enumerating possible \emph{homotopy} classes of the cycles in a cycle decomposition, and then finding the shortest cycle in each possible homotopy class by searching a finite portion of the universal cover of the surface~$\Sigma$.  In this section, we describe a more direct algorithm, which finds the shortest cycle in each \emph{homology} class, by constructing and searching a different canonical  covering space, which we call the \emph{$\Z_2$-homology cover}.
+At a very high level, our algorithms in Section 4 find the minimum-weight subgraph in a given homology class by enumerating possible \emph{homotopy} classes of the cycles in a cycle decomposition, and then finding the shortest cycle in each possible homotopy class by searching a finite portion of the universal cover of the surface~$\Sigma$.  In this section, we describe a more direct algorithm, which finds the shortest cycle in each \emph{homology} class, by constructing and searching a space which we call the \emph{$\Z_2$-homology cover}.
 Specifically, given a homology signature $h\in (\Z_2)^\beta$, our algorithm computes the shortest cycle in with signature $h$ in $(g+b)^{O(g+b)} n \log n$ time.
 In fact, because there are only $2^\beta$ homology classes, we can compute the shortest cycle in \emph{every} homology class in the same running time.
 We then assemble the minimum-weight \emph{even subgraph} in any given homology class from these $\Z_2$-minimal cycles using dynamic programming.
