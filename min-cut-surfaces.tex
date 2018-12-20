@@ -448,7 +448,7 @@ We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose end
 
 \EMPH{Cutting} a combinatorial surface along a cycle or  arc modifies both the surface and the embedded graph.
 For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
-Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. \note{Do we use this?}
+Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
 
 
 \subsection{Duality}
@@ -1164,7 +1164,7 @@ Our algorithm will make use of the cutting operation ($\snip$) along tight cycle
 \begin{lemma}
 \label{lem:global_null-homologous-projections}
 Let~$\alpha$ be an arbitrary simple cycle or arc in~$G$. Let
-${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any boundary subgraph~$\gammasnip$ in~$\Gsnip$ projects \note{define!} to a boundary subgraph in~$G$.
+${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any boundary subgraph~$\gammasnip$ in~$\Gsnip$ projects  to a boundary subgraph in~$G$.
 \end{lemma}
 
 \begin{proof}
@@ -1180,69 +1180,90 @@ Consider any edge~$e = f | g$ \note{define} on the boundary of~$F$. If~$f$ and~$
 Now consider any edge~$e$ in~$\gammasnip$. Suppose~$e$ does not lie along~$\alpha$ so that its projection appears in~$\gamma$. Edge~$e$ separates two faces~$f$ and~$g$ in~$\Gsnip$, and exactly one of those faces appears in~$F$. Now suppose~$e$ does lie along~$\alpha$. Edge~$e$ separates face~$f \in F$ from the boundary of~$\Gsnip$. The projection of~$e$ may separate~$f$ from another face~$g$. If~$g$ exists and is also in~$F$, then there exists another edge~$e'$ in~$\Gsnip$ that separates~$g$ from the boundary of~$\Gsnip$. The projections of~$e$ and~$e'$ cancel each other when taking the symmetric difference so their projection does not appear in~$\gamma$. Finally, if~$g$ does not exist or~$g$ is not a member of~$F$, then there is not another edge that shares a projection with~$e$. The projection of~$e$ will exist in~$\gamma$.
 \end{proof}
 
-We now present the main result of this section.
+The next lemma presents an algorithm to compute a tight non-separating cycle; this is a modification of an algorithm by  Cabello \etal~\cite[Theorem 5.4]{cdem-fotc-10}, where they give an algorithm that runs in $O(n \log n)$ time for the same problem.  
+
+\begin{lemma}
+\label{lem:tightcycle}
+There exists an $O(n \log \log)$ algorithm that computes a tight non-separating cycle in a surface without boundary.
+\end{lemma}
+
+
+\begin{proof}
+
+First, we compute a shortest non-separating loop $ell$ through any vertex.  This takes $O(n\log n)$ time~\cite{eh-ocsd-04}; however, since we assume $g = o(\log n)$ throughout this paper, the running time for this step will be $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97}.
+
+Next, we compute the shortest cycle $\alpha$ that is homotopic to $\ell$ in $\Sigma\snip\ell$; we make two improvements to~\cite[Lemma 4.1]{cdem-fotc-10} to improve the running time from $O(n \log n)$ to $O(n \log \log n)$.  Their algorithm proceeds by gluing a disk over one boundary of $Sigma\snip\ell$, and then computing a greedy system of tight arcs.  We are able to do this in $O(n)$ time (again via Henzinger \etal~\cite{hkrs-fspap-97}, since $g = o(\log n)$). 
+
+We then cut along the greedy cut graph, which is the union of the greedy system of arcs, to get a combinatorial annulus $A$; see Figure~\ref{fig:global_forbidden-pair}. While the greedy system of arcs as complexity $O(gn)$~\cite{cdem-fotc-10}, the \emph{union} of these arcs only has complexity $O(n)$.  Therefore, this operation takes $O(n)$ time and results in a planar graph.  Finally, we compute the shortest generating cycle in $A$ by computing a planar minimum $(s,t)$-cut; this takes $O(n \log \log n)$ time~\cite{insw-iamcmf-11}.
+
+\end{proof}
+
+
+Finally, we can present the main result of this section.
 %\begin{lemma}
 %\label{lem:contractible-alg}
 %There exists a~$g^{O(g)} n \log \log n$ time algorithm that computes a minimum weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 %\end{lemma}
-
 \begin{lemma}
 \label{lem:contractible-alg}
-There exists a~$g^{O(g)} n \log \log n$ time algorithm that computes a minimum weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
+There exists a~$O(n \log \log n)$ time algorithm that computes a minimum weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
 
 
-\begin{TODO}
-\noindent
-\textbf{\boldmath I think we can get rid of the $g^{O(g)}$ factor in the running time.}  Cabello \etal~find a shortest enclosing cycle in a surface without boundary~\cite[Theorem 5.4]{cdem-fotc-10} as follows.  (Numbered lemmas and theorems are from Cabello \etal~\cite{cdem-fotc-10}.)
-\smallskip
-\begin{itemize}
-\item
-\textbf{Theorem 4.3:} Compute a tight non-separating cycle $\alpha$ in $G$.  This takes Cabello \etal~$O(n\log n)$ time, but $O(n\log\log n)$ is possible:
-
-\begin{itemize}\cramped
-\item
-Compute the shortest non-separating loop $\ell$ through any vertex.  This takes $O(n\log n)$ time via Erickson--Har-Peled (or Erickson-Whittlesey), but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
-
-\item
-\textbf{Lemma 4.1:} Compute the shortest cycle $\alpha$ that is homotopic to $\ell$ in $\Sigma\snip\ell$.
-
-\begin{itemize}\cramped
-\item
-Let $\Sigma'$ be the combinatorial surface obtained by gluing a disk over one boundary of $\Sigma\snip\ell$.
-
-\item 
-\textbf{Lemma 3.4:} (Implicitly) compute a greedy system of (tight) arcs in $\Sigma'$.  This takes $O(n\log n)$ time via Erickson-Whittlesey, but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
-
-\item
-\textbf{Lemma 3.4:} Cut $\Sigma\snip\ell$ along the \emph{union} of these greedy arcs to obtain a combinatorial annulus~$A$.  This takes $O(n)$ time.  (Kutz~\cite{k-csnco-06} did the same thing earlier.)  The union of the arcs is a greedy cut graph; we don't have to compute the individual arcs (but we do need them for the correctness proof).
-
-\item
-Let $\alpha$ be the shortest generating cycle in $A$, computing via planar minimum $(s,t)$-cut.  Cabello \etal\ used Frederickson's $O(n\log n)$ time algorithms, but  Italiano \etal~improve the time bound to $O(n\log \log n)$~\cite{insw-iamcmf-11}.
-
-\end{itemize}
-
-\end{itemize}
-
-\item
-Cut the surface $G\snip \alpha$ along a greedy cut graph, again in $O(n)$ time.
-
-\item
-Finally, compute a minimum cut in the dual of $\Gsnip$.  When that paper was published, the best min-cut algorithm ran in $O(n\log^2 n)$ time~\cite{cfn-dnlta-04}, but this is now $O(n\log\log n)$ \cite{ls-mcsc-11}.
-\end{itemize}
-\smallskip\noindent
-The \text{only} significant differences in our algorithm are that (1) we compute the \emph{shortest} non-separating cycle, and (2) we insist that the enclosing cycle avoid at least one edge on the boundary of $\Gsnip$.  Our Lemma~7.2 implies (1) is unnecessary and enforcing (2) only requires calling the planar min-cut algorithm twice instead of once.
-\end{TODO}
+%\begin{TODO}
+%\noindent
+%\textbf{\boldmath I think we can get rid of the $g^{O(g)}$ factor in the running time.}  Cabello \etal~find a shortest enclosing cycle in a surface without boundary~\cite[Theorem 5.4]{cdem-fotc-10} as follows.  (Numbered lemmas and theorems are from Cabello \etal~\cite{cdem-fotc-10}.)
+%\smallskip
+%\begin{itemize}
+%\item
+%\textbf{Theorem 4.3:} Compute a tight non-separating cycle $\alpha$ in $G$.  This takes Cabello \etal~$O(n\log n)$ time, but $O(n\log\log n)$ is possible:
+%
+%\begin{itemize}\cramped
+%\item
+%Compute the shortest non-separating loop $\ell$ through any vertex.  This takes $O(n\log n)$ time via Erickson--Har-Peled (or Erickson-Whittlesey), but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
+%
+%\item
+%\textbf{Lemma 4.1:} Compute the shortest cycle $\alpha$ that is homotopic to $\ell$ in $\Sigma\snip\ell$.
+%
+%\begin{itemize}\cramped
+%\item
+%Let $\Sigma'$ be the combinatorial surface obtained by gluing a disk over one boundary of $\Sigma\snip\ell$.
+%
+%\item 
+%\textbf{Lemma 3.4:} (Implicitly) compute a greedy system of (tight) arcs in $\Sigma'$.  This takes $O(n\log n)$ time via Erickson-Whittlesey, but the running time can be improved to $O(n)$ via Henzinger \etal~\cite{hkrs-fspap-97} because we assume $g = o(\log n)$.
+%
+%\item
+%\textbf{Lemma 3.4:} Cut $\Sigma\snip\ell$ along the \emph{union} of these greedy arcs to obtain a combinatorial annulus~$A$.  This takes $O(n)$ time.  (Kutz~\cite{k-csnco-06} did the same thing earlier.)  The union of the arcs is a greedy cut graph; we don't have to compute the individual arcs (but we do need them for the correctness proof).
+%
+%\item
+%Let $\alpha$ be the shortest generating cycle in $A$, computing via planar minimum $(s,t)$-cut.  Cabello \etal\ used Frederickson's $O(n\log n)$ time algorithms, but  Italiano \etal~improve the time bound to $O(n\log \log n)$~\cite{insw-iamcmf-11}.
+%
+%\end{itemize}
+%
+%\end{itemize}
+%
+%\item
+%Cut the surface $G\snip \alpha$ along a greedy cut graph, again in $O(n)$ time.
+%
+%\item
+%Finally, compute a minimum cut in the dual of $\Gsnip$.  When that paper was published, the best min-cut algorithm ran in $O(n\log^2 n)$ time~\cite{cfn-dnlta-04}, but this is now $O(n\log\log n)$ \cite{ls-mcsc-11}.
+%\end{itemize}
+%\smallskip\noindent
+%The \text{only} significant differences in our algorithm are that (1) we compute the \emph{shortest} non-separating cycle, and (2) we insist that the enclosing cycle avoid at least one edge on the boundary of $\Gsnip$.  Our Lemma~7.2 implies (1) is unnecessary and enforcing (2) only requires calling the planar min-cut algorithm twice instead of once.
+%\end{TODO}
 
 
 \begin{proof}
-Our algorithm begins by computing a shortest non-separating cycle~$\alpha$ in $G$ in $g^{O(g)}n \log \log n$ time, using a modification of an algorithm of Kutz~\cite{k-csnco-06} by Italiano \etal~\cite{insw-iamcmf-11} or using a recent $2^{O(g)}n \log \log n$ time algorithm of Fox~\cite{f-sntcd-13}.  The surface $\Sigma \snip \alpha$ has two boundary cycles $\alpha'$ and $\alpha''$.
 
-It then computes a system $P$ of tight arcs anchored on $\alpha'$ and $\alpha''$ in $O(n)$ time as described in Section~\ref{sec:characterizing_crossings}.
-\note{Again, verify that the set of arcs can be computed in linear time this way.}
-Let $\Gsnip$ denote the planar graph $G \snip (\alpha \cup P)$; this graph has $O(gn)$ vertices.
+Our algorithm begins by computing a tight non-separating cycle~$\alpha$ in $G$ in $n \log \log n$ time via Lemma~\ref{lem:tightcycle}.
+It then computes the surface $\Sigma \snip \alpha$, which has two boundary cycles $\alpha'$ and $\alpha''$.
 
-Pick an arbitrary edge $e$ of $\alpha$, and let $e_1$ and $e_2$ be distinct copies of $e$ in~$\Gsnip$.  Let $\gamma_1$ and $\gamma_2$ be the shortest simple cycles in the  subgraphs $\Gsnip \backslash e_1$ and $\Gsnip \backslash e_2$, respectively.  Our algorithm computes both~$\gamma_1$ and~$\gamma_2$ in $O(gn \log\log n)$ time using the algorithm of \L\c{a}cki and Sankowski~\cite{ls-mcsc-11}. Note that graphs~$\Gsnip \backslash e_1$ and~$\Gsnip \backslash e_2$ may not contain any cycles. In this case,~$\Gsnip$ contains no simple cycles.  Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply~$G$ does not contains any simple contractible cycles to begin with and our algorithm returns nothing. \note{Alternatively, we can refine $G$ with $O(n)$ infinite-weight edges, so that at least one face (or even \emph{every} face) has simple contractible boundary.}  For the rest of this section, we assume~$\gamma_1$ and~$\gamma_2$ are well defined.
+Next, the algorithm computes a system $P$ of tight arcs anchored on $\alpha'$ and $\alpha''$ in $O(n)$ time as described in Section~\ref{sec:characterizing_crossings}.
+Let $\Gsnip$ denote the planar graph $G \snip (\alpha \cup P)$; this graph has $O(n)$ vertices, again as discussed in Lemma~\ref{lem:tightcycle}.
+
+Pick an arbitrary edge $e$ of $\alpha$, and let $e_1$ and $e_2$ be distinct copies of $e$ in~$\Gsnip$.  Let $\gamma_1$ and $\gamma_2$ be the shortest simple cycles in the  subgraphs $\Gsnip \backslash e_1$ and $\Gsnip \backslash e_2$, respectively.  Our algorithm computes both~$\gamma_1$ and~$\gamma_2$ in $O(n \log\log n)$ time using the algorithm of \L\c{a}cki and Sankowski~\cite{ls-mcsc-11}. Note that graphs~$\Gsnip \backslash e_1$ and~$\Gsnip \backslash e_2$ may not contain any cycles. In this case,~$\Gsnip$ contains no simple cycles.  Corollary~\ref{cor:disjoint-sep-cycle} and Lemma~\ref{lem:disjoint-tight-arc} imply~$G$ does not contains any simple contractible cycles to begin with and our algorithm returns nothing. 
+%\note{Alternatively, we can refine $G$ with $O(n)$ infinite-weight edges, so that at least one face (or even \emph{every} face) has simple contractible boundary.}  
+For the rest of this section, we assume~$\gamma_1$ and~$\gamma_2$ are well defined.
 
 \begin{figure}[ht]
 \centering

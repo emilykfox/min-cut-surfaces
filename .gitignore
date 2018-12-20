@@ -33,3 +33,4 @@
 *.fls
 min-cut-surfaces.pdf
 surfcutEoA.pdf
+.DS_store
