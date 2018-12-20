@@ -484,16 +484,15 @@ but it should be clear which we mean from context.
 \label{SS:homology}
 
 Two paths~$p$ and~$q$ in $\Sigma$ are \EMPH{homotopic} if one can be continuously deformed into the other without changing their endpoints.
-More formally, a \EMPH{homotopy} between~$p$ and~$q$ is a continuous map $h\colon {[0,1]\times [0,1] \to \Sigma}$ such that $h(0,\cdot) = p$, $h(1,\cdot) = q$, $h(\cdot, 0)=p(0)=q(0)$, and $h(\cdot,1)=p(1)=q(1)$.
-Homotopy defines an equivalence relation over the set of paths with any
-fixed pair of endpoints.
+More formally, a \EMPH{homotopy} between~$p$ and~$q$ is a continuous map $h\colon {[0,1]\times [0,1] \to \Sigma}$ such that $h(0,\cdot) = p$, $h(1,\cdot) = q$, $h(\cdot, 0)=p(0)=q(0)$, and $h(\cdot,1)=p(1)=q(1)$.  Homotopy defines an equivalence relation over the set of paths with any fixed pair of endpoints.
 
-Similarly, two cycles $\alpha$ and $\beta$ in $\Sigma$ are \EMPH{homotopic} if one can be continuously deformed into the other without changing their endpoints
+Similarly, two cycles $\alpha$ and $\beta$ in $\Sigma$ are \EMPH{freely homotopic} if one can be continuously deformed into the other.  More formally, a free homotopy between~$\alpha$ and~$\beta$ is a continuous map $h\colon {[0,1]\times S^1 \to \Sigma}$ such that $h(0,\cdot) = \alpha$ and $h(1,\cdot) = \beta$.  Free homotopy defines an equivalence relation over the set of cycles in~$\Sigma$.  We omit the word ”free” when it is clear from context.
+
 %
 %The set of homotopy classes of loops in~$\Sigma$ with basepoint~$x_0$ defines a group~$\pi_1(\Sigma,x_0)$ under concatenation, called the \EMPH{fundamental group} of~$\Sigma$. (For all basepoints~$x_0$ and~$x_1$, the groups~$\pi_1(\Sigma,x_0)$ and~$\pi_1(\Sigma,x_1)$ are isomorphic.)
 %
 A cycle is \EMPH{contractible} if it is homotopic to a constant map.
-Given a weight function on the edges of~$G$, we say a  path or cycle is \EMPH{tight} if it has minimum total weight (counting edges with multiplicity) for its homotopy class.
+Given a weight function on the edges of~$G$, we say a path or cycle is \EMPH{tight} if it has minimum total weight (counting edges with multiplicity) for its homotopy class.
 
 Homology is a coarser equivalence relation than homotopy, with nicer
 algebraic properties.  Like several earlier papers \cite{cf-qhc2-07,
@@ -505,24 +504,8 @@ Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ 
 
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}.
-Homology classes define a vector space over $\Z_2$, call the first homology group;  the rank of this group is  called the first \emph{Betti number} of the surface.
-
-\note{All the homology $Z_2$ stuff should be here now, but double check with list at beginning}
-
-We define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
-
-\begin{lemma}
-\label{lem:decomposition}
-Every even subgraph of an embedded graph has a cycle decomposition.
-\end{lemma}
-
-\begin{proof}
-Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.
-\note{double-check weakly simple}
-\end{proof}
-
-We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
-
+Homology classes define a vector space $\Z_2^\beta$, called the first homology group, where $\beta = 2g$ if the surface has no boundary and $\beta = 2g+b-1$ otherwise.
+The rank $\beta$ of the first homology group is called the first \emph{Betti number} of the surface.
 
 \begin{figure}[htb]
 \centering
@@ -538,6 +521,19 @@ We emphasize that each cycle in a cycle decomposition may visit vertices multipl
 \caption{Each cycle is homologous to the union of the other two.}
 \label{fig:homology2}
 \end{figure}
+
+A \EMPH{cycle decomposition} of an even subgraph~$H$ is a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
+
+\begin{lemma}
+\label{lem:decomposition}
+Every even subgraph of an embedded graph has a cycle decomposition.
+\end{lemma}
+
+\begin{proof}
+Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.
+\end{proof}
+
+We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
 
 \subsection{Cut-even subgraph duality}
 \label{SS:duality}
@@ -735,7 +731,7 @@ modified easily to compute a minimum-weight representative in
 there are exactly $2^{2g+b-1}$ such classes.
 Lemma~\ref{lem:cut-duality} implies our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time.
 
-Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several free \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
+Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several (free) \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
 
 
