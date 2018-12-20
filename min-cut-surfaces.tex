@@ -411,9 +411,11 @@ if the graph is simple.
 We consider only such
 cellular embeddings of genus $g=O(n^{1-\eps})$, so that the overall complexity of the embedding is $O(n)$.
 
+
 Any cellular embedding on an orientable surface can be encoded combinatorially
 by a \EMPH{rotation system}, which records the counterclockwise order of edges
 incident to each vertex.
+\note{add combinatorial surface here?}
 Two paths or cycles in a combinatorial surface \EMPH{cross} if no continuous infinitesimal perturbation makes them disjoint; if such a perturbation exists, then the paths are \EMPH{non-crossing}.
 Similarly, we define a path or cycle in the graph as \emph{weakly simple} if it can be continuously and infinitesimally perturbed to be a simple cycle on the underlying surface $\Sigma$.
 
@@ -447,6 +449,8 @@ f^*g^*$ are emphasized.} \label{fig:prelims_primaldual}
 
 
 Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdi\`ere~\cite{octagons}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{fig:duality}.  (Duality can be extended to directed graphs~\cite{surflow}, but our results do not require this extension.)
+
+\note{double check boundary stuff is clear}
 
 \begin{figure}[htb]
 \centering
@@ -487,7 +491,7 @@ continuously deformed into the other without changing their endpoints.
 More formally, a \EMPH{homotopy} between~$p$ and~$q$ is a
 continuous map $h\colon {[0,1]\times [0,1] \to \Sigma}$ such that $h(0,\cdot) = p$, $h(1,\cdot) = q$, $h(\cdot, 0)=p(0)=q(0)$, and $h(\cdot,1)=p(1)=q(1)$.
 Homotopy defines an equivalence relation over the set of paths with any
-fixed pair of endpoints.
+fixed pair of endpoints. \note{add free homotopy here}
 %
 %The set of homotopy classes of loops in~$\Sigma$ with basepoint~$x_0$ defines a group~$\pi_1(\Sigma,x_0)$ under concatenation, called the \EMPH{fundamental group} of~$\Sigma$. (For all basepoints~$x_0$ and~$x_1$, the groups~$\pi_1(\Sigma,x_0)$ and~$\pi_1(\Sigma,x_1)$ are isomorphic.)
 %
@@ -506,6 +510,7 @@ Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, 
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}.
 Homology classes define a vector space over $\Z_2$, call the first homology group;  the rank of this group is  called the first \emph{Betti number} of the surface.
 
+\note{All the homology $Z_2$ stuff should be here now, but double check with list at beginning}
 
 We define a \EMPH{cycle decomposition} of an even subgraph~$H$ to be a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
 
