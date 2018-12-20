@@ -204,13 +204,11 @@ Notation proposal: $X$ is a cut; $C$ is a co-tree; $L$ is the set of leftover ed
 
 \subsection{Past Results}
 
-\note{Status: Incomplete; existing parts are okay but may need modernization}
-
 \subsubsection*{Minimum Cuts in Planar Graphs}
 
 For any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subset of the edges of $G$ that intersects every path from $s$ to $t$.  A \emph{minimum} $(s,t)$-cut is an $(s,t)$-cut with the smallest number of edges, or with minimum total weight if the edges of $G$ are weighted.
 
-Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum cut by cutting the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
+Itai and Shiloach \cite{is-mfpn-79} observed that the minimum $(s,t)$-cut in a planar graph~$G$ is dual to the minimum-cost cycle that separates faces $s^*$ and $t^*$ in the dual graph $G^*$.  They also observed that this separating cycle intersects any shortest path from a vertex of $s^*$ to a vertex of $t^*$ exactly once.  Thus, one can compute the minimum $(s,t)$-cut by cutting the dual graph $G^*$ along a shortest path~$\pi$ from $s^*$ to~$t^*$; duplicating every vertex and edge of $\pi$; and then computing, for each vertex $u$ of $\pi$, the shortest path between the two copies of $u$ in the resulting planar graph.  Applying Dijkstra's shortest-path algorithm at each vertex of~$\pi$ immediately yields a running time of $O(n^2\log n)$.
 
 Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2 n)$ using a divide-and-conquer strategy.  Reif's algorithm was extended by Hassin and Johnson to compute the actual maximum flow in $O(n\log n)$ additional time, using a carefully structured dual shortest-path computation \cite{hj-oamfu-85}.  The running time was improved to $O(n\log n)$ by Frederickson~\cite{f-faspp-87}, and more recently to $O(n\log\log n)$ by Italiano \etal~\cite{insw-iamcmf-11}, by using a balanced separator decomposition to speed up the shortest-path computations.
 
@@ -221,7 +219,7 @@ Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obt
 Minimum $(s,t)$-cuts in directed planar graphs can also be computed in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (after filtering out useless edges \cite{fls-fuadp-18}) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
 
 A \EMPH{cut} (without specified $s$ and $t$) is a subset of edges of $G$ that separate $G$ into two non-empty sets of vertices.
-A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time.  Their algorithm was improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  Mozes \etal~recently achieved the same $O(n \log \log n)$ running time for global minimum cuts in \emph{directed} planar graphs \cite{mnnw-mdpgo-18},  using techniques reported  a preliminary version of this paper \cite{en-mcsnc-11}, specifically, the $\Z_2$-homology covers described in Section \ref{sec-homcover}.
+A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$ are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies on planarity; their algorithm runs in~$O(n \log^2 n)$ time.  Their algorithm was improved by \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  Mozes \etal~recently achieved the same $O(n \log \log n)$ running time for global minimum cuts in \emph{directed} planar graphs \cite{mnnw-mdpgo-18},  using techniques reported  a preliminary version of this paper \cite{en-mcsnc-11}, specifically, the $\Z_2$-homology covers described in Section \ref{sec:homcover}.
 
 \subsubsection*{Generalizations of Planar Graphs}
 
@@ -243,9 +241,9 @@ Euler's formula implies that a simple $n$-vertex graph embedded on a surface of 
 The fastest known combinatorial maximum-flow algorithm for sparse graphs, due to Orlin~\cite{o-mfotl-13}, runs in $O(n^2 / \log n)$ time.
 The fastest algorithm known for small integer capacities, due to Goldberg and Rao \cite{gr-bfdb-98}, runs in time $O(n^{3/2}\log n\log U)$, where $U$ is an upper bound on the integer edge weights.
 
-The fastest algorithm known for compute global minimum cuts in weighted undirected graphs is a Monto Carlo randomized algorithm of Karger~\cite{k-mcnlt-00}, which runs in~$O(m \log^3 n)$ time.
-A more recent deterministic algorithm of Heznziger, Rao, and Wang \cite{hrw-lfpfe-17}, based on breakthrough techniques of Kawarabayashi and Thorup \cite{kt-dgmcs-15}, computes global minimum cuts in \emph{unweighted} graphs in $O(m \log^2 n \log^2 \log n)$ time.
-Finally, the fastest algorithm known for global minimum cuts in arbitrary \emph{directed} graphs, due to Hao and Orlin \cite{ho-fafmd-94}, runs in $O(mn\log(n^2/m))$ time.
+The fastest algorithm known to compute global minimum cuts in arbitrary weighted undirected graphs is a Monte Carlo randomized algorithm of Karger~\cite{k-mcnlt-00}, which runs in~$O(m \log^3 n)$ time but fails with small probability. 
+A more recent deterministic algorithm of Henzinger, Rao, and Wang \cite{hrw-lfpfe-17}, based on breakthrough techniques of Kawarabayashi and Thorup \cite{kt-dgmcs-15,kt-decnt-18}, computes global minimum cuts in \emph{unweighted} graphs in $O(m \log^2 n \log^2 \log n)$ time.
+The fastest deterministic algorithms known for global minimum cuts in arbitrary weighted graphs run in $O(nm + n^2\log n)$ time for undirected graphs \cite{ni-cemcg-92,f-eani-94,sw-sma-97} and in $O(mn \log(n^2/m))$ time for directed graphs \cite{ho-fafmd-94}.
 
 For further background on maximum flows, minimum cuts, and related problems, we refer the reader to monographs by Ahuja \etal\ \cite{amo-nftaa-93} and Schrijver \cite{s-cape-03}.
 %
@@ -330,8 +328,6 @@ We optimistically conjecture that minimum-weight $(s,t)$-cuts and global minimum
 %\note{Kyle: These no longer look like sister papers, but I like mentioning the real homology part. Where should we put this paragraph?}
 
 \color{Black}
-
-\subsection{Additional Results}
 
 
 
