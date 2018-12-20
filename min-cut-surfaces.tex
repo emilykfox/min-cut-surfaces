@@ -150,7 +150,6 @@ We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global mi
 \begin{TODO}\noindent
 To do:
 \begin{itemize}\itemsep0pt
-\item Rewrite story — Section 1.2
 \item Normalize notation/terminology/assumptions ???
 \item Check conditions for orientable? -- NO!  Assume orientable
 \item Check conditions for directed? -- NO! Assume undirected (except comment in hom cover section)
@@ -170,7 +169,7 @@ To do:
 \section{Introduction}
 \label{sec:intro}
 
-\note{Status (excluding subsections): Beta}
+%\note{Status (excluding subsections): Beta}
 
 
 Planar graphs have been a natural focus of study for algorithms research for decades, both because they accurately model many real-world networks, and because they often admit simpler and/or more efficient algorithms for many problems than general graphs.  Most planar-graph algorithms either apply immediately or have been quickly generalized to larger families of graphs, such as graphs of higher genus, graphs with forbidden minors, or graphs with small separators.  Examples include minimum spanning trees \cite{p-omst-99, m-tltam-04}; single-source and multiple-source shortest paths \cite{cc-msspg-07, fr-pgnwe-06, hkrs-fspap-97, k-msspp-05, kmw-spdpg-09, lrt-gnd-79, tm-spltm-09}; graph and subgraph isomorphism \cite{g-itegd-00, hw-ltaip-74, m-itgbg-80, e-sipgr-99, e-dtmcg-00}; and approximation algorithms for the traveling salesman problem, Steiner trees, and other NP-hard problems~\cite{bdt-ptass-08, bkk-ptass-07, bkk-stpg-07, dhm-aacd-07, e-dtmcg-00}.
@@ -189,18 +188,18 @@ Unlike in planar graphs, where every minimal cut is  dual to a simple cycle \cit
 
 Before describing our results in further detail, we first review several related results; technical terms are defined in Section \ref{sec:prelims}.
 
-\begin{TODO}
-\noindent
-Things to double-check throughout the paper:
-\begin{itemize}\itemsep0pt
-\item
-Don't write “minimum cut” when we mean “minimum $(s,t)$-cut”.
-\item
-Edges have \emph{weights}, not capacities or costs.  (Ugh.)
-\item
-Notation proposal: $X$ is a cut; $C$ is a co-tree; $L$ is the set of leftover edges in a blargh-coblurgh decomposition; $H$ is an even subgraph (not $\eta$).  $w(e)$ is the weight of edge $e$.
-\end{itemize}
-\end{TODO}
+%\begin{TODO}
+%\noindent
+%Things to double-check throughout the paper:
+%\begin{itemize}\itemsep0pt
+%\item
+%Don't write “minimum cut” when we mean “minimum $(s,t)$-cut”.
+%\item
+%Edges have \emph{weights}, not capacities or costs.  (Ugh.)
+%\item
+%Notation proposal: $X$ is a cut; $C$ is a co-tree; $L$ is the set of leftover edges in a blargh-coblurgh decomposition; $H$ is an even subgraph (not $\eta$).  $w(e)$ is the weight of edge $e$.
+%\end{itemize}
+%\end{TODO}
 
 \subsection{Past Results}
 
@@ -286,8 +285,9 @@ This reduction implies that the exponential dependence on $g$ in our algorithms 
 
 Finally, in Section~\ref{sec:global}, we describe our algorithms for computing global minimum cuts.  Both algorithms ultimately reduce computing a global minimum cut to  $2^{O(g)}$ instances of computing minimum $(s,t)$-cuts; thus, our algorithms have the same asymptotic running times as the minimum $(s,t)$-cut algorithms from Sections \ref{sec:crossing} and \ref{sec:homcover}.
 
-We note with some amusement that our algorithms solve a problem with a well-known polynomial-time solution by reducing it to an exponential number (in $g$) of instances of an NP-hard (but fixed-parameter tractable) problem.  
-The authors are divided whether to conjecture that minimum cuts in surface graphs can  be computed in time $O(g^c n\polylog n)$ for some small constant $c$, or that the problem is “fixed-parameter quadratic” with respect to genus, just as diameter and radius are fixed-parameter quadratic with respect to treewidth \cite{aww-afpsa-16}.  Fomin \etal~\cite{flspw-fppcg-18} raise similar questions about the fixed-parameter efficiency of flows and cuts with respect to treewidth.
+We note with some amusement that our algorithms solve a problem with a well-known polynomial-time solution by reducing it to an exponential number (in $g$) of instances of an NP-hard (but fixed-parameter tractable) problem!  
+The authors are divided whether to conjecture that minimum cuts in surface graphs can  be computed in time $O(g^c n\polylog n)$ for some small constant $c$, or that the problem is “fixed-parameter quadratic” with respect to genus, just as diameter and radius are fixed-parameter quadratic with respect to treewidth \cite{aww-afpsa-16}.  
+Fomin \etal~\cite{flspw-fppcg-18} raise similar questions about the fixed-parameter efficiency of flows and cuts with respect to treewidth.
 
 
 %
