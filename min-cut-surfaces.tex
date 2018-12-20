@@ -499,7 +499,7 @@ fixed pair of endpoints. \note{add free homotopy here}
 %The set of homotopy classes of loops in~$\Sigma$ with basepoint~$x_0$ defines a group~$\pi_1(\Sigma,x_0)$ under concatenation, called the \EMPH{fundamental group} of~$\Sigma$. (For all basepoints~$x_0$ and~$x_1$, the groups~$\pi_1(\Sigma,x_0)$ and~$\pi_1(\Sigma,x_1)$ are isomorphic.)
 %
 A cycle is \EMPH{contractible} if it is homotopic to a constant map.
-Given a weight function on the darts of~$G$, we say a directed path or cycle is \EMPH{tight} if it has minimum total weight (counting edges with multiplicity) for its homotopy class.
+Given a weight function on the edges of~$G$, we say a  path or cycle is \EMPH{tight} if it has minimum total weight (counting edges with multiplicity) for its homotopy class.
 
 Homology is a coarser equivalence relation than homotopy, with nicer
 algebraic properties.  Like several earlier papers \cite{cf-qhc2-07,
@@ -693,7 +693,7 @@ Right: The resulting system of dual arcs.  Compare with Figure \ref{fig:forest-c
 \label{fig:tree-coforest}
 \end{figure}
 
-Finally, for each edge $e$ in $G$, we define its signature \EMPH{$[e]$} to be the $\beta$-bit vector whose $i$th bit is equal to~$1$ if and only if $e$ crosses $\dualarc_i$ (that is, if $\dualarc_i$ traverses the dual edge $e^*$) exactly once. \note{Not “an odd number of times”?} The signature $[H]$ of an even subgraph $H$ is the bitwise exclusive-or of the signatures of its edges.  Similarly, the signature~$[\cycle]$ of a cycle $\cycle$ is the bitwise exclusive-or of the signatures of the edges that $\cycle$ traverses an odd number of times.
+Finally, for each edge $e$ in $G$, we define its signature \EMPH{$[e]$} to be the $\beta$-bit vector whose $i$th bit is equal to~$1$ if and only if $e$ crosses $\dualarc_i$ (that is, if $\dualarc_i$ traverses the dual edge $e^*$) an odd number of times. The signature $[H]$ of an even subgraph $H$ is the bitwise exclusive-or of the signatures of its edges.  Similarly, the signature~$[\cycle]$ of a cycle $\cycle$ is the bitwise exclusive-or of the signatures of the edges that $\cycle$ traverses an odd number of times.
 
 Let \EMPH{$h \oplus h'$} denote the bitwise exclusive-or of two homology signatures $h$ and $h'$, or equivalently, their sum as elements of the homology group~$(\Z_2)^\beta$.  The identities $[H \oplus H'] = [H] \oplus [H']$ and $[\cycle\cdot\cycle'] = [\cycle] \oplus [\cycle']$ follow directly from the definitions.
 
@@ -741,7 +741,7 @@ modified easily to compute a minimum-weight representative in
 there are exactly $2^{2g+b-1}$ such classes.
 Lemma~\ref{lem:cut-duality} implies our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time.
 
-Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several \note{free} \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
+Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several free \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
 
 
@@ -760,7 +760,7 @@ Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ b
 \begin{proof}
 Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.  Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
 
-Consider the graph $G/\sigma$ obtained from $G$ by contracting $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ simple\note{Here we assume the cycles $\gamma_i$ are simple} non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
+Consider the graph $G/\sigma$ obtained from $G$ by contracting $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
 
 Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$ whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$ is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover, the uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.  But this contradicts our assumption that $H $ has minimum weight in its homology class.
 
@@ -841,7 +841,7 @@ In the preliminary version of this section~\cite{en-mcsnc-11}, we described an a
 \subsection{Definition and Construction}
 \label{sec:homcover_cover}
 
-\note{Recall from Section 2.3....}
+We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.
 After computing homology signatures for each edge, the $\Z_2$-homology cover of a combinatorial surface can be defined using a standard~\emph{voltage construction}~\cite[Chapter 4]{gt-tgt-01}, as follows.
 
 We first define the covering graph $\Gbar$.  As in many previous papers \cite{lots, stuff, blah, blurg}, we regard every edge $uv$ of $G$ as a pair of oppositely oriented \emph{darts} $\arc{u}{v}$ and $\arc{v}{u}$.  The vertices of $\Gbar$ are all ordered pairs $(v, h)$ where $v$ is a vertex of $G$ and $h$ is an element of $(\Z_2)^\beta$.  The darts of $\Gbar$ are the ordered pairs $(\arc{u}{v}, h) := (u, h)\arcto(v, h\oplus [uv])$ for all edges $\arc{u}{v}$ of $G$ and all homology classes $h \in (\Z_2)^\beta$, and the reversal of any dart $(\arc{u}{v}, h)$ is the dart $(\arc{v}{u}, h\oplus[uv])$.
@@ -870,10 +870,9 @@ If $b>1$, then each boundary cycle $\delta_i$ has a non-zero homology signature;
 After computing the homology signatures for $\Sigma$ in $O(\beta n)$ time, following Lemma \ref{lem:sign}, it is straightforward to construct $\Sigmabar$ in $O(\nbar) = O(2^\beta n)$ time.
 \end{proof}
 
-\note{Not so formal about $\wbar$}
-For each edge $\ebar$ of $\Gbar$, we assign the weight $\wbar(\ebar) = w(e)$, where $e$ is the projection of $\ebar$ to the original graph $G$.  In other words, each  edge in $\Sigmabar$ inherits the weight of its projection in $\Sigma$.
 
-Now consider an arbitrary path $\path$ in $G$, with (possibly equal) endpoints $u$~and $v$.  A straightforward induction argument implies that for any homology class $h \in (\Z_2)^\beta$, the path~$\path$ is the projection of a unique path from $(u,h)$ to $(v,h\oplus[\path])$, which we denote \EMPH{$(\path,h)$}.  Moreover, this lifted path has the same length as its projection: $w(\path) = \wbar(\path,h)$.  The following lemmas are now immediate.
+Each edge in $\Gbar$  inherits the weight of its projection in  $G$.
+Now consider an arbitrary path $\path$ in $G$, with (possibly equal) endpoints $u$~and $v$.  A straightforward induction argument implies that for any homology class $h \in (\Z_2)^\beta$, the path~$\path$ is the projection of a unique path from $(u,h)$ to $(v,h\oplus[\path])$, which we denote \EMPH{$(\path,h)$}.  Moreover, this lifted path has the same length as its projection.  The following lemmas are now immediate.
 
 \begin{lemma}
 \label{lem:lift-shortest}
@@ -931,7 +930,8 @@ Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $
 
 By running this algorithm $2^\beta$ times, we can compute the shortest cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.
 
-\note{Actually this last result works for directed graphs as well.  We really don’t need to say much here.}
+We note that this result holds in directed graphs as well, as the construction of the $\Z_2$-homology cover ignores weights and the multiple source shortest path algorithm works on directed graphs.
+
 
 % --------------------------------------------------------------------------------
 \subsection{Minimum cuts from the homology cover}
