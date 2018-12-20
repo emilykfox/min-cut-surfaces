@@ -443,7 +443,6 @@ Orientable surfaces with~$b$ boundary components are differentiated by their \EM
 \subsection{Graph embeddings}
 \label{SS:embeddings}
 
-\note{This needs cleanup: boundary!}
 
 An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
@@ -467,7 +466,6 @@ Similar to covering spaces, we define the~\EMPH{projection} of a curve in~$S \sn
 
 \subsection{Duality}
 
-\note{This needs cleanup — It does??}
 
 Any undirected graph~$G$ embedded on a surface~$\Sigma$ without boundary has a
 \EMPH{dual graph}~$G^*$, which has a vertex~$f^*$ for each face~$f$ of~$G$,
@@ -581,7 +579,6 @@ We emphasize that each cycle in a cycle decomposition may visit vertices multipl
 \subsection{Cut-even subgraph duality}
 \label{SS:duality}
 
-\note{Kyle: The lemma below is key to the algorithms working, but there doesn't appear to be enough there to make them their own section. Where should we put them?}
 
 A crucial component of our minimum $(s,t)$-cut algorithms is an equivalence between $(s,t)$-cuts and even subgraphs of the \emph{dual graph} contained in a particular homology class.  \note{generalizes Whitney's planar cycle-cut duality; see Itai-Shiloach}
 We formalize this equivalence in the following lemma.
@@ -622,7 +619,7 @@ For any path~$p : [0,1] \to \Sigma$ such that~$\pi(x') = p(0)$ for some point~$x
 \subsection{Uniqueness of Shortest Paths}
 \label{SS:unique}
 
-To simplify our presentation, as in many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10, eh-ocsd-04} \note{enough? too much?}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  If necessary, this assumption can be enforced \emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.  Alternatively, we can enforce genericity using either of two deterministic perturbation schemes.  Cabello \etal~\cite{cce-msspe-13} describe an efficient implementation of lexicographic perturbation \cite{c-odlp-52,dow-gsmml-55,hm-apmcb-94} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Erickson \etal \cite{efl-hmcpf-18} describe a deterministic perturbation scheme based on integer homology that increases our worst-case running times by a factor of $O(g)$.
+To simplify our presentation, as in many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10, eh-ocsd-04}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  If necessary, this assumption can be enforced \emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.  Alternatively, we can enforce genericity using either of two deterministic perturbation schemes.  Cabello \etal~\cite{cce-msspe-13} describe an efficient implementation of lexicographic perturbation \cite{c-odlp-52,dow-gsmml-55,hm-apmcb-94} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Erickson \etal \cite{efl-hmcpf-18} describe a deterministic perturbation scheme based on integer homology that increases our worst-case running times by a factor of $O(g)$.
 
 % ===============================================================================================
 \section{Characterizing Homology}
