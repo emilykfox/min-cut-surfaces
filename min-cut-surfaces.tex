@@ -422,6 +422,20 @@ We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose end
 
 An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be continuously and infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle \cite{cex-dwsp-15}.  Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses} $\beta$.
 
+An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.
+A \EMPH{cycle decomposition} of an even subgraph~$H$ is a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
+
+\begin{lemma}
+\label{lem:decomposition}
+Every even subgraph of an embedded graph has a cycle decomposition.
+\end{lemma}
+
+\begin{proof}
+Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.
+\end{proof}
+
+We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
+
 \EMPH{Slicing} a combinatorial surface along a cycle or arc modifies both the surface and the embedded graph.
 For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
 We define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
@@ -500,8 +514,7 @@ cf-qhc-08, dls-chtl-07, dlsc-cgaht-08,e-sncds-11,f-sntcd-13}, we will consider o
 one-dimensional cellular homology with coefficients in the finite
 field $\Z_2$; this restriction allows us to radically simplify our
 definitions.
-Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, every separating cycle is a boundary subgraph.
-
+Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, every separating cycle is a boundary subgraph.
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}.
 Homology classes define a vector space $\Z_2^\beta$, called the first homology group, where $\beta = 2g$ if the surface has no boundary and $\beta = 2g+b-1$ otherwise.
@@ -522,20 +535,8 @@ The rank $\beta$ of the first homology group is called the first \emph{Betti num
 \label{fig:homology2}
 \end{figure}
 
-A \EMPH{cycle decomposition} of an even subgraph~$H$ is a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
 
-\begin{lemma}
-\label{lem:decomposition}
-Every even subgraph of an embedded graph has a cycle decomposition.
-\end{lemma}
-
-\begin{proof}
-Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.
-\end{proof}
-
-We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
-
-\subsection{Cut-even subgraph duality}
+\subsection{Duality between Cuts and Even Subgraphs}
 \label{SS:duality}
 
 
@@ -544,7 +545,7 @@ We formalize the same equivalence on surface graphs in the following lemma:
 
 \begin{lemma}
 \label{lem:cut-duality}
-Let $G$ be an edge-weighted graph embedded on a surface $\Sigma$ without boundary, and let $s$ and~$t$ be vertices of~$G$.  Finally, let $\Cut$ be the minimum-weight $(s,t)$-cut in~$G$.  Then~$\Cut^*$ is the minimum-weight even subgraph of $G^*$ homologous with the boundary of $s^*$ in the surface $\Sigma\setminus(s^*\cup t^*)$.
+Let $G$ be an edge-weighted graph embedded on a surface $\Sigma$ without boundary, and let $s$ and~$t$ be vertices of~$G$.  If $\Cut$ is an $(s,t)$-cut in~$G$, then $\Cut^*$ is an even subgraph of $G^*$ homologous with the boundary of $s^*$ in the surface $\Sigma\setminus(s^*\cup t^*)$.  In particular, if $X$ is a minimum-weight $(s,t)$-cut in~$G$, then~$\Cut^*$ is the minimum-weight even subgraph of $G^*$ homologous with the boundary of $s^*$ in $\Sigma\setminus(s^*\cup t^*)$.
 \end{lemma}
 
 \begin{proof}
@@ -583,8 +584,6 @@ To simplify our presentation, as in many earlier papers \cite{cce-msspe-13, benw
 % ===============================================================================================
 \section{Characterizing Homology}
 \label{S:tree-cotree}
-
-\note{Status: Beta -- reread from scratch after rest of paper done}
 
 Throughout the paper, we fix an \EMPH{undirected} directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundary cycles.
 %When considering undirected graphs, we assume the weight function is symmetric.
