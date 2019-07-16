@@ -172,7 +172,13 @@ We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global mi
 %\note{Status (excluding subsections): Beta}
 
 
-Planar graphs have been a natural focus of study for algorithms research for decades, both because they accurately model many real-world networks, and because they often admit simpler and/or more efficient algorithms for many problems than general graphs.  Most planar-graph algorithms either apply immediately or have been quickly generalized to larger families of graphs, such as graphs of higher genus, graphs with forbidden minors, or graphs with small separators.  Examples include minimum spanning trees \cite{p-omst-99, m-tltam-04}; single-source and multiple-source shortest paths \cite{cc-msspg-07, fr-pgnwe-06, hkrs-fspap-97, k-msspp-05, kmw-spdpg-09, lrt-gnd-79, tm-spltm-09}; graph and subgraph isomorphism \cite{g-itegd-00, hw-ltaip-74, m-itgbg-80, e-sipgr-99, e-dtmcg-00}; and approximation algorithms for the traveling salesman problem, Steiner trees, and other NP-hard problems~\cite{bdt-ptass-08, bkk-ptass-07, bkk-stpg-07, dhm-aacd-07, e-dtmcg-00}.
+Planar graphs have been a natural focus of study for algorithms research for decades, both because
+they accurately model many real-world networks, and because they often admit simpler and/or more
+efficient algorithms for many problems than general graphs.  Most planar-graph algorithms either
+apply immediately or have been quickly generalized to larger families of graphs, such as graphs of
+higher genus, graphs with forbidden minors, or graphs with small separators.  Examples include
+minimum spanning trees \cite{p-omst-99, m-tltam-04}; single-source and multiple-source shortest
+paths \cite{cce-msspe-13, fr-pgnwe-06, hkrs-fspap-97, k-msspp-05, kmw-spdpg-09, lrt-gnd-79, tm-spltm-09}; graph and subgraph isomorphism \cite{g-itegd-00, hw-ltaip-74, m-itgbg-80, e-sipgr-99, e-dtmcg-00}; and approximation algorithms for the traveling salesman problem, Steiner trees, and other NP-hard problems~\cite{bdt-ptass-08, bkk-ptass-07, bkk-stpg-07, dhm-aacd-07, e-dtmcg-00}.
 
 The classical minimum cut problem and its dual, the maximum flow problem, are stark exceptions to this general pattern.  Flows and cuts were introduced in the 1950s as tools for studying transportation networks, which are naturally modeled as planar graphs \cite{hr-fmern-55}.  Ford and Fulkerson's seminal paper \cite{ff-mfn-56} includes an algorithm to compute maximum flows in planar networks where the source and target lie on the same face.  A long series of results eventually led to planar minimum-cut algorithms that run in near-linear time, first for undirected graphs \cite{r-mstcp-83, hj-oamfu-85, f-faspp-87, insw-iamcmf-11} and later for directed graphs \cite{jk-mcdpn-92, hkrs-fspap-97, mnnw-mdpgo-15}.
 
@@ -213,7 +219,11 @@ Reif \cite{r-mstcp-83} improved the running time of this algorithm to $O(n\log^2
 
 Janiga and Koubek~\cite{jk-mcdpn-92} attempted to adapt Reif's $O(n\log^2 n)$-time algorithm to directed planar graphs; however, their  algorithm has a subtle error~\cite{kn-mcupg-11} which may lead to an incorrect result when the minimum $(t,s)$-cut is smaller than the minimum $(s,t)$-cut.
 
-Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obtain an $O(n)$-time planar shortest-path algorithm; using this algorithm in place of Dijkstra's algorithm improves the running times of both Reif's and Janiga and Koubek's algorithms to $O(n\log n)$.  The same improvement can also be obtained using more recent multiple-source shortest path algorithms by Klein~\cite{k-msspp-05} and Cabello and Chambers \cite{cc-msspg-07}.
+Henzinger \etal~\cite{hkrs-fspap-97} generalized Frederickson's technique to obtain an $O(n)$-time
+planar shortest-path algorithm; using this algorithm in place of Dijkstra's algorithm improves the
+running times of both Reif's and Janiga and Koubek's algorithms to $O(n\log n)$.  The same
+improvement can also be obtained using more recent multiple-source shortest path algorithms by
+Klein~\cite{k-msspp-05} and Cabello, Chambers, and Erickson~\cite{cce-msspe-13}.
 
 Minimum $(s,t)$-cuts in directed planar graphs can also be computed in $O(n\log n)$ time using the planar maximum-flow algorithms of Weihe \cite{w-mstfp-97} (after filtering out useless edges \cite{fls-fuadp-18}) and Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09}.
 
