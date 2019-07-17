@@ -96,7 +96,9 @@
 
 \title{Minimum Cuts in Surface Graphs%
 \thanks{
-Portions of this work were presented in preliminary form, by different subsets of the authors, at the 25th Annual Symposium on Computational Geometry~\cite{cen-mcshc-09}, the 22nd Annual ACM-SIAM Symposium on Discrete Algorithms~\cite{en-mcsnc-11}, and the 24nd Annual ACM-SIAM Symposium on Discrete Algorithms~\cite{efn-gmcse-12}.
+Portions of this work were presented in preliminary form, by different subsets of the authors, at
+the 25th Annual Symposium on Computational Geometry~\cite{cen-mcshc-09}, the 22nd Annual ACM-SIAM
+Symposium on Discrete Algorithms~\cite{en-mcsnc-11}, and the 24th Annual ACM-SIAM Symposium on Discrete Algorithms~\cite{efn-gmcse-12}.
 %\textbf{\color{red} Should we cite Kyle's dissertation also? 
 %The global min cut section is based on the simplified algorithm first described in the dissertation.
 %Also, the prelims here are likely to be based directly on the dissertation's prelim section since it has the biggest set of definitions to draw from.  From Erin: I'd vote no, since we already cite the papers.  If you do cite Kyle's, Amir's should probably also appear.}
@@ -586,10 +588,10 @@ Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\
 %single-period lifts.
 
 
-\subsection{Uniqueness of Shortest Paths}
-\label{SS:unique}
-
-To simplify our presentation, as in many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10, eh-ocsd-04}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  If necessary, this assumption can be enforced \emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.  Alternatively, we can enforce genericity using either of two deterministic perturbation schemes.  Cabello \etal~\cite{cce-msspe-13} describe an efficient implementation of lexicographic perturbation \cite{c-odlp-52,dow-gsmml-55,hm-apmcb-94} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Erickson \etal \cite{efl-hmcpf-18} describe a deterministic perturbation scheme based on integer homology that increases our worst-case running times by a factor of $O(g)$.
+%\subsection{Uniqueness of Shortest Paths}
+%\label{SS:unique}
+%
+%To simplify our presentation, as in many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10, eh-ocsd-04}, we assume that edge weights are \emph{generic}; in particular, we assume that there is a \emph{unique} shortest path between any two vertices of the input graph.  If necessary, this assumption can be enforced \emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.  Alternatively, we can enforce genericity using either of two deterministic perturbation schemes.  Cabello \etal~\cite{cce-msspe-13} describe an efficient implementation of lexicographic perturbation \cite{c-odlp-52,dow-gsmml-55,hm-apmcb-94} that increases the worst-case running times of our algorithms by a factor of $O(\log n)$.  More recently, Erickson \etal \cite{efl-hmcpf-18} describe a deterministic perturbation scheme based on integer homology that increases our worst-case running times by a factor of $O(g)$.
 
 % ===============================================================================================
 \section{Characterizing Homology}
@@ -751,22 +753,74 @@ As mentioned in Section~\ref{sec:characterizing_crossings}, we cannot consistent
 
 \begin{lemma}
 \label{lem:crossing}
-Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
+Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.
+Let $A = \Set{a_1, a_2, \dots, a_\beta}$ be a greedy system of arcs.
+Let $H$ be a subgraph of $G$.
+There is a $Z_2$-minimal even subgraph $H'$ homologous to $H$ such that for any cycle decomposition
+$\gamma_1, \gamma_2, \dots, \gamma_r$ of $H'$, the total number of crossings between any arc $a_i$
+and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $12g+4b-5$.
 \end{lemma}
 
+Our proof begins by conceptually modifying the edge weights in $G$ in a manner reminiscent to the
+way many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10,
+eh-ocsd-04} enforce edge weight \emph{genericity}, and in particular, the \emph{uniqueness} shortest
+paths between any two vertices of a graph.
+This assumption can be enforced \emph{with high probability} by adding random infinitesimal weights
+to each edge \cite{mvv-memi-87}.
+%Alternatively, we can enforce genericity using either of two
+%deterministic perturbation schemes.
+Cabello \etal~\cite{cce-msspe-13} describe an efficient
+implementation of lexicographic perturbation \cite{c-odlp-52,dow-gsmml-55,hm-apmcb-94} that
+increases the worst-case running times of algorithms by a factor of $O(\log n)$.
+More recently, Erickson \etal \cite{efl-hmcpf-18} described a deterministic perturbation scheme for
+directed graphs based on integer homology that increases worst-case running times by a factor of
+$O(g)$.
+Unfortunately, this latter scheme cannot be used as a black box in algorithms such as ours that rely
+on edges being undirected.
+
+%\begin{lemma}
+%\label{lem:crossing}
+%Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
+%\end{lemma}
+
 \begin{proof}
-Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.  Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
+For the sake of argument, we slightly modify the edge weights of $G$ so that $Z_2$-minimal even
+subgraphs under the new weights are also $Z_2$-minimal under the original edge weights but the
+crossing bound is guaranteed to hold.
+Recall, every arc in $A$ consists of two shortest paths from a forest $F$ of shortest paths.
+Our modification simply adds identical infinitesimal weights $\eps$ to every edge \emph{outside} of
+$F$.
+We claim that for any shortest path $\sigma$ contributing to $F$, for any pair of vertices $u$ and $v$
+in $\sigma$, that $\sigma(u, v)$ is the unique shortest path from $u$ to $v$.
+Indeed, any path from $u$ to $v$ that uses an edge outside $F$ must weigh at least $\eps$ more than
+$\sigma(u, v)$, and $F$ is a forest so there are no other paths from $u$ to $v$ using only edges of
+$F$.
+
+Let $H'$ be is an arbitrary $\Z_2$-minimal even subgraph homologous to $H$ under the new edge weights.
+Let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H'$.
+We now argue that for any shortest path $\sigma = \sigma(u, v)$ contributing to $F$, the total
+number of crossings between $\sigma$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most
+$6g+2b-3$.
+The lemma immediately follows from the construction of $A$.
+Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
+
+%Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.
 
 Consider the graph $G/\sigma$ obtained from $G$ by contracting the path $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
 
-Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$ whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$ is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover, the uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.  But this contradicts our assumption that $H $ has minimum weight in its homology class.
+Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$
+whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$
+is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover,
+the previously discussed uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.  But this contradicts our assumption that $H $ has minimum weight in its homology class.
 
 Now suppose some pair of loops $\ell_i$ and $\ell_j$ are homotopic; by definition, the cycle $\ell_i\cdot\reverse{\ell_j}$ is contractible.  These two loops are contractions of paths $\pi_i$ and $\pi_j$ in $G$ with endpoints in $\sigma$.  Let $u_i$ and~$v_i$ denote the endpoints of $\pi_i$, and let $u_j$ and~$v_j$ denote the endpoints of $\pi_j$.  The cycle $\pi_i \cdot \sigma(v_i,v_j) \cdot \overline{\pi_j} \cdot \sigma(u_j, u_i)$ in $G$ is also contractible.  Let $\delta$ denote the set of edges of $G$ that appear in this cycle exactly once.  If the sub-paths $\sigma(v_i,v_j)$ and $\sigma(u_j, u_i)$ are edge-disjoint, then $\delta$ is a contractible cycle; otherwise, $\delta$ is the union of two non-crossing homotopic cycles.  In either case, $\delta$ is a boundary subgraph, so the symmetric difference $H\oplus\delta$ is homologous with $H$.  Moreover, $H\oplus\delta$ has smaller weight than~$H$, and we obtain another contradiction.
 
 We conclude that the loops $\ell_1, \ell_2, \dots, \ell_x$ lie in distinct nontrivial homotopy classes.  Thus, these loops define an embedding of a single-vertex graph with $x$ edges onto $\Sigma$, where every face of the embedding is bounded by at least three edges.  Euler's formula now implies that $x\le 6g+2b-3$~\cite[Lemma~2.1]{ccelw-scsih-08}.
 \end{proof}
 
-We emphasize that different cycle decompositions of the same even subgraph $H$ may lead to different numbers of crossings.  Our crossing bound applies to \emph{every} cycle decomposition of $H$.
+We emphasize that different cycle decompositions of the same even subgraph $H'$ may lead to
+different numbers of crossings.  Our crossing bound applies to \emph{every} cycle decomposition of
+$H'$.
 
 \subsection{Triangulations and crossing sequences}
 \label{SS:homotopy-triangulation}
@@ -895,6 +949,8 @@ Now let $(w,h')$ be the last vertex along $(\cycle,h)$ that is also a vertex of 
 We emphasize that the modified cycle $\cycle'$ may intersect~$\sigma$ arbitrarily many times; however, all such intersections lift to intersections between $(\cycle', h)$ and lifts of $\sigma$ other than $(\sigma, 0)$.
 
 Our algorithm uses a generalization of Klein's  multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
+\note{Add reference to Erickson \etal. so this is deterministic.
+We may need any factor of \(g\) which is really \(2^{O(g)}\) so whatever.}
 
 \begin{lemma}[Chambers \etal~\cite{cce-msspe-13}]
 \label{lem:multishort}
