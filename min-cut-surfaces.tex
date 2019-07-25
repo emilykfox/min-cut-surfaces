@@ -620,7 +620,7 @@ The second method is somewhat easier to describe and implement than the first, s
 \label{sec:characterizing_crossings}
 
 The first method begins by computing a set~$A$ of~$\beta$ arcs, each of which is the concatenation of two shortest paths (possibly meeting in the interior of an edge), such that the surface $\Sigma\setminus A$ is a topological disk.
-Following Chambers \etal~\cite{ccelw-scsih-08}, we construct a \EMPH{greedy system of arcs}, using a variant of Erickson and Whittlesey's algorithm to construct optimal systems of loops \cite{ew-gohhg-05}.  Our algorithm uses a natural generalization of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
+Following previous papers \cite{ccelw-scsih-08, ce-tnpcs-10, c-scgsp-10}, we construct a \EMPH{greedy system of arcs}, using a variant of Erickson and Whittlesey's algorithm to construct optimal systems of loops \cite{ew-gohhg-05}.  Our algorithm uses a natural generalization of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
 
 A \EMPH{forest-cotree decomposition} of $G$ is any partition $(\partial\! G, F, L, C)$ of the edges of $G$ into four edge-disjoint subgraphs with the following properties:
 \begin{itemize}\itemsep0pt
@@ -645,16 +645,12 @@ Right: The resulting system of arcs.  Compare with Figure \ref{fig:tree-coforest
 \label{fig:forest-cotree}
 \end{figure}
 
-We can easily construct an \emph{arbitrary} forest-cotree decomposition in $O(n)$ time using whatever-first search, but we require a decomposition with a particular forest $F$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex~$x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at~$x$ in $O(n)$ time.\footnote{This running time requires that $g = O(n^{1-\e})$ for some constant $\e>0$.  However, we can safely assume $g = o(\log n)$, since otherwise our minimum-cut algorithms are slower than textbook algorithms for arbitrary graphs.}  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.  With the shortest-path forest $F$ in hand, we can easily construct the rest of the forest-cotree decomposition in $O(n)$ time.
-
-Finally, for each edge $e_i\in L$, let $\sigma_i$ and $\tau_i$ denote the unique directed paths in $F$ from the boundary of~$G$ to the endpoints of $e_i$, and let $S := \set{\sigma\!_1, \dots, \sigma\!_\beta, \allowbreak \tau_1, \dots, \tau_\beta}$.  By construction of $F$, every element of~$S$ is a (possibly empty) shortest directed path.  Moreover, because $a_i = \sigma_i \cdot e_i \cdot \rev(\tau_i)$ for each index~$i$, every non-null-homologous cycle in $G$ must intersect at least one path in $S$.  We can easily compute each path in $S$ in $O(n)$ time.  The final greedy system of arcs is the set $A := \set{a_1, a_2, \dots, a_\beta}$.
-
-For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements.
+For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ of $\gamma$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements.
 
 Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; however, the \emph{parity} of the crossing number is independent of the cycle decomposition.  The \EMPH{crossing parity vector} of any even subgraph $H$ is the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses (any cycle decomposition of) $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
 
 \begin{lemma}
-Two even subgraphs are $\Z_2$-homologous if and only if their crossing parity vectors are equal.
+Two even subgraphs are $\Z_2$-homologous if and only if their crossing parity vectors (with respect to the same system of arcs) are equal.
 \end{lemma}
 
 \begin{proof}
@@ -662,13 +658,22 @@ Every boundary subgraph is the symmetric difference of facial cycles.  Any non-c
 \end{proof}
 
 \begin{lemma}
-We can compute the crossing parity vector of any even subgraph in $O(\beta)$ time per edge after computing any system of arcs.
+We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of arcs, in $O(\beta)$ time per edge.
 \end{lemma}
 
 \begin{proof}
 We can compute a cycle decomposition $\gamma_1, \dots, \gamma_r$ of $H$ in $O(1)$ time per edge, by following the proof of Lemma~\ref{lem:decomposition}.
 We can compute the number of crossings between any cycle $\gamma_i$ and any arc $a_j$ in time proportional to the number of edges in $\gamma_i$.
 \end{proof}
+
+We can easily construct an \emph{arbitrary} forest-cotree decomposition, and thus an arbitrary system of arcs, in $O(n)$ time using whatever-first search, but our algorithms require a decomposition with a particular forest $F$ and a particular dual spanning tree $C^*$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex~$x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at~$x$ in $O(n)$ time.\footnote{This running time requires that $g = O(n^{1-\e})$ for some constant $\e>0$.  However, we can safely assume $g = o(\log n)$, since otherwise our minimum-cut algorithms are slower than textbook algorithms for arbitrary graphs.}  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.  %With the shortest-path forest $F$ in hand, we can easily construct the rest of the forest-cotree decomposition in $O(n)$ time.
+
+Now for each edge $e$ that is \emph{not} in the forest $F$ or the boundary subgraph $\partial G$, let $\ell(e)$ denote the length of the unique arc in the subgraph $F \cup\set{e}$.  We can easily compute $\ell(e)$ for each non-forest edge $e$ in $O(n)$ time.  Finally, let $C^*$ denote the maximum spanning tree of $G^* \setminus (F\cup \partial G)^*$ with respect to the arc lengths $\ell(e)$.
+
+
+Finally, for each edge $e_i\in L$, let $\sigma_i$ and $\tau_i$ denote the unique directed paths in $F$ from the boundary of~$G$ to the endpoints of $e_i$, and let $S := \set{\sigma\!_1, \dots, \sigma\!_\beta, \allowbreak \tau_1, \dots, \tau_\beta}$.  By construction of $F$, every element of~$S$ is a (possibly empty) shortest directed path.  Moreover, because $a_i = \sigma_i \cdot e_i \cdot \rev(\tau_i)$ for each index~$i$, every non-null-homologous cycle in $G$ must intersect at least one path in $S$.  We can easily compute each path in $S$ in $O(n)$ time.  The final greedy system of arcs is the set $A := \set{a_1, a_2, \dots, a_\beta}$.
+
+Exchange arguments by Erickson and Whittlesey \cite{ew-gohhg-05} and Colin de Verdière \cite{c-scgsp-10} both imply that every arc in the greedy system is tight, and moreover that the greedy system of arcs has minimum total length among all systems of arcs.\footnote{Specifically, Colin de Verdière’s argument implies that the greedy system of arcs is a minimum-length basis in $G$ for the first relative homology group $H_1(\Sigma, \partial\Sigma)$ \cite[Section 3]{c-scgsp-10}.  Thus, each arc in the greedy system is as short as possible in its \emph{relative homology} class.}
 
 
 
@@ -1254,7 +1259,6 @@ In turn, $\gammasnip$ goes through the two copies of $e$ an odd number of times 
 $\gamma$ uses $e$ an odd number of times and $e \in H$.
 
 In all cases, an edge $e$ is in $H$ if and only if exactly one incident face to $e$ is in $F$.
-
 \end{proof}
 
 \begin{comment}
