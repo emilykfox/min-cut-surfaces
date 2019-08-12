@@ -1145,7 +1145,6 @@ Abusing terminology slightly,
 call the separating subgraph $\minSS$ \EMPH{contractible} if this component of $\Sigma \setminus
 \minSS$ is a disk, and \EMPH{non-contractible} otherwise.  If $\minSS$ is contractible, then
 $\minSS$ is actually a shortest (weakly) simple contractible cycle of $G$ in the surface $\Sigma$; otherwise, $\minSS$ can be decomposed into one or more simple cycles, each of which is non-contractible.  See Figure~\ref{fig:global_cases}.
-\note{Add a face to most figures in this section.}
 
 %
 %\begin{TODO}
@@ -1158,7 +1157,7 @@ $\minSS$ is actually a shortest (weakly) simple contractible cycle of $G$ in the
 \begin{figure}[ht]
 \centering
 \includegraphics[height=1in]{Fig/shortcon2}\qquad
-\includegraphics[height=1in]{Fig/homologous1}
+\includegraphics[height=1in]{Fig/homologous4}
 \caption{Two types of minimum-weight separating subgraphs: a simple contractible cycle and otherwise.}
 \label{fig:global_cases}
 \end{figure}
@@ -1331,8 +1330,6 @@ There exists an $O(n \log \log n)$-time algorithm that computes a minimum-weight
 
 The algorithm computes a system $A$ of tight arcs anchored on $s^*$ in $O(n)$ time as described in
 Section~\ref{sec:characterizing_crossings}.
-\note{We don't actually discuss tight arcs, just greedy ones.
-We need to decide what to cite or prove ourselves.}
 Let $\Gsnip$ denote the planar graph $G \snip A$; this graph has $O(n)$ vertices.
 %, again as discussed in Lemma~\ref{lem:tightcycle}.
 
@@ -1398,7 +1395,6 @@ that~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS'$ not 
 \begin{proof}
 If $\gamma$ is null-homologous, then $H$ is empty and the lemma is trivial, so assume otherwise.
 If~$H$ lies in the closure of the component of~$\Sigma \setminus \minSS$ not incident to $s^*$, then we are done, so assume otherwise.  See Figure \ref{fig:global_nonsep-vs-shortsep}. 
-\note{Need to swap out $f$ for $s^*$ in the figure. Also, $S$ for $\minSS$.}
 
 \begin{figure}[ht]
 \centering
