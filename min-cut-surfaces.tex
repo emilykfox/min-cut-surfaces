@@ -1121,8 +1121,6 @@ Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} show that this circulation pr
 \section{Global Minimum Cut}
 \label{sec:global}
 
-\note{Status: Alpha}
-
 Finally, we describe our algorithm to compute \emph{global} minimum cuts in surface-embedded graphs, where no source and target vertices are specified in advance.  
 Unlike previous sections, we assume that the underlying surface of the input graph does \emph{not}
 have boundary, because filling in any boundaries with disks does not change the minimum cut.
@@ -1219,13 +1217,13 @@ Let $\alpha$ be a tight arc or tight cycle on $G$.  There exists a shortest simp
 %The shortest simple contractible cycle and the shortest non-separating cycle in $G$ do not cross.
 %\end{corollary}
 
-\begin{figure}[ht]
-\centering
-\includegraphics[height=1.2in]{Fig/shortcon-vs-shortnonsep}
-\caption{A shortest simple contractible cycle does not cross some shortest non-separating cycle.}
-\label{fig:global_shortcon-vs-shortnonsep}
-\end{figure}
-\note{Change this figure to use a tight arc?}
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[height=1.2in]{Fig/shortcon-vs-shortnonsep}
+%\caption{A shortest simple contractible cycle does not cross some shortest non-separating cycle.}
+%\label{fig:global_shortcon-vs-shortnonsep}
+%\end{figure}
+%\note{Change this figure to use a tight arc?}
 
 Cabello~\cite{c-fscss-10} uses this observation to compute a shortest simple contractible cycle in a surface embedded graph; unfortunately, his algorithm runs in $O(n^2\log n)$ time.
 Cabello \etal~\cite{cdem-fotc-10} use the same observations to find a shortest contractible \emph{closed walk} that encloses a non-empty set of faces in $O(n\log n)$ time (with no dependence on $g$).
