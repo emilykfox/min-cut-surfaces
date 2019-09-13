@@ -147,13 +147,16 @@ undirected surface-embedded graphs.
 Given an edge-weighted undirected graph $G$ with $n$ vertices embedded on an orientable surface of
 genus $g$, our algorithms can solve either problem in $g^{O(g)} n \log \log n$ or $2^{O(g)} n \log
 n$ time, whichever is better.
+When $g$ is a constant, our algorithms match the best running times known for computing minimum cuts
+in planar graphs.
 
 Our algorithms for minimum cuts rely on reductions to the problem of finding a minimum-weight
-subgraph in a given \(\Z_2\)-homology class, and we give near-linear time algorithms for this latter
-problem.
+subgraph in a given \(\Z_2\)-homology class, and we give efficient algorithms for this latter
+problem as well.
 If $G$ is embedded on a surface with $b$ boundary components, these algorithms run in $(g + b)^{O(g
 + b)} n \log \log n$ and $2^{O(g + b)} n \log n$ time.
-We also prove that finding a minimum-weight subgraph homologous to a single input cycle is NP-hard.
+We also prove that finding a minimum-weight subgraph homologous to a single input cycle is NP-hard,
+showing it is likely impossible to improve upon the exponential dependencies on $g$.
 \end{abstract}
 
 %
