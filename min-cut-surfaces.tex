@@ -822,7 +822,8 @@ Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsi
 \subsection{Crossing bound}
 \label{SS:homotopy-crossing}
 
-Our main technical lemma for this section establishes an upper bound on the number of crossings between an arbitrary shortest path and the minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that the shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
+Our main technical lemma for this section establishes an upper bound on the number of crossings
+between members of a greedy system of arcs and some minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that the shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
 
 As mentioned in Section~\ref{sec:characterizing_crossings}, we cannot consistently define when a shortest path crosses an even subgraph.  Instead, we consider the total number of crossings between a shortest path and the cycles in an arbitrary cycle decomposition.
 
@@ -831,7 +832,7 @@ As mentioned in Section~\ref{sec:characterizing_crossings}, we cannot consistent
 Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.
 Let $A = \Set{a_1, a_2, \dots, a_\beta}$ be a greedy system of arcs.
 Let $H$ be a subgraph of $G$.
-There is a $Z_2$-minimal even subgraph $H'$ homologous to $H$ such that for any cycle decomposition
+There is a $\Z_2$-minimal even subgraph $H'$ homologous to $H$ such that for any cycle decomposition
 $\gamma_1, \gamma_2, \dots, \gamma_r$ of $H'$, the total number of crossings between any arc $a_i$
 and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $12g+4b-5$.
 \end{lemma}
