@@ -940,7 +940,14 @@ graphs \cite{cce-msspe-13,efl-hmcpf-18}.
 In fact, because there are only $2^\beta$ homology classes, we can compute the shortest cycle in \emph{every} homology class in the same running time.
 We then assemble the minimum-weight \emph{even subgraph} in any given homology class from these $\Z_2$-minimal cycles using dynamic programming.
 
-In the preliminary version of this section~\cite{en-mcsnc-11}, we described an algorithm to compute the shortest non-separating cycle in a directed surface graph in $g^{O(g)} n \log n$ time, improving (for fixed $g$) an earlier algorithm of Cabello \etal~\cite{ccl-fsncd-10} that runs in $O(g^{1/2}n^{3/2}\log n)$ time.  Using similar techniques but with different covering spaces, Erickson~\cite{e-sncds-11} and Fox~\cite{f-sntcd-13} described even faster algorithms that find shortest non-separating cycles in~$O(g^2 n \log n)$ time and shortest non-contractible cycles in~$O(g^3 n \log n)$ time.  In light of these improvements, we omit discussion of our algorithm from this paper.
+In the preliminary version of this section~\cite{en-mcsnc-11}, we described an algorithm to compute
+the shortest non-separating cycle in a directed surface graph in $g^{O(g)} n \log n$ time, improving
+(for fixed $g$) an earlier algorithm of Cabello \etal~\cite{ccl-fsncd-10} that runs in
+$O(g^{1/2}n^{3/2}\log n)$ time.  Using similar techniques but with different covering spaces,
+Erickson~\cite{e-sncds-11} and Fox~\cite{f-sntcd-13} described even faster algorithms that find
+shortest non-separating cycles in~$O(g^2 n \log n)$ time and shortest non-contractible cycles
+in~$O(g^3 n \log n)$ time.  In light of these improvements, we omit discussion of our non-separating
+cycle algorithm from this paper.
 
 %
 %\note{Rewrite this paragraph.}
@@ -961,7 +968,7 @@ In the preliminary version of this section~\cite{en-mcsnc-11}, we described an a
 %Instead of the universal cover, the algorithms of this section construct and search another canonical covering space, called the \emph{$\Z_2$-homology cover}; 
 %
 
-\subsection{Definition and Construction}
+\subsection{Definition and construction}
 \label{sec:homcover_cover}
 
 We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.
@@ -1052,7 +1059,7 @@ We can enforce uniqueness of shortest paths and achieve the $O(g n \log n)$ prep
 \emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.
 Because our minimum-weight $(s,t)$-cut algorithm is otherwise deterministic, we will use the
 deterministic $O(g^2 n \log n)$ preprocessing time procedure referenced in
-Lemma~\ref{lem:multishort}.
+Lemma~\ref{lem:multishort} throughout the rest of this section.
 
 \begin{theorem}
 \label{thm:min-cycle}
@@ -1063,7 +1070,7 @@ Let $G$ be a  graph with non-negative edge weights, cellularly embedded on a sur
 We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we return the empty walk and halt.
 
 Next, we construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, as described in Section~\ref{sec:homcover_cover}, as well as the set $S$ of directed shortest paths described in Section~\ref{sec:characterizing_crossings}.
-Any cycle homologous with~$\cycle$ must intersect at least one member of~$S$ as if~$\cycle$ is not null-homologous.
+Any cycle homologous with~$\cycle$ must intersect at least one member of~$S$ as~$\cycle$ is not null-homologous.
 We look for the shortest path in $\Gbar$ of the canonical form described in Lemma~\ref{lem:nocross}, by considering each shortest path $\sigma\in S$ in turn as follows.
 
 Let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arcto (v_t, h_t)$.  We construct the combinatorial surface $\Sigmabar\snip(\sigma,0)$ by splitting the path $(\sigma,0)$ into two parallel paths from $(v_0,0)$ to $(v_t,h_t)$, which we denote  $(\sigma,0)^+$ and $(\sigma,0)^-$.  For each index $1\le i\le t-1$, let $(v_i,h_i)^+$ and $(v_i,h_i)^-$ denote the copies of vertex $(v_i,h_i)$  on the paths $(\sigma,0)^+$ and $(\sigma,0)^-$, respectively.  The paths $(\sigma,0)^+$ and $(\sigma,0)^-$ bound a new common face $f_{(\sigma,0)}$ in $\Sigmabar\snip(\sigma,0)$.
@@ -1160,7 +1167,9 @@ Suppose we are given an \emph{arbitrary} graph $G = (V,E)$ with $n$ vertices and
 %\note{kylejfox: Won't picking an arbitrary rotation system give us an orientable embedding?}
 (We can compute the maximum-genus orientable cellular embedding  in polynomial time~\cite{fgm-fmggi-88}.)  Alternately, we can add zero-length edges to make the graph complete and then use classical results of Ringel, Youngs, and others \cite{ry-shmcp-68,r-mct-74} to compute a minimum-genus orientable embedding of $K_n$ in polynomial time.  Once we have an embedding, we add vertices and zero-cost edges to obtain a triangulation.
 
-Let $C$ be the sum of the absolute values of the edge costs: $C:= \sum_e \abs{c(e)}$.  We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{fig:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
+Let $C$ be the sum of the absolute values of the edge costs: $C:= \sum_e \abs{c(e)}$.
+A \EMPH{cocycle} of embedded graph $G$ is a subset of edges forming a cycle in the dual $G^*$.
+We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{fig:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
 
 \begin{figure}[hbt]
 \centering\includegraphics[scale=0.4]{Fig/addhandle3}
