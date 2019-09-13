@@ -866,7 +866,10 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 \label{sec:homcover}
 
 At a very high level, our algorithms in Section 4 find the minimum-weight subgraph in a given homology class by enumerating possible \emph{homotopy} classes of the cycles in a cycle decomposition, and then finding the shortest cycle in each possible homotopy class by searching a finite portion of the universal cover of the surface~$\Sigma$.  In this section, we describe a more direct algorithm, which finds the shortest cycle in each \emph{homology} class, by constructing and searching a space which we call the \emph{$\Z_2$-homology cover}.
-Specifically, given a homology signature $h\in (\Z_2)^\beta$, our algorithm computes the shortest cycle in with signature $h$ in $\beta^{O(\beta)} n \log n$ time, using a generalization of Klein's multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded graphs \cite{cce-msspe-13}.
+Specifically, given a homology signature $h\in (\Z_2)^\beta$, our algorithm computes the shortest
+cycle with signature $h$ in $\beta^{O(\beta)} n \log n$ time, using a generalization of Klein's
+multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded
+graphs \cite{cce-msspe-13,efl-hmcpf-18}.
 In fact, because there are only $2^\beta$ homology classes, we can compute the shortest cycle in \emph{every} homology class in the same running time.
 We then assemble the minimum-weight \emph{even subgraph} in any given homology class from these $\Z_2$-minimal cycles using dynamic programming.
 
@@ -958,17 +961,35 @@ Now let $(w,h')$ be the last vertex along $(\cycle,h)$ that is also a vertex of 
 We emphasize that the modified cycle $\cycle'$ may intersect~$\sigma$ arbitrarily many times; however, all such intersections lift to intersections between $(\cycle', h)$ and lifts of $\sigma$ other than $(\sigma, 0)$.
 
 Our algorithm uses a generalization of Klein's  multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
-\note{Add reference to Erickson \etal. so this is deterministic.
-We may need any factor of \(g\) which is really \(2^{O(g)}\) so whatever.}
+\note{Kyle: I changed to the deterministic running time for MSSP and added a short discussion on the
+randomized alternative.
+Please double check my math!
+In particular, the originally claimed min cut running time of \(O(16^g g^2 n \log n)\) seemed too
+low, because \(8^\beta = \Theta(8^{2g}) = \Theta(64^g)\).
+I think the deterministic time should be \(O(256^g g^3 n \log n)\) and the randomized time should
+have been \(O(64^g g^2 n \log n)\).}
 
-\begin{lemma}[Chambers \etal~\cite{cce-msspe-13}]
+\begin{lemma}[Erickson \etal~\cite{efl-hmcpf-18}]
 \label{lem:multishort}
-Let $G$ be a graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of~$G$.  We can preprocess $G$ in $O(gn\log n)$ time and $O(n)$ space so that the length of the shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$ time.
+Let $G$ be a graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of
+genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of~$G$.
+We can preprocess $G$ in $O(g^2n\log n)$ time and $O(g n \log n)$ space so that the length of the
+shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$
+time.
 \end{lemma}
+
+The above result is based on a procedure of Chambers \etal~\cite{cce-msspe-13} which requires only
+$O(g n \log n)$ preprocessing time but relies on the shortest path between any pair of vertices
+being unique.
+We can enforce uniqueness of shortest paths and achieve the $O(g n \log n)$ preprocessing time
+\emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.
+Because our minimum-weight $(s,t)$-cut algorithm is otherwise deterministic, we will use the
+deterministic $O(g^2 n \log n)$ preprocessing time procedure referenced in
+Lemma~\ref{lem:multishort}.
 
 \begin{theorem}
 \label{thm:min-cycle}
-Let $G$ be a  graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 4^\beta \beta^2\, n\log n)$ time.
+Let $G$ be a  graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 8^\beta \beta^3\, n\log n)$ time.
 \end{theorem}
 
 \begin{proof}
@@ -980,10 +1001,12 @@ We look for the shortest path in $\Gbar$ of the canonical form described in Lemm
 
 Let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arcto (v_t, h_t)$.  We construct the combinatorial surface $\Sigmabar\snip(\sigma,0)$ by splitting the path $(\sigma,0)$ into two parallel paths from $(v_0,0)$ to $(v_t,h_t)$, which we denote  $(\sigma,0)^+$ and $(\sigma,0)^-$.  For each index $1\le i\le t-1$, let $(v_i,h_i)^+$ and $(v_i,h_i)^-$ denote the copies of vertex $(v_i,h_i)$  on the paths $(\sigma,0)^+$ and $(\sigma,0)^-$, respectively.  The paths $(\sigma,0)^+$ and $(\sigma,0)^-$ bound a new common face $f_{(\sigma,0)}$ in $\Sigmabar\snip(\sigma,0)$.
 
-Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $\cycle$ intersects $\sigma$, then some $\Z_2$-minimal cycle homologous to $\cycle$ is the projection of a shortest path in $\Sigmabar\snip(\sigma,0)$ from some vertex $(v_i,h_i)^\pm$ to the corresponding vertex $(v_i, h_i\oplus[\cycle])$.  To compute these shortest paths, we implicitly compute the shortest path in $\Sigmabar\snip(\sigma,0)$ from every vertex on the boundary of $f_{(\sigma,0)}$ to \emph{every} vertex of $\Sigmabar\snip(\sigma,0)$, using Lemma~\ref{lem:multishort}.  The resulting algorithm runs in $O(\gbar\,\nbar \log \nbar) = O(4^\beta \beta^2\, n\log n)$ time, by Lemma \ref{lem:cover-cxy}.
+Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $\cycle$ intersects $\sigma$, then some $\Z_2$-minimal cycle homologous to $\cycle$ is the projection of a shortest path in $\Sigmabar\snip(\sigma,0)$ from some vertex $(v_i,h_i)^\pm$ to the corresponding vertex $(v_i, h_i\oplus[\cycle])$.  To compute these shortest paths, we implicitly compute the shortest path in $\Sigmabar\snip(\sigma,0)$ from every vertex on the boundary of $f_{(\sigma,0)}$ to \emph{every} vertex of $\Sigmabar\snip(\sigma,0)$, using Lemma~\ref{lem:multishort}.
+The resulting algorithm runs in $O(\gbar^2\,\nbar \log \nbar) = O(8^\beta \beta^3\, n\log n)$ time, by Lemma \ref{lem:cover-cxy}.
 \end{proof}
 
-By running this algorithm $2^\beta$ times, we can compute the shortest cycle in $\Sigma$ in \emph{every} $\Z_2$-homology class, in $O(8^\beta \beta^2\, n\log n)$ time.
+By running this algorithm $2^\beta$ times, we can compute the shortest cycle in $\Sigma$ in
+\emph{every} $\Z_2$-homology class, in $O(16^\beta \beta^3\, n\log n)$ time.
 
 We note that this result holds in directed graphs as well, as the construction of the $\Z_2$-homology cover ignores weights and the multiple source shortest path algorithm works on directed graphs.
 
@@ -996,7 +1019,8 @@ We now apply our algorithm for computing $\Z_2$-minimal cycles to the problem of
 %\note{TODO(kylejfox): Emphasize here or in the intro that we cannot use these techniques to do directed minimum cut.}
 %\note{Jeff: WHY NOT?}
 %\note{Erin: Another place where we need to clarify that we're not always in directed case.  Emphasizing my vote to rewrite that assumption out of the prelims now...}
-Theorem~\ref{thm:min-cycle} immediately implies that we can compute a minimum-weight \emph{cycle} in every $\Z_2$-homology class in $O(8^\beta \beta^2\, n\log n)$ time.  However, the minimum weight \emph{even subgraph} in a given homology class may not be (the carrier of) a $\Z_2$-minimal cycle.  In particular, if a $\Z_2$-minimal cycle $\gamma$ traverses any edge more than once, then every minimum-weight even subgraph with signature $[\gamma]$ \emph{must} be disconnected.
+Theorem~\ref{thm:min-cycle} immediately implies that we can compute a minimum-weight \emph{cycle} in
+every $\Z_2$-homology class in $O(16^\beta \beta^3\, n\log n)$ time.  However, the minimum weight \emph{even subgraph} in a given homology class may not be (the carrier of) a $\Z_2$-minimal cycle.  In particular, if a $\Z_2$-minimal cycle $\gamma$ traverses any edge more than once, then every minimum-weight even subgraph with signature $[\gamma]$ \emph{must} be disconnected.
 
 However, any \emph{connected} $\Z_2$-minimal even subgraph is the carrier of a $\Z_2$-minimal cycle, and the components of any $\Z_2$-minimal even subgraph are themselves $\Z_2$-minimal even subgraphs.  Thus, we can assemble a $\Z_2$-minimal even subgraph in any homology class from a subset of the $\Z_2$-minimal cycles we have already computed.  The following lemma puts an upper bound on the number of cycles we need.
 
@@ -1013,11 +1037,13 @@ Now let $H$ be an even subgraph of $G$ with more than $g+b-1$ components.  Each 
 
 \begin{theorem}
 \label{thm:min-even}
-Let $G$ be an undirected graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$.  A minimum-weight even subgraph of $G$ in each $\Z_2$-homology class can be computed in $O(8^\beta \beta^2\, n\log n)$ time.
+Let $G$ be an undirected graph with non-negative edge weights, cellularly embedded on a
+surface~$\Sigma$ with first Betti number $\beta$.  A minimum-weight even subgraph of $G$ in each
+$\Z_2$-homology class can be computed in $O(16^\beta \beta^3\, n\log n)$ time.
 \end{theorem}
 
 \begin{proof}
-Our algorithm computes a minimum-weight cycle~$\gamma_h$ in every $\Z_2$-homology class~$h$ in $O(8^\beta \beta^2\, n\log n)$ time, via Theorem \ref{thm:min-cycle}, and then assembles these $\Z_2$-minimal cycles into $\Z_2$-minimal even subgraphs using dynamic programming.
+Our algorithm computes a minimum-weight cycle~$\gamma_h$ in every $\Z_2$-homology class~$h$ in $O(16^\beta \beta^3\, n\log n)$ time, via Theorem \ref{thm:min-cycle}, and then assembles these $\Z_2$-minimal cycles into $\Z_2$-minimal even subgraphs using dynamic programming.
 
 For each homology class $h\in (\Z_2)^\beta$ and each integer $1\le k\le g+b-1$, let \EMPH{$C(h,k)$} denote the minimum total weight of any set of at most $k$ cycles in $G$ whose homology classes sum to $h$.  Lemma~\ref{lem:even-comps} implies that the minimum weight of any even subgraph in homology class~$h$ is exactly $C(h, g+b-1)$.  This function obeys the following straightforward recurrence:
 \[
@@ -1028,8 +1054,14 @@ This recurrence has two base cases: $C(0, k) = 0$ for any integer $k$, and for a
 
 \begin{corollary}
 \label{cor:mincut}
-Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$ and $b$ boundary components, and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $O(16^g g^2 n \log n)$ time.
+Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$ and $b$ boundary
+components, and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut
+in $G$ in $O(256^g g^3 n \log n)$ time.
 \end{corollary}
+
+As discussed above, we can instead randomly perturb edge weights and use the faster multiple-source
+shortest paths algorithm of Chambers \etal~\cite{cce-msspe-13} to find a minimum-weight $(s,t)$-cut
+with high probability in $O(64^g g^3 n \log n)$ time.
 
 % ==================================================================================
 \section{{NP}-Hardness}
