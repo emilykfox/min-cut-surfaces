@@ -142,10 +142,18 @@ Amir Nayyeri%
 
 \maketitle
 \begin{abstract}
-\note{Status: Unwritten}
+We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global minimum cuts of
+undirected surface-embedded graphs.
+Given an edge-weighted undirected graph $G$ with $n$ vertices embedded on an orientable surface of
+genus $g$, our algorithms can solve either problem in $g^{O(g)} n \log \log n$ or $2^{O(g)} n \log
+n$ time, whichever is better.
 
-Let $G$ be an edge-weighted directed graph with $n$ vertices embedded on an orientable surface of genus $g$.
-We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global minimum cuts of~$G$.
+Our algorithms for minimum cuts rely on reductions to the problem of finding a minimum-weight
+subgraph in a given \(\Z_2\)-homology class, and we give near-linear time algorithms for this latter
+problem.
+If $G$ is embedded on a surface with $b$ boundary components, these algorithms run in $(g + b)^{O(g
++ b)} n \log \log n$ and $2^{O(g + b)} n \log n$ time.
+We also prove that finding a minimum-weight subgraph homologous to a single input cycle is NP-hard.
 \end{abstract}
 
 %
