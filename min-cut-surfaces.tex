@@ -473,7 +473,11 @@ Every combinatorial surface with boundary can be obtained from a combinatorial s
 
 We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may traverse the same vertex or edge more than once.
 
-An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be continuously and infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle \cite{cex-dwsp-15}.  Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses} $\beta$.
+An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be continuously and
+infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle
+\cite{cex-dwsp-15,aaet-rwsp-17}.
+\note{Was Chang \etal\ originally cited for the definition or just as related work?}
+Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses} $\beta$.
 
 An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.
 A \EMPH{cycle decomposition} of an even subgraph~$H$ is a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
@@ -522,12 +526,11 @@ Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMP
 \begin{figure}[htb]
 \centering
 \includegraphics[scale=0.45]{Fig/pants}
-\caption{A cellularly embedded graph $G$ (solid lines) on a pair of pants (genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
+\caption{A cellularly embedded graph $G$ (solid lines) on a pair of pants (the surface of genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
 \label{fig:duality}
 \end{figure}
  
-For any subgraph $F = (U,D)$ of $G = (V,E)$, we write \EMPH{$G\setminus F$} to denote the edge-complement $(V, {E\setminus D})$.  Also, when the graph $G$ is fixed, we abuse notation by writing~$F^*$ to denote the subgraph of $G^*$ corresponding to a subgraph $F$ of~$G^*$; each edge in $F^*$ is the dual of a unique edge in~$F$.  In particular, we have the identity $(G\setminus F)^* = G^* \setminus F^*$.
-
+For any subgraph $F = (U,D)$ of $G = (V,E)$, we write \EMPH{$G\setminus F$} to denote the edge-complement $(V, {E\setminus D})$.  Also, when the graph $G$ is fixed, we abuse notation by writing~$F^*$ to denote the subgraph of $G^*$ corresponding to a subgraph $F$ of~$G$; each edge in $F^*$ is the dual of a unique edge in~$F$.  In particular, we have the identity $(G\setminus F)^* = G^* \setminus F^*$.
 Further, we may sometimes use~$D$ to refer to an edge set or the subgraph~$F = (V, D)$,
 but it should be clear which we mean from context.
 
@@ -556,7 +559,11 @@ but it should be clear which we mean from context.
 Two paths~$p$ and~$q$ in $\Sigma$ are \EMPH{homotopic} if one can be continuously deformed into the other without changing their endpoints.
 More formally, a \EMPH{homotopy} between~$p$ and~$q$ is a continuous map $h\colon {[0,1]\times [0,1] \to \Sigma}$ such that $h(0,\cdot) = p$, $h(1,\cdot) = q$, $h(\cdot, 0)=p(0)=q(0)$, and $h(\cdot,1)=p(1)=q(1)$.  Homotopy defines an equivalence relation over the set of paths with any fixed pair of endpoints.
 
-Similarly, two cycles $\alpha$ and $\beta$ in $\Sigma$ are \EMPH{freely homotopic} if one can be continuously deformed into the other.  More formally, a free homotopy between~$\alpha$ and~$\beta$ is a continuous map $h\colon {[0,1]\times S^1 \to \Sigma}$ such that $h(0,\cdot) = \alpha$ and $h(1,\cdot) = \beta$.  Free homotopy defines an equivalence relation over the set of cycles in~$\Sigma$.  We omit the word ”free” when it is clear from context.
+Similarly, two cycles $\alpha$ and $\beta$ in $\Sigma$ are \EMPH{freely homotopic} if one can be
+continuously deformed into the other.  More formally, a free homotopy between~$\alpha$ and~$\beta$
+is a continuous map $h\colon {[0,1]\times S^1 \to \Sigma}$ such that $h(0,\cdot) = \alpha$ and
+$h(1,\cdot) = \beta$.  Free homotopy defines an equivalence relation over the set of cycles
+in~$\Sigma$.  We omit the word ``free'' when it is clear from context.
 
 %
 %The set of homotopy classes of loops in~$\Sigma$ with basepoint~$x_0$ defines a group~$\pi_1(\Sigma,x_0)$ under concatenation, called the \EMPH{fundamental group} of~$\Sigma$. (For all basepoints~$x_0$ and~$x_1$, the groups~$\pi_1(\Sigma,x_0)$ and~$\pi_1(\Sigma,x_1)$ are isomorphic.)
@@ -592,7 +599,7 @@ The rank $\beta$ of the first homology group is called the first \emph{Betti num
 \end{figure}
 
 
-\subsection{Duality between Cuts and Even Subgraphs}
+\subsection{Duality between cuts and even subgraphs}
 \label{SS:duality}
 
 
@@ -641,16 +648,28 @@ Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\
 \section{Characterizing Homology}
 \label{S:tree-cotree}
 
-Throughout the paper, we fix an \EMPH{undirected} directed graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundary cycles.
+Throughout the paper, we fix an \EMPH{undirected} graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b$ boundary cycles.
 %When considering undirected graphs, we assume the weight function is symmetric.
 Except where explicitly indicated otherwise, we assume without loss of generality  that the underlying surface $\Sigma$ has non-empty boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
 
-In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}; we include the details here because we are unaware of a detailed description elsewhere in the literature.  All results in this section extend without modification to nonorientable surfaces.
+In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.
+%we include the details here because we are unaware of a detailed description elsewhere in the literature.
+\note{Kyle: So, there was a claim about literature that isn't true anymore thanks to Cora, Erin,
+Amir, and I.
+We give full details for the homology signatures via tree-coforest decompositions (but without the
+nice figures) in our JoCG paper on homology bases.
+I've amended the motivation to say the preliminary works were the first to give these details.}
+We give these details here, because as far as we are aware, no detailed description appears
+elsewhere in the literature for the first method and a preliminary version of the current
+work~\cite{en-mcsnc-11} was the first detailed description of the second method.
+See also Chambers~\etal~\cite{bcfn-mchbs-17} for an alternative description of the second method.
+All results in this section extend without modification to nonorientable surfaces.
+
 
 Both methods characterize the homology class of any even subgraph $H$ using a vector of~$\beta$ bits.
 The vectors are computed using a one of two natural generalizations of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
 In the first method, the vector is based on the crossings between a cycle decomposition of~$H$ and a set of~$\beta$ primal arcs.
-By carefully selecting these arcs, we can bound on the number of times any~$\Z_2$-minimal even subgraph can cross any of these arcs; this bound is necessary for the algorithm given in Section~\ref{sec:crossing}.
+By carefully selecting these arcs, we can bound the number of times any~$\Z_2$-minimal even subgraph can cross any of these arcs; this bound is necessary for the algorithm given in Section~\ref{sec:crossing}.
 In the second method, the vector is based on the crossings between~$H$ and a set of~$\beta$ \emph{dual} arcs.
 The second method is somewhat easier to describe and implement than the first, so we use the second method in the algorithm given in Section~\ref{sec:homcover}.
 
@@ -698,7 +717,8 @@ Every boundary subgraph is the symmetric difference of facial cycles.  Any non-c
 \end{proof}
 
 \begin{lemma}
-We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of arcs, in $O(\beta)$ time per edge.
+We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of
+arcs, in $O(\beta)$ time per edge of the subgraph.
 \end{lemma}
 
 \begin{proof}
@@ -722,7 +742,10 @@ Exchange arguments by Erickson and Whittlesey \cite{ew-gohhg-05} and Colin de Ve
 
 Our second method associates a vector of $\beta$ bits with each edge $e$, called the \EMPH{signature} of~$e$; the homology class of any even subgraph is characterized by the bit-wise exclusive-or of the signatures of its edges.
 
-Again, our construction is based on one of two natural generalizations of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary; the other generalization is used for computing crossing parity vectors as described above and is used in Section \ref{sec:homcover}.
+Again, our construction is based on one of two natural generalizations of tree-cotree
+decompositions~\cite{e-dgteg-03} to surfaces with boundary; the other generalization is used for
+computing crossing parity vectors as described above.
+%and is used in Section \ref{sec:crossing}.
 We define a \EMPH{tree-coforest decomposition} of $G$ to be any partition $(T, L, F)$ of the edges of $G$ into three edge-disjoint subgraphs with the following properties:
 \begin{itemize}\itemsep0pt
 \item $T$ is a spanning tree of $G$.
@@ -766,6 +789,9 @@ Let $H$ be a boundary subgraph of $G$.  Then by definition, $H$ is the boundary 
 Conversely, suppose $H$ crosses each arc $\dualarc_i$ an even number of times, so $[H]=0$.  Let $x$ and $y$ be two intersection points between $H$ and some arc $\dualarc_i$, and let $\dualarc_i[x,y]$ be the subpath of $\dualarc_i$ between those two points.  Replacing tiny segments of $H$ through~$x$ and~$y$ with two copies of $\dualarc_i[x,y]$ does not change the homology class of $H$, but does reduce the number of intersection points between $H$ and $\dualarc_i$.  It follows by induction that~$H$ is homologous to another even graph $H'$ that does not intersect any path~$\dualarc_i$ at all.  This even graph lies entirely within the disk $\Sigma\setminus \bigcup_i\dualarc_i$, and is therefore null-homologous.
 \end{proof}
 
+\note{Kyle: Just to make sure.
+Is anybody going to have a problem with our shortcuts following edges of $G^*$ instead of $G$?
+This bit of weirdness was my main motivation for writing a new proof in~\cite{bcfn-mchbs-17}.}
 
 The following corollaries are now immediate.
 
