@@ -1198,8 +1198,9 @@ Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} show that this circulation pr
 \label{sec:global}
 
 Finally, we describe our algorithm to compute \emph{global} minimum cuts in surface-embedded graphs, where no source and target vertices are specified in advance.  
-Unlike previous sections, we assume that the underlying surface of the input graph does \emph{not}
-have boundary, because filling in any boundaries with disks does not change the minimum cut.
+Unlike previous sections, we begin our exposition assuming that the underlying surface of the input
+graph does \emph{not} have boundary, because filling in any boundaries with disks does not change
+the minimum cut.
 We also assume without loss of generality that no edge of the input graph has the same face on both
 sides; we can enforce this assumption by adding zero-weight edges if necessary.
 
@@ -1280,8 +1281,8 @@ In Section \ref{sec:global_contractible}, we describe an algorithm that computes
 \subsection{Contractible}
 \label{sec:global_contractible}
 
-First we consider the case where some minimum weight separating subgraph $\minSS$ is contractible.  
-We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.  Recall that an arc or cycle is \emph{tight} if it has minimum weight among all arcs or cycles in its homotopy class.
+First we consider the case where some minimum-weight separating subgraph $\minSS$ is contractible.  
+We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.  Recall that an arc or cycle is \emph{tight} if it has minimum-weight among all arcs or cycles in its homotopy class.
 
 \begin{lemma}[Cabello~\cite{c-fscss-10}]
 \label{lem:disjoint-tight-arc}
@@ -1312,7 +1313,7 @@ However, the resulting closed walk $W$ might traverse some edges of~$G$ more tha
 Our algorithm closely follows the algorithm of Cabello \etal~\cite{cdem-fotc-10}, but with modifications to ensure that the resulting walk traverses at least one edge an odd number of times.
 
 We use the slicing operation ($\snip$) along tight cycles and arcs in~$G$.  The following lemma
-implies it is safe for our algorithm to find minimum-weight separating subgraphs in snipped copies
+implies it is safe for our algorithm to find minimum-weight separating subgraphs in sliced copies
 of~$\Sigma$.
 
 \begin{lemma}
@@ -1475,15 +1476,15 @@ $G$ does not cross $A$.  (We emphasize that our algorithm does not necessarily c
 
 Now suppose some minimum-weight separating subgraph $\minSS$ is non-contractible.  At a high level,
 our algorithm for this case computes a set $F$ of faces, such that some minimum-weight separating
-subgraph of $G$ separates $s^*$ from at least one face in $F$.  (Equivalently, $F$ is a set of
+subgraph of $G$ separates $s^*$ from at least one face in $F$.  (Equivalently, $F^*$ is a set of
 vertices of $G^*$, such that the global minimum cut in $G^*$ is an $(s,t)$-cut for some $t\in
-P$.)  Then for each face in~$F$, we compute a minimum-weight subgraph separating $s^*$ from that
+F^*$.)  Then for each face in~$F$, we compute a minimum-weight subgraph separating $s^*$ from that
 face using one of our earlier algorithms.
 
 Throughout this section, we assume without loss of generality that every edge of $G$ lies on the boundary of two distinct faces of $G$.  We can enforce this assumption if necessary by adding $O(n)$ infinite-weight edges to $G$.
 
 The following lemma can be seen as the main technical take-away from this section.
-After its apparence in the conference version of this section~\cite{efn-gmcse-12}, it was
+After its appearance in a preliminary version of our work~\cite{efn-gmcse-12}, it was
 generalized by Borradaile \etal~\cite{benw-amcnt-16} for their construction of a minimum $(s,t)$-cut
 oracle for surface embedded graphs.
 
