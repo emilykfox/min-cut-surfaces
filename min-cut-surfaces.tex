@@ -110,7 +110,7 @@ Erin W. Chambers%
 	\thanks{Department of Computer Science,
 	Saint Louis University;
 	\url{erin.chambers@slu.edu}.
-	Supported in part by NSF grants CCF-1054779, IIS-1319573, and DMS-0528086.
+	Supported in part by NSF grants CCF-1054779, IIS-1319573, and CCF-1614562.
 	Portions of this work were done while this author was a student at the University of Illinois at Urbana-Champaign.}
 %
 \and
@@ -474,9 +474,8 @@ Every combinatorial surface with boundary can be obtained from a combinatorial s
 We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may traverse the same vertex or edge more than once.
 
 An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be continuously and
-infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle
-\cite{cex-dwsp-15,aaet-rwsp-17}.
-\note{Was Chang \etal\ originally cited for the definition or just as related work?}
+infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle; we note that algorithms to detect if a cycle is weakly simple has been studied extensively of late~\cite{cex-dwsp-15,aaet-rwsp-17}.
+%\note{Was Chang \etal\ originally cited for the definition or just as related work?}
 Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses} $\beta$.
 
 An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.
@@ -654,15 +653,11 @@ Except where explicitly indicated otherwise, we assume without loss of generalit
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.
 %we include the details here because we are unaware of a detailed description elsewhere in the literature.
-\note{Kyle: So, there was a claim about literature that isn't true anymore thanks to Cora, Erin,
-Amir, and I.
-We give full details for the homology signatures via tree-coforest decompositions (but without the
-nice figures) in our JoCG paper on homology bases.
-I've amended the motivation to say the preliminary works were the first to give these details.}
-We give these details here, because as far as we are aware, no detailed description appears
-elsewhere in the literature for the first method and a preliminary version of the current
-work~\cite{en-mcsnc-11} was the first detailed description of the second method.
-See also Chambers~\etal~\cite{bcfn-mchbs-17} for an alternative description of the second method.
+%\note{Kyle: So, there was a claim about literature that isn't true anymore thanks to Cora, Erin, Amir, and I.We give full details for the homology signatures via tree-coforest decompositions (but without thenice figures) in our JoCG paper on homology bases.I've amended the motivation to say the preliminary works were the first to give these details.}
+We give these full details here completeness, and because as far as we are aware, no detailed description appears
+elsewhere in the literature for the first method.  We note that a preliminary version of the current
+work~\cite{en-mcsnc-11} was the first detailed description of the second method;
+see also Chambers~\etal~\cite{bcfn-mchbs-17} for an alternative description of the second method.
 All results in this section extend without modification to nonorientable surfaces.
 
 
@@ -789,9 +784,10 @@ Let $H$ be a boundary subgraph of $G$.  Then by definition, $H$ is the boundary 
 Conversely, suppose $H$ crosses each arc $\dualarc_i$ an even number of times, so $[H]=0$.  Let $x$ and $y$ be two intersection points between $H$ and some arc $\dualarc_i$, and let $\dualarc_i[x,y]$ be the subpath of $\dualarc_i$ between those two points.  Replacing tiny segments of $H$ through~$x$ and~$y$ with two copies of $\dualarc_i[x,y]$ does not change the homology class of $H$, but does reduce the number of intersection points between $H$ and $\dualarc_i$.  It follows by induction that~$H$ is homologous to another even graph $H'$ that does not intersect any path~$\dualarc_i$ at all.  This even graph lies entirely within the disk $\Sigma\setminus \bigcup_i\dualarc_i$, and is therefore null-homologous.
 \end{proof}
 
-\note{Kyle: Just to make sure.
-Is anybody going to have a problem with our shortcuts following edges of $G^*$ instead of $G$?
-This bit of weirdness was my main motivation for writing a new proof in~\cite{bcfn-mchbs-17}.}
+%\note{Kyle: Just to make sure.
+%Is anybody going to have a problem with our shortcuts following edges of $G^*$ instead of $G$?
+%This bit of weirdness was my main motivation for writing a new proof in~\cite{bcfn-mchbs-17}.}
+%\note{Erin: I'm ok with it!  We can cite that if you want, I guess?}
 
 The following corollaries are now immediate.
 
@@ -1035,13 +1031,14 @@ Now let $(w,h')$ be the last vertex along $(\cycle,h)$ that is also a vertex of 
 We emphasize that the modified cycle $\cycle'$ may intersect~$\sigma$ arbitrarily many times; however, all such intersections lift to intersections between $(\cycle', h)$ and lifts of $\sigma$ other than $(\sigma, 0)$.
 
 Our algorithm uses a generalization of Klein's  multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
-\note{Kyle: I changed to the deterministic running time for MSSP and added a short discussion on the
-randomized alternative.
-Please double check my math!
-In particular, the originally claimed min cut running time of \(O(16^g g^2 n \log n)\) seemed too
-low, because \(8^\beta = \Theta(8^{2g}) = \Theta(64^g)\).
-I think the deterministic time should be \(O(256^g g^3 n \log n)\) and the randomized time should
-have been \(O(64^g g^2 n \log n)\).}
+%\note{Kyle: I changed to the deterministic running time for MSSP and added a short discussion on the
+%randomized alternative.
+%Please double check my math!
+%In particular, the originally claimed min cut running time of \(O(16^g g^2 n \log n)\) seemed too
+%low, because \(8^\beta = \Theta(8^{2g}) = \Theta(64^g)\).
+%I think the deterministic time should be \(O(256^g g^3 n \log n)\) and the randomized time should
+%have been \(O(64^g g^2 n \log n)\).}
+%\note{Erin: Looks good to me!  Jeff and Amir, you might also want to check in next round of revision.}
 
 \begin{lemma}[Erickson \etal~\cite{efl-hmcpf-18}]
 \label{lem:multishort}
@@ -1641,7 +1638,7 @@ We can compute a global minimum cut in $G$ in either $g^{O(g)} n \log \log n$ ti
 %case of unit capacities is open.
 
 \paragraph{Acknowledgments}
-The authors would like to thank Chandra Chekuri and Aparna Sundar for helpful discussions.  \note{Éric? Sergio? Cora? David? Anyone else?}
+The authors would like to thank Chandra Chekuri and Aparna Sundar for helpful discussions on some of the preliminary work included here. % \note{Éric? Sergio? Cora? David? Anyone else?} \note{Erin: Just taking these out, but feel free to re-add!  I had not spoken to any of these people about the paper I was on, and no one added, but we can re-include if you want when revising next round.}
 We would also like to thank the anonymous reviewers of our earlier extended abstracts \cite{cen-mcshc-09, en-mcsnc-11, efn-gmcse-12} for many helpful comments and suggestions.
 
 
