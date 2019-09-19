@@ -147,8 +147,8 @@ undirected surface-embedded graphs.
 Given an edge-weighted undirected graph $G$ with $n$ vertices embedded on an orientable surface of
 genus $g$, our algorithms can solve either problem in $g^{O(g)} n \log \log n$ or $2^{O(g)} n \log
 n$ time, whichever is better.
-When $g$ is a constant, our algorithms match the best running times known for computing minimum cuts
-in planar graphs.
+When $g$ is a constant, our $g^{O(g)} n \log \log n$ time algorithms match the best running times
+known for computing minimum cuts in planar graphs.
 
 Our algorithms for minimum cuts rely on reductions to the problem of finding a minimum-weight
 subgraph in a given \(\Z_2\)-homology class, and we give efficient algorithms for this latter
@@ -156,7 +156,8 @@ problem as well.
 If $G$ is embedded on a surface with $b$ boundary components, these algorithms run in $(g + b)^{O(g
 + b)} n \log \log n$ and $2^{O(g + b)} n \log n$ time.
 We also prove that finding a minimum-weight subgraph homologous to a single input cycle is NP-hard,
-showing it is likely impossible to improve upon the exponential dependencies on $g$.
+showing it is likely impossible to improve upon the exponential dependencies on $g$ for this latter
+problem.
 \end{abstract}
 
 %
@@ -228,9 +229,9 @@ Before describing our results in further detail, we first review several related
 %\end{itemize}
 %\end{TODO}
 
-\subsection{Past Results}
+\subsection{Past results}
 
-\subsubsection*{Minimum Cuts in Planar Graphs}
+\subsubsection*{Minimum cuts in planar graphs}
 
 For any two vertices $s$ and~$t$ in a graph $G$, an \EMPH{$(s,t)$-cut} is a subset of the edges of $G$ that intersects every path from $s$ to $t$.  A \emph{minimum} $(s,t)$-cut is an $(s,t)$-cut with the smallest number of edges, or with minimum total weight if the edges of $G$ are weighted.
 
@@ -260,7 +261,7 @@ on planarity; their algorithm runs in~$O(n \log^2 n)$ time.  Their algorithm was
 \emph{directed} planar graphs \cite{mnnw-mdpgo-18},  using techniques reported in a preliminary
 version of the current paper \cite{en-mcsnc-11}, specifically, the $\Z_2$-homology covers described in Section \ref{sec:homcover}.
 
-\subsubsection*{Generalizations of Planar Graphs}
+\subsubsection*{Generalizations of planar graphs}
 
 Surprisingly little is known about the complexity of computing maximum flows or minimum cuts in generalizations of planar graphs.  In particular, we know of no previous algorithm to compute minimum cuts in non-planar graphs that does not first compute a maximum flow.
 
@@ -318,7 +319,7 @@ Most interesting variants of homology localization are NP-hard.  Chambers \etal~
 
 On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on a surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
 
-\subsection{New Results and Organization}
+\subsection{New results and organization}
 
 In Section \ref{S:tree-cotree}, we describe two techniques to preprocess a graph on a surface with boundary, so that the homology class of any subgraph can be computed quickly.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.  In particular, we describe how to construct a \emph{system of arcs}---a collection of $O(g+b)$ boundary-to-boundary paths that cut the surface into a disk---in $O((g+b)n)$ time.  This generalization is essential for our algorithms, as our dual homology characterization of minimum $(s,t)$-cuts removes the dual faces $s^*$ and $t^*$, leaving a surface with two boundary components.
 
@@ -1610,7 +1611,7 @@ There is a~$2^{O(g)} n \log n$-time algorithm that computes a minimum-weight sep
 %One of the homology classes contains~$H$, so the algorithm will eventually find the minimum weight separating subgraph assuming every minimum weight separating subgraph can be decomposed into non-simple contractible cycles.
 %\end{proof}
 
-\subsection{Summing Up}
+\subsection{Summing up}
 
 Finally, to compute the minimum-weight separating subgraph in $G$, we run both  algorithms described in Lemmas~\ref{lem:contractible-alg} and~\ref{lem:global_split-alg}.  If either algorithm returns nothing, the other algorithm returns a minimum-weight separating subgraph of $G$; otherwise, both algorithms return non-empty separating subgraphs of $G$, and the smaller of those two subgraphs is a minimum-weight separating subgraph of $G$.  We conclude:
 
