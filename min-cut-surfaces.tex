@@ -1,15 +1,15 @@
 %!TEX TS-program = pdflatex
 %!TEX encoding = UTF-8 Unicode
 %!TEX spellcheck = English (Aspell)
-\documentclass[11pt,twoside]{article}
+\documentclass[letterpaper,review]{siamart190516}
 
-\usepackage{jeffe,graphicx,hyperref}
+\usepackage{jeffe,graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage[margin=1in]{geometry}
 \usepackage{marvosym}
 \usepackage{cite}
 \usepackage{verbatim}
-\usepackage[cmyk,dvipsnames]{xcolor}
+%\usepackage[cmyk,dvipsnames]{xcolor}
 
 %-----------------------------------------------------------------------
 %  These packages are purely cosmetic.
@@ -83,17 +83,16 @@
 \def\fakeparagraph#1{\par\medskip\noindent\textbf{#1}}
 
 
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{corollary}[theorem]{Corollary}
+%\newtheorem{lemma}[theorem]{Lemma}
 
-\begin{document}
 
 \pagestyle{myheadings}
 \markboth{Minimum cuts in surface graphs}
 		 {Erin W. Chambers, Jeff Erickson, Kyle Fox, and Amir Nayyeri}
 
-\begin{titlepage}
+%\begin{titlepage}
 
 \title{Minimum Cuts in Surface Graphs%
 \thanks{
@@ -138,8 +137,9 @@ Amir Nayyeri%
 	Portions of this work were done while this author was a student at the University of Illinois at Urbana-Champaign.}
 }
 
-\DRAFT
+%\DRAFT
 
+\begin{document}
 \maketitle
 \begin{abstract}
 We describe algorithms to efficiently compute minimum $(s,t)$-cuts and global minimum cuts of
@@ -175,9 +175,9 @@ problem.
 %
 %\noindent
 
-\thispagestyle{empty}
-\setcounter{page}{0}
-\end{titlepage}
+%\thispagestyle{empty}
+%\setcounter{page}{0}
+%\end{titlepage}
 
 
 % ===============================================================================================
@@ -1644,7 +1644,7 @@ We would also like to thank the anonymous reviewers of our earlier extended abst
 
 
 % ===============================================================================================
-\bibliographystyle{bib/newuser}
+\bibliographystyle{siamplain}
 \bibliography{bib/topology,bib/data-structures,bib/optimization,bib/other}
 
 
