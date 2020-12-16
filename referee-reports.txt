@@ -1,0 +1,162 @@
+
+
+Referee #1 (Remarks to the Author): 
+
+The paper in question provides *the* correct way of thinking about minimum (s,t)-cut and minimum (global) cuts in graphs embedded on orientable surfaces. The authors elegantly reduce the problem to (variants of) minimum even subgraph in given a homology class and solve the latter. The final algorithms have either running time bound 2^O(g log g) n log log n or 2^O(g) n log n. 
+
+On the positive side, I think the paper treats a very central problem --- minimum (s,t) cut and minimum global cut --- heavily investigated both in general graphs and in planar graphs. Another big asset of the paper is its outstanding elegancy: one feels that the Z_2-homology point of view is *the* correct way of lifting algorithms for cuts from planar graphs to bounded genus graphs. This elegancy led to simplicity of the algorithms and the arguments, which in my opinion should not be held against the paper. Finally, the paper is very very well written. 
+
+On the negative side, the results do not seem like the "last word" of the problem; it is tempting to argue that the final running time bound should be like 2^O(g) * best asymptotics in planar graphs (currently n log log n). The techniques of this paper stop short of proving that. 
+
+Overall, due to the importance of the problem and elegancy of the provided solution I recommend acceptance at SICOMP. I have only a few very minor comments to the presentation, listed below. 
+
+214: Definition of an arc as a walk. Previously, arc on a surface was disallowed to contain internal vertices on boundaries. Is here an arc as a walk disallowed to contain vertices on the boundary as internal vertices? I think not, you consider such an arc as bouncing from the boundary without really touching it, but I think it requires an explicit comment. 
+267: "for example, every separating cycle is a boundary subgraph". This is true only if the surface has no boundaries to start from, isn't it? 
+302: *for* completeness 
+Page 9, footnote 2: I think you can only assume g = O(log n), not o(log n); if g = 0.0000000000001 log n, then exponential in g is still a tiny polynomial. 
+462: "be is" -> "be" 
+516: missing dependency on b in the running time bound 
+523: really \beta^O(\beta) in the running time bound? I think the point of this section is to have 2^O(\beta). 
+
+
+==========================================================================================
+
+Referee #2 (Remarks to the Author): 
+
+Report on the paper 
+Minimum cuts in surface graphs 
+by Chambers, Erickson, Fox, and Nayyeri 
+
+In this paper, the authors devise a fast algorithm for finding minimum (s,t)-cuts in graphs that are embedded (or embeddable) in a surface of bounded genus g. The approach is a combination of two ingredients, each of which is the state of the art in a simpler problem, but their extension to the setup in this paper is far from obvious. 
+
+The first ingredient is to consider mod 2 homology classes. There are 2^\beta such classes, where \beta is \Theta(g). The homology is treated in the dual graph where cycles correspond to cuts in the original graph. The novelty here is the second ingredient that one can find the best cycle separator in each homology class using extension of the method used for planar graphs. To use the first part, the authors first construct certain cover of the original embedding, which I find very nice. 
+
+The paper is well written, no spelling or grammar mistakes are apparent. I found one error which occurs on a very basic level and can be cured by changing the definition of a cut. Namely, if one defines cuts as at the bottom of p.1, then some of the results are no longer true, and some others fail if edges of weight 0 are allowed. For example, Lemma 2.2 is such a statement. 
+
+I propose to define a cut as the set of edges with one vertex in a vertex-set S (containing s) and the other vertex in the complement T = V-S (containing t). It would be equally fine (but not necessary) to assume that G<S> and G[T] are both connected since every minimal cut has this property (if all edges have positive weight). 
+
+It would be nice if the authors would add a short discussion what happens on nonorientable surfaces. Does the same approach work, possibly with some additional work, or is that open. 
+
+
+==========================================================================================
+
+Referee #3 (Remarks to the Author): 
+
+This paper presents the first algorithms to compute minimum cuts in graphs of bounded genus in near-linear time: Two algorithms for minimum (s,t)-cuts, and one for global minimum cuts. They vastly generalize known algorithms for the same problem in planar graphs, and unveil and exploit a surprising connection between cuts in embedded graphs on one hand, and homology on the other hand. I think this is excellent material, very appropriate for SIAM J. Computing. 
+
+The manuscript gathers in a unified way the results of three preliminary versions by subsets of the authors of this version, all of which appeared in very good conferences. It also contains some bonus, in particular (I think) an NP-hardness proof (Section 6), two generalizations of the tree-cotree decomposition to surfaces with boundary, and an impressive introduction putting the results in context. The techniques introduced have been reused by other authors in papers subsequent to the conference versions. This is very convincing. The paper is also excellently written in general. 
+
+I have, however, a rather long list of recommendations. Many of them are minor or easy to implement, but a few of my complaints are probably harder to handle. In particular, I often feel uncomfortable with the notion of crossings between two (possibly non-simple) paths in a single graph; the arguments are sometimes a bit too informal to my taste. See below for details. However, I am convinced that the proofs are essentially correct, except for one doubt on l.866 (see below), and if these issues are resolved in a satisfactory way, I will strongly recommend publication. 
+
+
+----------------------------- Main comments for the authors 
+
+32: Could you handle non-orientable surfaces with the same techniques? If so, it would be nice to include these in the statements of your theorems. If not, please explain the main difficulties. 
+
+54: Your definition of (s,t)-cut departs from the standard one. Typically, it is defined as a set of vertices containing s but not t, and its weight is the sum of the weights of the edges with exactly one endpoint in S. Of course, if the weights are positive, minimum (s,t)-cuts under both definitions are the same. I suggest you switch to the standard definition (see my comment on Lemma 2 below), but clarify that you are actually computing minimum (s,t)-cuts also under your definition as well. 
+
+137-138: perhaps add some details. 
+
+207: This assumption is strange and not very nice. I think you are using it at a single place (cf. footnote 2). It would be better to mention where you are using it here, and tell (if true) that your theorems hold regardless of this assumption. 
+
+209: While you're at it, you should probably say a few words about data structures for graph embeddings. 
+
+214: I think the interior of an arc must lie in the interior of the surface. 
+
+279: I have a few problems with this lemma: 
+- With your definition, the dual of an (s,t)-cut is not necessarily even. 
+- Also, on l.284, with your definition, X^* does not necessarily partition the faces of G^* into two disjoint subsets containing s^* and t^* respectively. 
+- You are proving an "iff", but just claim an "if... then". 
+
+310: Define "Z_2-minimal". 
+
+314: Two generalizations of tree-cotree constructions to surfaces with boundary are presented. It is good to have them here. However, I am wondering whether you need two similar subsections to present them; it seems plausible that one construction follows from the other one, or that there is a common generalization. Have you looked at this? 
+
+315: "possibly meeting in the interior of an edge" is not clear. 
+
+327,382: The small computation on the number of leftover edges should be detailed. 
+
+332: Please define the notion of crossing between two paths in G. 
+
+338: Why is the parity of the crossing number independent of the cycle decomposition? If you are using it, perhaps put it in a lemma. 
+
+342: You are stating an "iff", but only prove one direction. 
+
+356: Ref. [71] applies, as such, only to planar graphs. Please explain why it extends to graphs of small genus. 
+
+365-366: You seem to be using the fact that S cuts the surface into a disk, but you haven't proved it. 
+
+385: Perhaps it is useful to mention that alpha_i is weakly simple. What is the meaning of "we can treat each path alpha_i as a simple arc in the abstract surface"? 
+
+411: You defined homology for subgraphs of G, but H' does not lie in G. I am not sure how to solve this problem elegantly. 
+
+419: Perhaps recall that you assume non-empty boundary. 
+
+424: You did not prove it is a disk. 
+
+446: Why -5 and not -6? 
+
+465: It is true, but please justify better why you can assume that sigma crosses each cycle gamma_i at least once. 
+
+466: You could recall that each arc in A is the concatenation of two shortest paths possibly meeting in the middle of an edge (and, again, clarify what you mean by this). 
+
+470: So you are using the notion of "non-crossing set of loops", not only the notion of "two non-crossing loops" as you define earlier. 
+
+492: Again, you haven't proved that this is a disk. 
+
+499: But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky. 
+
+~500: I think you need each edge of the polygon to represent a shortest path, not an arc. Otherwise, each edge represents essentially the concatenation of two shortest paths, and a cycle of your decomposition may form a bigon with an arc, which you do not encode using the dual triangulation. 
+
+579: Perhaps, for consistency, it would be better to use your perturbation argument (l.455). 
+
+595-600: I found this paragraph confusing. Perhaps mention that [45] has a better running time, but is randomized, and that this lemma substitutes the randomized black-box with a deterministic one, increasing the running time. 
+
+604: This seems weird. You are computing homology covers using the decomposition of Section 3.2, but computing crossings with the decomposition of Section 3.1. It looks correct, but very unnatural! If you cannot fix this in a nicer way, please at least emphasize this, and explain why you choose this route. 
+
+628: (and probably elsewhere): This assumes positive weights, not only nonnegative ones. 
+
+633: Such a lemma should hold, but I am lost here. On l.635, it could be that we have b cycles, each on one boundary component, so Sigma' could still be connected, it seems. 
+
+664: The proofs in this section seem nice and correct, but it is easy to get lost. Please split the proof in separate lemmas, each presenting a single reduction, clearly stated. In particular I would expect a new lemma on l.685, to refer to [90], and on l.689, to introduce what you are going to present. 
+
+668: Again, perhaps check the definition of a cut; its dual should be an even subgraph. 
+
+672: add "with respect to weight function c". 
+
+676: Every non-empty boundary subgraph? 
+
+679: The cut is not necessarily unique. 
+
+711: "strongly" should also appear in the previous lemmas. 
+
+730: You are proving an iff but only state an "if...then". 
+
+785: "note that f1 and f2 may be equal": You assumed not, on l.723. This is also mentioned again on l.818. 
+
+797: Perhaps tell that A is the set of edges of the arcs, rather than the arcs themselves. 
+
+833: "Every edge of H is incident to a white face": I think this is not the case; see your remark on l.831 telling that if H=gamma, then every face of G is black. 
+
+850: This is strange to rely to [41] while you have introduced the tree-cotree decomposition in Section 3. Please try to make the paper more self-contained. 
+
+866: I do not see why Sigma' necessarily contains a cycle that is not separating in Sigma'. Indeed, Sigma' is not a disk, but it could be, eg, an annulus. 
+
+----------------------- Typos and minor comments 
+
+87-88: already mentioned on l.27. 
+110: remove "at most". 
+157: "even" graph is not defined. 
+163: "NP-hard", not "NP-Hard". 
+166: add "(probably)". 
+365: Rephrase as: "Let us define a_i=... for each index i." 
+456: Z should be {\bb Z}. 
+457: "Recall, every" should be "Recall that every". 
+458-459: repeated "that". 
+462: "be is". 
+692: "alternately" should be "alternatively". 
+731: "arbtirary" 
+801: "does not contains" should be "does not contain". 
+Figure 7.2 is not referred to in the text. 
+829: "Recall, subgraph X" should be "Recall that X".
+
