@@ -632,7 +632,7 @@ Now for each edge $e$ that is \emph{not} in the forest $F$ or the boundary subgr
 Finally, for each edge $e_i\in L$, let $\sigma_i$ and $\tau_i$ denote the unique directed paths in $F$ from the boundary of~$G$ to the endpoints of $e_i$, and let $S := \set{\sigma\!_1, \dots, \sigma\!_\beta, \allowbreak \tau_1, \dots, \tau_\beta}$.  By construction of $F$, every element of~$S$ is a (possibly empty) shortest directed path.  \modified{Also, we can easily compute each path in $S$ in $O(n)$ time. 
 Now, for $1\leq i \leq \beta$, let $a_i = \sigma_i \cdot e_i \cdot \rev(\tau_i)$, and let $A := \set{a_1, a_2, \dots, a_\beta}$ be the final greedy system of arcs.  
 It follows that every cycle that does not cross $A$ can be written as the sum of the faces in $C^*$.
-Therefore, every non-null-homologous cycle in $G$ must intersect at least one arc in $A$ and so one path in $S$.}
+Therefore, every non-null-homologous cycle in $G$ must intersect at least one arc in $A$ and so one path in $S$.} \anote{Perhaps, it is better to write a lemma and show that cutting $G$ along $A$ would give us a topological disk.}
 
 Exchange arguments by Erickson and Whittlesey \cite{ew-gohhg-05} and Colin de Verdière \cite{c-scgsp-10} both imply that every arc in the greedy system is tight, and moreover that the greedy system of arcs has minimum total length among all systems of arcs.\footnote{Specifically, Colin de Verdière’s argument implies that the greedy system of arcs is a minimum-length basis in $G$ for the first relative homology group $H_1(\Sigma, \partial\Sigma)$ \cite[Section 3]{c-scgsp-10}.  Thus, each arc in the greedy system is as short as possible in its \emph{relative homology} class.}
 
@@ -1090,8 +1090,8 @@ Consider the \emph{residual weight} function $c_H\colon E\to \Real$ defined by s
     H \oplus \textsc{MinHom}(\varnothing, c_H).
 \)
 
-\rnote{676: Every non-empty boundary subgraph?}
-Every boundary subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the weight function $c_H$.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost is empty.\rnote{The cut is not necessarily unique. }
+\rnote{676: Every non-empty boundary subgraph?}\anote{I think we are viewing $(\emptyset, V)$ as a cut here.}
+Every boundary subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the weight function $c_H$.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost \sout{is empty}\modified{has zero cost}.
 
 In fact, our reduction is reversible.  Suppose we want to find the minimum cut in an embedded graph $G = (V, E)$ with respect to the cost function $c\colon E\to \Real$, where every face of $G$ is incident to an even number of edges with negative cost.  Let $H = \set{{e\in E}\mid {c(e)<0}}$ be the subgraph of negative-cost edges, and let $X$ denote the (possibly empty) set of edges in the minimum cut of $G$.  Consider the \emph{absolute cost} function $\abs{c}\colon E^*\to \Real$ defined as $\abs{c}(e^*) = \abs{c(e)}$.  Then $(H\oplus X)^*$ is the even subgraph of $G^*$ of minimum absolute cost that is homologous to $H^*$.
 \end{proof}
@@ -1099,15 +1099,28 @@ In fact, our reduction is reversible.  Suppose we want to find the minimum cut i
 \rnote{
 The proofs in this section seem nice and correct, but it is easy to get lost. Please split the proof in separate lemmas, each presenting a single reduction, clearly stated. In particular I would expect a new lemma on l.685, to refer to [90], and on l.689, to introduce what you are going to present. 
 }
-We now prove that this special case of the minimum cut problem is {NP}-hard, by  reduction from \textsc{MinCut} in graphs with negative edges.  This problem includes \textsc{MaxCut} as a special case (when every edge has negative cost), but many other special cases are also {NP}-hard~\cite{mrr-edofm-03}.  The output of our reduction is a simple triangulation; the reduction can be simplified if graphs with loops and parallel edges are allowed.
+\color{blue}
+We now prove that this special case of the minimum cut problem is {NP}-hard, by  reduction from \textsc{MinCut} in graphs with negative edges.  This problem includes \textsc{MaxCut} as a special case (when every edge has negative cost), but many other special cases are also {NP}-hard~\cite{mrr-edofm-03}.
 
-Suppose we are given an \emph{arbitrary} graph $G = (V,E)$ with $n$ vertices and an \emph{arbitrary} cost function $c\colon E\to \Real$.  We begin by computing a cellular embedding of $G$ on some orientable surface, by imposing an arbitrary cyclic order on the edges incident to each vertex.
-%\note{kylejfox: Won't picking an arbitrary rotation system give us an orientable embedding?}
+\begin{lemma}[McCormick \etal~\cite{mrr-edofm-03}]
+\textsc{MinCut} is NP-hard.
+\end{lemma}
+
+The output of our reduction is a simple triangulation; the reduction can be simplified if graphs with loops and parallel edges are allowed.
+
+\begin{lemma}
+Computing a minimum-weight cut in an embedded edge-weighted graph $G$ whose negative-weight edges are dual to an even subgraph in $G^*$
+is NP-hard.
+\end{lemma}
+\begin{proof}
+Let $n$ be the number of vertices of $G$ and $c\colon E\to \Real$ be the edge weight function.  We begin by computing a cellular embedding of $G$ on some orientable surface, by imposing an arbitrary cyclic order on the edges incident to each vertex.
 (We can compute the maximum-genus orientable cellular embedding  in polynomial time~\cite{fgm-fmggi-88}.)  Alternatively, we can add zero-length edges to make the graph complete and then use classical results of Ringel, Youngs, and others \cite{ry-shmcp-68,r-mct-74} to compute a minimum-genus orientable embedding of $K_n$ in polynomial time.  Once we have an embedding, we add vertices and zero-cost edges to obtain a triangulation.
 
 Let $C$ be the sum of the absolute values of the edge costs: $C:= \sum_e \abs{c(e)}$.
 A \EMPH{cocycle} of embedded graph $G$ is a subset of edges forming a cycle in the dual $G^*$.
-We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{fig:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
+We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  Therefore, in the end, the set of negative-weight edges are dual to an even subgraph.
+
+We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{fig:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
 
 \begin{figure}[hbt]
 \centering\includegraphics[scale=0.4]{Fig/addhandle3}
@@ -1116,6 +1129,23 @@ We locally modify both the surface and the embedding to transform each negative-
 \end{figure}
 
 Let $G'$ denote the transformed graph and $c'\colon E(G')\to \Real$ its associated cost function.  The minimum cut in $G'$ cannot contain any edge of an endpoint triangle.  Thus, for each edge cocycle, either all six edges cross the cut, or none of them cross the cut.  It follows that the minimum cut in $G'$ corresponds to a cut with equal cost in the original graph $G$.  Conversely, any cut in $G$ can be transformed into a cut in~$G'$ of equal cost.  Thus, computing the minimum cut in $G'$ is equivalent to computing the minimum cut in $G$.
+\end{proof}
+\color{black}
+
+\anote{The gray part is the old version.}
+\color{gray}
+We now prove that this special case of the minimum cut problem is {NP}-hard, by  reduction from \textsc{MinCut} in graphs with negative edges.  This problem includes \textsc{MaxCut} as a special case (when every edge has negative cost), but many other special cases are also {NP}-hard%~\cite{mrr-edofm-03}.  
+The output of our reduction is a simple triangulation; the reduction can be simplified if graphs with loops and parallel edges are allowed.
+\\
+Suppose we are given an \emph{arbitrary} graph $G = (V,E)$ with $n$ vertices and an \emph{arbitrary} cost function $c\colon E\to \Real$.  We begin by computing a cellular embedding of $G$ on some orientable surface, by imposing an arbitrary cyclic order on the edges incident to each vertex.
+(We can compute the maximum-genus orientable cellular embedding  in polynomial time~\cite{fgm-fmggi-88}.)  Alternatively, we can add zero-length edges to make the graph complete and then use classical results of Ringel, Youngs, and others \cite{ry-shmcp-68,r-mct-74} to compute a minimum-genus orientable embedding of $K_n$ in polynomial time.  Once we have an embedding, we add vertices and zero-cost edges to obtain a triangulation.
+
+Let $C$ be the sum of the absolute values of the edge costs: $C:= \sum_e \abs{c(e)}$.
+A \EMPH{cocycle} of embedded graph $G$ is a subset of edges forming a cycle in the dual $G^*$.
+We locally modify both the surface and the embedding to transform each negative-weight edge into a cocycle, as follows.  We transform the edges one at a time; after each iteration, the embedding is a simple triangulation.  (Our reduction can be simplified if a simple graph is not required.)  For each edge~$uv$ with $c(uv)<0$, remove $uv$ to create a quadrilateral face.  Triangulate this face as shown in Figure \ref{fig:addhandle}; we call the new faces $uu_1u_2$ and $vv_1v_2$ \emph{endpoint triangles}.  Assign cost $C$ to the edges of the endpoint triangles and cost zero to the other new edges. Glue a new handle to the endpoint triangles, and triangulate the handle with a cycle of six edges, each with cost $c(uv)/6$.  These six edges form a cocycle of cost $c(uv)$, which we call an \emph{edge cocycle}, in the new embedding.  Each iteration adds $5$ vertices and $21$ edges to the graph and increases the genus of the underlying surface by $1$.
+\\
+Let $G'$ denote the transformed graph and $c'\colon E(G')\to \Real$ its associated cost function.  The minimum cut in $G'$ cannot contain any edge of an endpoint triangle.  Thus, for each edge cocycle, either all six edges cross the cut, or none of them cross the cut.  It follows that the minimum cut in $G'$ corresponds to a cut with equal cost in the original graph $G$.  Conversely, any cut in $G$ can be transformed into a cut in~$G'$ of equal cost.  Thus, computing the minimum cut in $G'$ is equivalent to computing the minimum cut in $G$.
+\color{black}
 
 \begin{theorem}
 Given an even subgraph $H$ of an edge-weighted graph $G$ embedded on a surface without boundary, computing the minimum-weight even subgraph homologous to $H$ is strongly {NP}-hard.
