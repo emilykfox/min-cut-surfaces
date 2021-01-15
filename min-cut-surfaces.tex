@@ -87,6 +87,7 @@
 \def\modified#1{\color{blue}#1 \color{black}}
 \def\anote#1{\color{purple}Amir: #1 \color{black}}
 \def\rnote#1{\color{red}Review: #1 \color{black}}
+\def\jnote#1{\textcolor{orange}{Jeff: #1}}
 
 %\newtheorem{theorem}{Theorem}[section]
 %\newtheorem{corollary}[theorem]{Corollary}
@@ -404,7 +405,7 @@ We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose end
 
 An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be continuously and
 infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle; we note that algorithms to detect if a cycle is weakly simple has been studied extensively of late~\cite{cex-dwsp-15,aaet-rwsp-17}.
-Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses} $\beta$.
+Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.  \jnote{Add more careful definition of crossing subpaths, following Amir and Jeff’s paper on non-crossing walks.  That formulation works for us only because (1) arcs have both endpoint on boundary, and (2) neither arcs nor cycles have spurs!}
 
 An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.
 A \EMPH{cycle decomposition} of an even subgraph~$H$ is a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
@@ -595,7 +596,7 @@ Right: The resulting system of arcs.  Compare with Figure \ref{fig:tree-coforest
 \label{fig:forest-cotree}
 \end{figure}
 
-For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ of $\gamma$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements. \rnote{please define the notion of crossing between two paths in $G$? Amir: Also, we need to define 'the number of crossing' (?)}
+For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ of $\gamma$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements. \rnote{please define the notion of crossing between two paths in $G$? Amir: Also, we need to define 'the number of crossing' (?)} \jnote{See my earlier comment in Section 2.  We need a lemma for later: \emph{The greedy system of arcs is a shortest system of arcs.}  See Éric’s homology argument about greedy systems of \emph{loops} in my AMS survey.}
 
 Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; however, the \emph{parity} of the crossing number is independent of the cycle decomposition.  
 \anote{A reviewer has requested a proof that this definition is independent of the choice of the cycle decomposition ... }
@@ -771,17 +772,21 @@ on edges being undirected.
 %\end{lemma}
 
 \begin{proof}
+\jnote{Rewrite exchange argument at the level of arcs, not paths.  Use the earlier lemma that the greedy system of arcs is the \emph{shortest} system of arcs.  So (later) if any of the contracted loops $\ell_i$ in $\Sigma/a_i$ is contractible, then we could shorten $a_i$ to get a shortest system of arcs, contradiction.}
+
 For the sake of argument, we slightly modify the edge weights of $G$ so that $Z_2$-minimal even
 subgraphs under the new weights are also $\Z_2$-minimal under the original edge weights but the
 crossing bound is guaranteed to hold.
+%
 Recall that every arc in $A$ consists of two shortest paths from a forest $F$ of shortest paths.
 Our modification simply adds identical infinitesimal weights $\eps$ to every edge \emph{outside} of
 $F$.
 We claim for any shortest path $\sigma$ contributing to $F$, for any pair of vertices $u$ and $v$
 in $\sigma$, that $\sigma(u, v)$ is the unique shortest path from $u$ to $v$.
 Indeed, any path from $u$ to $v$ that uses an edge outside $F$ must weigh at least $\eps$ more than
-$\sigma(u, v)$, and $F$ is a forest so there are no other paths from $u$ to $v$ using only edges of
-$F$.
+$\sigma(u, v)$, and $F$ is a forest so there are no other paths from $u$ to $v$ using only edges of~$F$.
+
+
 
 Let $H'$ be an arbitrary $\Z_2$-minimal even subgraph homologous to $H$ under the new edge weights.
 Let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H'$.
