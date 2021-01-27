@@ -88,6 +88,7 @@
 \def\anote#1{\color{purple}Amir: #1 \color{black}}
 \def\rnote#1{\color{red}Review: #1 \color{black}}
 \def\jnote#1{\textcolor{orange}{Jeff: #1}}
+\def\knote#1{\textcolor{olive}{Kyle: #1}}
 
 %\newtheorem{theorem}{Theorem}[section]
 %\newtheorem{corollary}[theorem]{Corollary}
@@ -695,6 +696,11 @@ An even subgraph $H$ of $G$ is null-homologous in $\Sigma$ if and only if $[H] =
 \rnote{ 
 You defined homology for subgraphs of $G$, but $H'$ does not lie in $G$. I am not sure how to solve this problem elegantly.
 }
+\knote{
+Reprove using a more combinatorial argument:
+The fundamental cycles form a homology basis, and an even subgraph's signature is equal to that of
+the homologous subset of fundamental cycles.
+}
 
 Let $H$ be a boundary subgraph of $G$.  Then by definition, $H$ is the boundary of the union of a subset~$Y$ of faces of $G$.  The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.  It follows immediately that $[H] = [\bigoplus_{f\in Y} \partial f] = \bigoplus_{f\in Y} [\partial f] = 0$.
 
@@ -773,6 +779,10 @@ on edges being undirected.
 
 \begin{proof}
 \jnote{Rewrite exchange argument at the level of arcs, not paths.  Use the earlier lemma that the greedy system of arcs is the \emph{shortest} system of arcs.  So (later) if any of the contracted loops $\ell_i$ in $\Sigma/a_i$ is contractible, then we could shorten $a_i$ to get a shortest system of arcs, contradiction.}
+\knote{At the end of the last meeting, we agreed it would be easier to use the following argument:
+If you cross an arc too many times, then you need to \emph{touch} one of its shortest paths too many
+times.
+Now use the original argument for shortest paths.}
 
 For the sake of argument, we slightly modify the edge weights of $G$ so that $Z_2$-minimal even
 subgraphs under the new weights are also $\Z_2$-minimal under the original edge weights but the
