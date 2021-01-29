@@ -784,9 +784,12 @@ If you cross an arc too many times, then you need to \emph{touch} one of its sho
 times.
 Now use the original argument for shortest paths.}
 
-For the sake of argument, we slightly modify the edge weights of $G$ so that $Z_2$-minimal even
-subgraphs under the new weights are also $\Z_2$-minimal under the original edge weights but the
-crossing bound is guaranteed to hold.
+For the sake of argument, we slightly modify the edge weights of $G$.
+\knote{Changed this description of the perturbation scheme's guarantees.}
+Every \(Z_2\)-minimal even subgraph under the modified weights is \(Z_2\)-minimal under the original
+weights as well;
+however, every \(Z_2\)-minimal even subgraph under the modified weights also has a bounded number of
+crossings with each arc of \(A\) as specified by the lemma.
 %
 Recall that every arc in $A$ consists of two shortest paths from a forest $F$ of shortest paths.
 Our modification simply adds identical infinitesimal weights $\eps$ to every edge \emph{outside} of
