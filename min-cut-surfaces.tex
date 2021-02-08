@@ -1331,6 +1331,10 @@ to be contractible.
 There exists an $O(n \log \log n)$-time algorithm that computes a minimum-weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
 
+\knote{Seriously, me, rewrite this proof.
+In short, \(s^*\) lies outside the disk, so any cycle in the disk necessarily separates \(s^*\) from
+the interior of the cycle.
+There's no need to compute two cycles.}
 
 \begin{proof}
 
