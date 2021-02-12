@@ -89,6 +89,7 @@
 \def\rnote#1{\color{red}Review: #1 \color{black}}
 \def\jnote#1{\textcolor{orange}{Jeff: #1}}
 \def\knote#1{\textcolor{olive}{Kyle: #1}}
+\def\enote#1{\textcolor{magenta}{Erin: #1}}
 
 %\newtheorem{theorem}{Theorem}[section]
 %\newtheorem{corollary}[theorem]{Corollary}
@@ -287,8 +288,8 @@ Homology is a topological notion of equivalence with nice algebraic properties. 
 
 Most interesting variants of homology localization are NP-hard.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{simple cycle} in a given homology class is {NP}-hard.  Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Recently, Grochaw and Tucker-Foltz \cite{gt-ctugc-18} proved that homology localization in surface graphs, over a sufficiently large finite coefficient ring, is equivalent to Unique Games; in particular, there is no PTAS for \emph{any} finite coefficient ring unless the Unique Games Conjecture is false.
 
-\rnote{137-138: perhaps add some details. }
-On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on a surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
+\rnote{137-138: perhaps add some details. }\anote{I added citations in the and of the last sentence.}
+On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time~\cite{cen-hfcc-12, s-cath-90}.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on a surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
 
 \subsection{New results and organization}
 
@@ -607,9 +608,11 @@ Right: The resulting system of arcs.  Compare with Figure \ref{fig:tree-coforest
 
 For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ of $\gamma$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements. \rnote{please define the notion of crossing between two paths in $G$? Amir: Also, we need to define 'the number of crossing' (?)} \jnote{See my earlier comment in Section 2.  We need a lemma for later: \emph{The greedy system of arcs is a shortest system of arcs.} Or more usefully: \emph{Every arc in the greedy system of arcs is tight (shortest in its homotopy class.} See Éric’s homology argument about greedy systems of \emph{loops} in my AMS survey and in Éric’s ESA 2010 paper.  Argue that our one-shot tree-cotree construction yields the same arcs as Éric’s iterative construction.}
 
-Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; however, the \emph{parity} of the crossing number is independent of the cycle decomposition.  
+Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; \modified{instead, we define}
+\sout{however, the \emph{parity} of the crossing number is independent of the cycle decomposition.} 
 \anote{A reviewer has requested a proof that this definition is independent of the choice of the cycle decomposition ... }
-The \EMPH{crossing parity vector} of any even subgraph $H$ is the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses (any cycle decomposition of) $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
+\enote{Edited this to address reviewer request, and instead justify why it's independent of the cycle decomposition after 3.1}
+the \EMPH{crossing parity vector} of any even subgraph $H$ \modified{with respect to a particular fixed cycle decomposition} to be the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses the cycle decomposition of $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
 
 \begin{lemma}
 Two even subgraphs are $\Z_2$-homologous if and only if their crossing parity vectors (with respect to the same system of arcs) are equal.
@@ -623,6 +626,8 @@ Thus, the crossing parity vector of any boundary subgraph is the zero vector.
 On the other hand, every pair of even subgraphs $H$ and $H'$ satisfies the identity $x(H\oplus H') = x(H) \oplus x(H')$. \anote{(do we need to prove $x(H\oplus H') = x(H) \oplus x(H')$? this seems more general than the fact that the crossing number is independent of the cycle decomposition that one of the reviewers asked to prove?)}
 So, if $x(H\oplus H')$ is the zero vector then  $x(H) = x(H')$.
 \end{proof}
+
+\modified{In fact, the previous lemma implies that since two even subgraphs are $\Z_2$-homologous subgraphs if and only if their crossing parity vectors agree, then the crossing parity vector is in fact independent of the choice of cycle decomposition.}  \enote{Should we say more here, or is it clear? And double check proof of 3.1 above...}
 
 \begin{lemma}
 We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of
@@ -709,10 +714,36 @@ Reprove using a more combinatorial argument:
 The fundamental cycles form a homology basis, and an even subgraph's signature is equal to that of
 the homologous subset of fundamental cycles.
 }
+\knote{Please check new proof.}
 
-Let $H$ be a boundary subgraph of $G$.  Then by definition, $H$ is the boundary of the union of a subset~$Y$ of faces of $G$.  The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.  It follows immediately that $[H] = [\bigoplus_{f\in Y} \partial f] = \bigoplus_{f\in Y} [\partial f] = 0$.
+A proof of the lemma appears in Borradaile~\etal~\cite[Corollary 3.5]{bcfn-mchbs-17}.
+They cite an earlier version~\cite{en-mcsnc-11} of the current paper for the lemma statement, so we
+present a slightly simplified version of their proof for completeness.
+For each edge \(e_i \in L\), let \(\cycle_i\) denote the fundamental cycle obtained by adding
+\(e_i\) to \(T\).
+We claim the set of cycles \(\Set{\cycle_1, \dots, \cycle_\beta}\) form a basis of the first
+homology group;
+precisely, these cycles lie in linearly independent homology classes that span the group.
+Indeed, consider any non-empty subset \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}}\) of these
+cycles, and let \(\cycle_i\) be an arbitrary member of this subset.
+Dual arc \(\alpha_i\) crosses the subset exactly once, at the dual edge \(e^*_i\).
+Therefore, even subgraph \(\bigoplus_{\cycle \in \Gamma} \cycle\) does not bound the union of a
+subset of primal faces/dual vertices.
 
-Conversely, suppose $H$ crosses each arc $\dualarc_i$ an even number of times, so $[H]=0$.  Let $x$ and $y$ be two intersection points between $H$ and some arc $\dualarc_i$, and let $\dualarc_i[x,y]$ be the subpath of $\dualarc_i$ between those two points.  Replacing tiny segments of $H$ through~$x$ and~$y$ with two copies of $\dualarc_i[x,y]$ does not change the homology class of $H$, but does reduce the number of intersection points between $H$ and $\dualarc_i$.  It follows by induction that~$H$ is homologous to another even graph $H'$ that does not intersect any path~$\dualarc_i$ at all.  This even graph lies entirely within the disk $\Sigma\setminus \bigcup_i\dualarc_i$, and is therefore null-homologous.
+Now, let $H$ be an even subgraph of $G$.
+Let \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}} \subseteq \Set{\cycle_1, \dots,
+\cycle_\beta}\) be such that \(\bigoplus_{\cycle \in \Gamma} \cycle\) is homologous to \(H\).
+Then by definition, $H \oplus \bigoplus_{\cycle \in \Gamma} \cycle$ is the boundary of the union of
+a subset~$Y$ of faces of $G$.
+The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.
+It follows immediately that $[H] = [\bigoplus_{\cycle \in \Gamma} \cycle] \oplus [\bigoplus_{f\in Y}
+\partial f] = [\bigoplus_{\cycle \in \Gamma} \cycle] \oplus \bigoplus_{f\in Y} [\partial f] =
+[\bigoplus_{\cycle \in \Gamma} \cycle]$.
+The \(i\)th bit of \([\bigoplus_{\cycle \in \Gamma} \cycle]\) is equal to \(1\) if and only if
+\(\gamma_i \in \Gamma\), because dual arc \(\dualarc_i\) crosses no other member of \(\Set{\cycle_1,
+\dots, \cycle_\beta}\).
+Therefore, \([H] = 0\) if and only if the homologous even subgraph \(\bigoplus_{\cycle \in \Gamma}
+\cycle\) is empty.
 \end{proof}
 
 The following corollaries are now immediate.
