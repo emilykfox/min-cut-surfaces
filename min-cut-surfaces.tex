@@ -388,26 +388,33 @@ Orientable surfaces with~$b$ boundary components are differentiated by their \EM
 
 An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
-An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plane; in particular, in any cellular embedding, each component of the boundary of $\Sigma$ must be covered by a cycle of edges in~$G$.  Euler's formula implies that any cellularly embedded graph with $n$ vertices, $m$ edges, and $f$ faces lies on a surface with Euler characteristic $\chi = n-m+f$, which implies that $m = O(n+g)$ and $f=O(n+g)$
-if the graph is simple.
-We consider only such
-cellular embeddings of genus $g=O(n^{1-\eps})$, so that the overall complexity of the embedding is $O(n)$.
-\modified{Our algorithm is too slow if $g=\Omega(n)$, so we assume that $g=O(n^{1-\eps})$, so the overall complexity of the embedding is always $O(n)$.}
-\rnote{207: This assumption is strange and not very nice. I think you are using it at a single place (cf. footnote 2). It would be better to mention where you are using it here, and tell (if true) that your theorems hold regardless of this assumption.}
+An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plane; in particular, in any cellular embedding, each component of the boundary of $\Sigma$ must be covered by a cycle of edges in~$G$.  
 
-\rnote{209: While you're at it, you should probably say a few words about data structures for graph embeddings.}
-Any cellular embedding on an orientable surface can be encoded combinatorially by a \EMPH{rotation system}, which records the counterclockwise order of edges incident to each vertex.
 We also refer to the complex of vertices, edges, and faces induced by a cellular embedding as a \EMPH{combinatorial surface}.
-Every combinatorial surface with boundary can be obtained from a combinatorial surface without boundary by deleting the interiors of one or more faces.
+Every combinatorial surface with boundary can be obtained from a combinatorial surface without boundary by deleting the interiors of one or more faces.  See Kettner \cite{k-ugpdd-99} for an overview and comparison of several standard data structures for combinatorial surfaces. 
 
-\rnote{214: Definition of an arc as a walk. Previously, arc on a surface was disallowed to contain internal vertices on boundaries. Is here an arc as a walk disallowed to contain vertices on the boundary as internal vertices? I think not, you consider such an arc as bouncing from the boundary without really touching it, but I think it requires an explicit comment. }
+Euler's formula implies that any cellularly embedded graph with $n$ vertices, $m$ edges, and $f$ faces lies on a surface with Euler characteristic $\chi = n-m+f$, which implies that $m = O(n+g)$ and $f=O(n+g)$ if the graph is simple.
+To simplify our presentation, we implicitly assume throughout the paper that $g = O(\log n)$, since otherwise our minimum-cut algorithms are slower than textbook maximum-flow algorithms.  This assumption implies that the overall complexity of an embedding is $O(n)$.
 
-We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may traverse the same vertex or edge more than once.
+We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices, but that is otherwise disjoint from the boundary.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may traverse the same vertex or edge more than once.
+
+\subsection{Perturbations and Crossings}
+
+Our algorithms manipulate cycles and arcs that can share or repeat edges, but that can be perturbed (on the surface) to avoid self-intersections and other degeneracies.
+
+\jnote{Band decompositions/ribbon graphs.  Replace every vertex with a tiny disk and every edge with a narrow ribbon.  This works even if the surface is non-orientable.  Each edge stores a left-to-right ordering of the cycles and arcs traversing the corresponding edge ribbon.  In particular, cycles and walks can only (self-)intersect within vertex regions.  Arcs extend to the boundary of the regions corresponding to their endpoints.  A cycle or arc is weakly simple if it has a simple representation; two cycles, or a cycle and an arc, are weakly disjoint if they have disjoint representations.  This formulation is equivalent to Èric’s cross-metric surface model.}
+
+
+\rnote{209: While you're at it, you should probably say a few words about data structures for graph embeddings.}\jnote{We don’t need to talk about rotation systems.}
+Any cellular embedding on an orientable surface can be encoded combinatorially by a \EMPH{rotation system}, which records the counterclockwise order of edges incident to each vertex.  
+
+%\rnote{214: Definition of an arc as a walk. Previously, arc on a surface was disallowed to contain internal vertices on boundaries. Is here an arc as a walk disallowed to contain vertices on the boundary as internal vertices? I think not, you consider such an arc as bouncing from the boundary without really touching it, but I think it requires an explicit comment. }
 
 An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be continuously and
 infinitesimally perturbed on the underlying 2-manifold $\Sigma$ into a simple path or cycle; we note that algorithms to detect if a cycle is weakly simple has been studied extensively of late~\cite{cex-dwsp-15,aaet-rwsp-17}.
 Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if some arbitrarily small perturbations of $\alpha$ and $\beta$ are disjoint; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.  \jnote{Add more careful definition of crossing subpaths, following Amir and Jeff’s paper on non-crossing walks.  That formulation works for us only because (1) arcs have both endpoint on boundary, and (2) neither arcs nor cycles have spurs!}
 
+\subsection{Even subgraphs and cycle decompositions}
 An \EMPH{even subgraph} is a subgraph of $G$ in which every node has even degree, or equivalently, the symmetric difference of cycles.
 A \EMPH{cycle decomposition} of an even subgraph~$H$ is a set of edge-disjoint, non-crossing, weakly simple cycles whose union is $H$.
 
@@ -528,7 +535,7 @@ In particular, if $X$ is a minimum-weight $(s,t)$-cut in~$G$, then~$\Cut^*$ is t
 Let $\partial s^*$ denote the boundary of $s^*$, and let $\Sigma'$ denote the surface $\Sigma\setminus {(s^*\cup t^*)}$.
 
 Let $\Cut$ be an arbitrary $(s,t)$-cut in $G$.  \modified{So, there is a (non-trivial) partition $(S,T)$ of $V$, such that $s\in S$, $t\in T$, and $\Cut$ is the set of edges crossing $S$ and $T$.}
-\sout{This cut partitions the vertices of $G$ into two disjoint subsets~$S$ and $T$, respectively containing vertices $s$ and $t$.}  Thus, the dual subgraph $\Cut^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $\Cut^*$ is the boundary of the union of the faces in $S^*$, which implies that $\Cut^*$ is null-homologous in $\Sigma$.  The subgraph $\Cut^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus, $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $\Cut^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
+\sout{This cut partitions the vertices of $G$ into two disjoint subsets~$S$ and $T$, respectively containing vertices $s$ and $t$.}  Thus, the dual subgraph $\Cut^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $\Cut^*$ is the boundary of the union of the faces in $S^*$, which implies that $\Cut^*$ is null-homologous in $\Sigma$.  The symmetric difference $\Cut^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus, $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $\Cut^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
 
 Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\partial s^*$ in $\Sigma'$.  The subgraph $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  This immediately implies that $X^*$ is null-homologous in $\Sigma$; moreover, faces $s^*$ and $t^*$ are on opposite sides of $X^*$.  Any path from $s$ to $t$ in the original graph $G$ must traverse at least one edge of $\Cut$.  We conclude that $\Cut$ is an $(s,t)$-cut.
 \end{proof}
@@ -576,13 +583,14 @@ A \EMPH{forest-cotree decomposition} of $G$ is any partition $(\partial\! G, F, 
 \modified{
 If $G$ has no boundary then $(F, C^*, L)$ is a tree-cotree decomposition. So, $|\partial\! G| = 0$, $|F| = n -1$ and $|C^*| = f-1$.  It follows that $|L| = m - |F| - |C^* = 2g = \beta$.
 Otherwise, Let $d_1, \ldots, d_b$ be the number of edges on the boundary components.  
-We have $|\partial\! G| = \sum{d_i}$.
-Also, since our boundary cycles are disjoint, we can view $F$ as a spanning forest of $G$ with $b$ connected components, after contracting the boundary cycles.  Hence, $|F| = (n - \sum{(d_i-1)}) - b$.  Finally, $C^*$ is a spanning tree of the dual graph, so it has $f-1$ edges. As $(\partial\! G, F, L, C)$ is a partition of edges:
-\[
-m = |\partial\! G| + |F| + |C| + |L| = \sum{d_i} + (n - \sum{(d_i-1)}) - b + f-1 + |L| 
-= n + f-1 + |L| \Rightarrow |L| = m - n - f + 1 = 2g - b - 1
-\]
-Thus, in both cases, $L$ contains exactly $\beta$ edges;
+We have $|\partial\! G| = \sum_i {d_i}$.
+Also, since our boundary cycles are disjoint, we can view $F$ as a spanning forest of $G$ with $b$ connected components, after contracting the boundary cycles.  Hence, $|F| = (n - \sum_i{(d_i-1)}) - b$.  Finally, $C^*$ is a spanning tree of the dual graph, so it has $f-1$ edges. As $(\partial\! G, F, L, C)$ is a partition of the edges, we have
+\begin{align*}
+	m &= \abs{\partial\! G} + \abs{F} + \abs{C} + \abs{L}
+\\	&= \textstyle \sum_i d_i + (n - \sum_i{(d_i-1)}) - b + f-1 + \abs{L}
+\\	&= n + f-1 + \abs{L}
+\end{align*}
+and therefore $\abs{L} = m - n - f + 1 = 2g - b - 1$.  Thus, in both cases, $L$ contains exactly $\beta$ edges.
 }
 \sout{Euler's formula implies that there are exactly $\beta$ leftover edges in $L$;} arbitrarily label these edges $e_1, e_2, \dots, e_\beta$.  For each edge $e_i\in L$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial loop from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of $F$ twice.  Slicing along the arcs $a_1, \dots, a_\beta$ transforms~$\Sigma$ into a topological disk. See Figure \ref{fig:forest-cotree}.
 
@@ -626,7 +634,7 @@ We can compute a cycle decomposition $\gamma_1, \dots, \gamma_r$ of $H$ in $O(1)
 We can compute the number of crossings between any cycle $\gamma_i$ and any arc $a_j$ in time proportional to the number of edges in $\gamma_i$.
 \end{proof}
 
-We can easily construct an \emph{arbitrary} forest-cotree decomposition, and thus an arbitrary system of arcs, in $O(n)$ time using whatever-first search, but our algorithms require a decomposition with a particular forest $F$ and a particular dual spanning tree $C^*$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex~$x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97} \modified{with the Aleksandrov and Djidjev linear time algorithm for partitioning embedded graphs~\cite{ad-lapegbg-96}}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at~$x$ in $O(n)$ time.\footnote{This running time requires that $g = O(n^{1-\e})$ for some constant $\e>0$.  However, we can safely assume $g = o(\log n)$, since otherwise our minimum-cut algorithms are slower than textbook algorithms for arbitrary graphs.}  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.
+We can easily construct an \emph{arbitrary} forest-cotree decomposition, and thus an arbitrary system of arcs, in $O(n)$ time using whatever-first search, but our algorithms require a decomposition with a particular forest $F$ and a particular dual spanning tree $C^*$.  Let $G/\partial G$ denote the graph obtained from $G$ by \emph{contracting} the entire subgraph $\partial G$---both vertices and edges---to a single vertex~$x$.  Using the algorithm of Henzinger \etal~\cite{hkrs-fspap-97} \modified{with Aleksandrov and Djidjev’s linear-time algorithm for partitioning embedded graphs~\cite{ad-lapegbg-96}}, we compute the single-source shortest-path tree $T$ in $G/\partial G$ rooted at~$x$ in $O(n)$ time.\footnote{This running time requires that $g = O(n^{1-\e})$ for some constant $\e>0$.  However, we can safely assume $g = o(\log n)$, since otherwise our minimum-cut algorithms are slower than textbook algorithms for arbitrary graphs.}  Let $F$ be the subgraph of $G$ corresponding to~$T$.  Each component of $F$ is a tree of shortest paths from a boundary vertex to a subset of the non-boundary vertices of $G$.
 
 Now for each edge $e$ that is \emph{not} in the forest $F$ or the boundary subgraph $\partial G$, let $\ell(e)$ denote the length of the unique arc in the subgraph $F \cup\set{e}$.  We can easily compute $\ell(e)$ for each non-forest edge $e$ in $O(n)$ time.  Finally, let $C^*$ denote the maximum spanning tree of $G^* \setminus (F\cup \partial G)^*$ with respect to the arc lengths $\ell(e)$.
 
