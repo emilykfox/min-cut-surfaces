@@ -89,6 +89,7 @@
 \def\rnote#1{\color{red}Review: #1 \color{black}}
 \def\jnote#1{\textcolor{orange}{Jeff: #1}}
 \def\knote#1{\textcolor{olive}{Kyle: #1}}
+\def\enote#1{\textcolor{magenta}{Erin: #1}}
 
 %\newtheorem{theorem}{Theorem}[section]
 %\newtheorem{corollary}[theorem]{Corollary}
@@ -599,9 +600,11 @@ Right: The resulting system of arcs.  Compare with Figure \ref{fig:tree-coforest
 
 For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ of $\gamma$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements. \rnote{please define the notion of crossing between two paths in $G$? Amir: Also, we need to define 'the number of crossing' (?)} \jnote{See my earlier comment in Section 2.  We need a lemma for later: \emph{The greedy system of arcs is a shortest system of arcs.} Or more usefully: \emph{Every arc in the greedy system of arcs is tight (shortest in its homotopy class.} See Éric’s homology argument about greedy systems of \emph{loops} in my AMS survey and in Éric’s ESA 2010 paper.  Argue that our one-shot tree-cotree construction yields the same arcs as Éric’s iterative construction.}
 
-Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; however, the \emph{parity} of the crossing number is independent of the cycle decomposition.  
+Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; \modified{instead, we define}
+\sout{however, the \emph{parity} of the crossing number is independent of the cycle decomposition.} 
 \anote{A reviewer has requested a proof that this definition is independent of the choice of the cycle decomposition ... }
-The \EMPH{crossing parity vector} of any even subgraph $H$ is the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses (any cycle decomposition of) $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
+\enote{Edited this to address reviewer request, and instead justify why it's independent of the cycle decomposition after 3.1}
+the \EMPH{crossing parity vector} of any even subgraph $H$ \modified{with respect to a particular fixed cycle decomposition} to be the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses the cycle decomposition of $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
 
 \begin{lemma}
 Two even subgraphs are $\Z_2$-homologous if and only if their crossing parity vectors (with respect to the same system of arcs) are equal.
@@ -615,6 +618,8 @@ Thus, the crossing parity vector of any boundary subgraph is the zero vector.
 On the other hand, every pair of even subgraphs $H$ and $H'$ satisfies the identity $x(H\oplus H') = x(H) \oplus x(H')$. \anote{(do we need to prove $x(H\oplus H') = x(H) \oplus x(H')$? this seems more general than the fact that the crossing number is independent of the cycle decomposition that one of the reviewers asked to prove?)}
 So, if $x(H\oplus H')$ is the zero vector then  $x(H) = x(H')$.
 \end{proof}
+
+\modified{In fact, the previous lemma implies that since two even subgraphs are $\Z_2$-homologous subgraphs if and only if their crossing parity vectors agree, then the crossing parity vector is in fact independent of the choice of cycle decomposition.}  \enote{Should we say more here, or is it clear? And double check proof of 3.1 above...}
 
 \begin{lemma}
 We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of
