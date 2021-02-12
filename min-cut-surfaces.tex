@@ -288,8 +288,8 @@ Homology is a topological notion of equivalence with nice algebraic properties. 
 
 Most interesting variants of homology localization are NP-hard.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{simple cycle} in a given homology class is {NP}-hard.  Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Recently, Grochaw and Tucker-Foltz \cite{gt-ctugc-18} proved that homology localization in surface graphs, over a sufficiently large finite coefficient ring, is equivalent to Unique Games; in particular, there is no PTAS for \emph{any} finite coefficient ring unless the Unique Games Conjecture is false.
 
-\rnote{137-138: perhaps add some details. }
-On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on a surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
+\rnote{137-138: perhaps add some details. }\anote{I added citations in the and of the last sentence.}
+On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time~\cite{cen-hfcc-12, s-cath-90}.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on a surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
 
 \subsection{New results and organization}
 
@@ -706,10 +706,36 @@ Reprove using a more combinatorial argument:
 The fundamental cycles form a homology basis, and an even subgraph's signature is equal to that of
 the homologous subset of fundamental cycles.
 }
+\knote{Please check new proof.}
 
-Let $H$ be a boundary subgraph of $G$.  Then by definition, $H$ is the boundary of the union of a subset~$Y$ of faces of $G$.  The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.  It follows immediately that $[H] = [\bigoplus_{f\in Y} \partial f] = \bigoplus_{f\in Y} [\partial f] = 0$.
+A proof of the lemma appears in Borradaile~\etal~\cite[Corollary 3.5]{bcfn-mchbs-17}.
+They cite an earlier version~\cite{en-mcsnc-11} of the current paper for the lemma statement, so we
+present a slightly simplified version of their proof for completeness.
+For each edge \(e_i \in L\), let \(\cycle_i\) denote the fundamental cycle obtained by adding
+\(e_i\) to \(T\).
+We claim the set of cycles \(\Set{\cycle_1, \dots, \cycle_\beta}\) form a basis of the first
+homology group;
+precisely, these cycles lie in linearly independent homology classes that span the group.
+Indeed, consider any non-empty subset \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}}\) of these
+cycles, and let \(\cycle_i\) be an arbitrary member of this subset.
+Dual arc \(\alpha_i\) crosses the subset exactly once, at the dual edge \(e^*_i\).
+Therefore, even subgraph \(\bigoplus_{\cycle \in \Gamma} \cycle\) does not bound the union of a
+subset of primal faces/dual vertices.
 
-Conversely, suppose $H$ crosses each arc $\dualarc_i$ an even number of times, so $[H]=0$.  Let $x$ and $y$ be two intersection points between $H$ and some arc $\dualarc_i$, and let $\dualarc_i[x,y]$ be the subpath of $\dualarc_i$ between those two points.  Replacing tiny segments of $H$ through~$x$ and~$y$ with two copies of $\dualarc_i[x,y]$ does not change the homology class of $H$, but does reduce the number of intersection points between $H$ and $\dualarc_i$.  It follows by induction that~$H$ is homologous to another even graph $H'$ that does not intersect any path~$\dualarc_i$ at all.  This even graph lies entirely within the disk $\Sigma\setminus \bigcup_i\dualarc_i$, and is therefore null-homologous.
+Now, let $H$ be an even subgraph of $G$.
+Let \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}} \subseteq \Set{\cycle_1, \dots,
+\cycle_\beta}\) be such that \(\bigoplus_{\cycle \in \Gamma} \cycle\) is homologous to \(H\).
+Then by definition, $H \oplus \bigoplus_{\cycle \in \Gamma} \cycle$ is the boundary of the union of
+a subset~$Y$ of faces of $G$.
+The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.
+It follows immediately that $[H] = [\bigoplus_{\cycle \in \Gamma} \cycle] \oplus [\bigoplus_{f\in Y}
+\partial f] = [\bigoplus_{\cycle \in \Gamma} \cycle] \oplus \bigoplus_{f\in Y} [\partial f] =
+[\bigoplus_{\cycle \in \Gamma} \cycle]$.
+The \(i\)th bit of \([\bigoplus_{\cycle \in \Gamma} \cycle]\) is equal to \(1\) if and only if
+\(\gamma_i \in \Gamma\), because dual arc \(\dualarc_i\) crosses no other member of \(\Set{\cycle_1,
+\dots, \cycle_\beta}\).
+Therefore, \([H] = 0\) if and only if the homologous even subgraph \(\bigoplus_{\cycle \in \Gamma}
+\cycle\) is empty.
 \end{proof}
 
 The following corollaries are now immediate.
