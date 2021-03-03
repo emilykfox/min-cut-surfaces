@@ -550,6 +550,7 @@ Throughout the paper, we fix an \EMPH{undirected} graph $G=(V,E)$, a non-negativ
 Except where explicitly indicated otherwise, we assume without loss of generality  that the underlying surface $\Sigma$ has non-empty boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.
+Tree-cotree decompositions were first formalized by Eppstein~\cite{e-dgteg-03} to compute homology generators, although the same decomposition was also studied earlier \enote{Jeff, add citations of those two earlier papers here}.
 We give these full details here for completeness, and because as far as we are aware, no detailed description appears
 elsewhere in the literature for the first method.  We note that a preliminary version of the current
 work~\cite{en-mcsnc-11} was the first detailed description of the second method;
@@ -557,8 +558,8 @@ see also Chambers~\etal~\cite{bcfn-mchbs-17} for an alternative description of t
 All results in this section extend without modification to nonorientable surfaces.
 
 
-Both methods characterize the homology class of any even subgraph $H$ using a vector of~$\beta$ bits.
-The vectors are computed using one of two natural generalizations of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
+Both of the methods we will describe characterize the homology class of any even subgraph $H$ using a vector of~$\beta$ bits.
+The vectors are computed using one of two natural generalizations of tree-cotree decompositions  to surfaces with boundary.
 In the first method, the vector is based on the crossings between a cycle decomposition of~$H$ and a set of~$\beta$ primal arcs.
 By carefully selecting these arcs, we can bound the number of times any~$\Z_2$-minimal even subgraph can cross any of these arcs; this bound is necessary for the algorithm given in Section~\ref{sec:crossing}.
 In the second method, the vector is based on the crossings between~$H$ and a set of~$\beta$ \emph{dual} arcs.
@@ -612,6 +613,7 @@ Extending the notion of crossing vectors to even subgraphs is rather subtle, bec
 \sout{however, the \emph{parity} of the crossing number is independent of the cycle decomposition.} 
 \anote{A reviewer has requested a proof that this definition is independent of the choice of the cycle decomposition ... }
 \enote{Edited this to address reviewer request, and instead justify why it's independent of the cycle decomposition after 3.1}
+\enote{Actually, this is AWFUL. Rewrite after the perturbation/crossing definitions stabilize.}
 the \EMPH{crossing parity vector} of any even subgraph $H$ \modified{with respect to a particular fixed cycle decomposition} to be the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses the cycle decomposition of $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
 
 \begin{lemma}
@@ -701,24 +703,27 @@ We can preprocess $G$ in $O(\beta n)$ time, so that the signature $[\cycle]$ of 
 A tree-coforest decomposition can be computed in $O(n)$ time as follows.  First construct a graph~$G'$ by identifying all the dual boundary vertices in $G^*$ to a single vertex.  Compute a spanning tree of $G'$ by whatever-first search; the edges of this spanning tree define an appropriate dual spanning forest~$F^*$.  Construct the subgraph $G\setminus F$ and compute a spanning tree $T$ via whatever-first search.  Finally, let $L = G\setminus (T\cup F)$.  With the decomposition in hand, it is straightforward to compute each path $\dualarc_i$ in $O(n)$ time, and then compute each edge signature in $O(\beta)$ time.
 \end{proof}
 
+We note that a proof of our next lemma appears in Borradaile~\etal~\cite[Corollary 3.5]{bcfn-mchbs-17}.
+They cite an earlier version~\cite{en-mcsnc-11} of the current paper for the lemma statement, so we
+present a slightly simplified version of their proof for completeness.
+
 \begin{lemma}
 An even subgraph $H$ of $G$ is null-homologous in $\Sigma$ if and only if $[H] = 0$.
 \end{lemma}
 
 \begin{proof}
-\rnote{ 
-You defined homology for subgraphs of $G$, but $H'$ does not lie in $G$. I am not sure how to solve this problem elegantly.
-}
-\knote{
-Reprove using a more combinatorial argument:
-The fundamental cycles form a homology basis, and an even subgraph's signature is equal to that of
-the homologous subset of fundamental cycles.
-}
-\knote{Please check new proof.}
+%\rnote{ 
+%You defined homology for subgraphs of $G$, but $H'$ does not lie in $G$. I am not sure how to solve this problem elegantly.
+%}
+%\knote{
+%Reprove using a more combinatorial argument:
+%The fundamental cycles form a homology basis, and an even subgraph's signature is equal to that of
+%the homologous subset of fundamental cycles.
+%}
+%\knote{Please check new proof.}
 
-A proof of the lemma appears in Borradaile~\etal~\cite[Corollary 3.5]{bcfn-mchbs-17}.
-They cite an earlier version~\cite{en-mcsnc-11} of the current paper for the lemma statement, so we
-present a slightly simplified version of their proof for completeness.
+
+
 For each edge \(e_i \in L\), let \(\cycle_i\) denote the fundamental cycle obtained by adding
 \(e_i\) to \(T\).
 We claim the set of cycles \(\Set{\cycle_1, \dots, \cycle_\beta}\) form a basis of the first
