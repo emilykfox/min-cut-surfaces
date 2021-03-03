@@ -1,10 +1,10 @@
-\contentsline {lemma}{{Lemma}{2.1}{}}{5}{theorem.12}%
+\contentsline {lemma}{{Lemma}{2.1}{}}{6}{theorem.12}%
 \contentsline {lemma}{{Lemma}{2.2}{}}{7}{theorem.25}%
-\contentsline {lemma}{{Lemma}{3.1}{}}{9}{theorem.30}%
+\contentsline {lemma}{{Lemma}{3.1}{}}{10}{theorem.30}%
 \contentsline {lemma}{{Lemma}{3.2}{}}{10}{theorem.31}%
 \contentsline {lemma}{{Lemma}{3.3}{}}{11}{theorem.37}%
 \contentsline {lemma}{{Lemma}{3.4}{}}{11}{theorem.38}%
-\contentsline {corollary}{{Corollary}{3.5}{}}{11}{theorem.39}%
+\contentsline {corollary}{{Corollary}{3.5}{}}{12}{theorem.39}%
 \contentsline {corollary}{{Corollary}{3.6}{}}{12}{theorem.40}%
 \contentsline {lemma}{{Lemma}{4.1}{}}{12}{theorem.43}%
 \contentsline {theorem}{{Theorem}{4.2}{}}{14}{theorem.47}%
@@ -12,22 +12,22 @@
 \contentsline {lemma}{{Lemma}{5.1}{}}{15}{theorem.53}%
 \contentsline {lemma}{{Lemma}{5.2}{}}{15}{theorem.54}%
 \contentsline {lemma}{{Lemma}{5.3}{}}{15}{theorem.55}%
-\contentsline {lemma}{{Lemma}{5.4}{}}{15}{theorem.57}%
+\contentsline {lemma}{{Lemma}{5.4}{}}{16}{theorem.57}%
 \contentsline {lemma}{{Lemma}{5.5}{Erickson \etal ~\cite {efl-hmcpf-18}}}{16}{theorem.58}%
 \contentsline {theorem}{{Theorem}{5.6}{}}{16}{theorem.59}%
 \contentsline {lemma}{{Lemma}{5.7}{}}{17}{theorem.61}%
 \contentsline {theorem}{{Theorem}{5.8}{}}{17}{theorem.62}%
 \contentsline {corollary}{{Corollary}{5.9}{}}{17}{theorem.63}%
-\contentsline {theorem}{{Theorem}{6.1}{}}{17}{theorem.65}%
+\contentsline {theorem}{{Theorem}{6.1}{}}{18}{theorem.65}%
 \contentsline {lemma}{{Lemma}{6.2}{McCormick \etal ~\cite {mrr-edofm-03}}}{18}{theorem.66}%
 \contentsline {lemma}{{Lemma}{6.3}{}}{18}{theorem.67}%
 \contentsline {theorem}{{Theorem}{6.4}{}}{19}{theorem.70}%
-\contentsline {lemma}{{Lemma}{7.1}{}}{19}{theorem.72}%
-\contentsline {lemma}{{Lemma}{7.2}{Cabello~\cite {c-fscss-10}}}{20}{theorem.76}%
+\contentsline {lemma}{{Lemma}{7.1}{}}{20}{theorem.72}%
+\contentsline {lemma}{{Lemma}{7.2}{Cabello~\cite {c-fscss-10}}}{21}{theorem.76}%
 \contentsline {lemma}{{Lemma}{7.3}{}}{21}{theorem.77}%
 \contentsline {lemma}{{Lemma}{7.4}{}}{21}{theorem.78}%
 \contentsline {lemma}{{Lemma}{7.5}{}}{22}{theorem.82}%
-\contentsline {lemma}{{Lemma}{7.6}{}}{22}{theorem.85}%
+\contentsline {lemma}{{Lemma}{7.6}{}}{23}{theorem.85}%
 \contentsline {lemma}{{Lemma}{7.7}{}}{23}{theorem.86}%
 \contentsline {theorem}{{Theorem}{7.8}{}}{23}{theorem.88}%
 \contentsline {corollary}{{Corollary}{7.9}{}}{23}{theorem.89}%

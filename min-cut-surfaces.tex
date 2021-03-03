@@ -391,8 +391,7 @@ An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps 
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
 An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plane; in particular, in any cellular embedding, each component of the boundary of $\Sigma$ must be covered by a cycle of edges in~$G$.  
 
-We also refer to the complex of vertices, edges, and faces induced by a cellular embedding as a \EMPH{combinatorial surface}.
-Every combinatorial surface with boundary can be obtained from a combinatorial surface without boundary by deleting the interiors of one or more faces.  See Kettner \cite{k-ugpdd-99} for an overview and comparison of several standard data structures for combinatorial surfaces. 
+We also refer to the complex of vertices, edges, and faces induced by a cellular embedding as a \EMPH{combinatorial surface}.  Every combinatorial surface with boundary can be obtained from a combinatorial surface without boundary by deleting the interiors of one or more faces.  See Kettner \cite{k-ugpdd-99} for an overview and comparison of several standard data structures for combinatorial surfaces. 
 
 Euler's formula implies that any cellularly embedded graph with $n$ vertices, $m$ edges, and $f$ faces lies on a surface with Euler characteristic $\chi = n-m+f$, which implies that $m = O(n+g)$ and $f=O(n+g)$ if the graph is simple.
 To simplify our presentation, we implicitly assume throughout the paper that $g = O(\log n)$, since otherwise our minimum-cut algorithms are slower than textbook maximum-flow algorithms.  This assumption implies that the overall complexity of an embedding is $O(n)$.
@@ -401,7 +400,13 @@ We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose end
 
 \subsection{Perturbations and Crossings}
 
-Our algorithms manipulate cycles and arcs that can share or repeat edges, but that can be perturbed (on the surface) to avoid self-intersections and other degeneracies.
+Our algorithms manipulate cycles and arcs in combinatorial surfaces that can share or repeat graph vertices and edges, but that can be perturbed on the surface to avoid self-intersections and other degeneracies.  To accommodate these perturbations, we represent our combinatorial surfaces as \EMPH{ribbon graphs} \cite{}.  (Ribbon graphs are also known as \emph{band decompositions} \cite{} and \emph{fat graphs} \cite{} , and they are closely related to the \emph{graph-encoded map} data structure \cite{} for representing both orientable and non-orientable combinatorial surfaces.)  The ribbon graph $G^\square$ of an embedded graph $G$ is constructed by expanding the vertices of $G$ into disjoint disks called \emph{vertex regions} and the edges of $G$ into disjoint rectangles called \emph{edge ribbons}.  Each face of the original embedding contains exactly one component of $\Sigma\setminus G^\square$.
+
+\jnote{words words words}  Any finite collection $C$ of cycles and arcs in a combinatorial surface can be perturbed into general position within the ribbon graph $G^\square$, so that all (self-)intersections are transverse and occur within vertex regions.  None of the cycles and arcs we consider contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  We also require minimal (self-)intersection within each vertex region are minimal; that is, each boundary-to-boundary path within a vertex region is simple, and any two such paths intersect at most once.  This requirement allows us to represent a perturbation of $C$ symbolically by recording, for each edge $e$ of $G$, the left-to-right order of the traversals of the ribbon $e^\square$.
+
+\jnote{Perturbed arcs start at vertex-face boundary of vertex region}
+\jnote{This is all equivalent to the cross-metric surface model}
+\jnote{Weakly simple = has a simple peturbation}
 
 \jnote{Band decompositions/ribbon graphs.  Replace every vertex with a tiny disk and every edge with a narrow ribbon.  This works even if the surface is non-orientable.  Each edge stores a left-to-right ordering of the cycles and arcs traversing the corresponding edge ribbon.  In particular, cycles and walks can only (self-)intersect within vertex regions.  Arcs extend to the boundary of the regions corresponding to their endpoints.  A cycle or arc is weakly simple if it has a simple representation; two cycles, or a cycle and an arc, are weakly disjoint if they have disjoint representations.  This formulation is equivalent to Èric’s cross-metric surface model.}
 
@@ -1581,7 +1586,7 @@ We can compute a global minimum cut in $G$ in either $g^{O(g)} n \log \log n$ ti
 
 \paragraph{Acknowledgments}
 The authors would like to thank Chandra Chekuri and Aparna Sundar for helpful discussions on some of the preliminary work included here. % \note{Éric? Sergio? Cora? David? Anyone else?} \note{Erin: Just taking these out, but feel free to re-add!  I had not spoken to any of these people about the paper I was on, and no one added, but we can re-include if you want when revising next round.}
-We would also like to thank the anonymous reviewers of our earlier extended abstracts \cite{cen-mcshc-09, en-mcsnc-11, efn-gmcse-12} for many helpful comments and suggestions.
+We would also like to thank the anonymous reviewers, both for our earlier extended abstracts \cite{cen-mcshc-09, en-mcsnc-11, efn-gmcse-12} and for this paper, for many helpful comments and suggestions.
 
 
 % ===============================================================================================
