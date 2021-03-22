@@ -443,6 +443,13 @@ The intersection of each perturbed curve with any vertex region $v^\square$ cons
 
 None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  This requirement allows us to represent a perturbation of $C$ symbolically by recording its order of intersection with interior segments of the form $v^\square\cap e^\square$ and with boundary segments of the form $v^\square\cap f^\square$.
 
+\begin{figure}
+\centering
+\includegraphics[scale=0.45]{Fig/pants-ribbon}\hfil
+\includegraphics[scale=0.45]{Fig/pants-ribbon-2}
+\caption{Left: A cycle and an arc that share an edge in $G$.  Right: A closeup on the ribbon graph $G^\square$, with a perturbation of the cycle and arc that cross inside a vertex region.}
+\end{figure}
+
 \jnote{Weakly simple = has a simple perturbation}
 
 \jnote{Band decompositions/ribbon graphs.  Replace every vertex with a tiny disk and every edge with a narrow ribbon.  This works even if the surface is non-orientable.  Each edge stores a left-to-right ordering of the cycles and arcs traversing the corresponding edge ribbon.  In particular, cycles and walks can only (self-)intersect within vertex regions.  Arcs extend to the boundary of the regions corresponding to their endpoints.  A cycle or arc is weakly simple if it has a simple representation; two cycles, or a cycle and an arc, are weakly disjoint if they have disjoint representations.  This formulation is equivalent to Èric’s cross-metric surface model.}
