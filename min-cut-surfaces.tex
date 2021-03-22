@@ -398,6 +398,38 @@ To simplify our presentation, we implicitly assume throughout the paper that $g 
 
 We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices, but that is otherwise disjoint from the boundary.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may traverse the same vertex or edge more than once.
 
+\subsection{Duality}
+
+Any undirected graph~$G$ embedded on a surface~$\Sigma$ without boundary has a
+\EMPH{dual graph}~$G^*$, which has a vertex~$f^*$ for each face~$f$ of~$G$,
+and an edge~$e^*$ for each edge~$e$ in~$G$ joining the vertices dual to the
+faces of~$G$ that~$e$ separates. The dual graph~$G^*$ has a natural cellular
+embedding in~$\Sigma$, whose faces corresponds to the vertices of~$G$.
+See Figure~\ref{fig:prelims_primaldual}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[height=1.25in]{Fig/primal}\quad
+\includegraphics[height=1.25in]{Fig/dual}
+\caption{Graph duality.  One edge $uv$ and its dual $(uv)^* =
+f^*g^*$ are emphasized.} \label{fig:prelims_primaldual}
+\end{figure}
+
+
+Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdière~\cite{ce-tnpcs-10}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{fig:duality}.  (Duality can be extended to directed graphs~\cite{cen-hfcc-12}, but our results do not require this extension.)
+
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.45]{Fig/pants}
+\caption{A cellularly embedded graph $G$ (solid lines) on a pair of pants (the surface of genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
+\label{fig:duality}
+\end{figure}
+ 
+For any subgraph $F = (U,D)$ of $G = (V,E)$, we write \EMPH{$G\setminus F$} to denote the edge-complement $(V, {E\setminus D})$.  Also, when the graph $G$ is fixed, we abuse notation by writing~$F^*$ to denote the subgraph of $G^*$ corresponding to a subgraph $F$ of~$G$; each edge in $F^*$ is the dual of a unique edge in~$F$.  In particular, we have the identity $(G\setminus F)^* = G^* \setminus F^*$.
+Further, we may sometimes use~$D$ to refer to an edge set or the subgraph~$F = (V, D)$,
+but it should be clear which we mean from context.
+
+
 \color{green!50!black}
 \subsection{Perturbations and Crossings}
 
@@ -445,39 +477,6 @@ We emphasize that each cycle in a cycle decomposition may visit vertices multipl
 \EMPH{Slicing} a combinatorial surface along a cycle or arc modifies both the surface and the embedded graph.
 For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
 We define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
-
-\subsection{Duality}
-
-
-Any undirected graph~$G$ embedded on a surface~$\Sigma$ without boundary has a
-\EMPH{dual graph}~$G^*$, which has a vertex~$f^*$ for each face~$f$ of~$G$,
-and an edge~$e^*$ for each edge~$e$ in~$G$ joining the vertices dual to the
-faces of~$G$ that~$e$ separates. The dual graph~$G^*$ has a natural cellular
-embedding in~$\Sigma$, whose faces corresponds to the vertices of~$G$.
-See Figure~\ref{fig:prelims_primaldual}.
-
-
-\begin{figure}[ht]
-\centering
-\includegraphics[height=1.25in]{Fig/primal}\quad
-\includegraphics[height=1.25in]{Fig/dual}
-\caption{Graph duality.  One edge $uv$ and its dual $(uv)^* =
-f^*g^*$ are emphasized.} \label{fig:prelims_primaldual}
-\end{figure}
-
-
-Any undirected graph $G$ embedded on a surface $\Sigma$ with boundary has a \EMPH{dual graph~$G^*$}, defined as follows.\footnote{Our definition differs slightly from the one proposed by Erickson and Colin de Verdière~\cite{ce-tnpcs-10}.}  The dual graph~$G^*$ has a vertex $f^*$ for each face $f$ of~$G$, \emph{including the boundary cycles}, and an edge $e^*$ for each edge $e$ in $G$ (including boundary edges) joining the vertices dual to the faces that~$e$ separates.  For each boundary cycle $\delta$ of~$G$, we refer to the corresponding vertex $\delta^*$ of $G^*$ as a \EMPH{dual boundary vertex}.  The dual graph $G^*$ has a natural cellular embedding in the surface~\EMPH{$\Sigma^\bullet$} obtained from~$\Sigma$ by gluing a disk to each boundary cycle; each face of this embedding corresponds to a vertex of $G$.  See Figure \ref{fig:duality}.  (Duality can be extended to directed graphs~\cite{cen-hfcc-12}, but our results do not require this extension.)
-
-\begin{figure}[htb]
-\centering
-\includegraphics[scale=0.45]{Fig/pants}
-\caption{A cellularly embedded graph $G$ (solid lines) on a pair of pants (the surface of genus 0 with 3 boundaries), and its dual graph $G^*$ (dashed lines).  Dual boundary vertices are indicated by squares.}
-\label{fig:duality}
-\end{figure}
- 
-For any subgraph $F = (U,D)$ of $G = (V,E)$, we write \EMPH{$G\setminus F$} to denote the edge-complement $(V, {E\setminus D})$.  Also, when the graph $G$ is fixed, we abuse notation by writing~$F^*$ to denote the subgraph of $G^*$ corresponding to a subgraph $F$ of~$G$; each edge in $F^*$ is the dual of a unique edge in~$F$.  In particular, we have the identity $(G\setminus F)^* = G^* \setminus F^*$.
-Further, we may sometimes use~$D$ to refer to an edge set or the subgraph~$F = (V, D)$,
-but it should be clear which we mean from context.
 
 
 \subsection{Homotopy and homology}
