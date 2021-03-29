@@ -807,9 +807,18 @@ Why $-5$ and not $-6$?
 }
 \end{lemma}
 
+%\begin{lemma}
+%\label{lem:crossing}
+%Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
+%\end{lemma}
+
+\begin{proof}
+\knote{First draft of new detour focused proof below.}
+
+\knote{I moved the aside about uniqueness into the proof environment.}
 Our proof begins by conceptually modifying the edge weights in $G$ in a manner reminiscent to the
 way many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10,
-eh-ocsd-04} enforce edge weight \emph{genericity}, and in particular, the \emph{uniqueness} shortest
+eh-ocsd-04} enforce edge weight \emph{genericity}, and in particular, the uniqueness of shortest
 paths between any two vertices of a graph.
 This assumption can be enforced \emph{with high probability} by adding random infinitesimal weights
 to each edge \cite{mvv-memi-87}.
@@ -824,24 +833,12 @@ $O(g)$.
 Unfortunately, this latter scheme cannot be used as a black box in algorithms such as ours that rely
 on edges being undirected.
 
-%\begin{lemma}
-%\label{lem:crossing}
-%Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
-%\end{lemma}
-
-\begin{proof}
-\jnote{Rewrite exchange argument at the level of arcs, not paths.  Use the earlier lemma that the greedy system of arcs is the \emph{shortest} system of arcs.  So (later) if any of the contracted loops $\ell_i$ in $\Sigma/a_i$ is contractible, then we could shorten $a_i$ to get a shortest system of arcs, contradiction.}
-\knote{At the end of the last meeting, we agreed it would be easier to use the following argument:
-If you cross an arc too many times, then you need to \emph{touch} one of its shortest paths too many
-times.
-Now use the original argument for shortest paths.}
-
-For the sake of argument, we slightly modify the edge weights of $G$.
+We modify the edge weights of $G$ as follows.
 \knote{Changed this description of the perturbation scheme's guarantees.}
 Every \(Z_2\)-minimal even subgraph under the modified weights is \(Z_2\)-minimal under the original
 weights as well;
-however, every \(Z_2\)-minimal even subgraph under the modified weights also has a bounded number of
-crossings with each arc of \(A\) as specified by the lemma.
+however, the cycles in any decomposition of any \(Z_2\)-minimal even subgraph under the modified
+weights also has a bounded number of crossings with each arc of \(A\)'s as specified by the lemma.
 %
 Recall that every arc in $A$ consists of two shortest paths from a forest $F$ of shortest paths.
 Our modification simply adds identical infinitesimal weights $\eps$ to every edge \emph{outside} of
@@ -851,32 +848,44 @@ in $\sigma$, that $\sigma(u, v)$ is the unique shortest path from $u$ to $v$.
 Indeed, any path from $u$ to $v$ that uses an edge outside $F$ must weigh at least $\eps$ more than
 $\sigma(u, v)$, and $F$ is a forest so there are no other paths from $u$ to $v$ using only edges of~$F$.
 
-
-
 Let $H'$ be an arbitrary $\Z_2$-minimal even subgraph homologous to $H$ under the new edge weights.
 Let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H'$.
-We now argue that for any shortest path $\sigma = \sigma(u, v)$ contributing to $F$, the total
-number of crossings between $\sigma$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most
-$6g+2b-3$.
-The lemma immediately follows from the construction of $A$, \modified{as 
-each arc in $A$ is the concatenation of two shortest paths possibly meeting in the middle of an edge.}
-Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  
-\rnote{
-Reviewer: It is true, but please justify better why you can assume that sigma crosses each cycle $\gamma_i$ at least once. 
-}
-\anote{
- Why do we need this assumption?
-}
-For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
-
+Consider any shortest path \(\sigma = \sigma(u, v)\) contributing to \(F\).
+We define a \EMPH{detour} of any cycle \(\gamma_j \in \Set{\gamma_1, \dots, \gamma_r}\) from
+\(\sigma\) as a subpath of \(\gamma_j\) that has endpoints on \(\sigma\) but is otherwise disjoint
+from \(\sigma\).
+For each $j$, let~$x_j$ denote the number of detours of \(\gamma_j\) from $\sigma$ if \(\gamma_j\)
+and \(\sigma\) intersect and \(0\) otherwise.
+Let $x = x_1 + x_2 + \cdots + x_r$.
+We will prove that $x\le 6g+2b-3$.
+%We now argue that the total number of detours from \(\sigma\) is at most $6g+2b-3$.
+The lemma immediately follows from the construction of $A$, as each arc in $A$ is the concatenation
+of two shortest paths with an additional edge.
+In particular, every crossing between arc \(a_i\) and a cycle~\(\gamma_j\) ends with a detour from
+one of the two shortest paths of~\(a_i\).
+\knote{Check that last statement.}
+%Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  
+%\rnote{
+%Reviewer: It is true, but please justify better why you can assume that sigma crosses each cycle $\gamma_i$ at least once. 
+%}
+%\anote{
+ %Why do we need this assumption?
+%}
 %Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.
 
-Consider the graph $G/\sigma$ obtained from $G$ by contracting the path $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple \modified{pairwise} non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
+Consider the graph $G/\sigma$ obtained from $G$ by contracting the path $\sigma$ to a single vertex $uv$.
+This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.
+Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple pairwise non-crossing loops
+in $G/\sigma$ with basepoint $uv$.
+Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.
+We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
 
 Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$
 whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$
 is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover,
-the previously discussed uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.  But this contradicts our assumption that $H $ has minimum weight in its homology class.
+the previously discussed uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.
+But this last observation contradicts our assumption that $H $ has minimum weight in its homology
+class.
 
 Now suppose some pair of loops $\ell_i$ and $\ell_j$ are homotopic; by definition, the cycle $\ell_i\cdot\reverse{\ell_j}$ is contractible.  These two loops are contractions of paths $\pi_i$ and $\pi_j$ in $G$ with endpoints in $\sigma$.  Let $u_i$ and~$v_i$ denote the endpoints of $\pi_i$, and let $u_j$ and~$v_j$ denote the endpoints of $\pi_j$.  The cycle $\pi_i \cdot \sigma(v_i,v_j) \cdot \overline{\pi_j} \cdot \sigma(u_j, u_i)$ in $G$ is also contractible.  Let $\delta$ denote the set of edges of $G$ that appear in this cycle exactly once.  If the sub-paths $\sigma(v_i,v_j)$ and $\sigma(u_j, u_i)$ are edge-disjoint, then $\delta$ is a contractible cycle; otherwise, $\delta$ is the union of two non-crossing homotopic cycles.  In either case, $\delta$ is a boundary subgraph, so the symmetric difference $H\oplus\delta$ is homologous with $H$.  Moreover, $H\oplus\delta$ has smaller weight than~$H$, and we obtain another contradiction.
 
@@ -1428,6 +1437,7 @@ $G$ does not cross $A$.  (We emphasize that our algorithm does not necessarily c
 \subsection{Non-contractible}
 \label{sec:global_non-contractible}
 
+\knote{Use \(Y\) for a subset of faces?}
 Now suppose some minimum-weight separating subgraph $\minSS$ is non-contractible.  At a high level,
 our algorithm for this case computes a set $F$ of faces, such that some minimum-weight separating
 subgraph of $G$ separates $s^*$ from at least one face in $F$.  (Equivalently, $F^*$ is a set of
