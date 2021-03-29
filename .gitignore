@@ -32,6 +32,7 @@
 *.tdo
 *.fls
 min-cut-surfaces.pdf
+min-cut-surfaces-view.pdf
 surfcutEoA.pdf
 .DS_store
 min-cut-surfaces.thm
