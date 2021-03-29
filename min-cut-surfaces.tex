@@ -431,13 +431,13 @@ but it should be clear which we mean from context.
 
 \subsection{Perturbations and Crossings}
 
-Our algorithms manipulate cycles and arcs in combinatorial surfaces that can share or repeat graph vertices and edges, but that can be perturbed on the surface to avoid self-intersections and other degeneracies.  To accommodate these perturbations, we represent our combinatorial surfaces as \EMPH{ribbon graphs} \cite{l-gos-2004,em-gos-13}.  (Ribbon graphs are also known as \emph{band decompositions}  \cite{em-gos-13} and \emph{fat graphs} \cite{l-gos-2004}, and they are closely related to the \emph{graph-encoded map} data structure \cite{l-gem-82} for representing both orientable and non-orientable combinatorial surfaces.)
+Our algorithms manipulate cycles and arcs in combinatorial surfaces that can share or repeat graph vertices and edges, but that can be perturbed on the surface to avoid self-intersections and other degeneracies.  To accommodate these perturbations, we represent our combinatorial surfaces as \EMPH{ribbon graphs} \cite{l-gos-2004,em-gos-13}.  (Ribbon graphs are also known as \emph{band decompositions}  \cite{em-gos-13} and \emph{fat graphs} \cite{l-gos-2004}, and they are closely related to the \emph{graph-encoded map} data structure \cite{l-gem-82} for representing both orientable and non-orientable combinatorial surfaces.)  We note that the cross metric surface is a (roughly) equivalent structure to avoid these degeneracies as well; see~\cite{ce-tspcs-06,cl-opdsh-07}. \enote{Justify why we don't use it? Leaning towards no, but feel free if you think necessary!}
 
 The ribbon graph $G^\square$ of an embedded graph $G$ is constructed by expanding each vertex $v$ of $G$ into a closed disk $v^\square$ called a \emph{vertex region}, and expanding each edge $e$ of $G$ into a narrow rectangle $e^\square$ called an \emph{edge ribbon}.  For any vertex $v$ and edge $e$, the intersection $v^\square\cap e^\square$ is a simple path on the boundary of both regions if $v$ is an endpoint of $e$; otherwise, the vertex regions and edge ribbons are pairwise disjoint.  Each face $f$ of the original embedding $G$ (including any faces deleted to create surface boundaries) contains exactly one component of $\Sigma\setminus G^\square$; we call this component the \emph{face region} $f^\square$.  See Figure~\ref{F:ribbon}.
 
 Any finite collection $C$ of cycles and arcs in a combinatorial surface, each represented as a walk in the underlying graph $G$, can be continuously \EMPH{perturbed} into general position within the ribbon graph $G^\square$, so that all (self-)intersections are transverse and occur only within vertex regions.  (Formally, this perturbation is a \emph{homotopy} within $\Sigma^\square$; see Section \ref{SS:homology} below.)  In particular, each perturbed curve visits the vertex regions and edge ribbons in~$G^\square$ in the same order that the original curve visits the corresponding vertices and edges of~$G$.
 
-The intersection of each perturbed curve with any vertex region $v^\square$ consists of simple boundary-to-boundary paths in $v^\square$.  In particular, any arc that ends at vertex $v$ on a boundary face $f$ is perturbed into an arc in $G^\square$ that ends at the boundary segment $v^\square \cap f^\square$.  We also require minimal intersection within vertex regions; any two boundary-to-boundary paths within the same vertex region intersect at most once.
+The intersection of each perturbed curve with any vertex region $v^\square$ consists of simple boundary-to-boundary paths in $v^\square$.  In particular, any arc that ends at vertex $v$ on a boundary face $f$ is perturbed into an arc in $G^\square$ that ends at the boundary segment $v^\square \cap f^\square$.  We also require minimal intersection within vertex regions, so any two boundary-to-boundary paths within the same vertex region intersect at most once.
 
 None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  This requirement allows us to represent a perturbation of $C$ symbolically by recording its order of intersection with interior segments of the form $v^\square\cap e^\square$ and with boundary segments of the form $v^\square\cap f^\square$.
 
@@ -449,12 +449,10 @@ None of the cycles and arcs we consider in this paper contain \emph{spurs}—sub
 \label{F:ribbon}
 \end{figure}
 
-An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be perturbed into a \emph{simple} path or cycle in the ribbon graph; algorithms to detect if a cycle is weakly simple has been studied extensively of late~\cite{cex-dwsp-15,aaet-rwsp-17}.
+An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be perturbed into a \emph{simple} path or cycle in the ribbon graph; algorithms to detect if a cycle is weakly simple have been studied extensively of late, in both the plane and on orientable or non-orientable surfaces~\cite{cex-dwsp-15,aaet-rwsp-17}.
 Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if they have disjoint perturbations within the ribbon graph; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.
 
-\jnote{Cite cross-metric surface model?  Other related/equivalent perturbation models?}
 
-\rnote{209: While you're at it, you should probably say a few words about data structures for graph embeddings.}\jnote{See reference to Kettner above.}  
 
 %\rnote{214: Definition of an arc as a walk. Previously, arc on a surface was disallowed to contain internal vertices on boundaries. Is here an arc as a walk disallowed to contain vertices on the boundary as internal vertices? I think not, you consider such an arc as bouncing from the boundary without really touching it, but I think it requires an explicit comment. }
 
@@ -565,7 +563,7 @@ We give these full details here for completeness, and because as far as we are a
 elsewhere in the literature for the first method.  We note that a preliminary version of the current
 work~\cite{en-mcsnc-11} was the first detailed description of the second method;
 see also Chambers~\etal~\cite{bcfn-mchbs-17} for an alternative description of the second method.
-All results in this section extend without modification to nonorientable surfaces.
+All results in this section extend without modification to non-orientable surfaces.
 
 
 Both of the methods we will describe characterize the homology class of any even subgraph $H$ using a vector of~$\beta$ bits.
@@ -809,9 +807,18 @@ Why $-5$ and not $-6$?
 }
 \end{lemma}
 
+%\begin{lemma}
+%\label{lem:crossing}
+%Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
+%\end{lemma}
+
+\begin{proof}
+\knote{First draft of new detour focused proof below.}
+
+\knote{I moved the aside about uniqueness into the proof environment.}
 Our proof begins by conceptually modifying the edge weights in $G$ in a manner reminiscent to the
 way many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10,
-eh-ocsd-04} enforce edge weight \emph{genericity}, and in particular, the \emph{uniqueness} shortest
+eh-ocsd-04} enforce edge weight \emph{genericity}, and in particular, the uniqueness of shortest
 paths between any two vertices of a graph.
 This assumption can be enforced \emph{with high probability} by adding random infinitesimal weights
 to each edge \cite{mvv-memi-87}.
@@ -826,24 +833,12 @@ $O(g)$.
 Unfortunately, this latter scheme cannot be used as a black box in algorithms such as ours that rely
 on edges being undirected.
 
-%\begin{lemma}
-%\label{lem:crossing}
-%Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.  Let $H$ be a subgraph of $G$ of minimum weight in its $\Z_2$-homology class, and let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H$.  The total number of crossings between any shortest path in $G$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $6g+2b-3$.
-%\end{lemma}
-
-\begin{proof}
-\jnote{Rewrite exchange argument at the level of arcs, not paths.  Use the earlier lemma that the greedy system of arcs is the \emph{shortest} system of arcs.  So (later) if any of the contracted loops $\ell_i$ in $\Sigma/a_i$ is contractible, then we could shorten $a_i$ to get a shortest system of arcs, contradiction.}
-\knote{At the end of the last meeting, we agreed it would be easier to use the following argument:
-If you cross an arc too many times, then you need to \emph{touch} one of its shortest paths too many
-times.
-Now use the original argument for shortest paths.}
-
-For the sake of argument, we slightly modify the edge weights of $G$.
+We modify the edge weights of $G$ as follows.
 \knote{Changed this description of the perturbation scheme's guarantees.}
 Every \(Z_2\)-minimal even subgraph under the modified weights is \(Z_2\)-minimal under the original
 weights as well;
-however, every \(Z_2\)-minimal even subgraph under the modified weights also has a bounded number of
-crossings with each arc of \(A\) as specified by the lemma.
+however, the cycles in any decomposition of any \(Z_2\)-minimal even subgraph under the modified
+weights also has a bounded number of crossings with each arc of \(A\)'s as specified by the lemma.
 %
 Recall that every arc in $A$ consists of two shortest paths from a forest $F$ of shortest paths.
 Our modification simply adds identical infinitesimal weights $\eps$ to every edge \emph{outside} of
@@ -853,32 +848,44 @@ in $\sigma$, that $\sigma(u, v)$ is the unique shortest path from $u$ to $v$.
 Indeed, any path from $u$ to $v$ that uses an edge outside $F$ must weigh at least $\eps$ more than
 $\sigma(u, v)$, and $F$ is a forest so there are no other paths from $u$ to $v$ using only edges of~$F$.
 
-
-
 Let $H'$ be an arbitrary $\Z_2$-minimal even subgraph homologous to $H$ under the new edge weights.
 Let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H'$.
-We now argue that for any shortest path $\sigma = \sigma(u, v)$ contributing to $F$, the total
-number of crossings between $\sigma$ and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most
-$6g+2b-3$.
-The lemma immediately follows from the construction of $A$, \modified{as 
-each arc in $A$ is the concatenation of two shortest paths possibly meeting in the middle of an edge.}
-Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  
-\rnote{
-Reviewer: It is true, but please justify better why you can assume that sigma crosses each cycle $\gamma_i$ at least once. 
-}
-\anote{
- Why do we need this assumption?
-}
-For each $i$, let~$x_i$ denote the number of times $\sigma$ and $\gamma_i$ cross, and let $x = x_1 + x_2 + \cdots + x_r$.  We need to prove that $x\le 6g+2b-3$.
-
+Consider any shortest path \(\sigma = \sigma(u, v)\) contributing to \(F\).
+We define a \EMPH{detour} of any cycle \(\gamma_j \in \Set{\gamma_1, \dots, \gamma_r}\) from
+\(\sigma\) as a subpath of \(\gamma_j\) that has endpoints on \(\sigma\) but is otherwise disjoint
+from \(\sigma\).
+For each $j$, let~$x_j$ denote the number of detours of \(\gamma_j\) from $\sigma$ if \(\gamma_j\)
+and \(\sigma\) intersect and \(0\) otherwise.
+Let $x = x_1 + x_2 + \cdots + x_r$.
+We will prove that $x\le 6g+2b-3$.
+%We now argue that the total number of detours from \(\sigma\) is at most $6g+2b-3$.
+The lemma immediately follows from the construction of $A$, as each arc in $A$ is the concatenation
+of two shortest paths with an additional edge.
+In particular, every crossing between arc \(a_i\) and a cycle~\(\gamma_j\) ends with a detour from
+one of the two shortest paths of~\(a_i\).
+\knote{Check that last statement.}
+%Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  
+%\rnote{
+%Reviewer: It is true, but please justify better why you can assume that sigma crosses each cycle $\gamma_i$ at least once. 
+%}
+%\anote{
+ %Why do we need this assumption?
+%}
 %Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.
 
-Consider the graph $G/\sigma$ obtained from $G$ by contracting the path $\sigma$ to a single vertex $uv$.  This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.  Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple \modified{pairwise} non-crossing loops in $G/\sigma$ with basepoint $uv$.  Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.  We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
+Consider the graph $G/\sigma$ obtained from $G$ by contracting the path $\sigma$ to a single vertex $uv$.
+This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.
+Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple pairwise non-crossing loops
+in $G/\sigma$ with basepoint $uv$.
+Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.
+We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
 
 Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$
 whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$
 is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover,
-the previously discussed uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.  But this contradicts our assumption that $H $ has minimum weight in its homology class.
+the previously discussed uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.
+But this last observation contradicts our assumption that $H $ has minimum weight in its homology
+class.
 
 Now suppose some pair of loops $\ell_i$ and $\ell_j$ are homotopic; by definition, the cycle $\ell_i\cdot\reverse{\ell_j}$ is contractible.  These two loops are contractions of paths $\pi_i$ and $\pi_j$ in $G$ with endpoints in $\sigma$.  Let $u_i$ and~$v_i$ denote the endpoints of $\pi_i$, and let $u_j$ and~$v_j$ denote the endpoints of $\pi_j$.  The cycle $\pi_i \cdot \sigma(v_i,v_j) \cdot \overline{\pi_j} \cdot \sigma(u_j, u_i)$ in $G$ is also contractible.  Let $\delta$ denote the set of edges of $G$ that appear in this cycle exactly once.  If the sub-paths $\sigma(v_i,v_j)$ and $\sigma(u_j, u_i)$ are edge-disjoint, then $\delta$ is a contractible cycle; otherwise, $\delta$ is the union of two non-crossing homotopic cycles.  In either case, $\delta$ is a boundary subgraph, so the symmetric difference $H\oplus\delta$ is homologous with $H$.  Moreover, $H\oplus\delta$ has smaller weight than~$H$, and we obtain another contradiction.
 
@@ -1430,6 +1437,7 @@ $G$ does not cross $A$.  (We emphasize that our algorithm does not necessarily c
 \subsection{Non-contractible}
 \label{sec:global_non-contractible}
 
+\knote{Use \(Y\) for a subset of faces?}
 Now suppose some minimum-weight separating subgraph $\minSS$ is non-contractible.  At a high level,
 our algorithm for this case computes a set $F$ of faces, such that some minimum-weight separating
 subgraph of $G$ separates $s^*$ from at least one face in $F$.  (Equivalently, $F^*$ is a set of
