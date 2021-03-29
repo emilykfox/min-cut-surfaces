@@ -471,10 +471,10 @@ Every even subgraph of an embedded graph has a cycle decomposition.
 Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specifying, at each vertex~$v$, which pairs of incident edges of $H$ are consecutive.  Any pairing that does not create a crossing at $v$ is sufficient.  For example, if $e_1, e_2, \dots, e_{2d}$ are the edges of $H$ incident to $v$, indexed in clockwise order around $v$, we could pair edges $e_{2i-1}$ and $e_{2i}$ for each $i$.
 \end{proof}
 
-We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs cannot be decomposed into strictly simple cycles.
+We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs of $G$ cannot be decomposed into strictly simple cycles in $G$.
 
-\EMPH{Slicing} a combinatorial surface along a cycle or arc modifies both the surface and the embedded graph.
-For any combinatorial surface $S = (\Sigma, G)$ and any simple cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.
+\EMPH{Slicing} a combinatorial surface along a cycle or arc modifies both the surface and the embedded graph.  For any combinatorial surface $S = (\Sigma, G)$ and any \emph{simple} cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.  We can also slice along any \emph{weakly} simple arc or cycle $\gamma$ by considering any simple perturbation $\tilde\gamma$ of $\gamma$ within the ribbon graph $G^\square$.  In particular, $\tilde\gamma$ partitions the vertex regions and edge ribbons of $G^\square$ into the vertex regions and edge ribbons of the ribbon graph of \EMPH{$S \snip \gamma$}.
+
 We define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
 
 
@@ -898,7 +898,7 @@ We will cut the combinatorial surface $\Sigma$ along our greedy system of arcs i
 \rnote{Again, you haven't proved that this is a disk. }
 This construction cuts along each path in the greedy system; we then have two copies of each path,  and replace each copy  with a single edge.  Thus, each path in our greedy system of arcs will correspond to two edges in the polygon.
 
-We next dualize the abstract polygonal schema by replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Any collection of non-crossing, non-self-crossing cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08}, where we draw an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of loops.  
+We next dualize the abstract polygonal schema by replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Any collection of non-crossing, weakly simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08}, where we draw an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of loops.  
 \rnote{
 But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky.
 }
