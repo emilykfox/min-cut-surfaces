@@ -611,7 +611,7 @@ Therefore, $\abs{L} = m - n - f + 1 = 2g - b - 1$.  Thus, in both cases, $L$ con
 Fix a forest-cotree decomposition $(\partial\! G, F, L, C)$, and arbitrarily index $L = \set{e_1, e_2, \dots, e_\beta}$.  For each edge $e_i\in L$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial loop from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of~$F$ twice.  We refer to the collection $\set{a_1, a_2, \dots, a_\beta}$ as a \EMPH{system of arcs}.  See Figure \ref{fig:forest-cotree}.
 
 \begin{lemma}
-The arcs $a_1, a_2, \dots, a_\beta$ are weakly disjoint.
+The arcs $a_1, a_2, \dots, a_\beta$ are weakly simple and weakly disjoint.
 \end{lemma}
 
 \begin{proof}
@@ -646,6 +646,10 @@ For each edge $e_i\in L$, let $\sigma_i$ and $\tau_i$ denote the unique directed
 Exchange arguments by Erickson and Whittlesey \cite{ew-gohhg-05} and Colin de Verdière \cite{c-scgsp-10} imply that every arc in the greedy system is tight, and moreover that the greedy system of arcs has minimum total length among all systems of arcs.\footnote{Specifically, Colin de Verdière’s argument implies that the greedy system of arcs is a minimum-length basis in $G$ for the first relative homology group $H_1(\Sigma, \partial\Sigma)$ \cite[Section 3]{c-scgsp-10}.  Thus, each arc in the greedy system is as short as possible in its \emph{relative homology} class.}
 
 \subsection{Crossing parity vectors}
+
+Fix a system of arcs $a_1, a_2, \dots, a_\beta$.  In this section we define the \EMPH{crossing parity vector} of any even subgraph $H$, with respect to the fixed system of arcs, and prove that this vector characterizes the homology class of $H$.  Intuitively, the crossing parity vector is a vector of $\beta$ bits, whose $i$th bit is equal to $1$ if and only if $H$ crosses arc $a_i$ an odd number of times.  However, some care is required to ensure that this intuitive notion is actually well-defined.  Rather than working directly with $H$, we decompose $H$ into cycles, perturb those cycles and the arcs $a_i$ within the ribbon graph $G^\square$, and finally count crossings between those perturbations.  The main observation of this section is that the crossing parity vector is independent of both the choice of cycle decomposition and the choice of ribbon perturbation.
+
+\jnote{HERE}
 
 For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ of $\gamma$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements. \rnote{please define the notion of crossing between two paths in $G$? Amir: Also, we need to define 'the number of crossing' (?)} \jnote{See my earlier comment in Section 2.  We need a lemma for later: \emph{The greedy system of arcs is a shortest system of arcs.} Or more usefully: \emph{Every arc in the greedy system of arcs is tight (shortest in its homotopy class.} See Éric’s homology argument about greedy systems of \emph{loops} in my AMS survey and in Éric’s ESA 2010 paper.  Argue that our one-shot tree-cotree construction yields the same arcs as Éric’s iterative construction.}
 
