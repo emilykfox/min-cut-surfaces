@@ -704,12 +704,11 @@ We define a \EMPH{tree-coforest decomposition} of $G$ to be any partition $(T, L
 \end{itemize}
 %
 \modified{
-If $G$ has no boundary then $(T, L, F)$ coincides with a tree-cotree decomposition.  Therefore, $|L| = 2g = \beta$.
-Otherwise, $F^*$ is a spanning forest of a graph with $f+b$ vertices that has $b$ connected components.  So, $|F^*| = f$.
-Since $(T, L, F)$ is a partition of $m$ edges, we have $|L| = m - |T| - |F^*| = m-n-f+1=2g-b-1=\beta$.
-Hence, in both cases, $L$ contains exactly $\beta$ edges;
+By Lemma~\ref{lem:L_edges} there are exactly~$\beta$ edges in $L$;
 }
-\sout{Euler's formula implies that there are exactly~$\beta$ edges in $L$;} arbitrarily index these edges $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to $F^*$ creates a new dual path $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  We can treat each path $\dualarc_i$ as a simple arc in the \emph{abstract} surface $\Sigma$; slicing along these $\beta$ arcs transforms $\Sigma$ into a topological disk. \modified{What do we mean by abstract surface? a reviewer asked? Also, should we say $\alpha_i$ is weakly simple.  I think the only non-simple part of $\alpha_i$ is the initial part of the two paths to the endpoints of $e_i$, am I right? may be we can just say that}
+\sout{Euler's formula implies that there are exactly~$\beta$ edges in $L$;} arbitrarily index these edges $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to $F^*$ creates a new dual path $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  
+\modified{The paths $\dualarc_i$ form a set of weakly simple arcs;}
+\sout{We can treat each path $\dualarc_i$ as a simple arc in the \emph{abstract} surface $\Sigma$;} slicing along these $\beta$ arcs transforms $\Sigma$ into a topological disk. \modified{What do we mean by abstract surface? a reviewer asked? Also, should we say $\alpha_i$ is weakly simple.  I think the only non-simple part of $\alpha_i$ is the initial part of the two paths to the endpoints of $e_i$, am I right? may be we can just say that}
 See Figure~\ref{fig:tree-coforest}.  We call the set $\set{\dualarc_1, \dualarc_2, \dots, \dualarc_\beta}$ a \EMPH{system of dual arcs}.
 
 \begin{figure}[htb]
