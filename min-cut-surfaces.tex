@@ -693,13 +693,13 @@ So, if $x(H\oplus H')$ is the zero vector then  $x(H) = x(H')$.
 \modified{In fact, the previous lemma implies that since two even subgraphs are $\Z_2$-homologous subgraphs if and only if their crossing parity vectors agree, then the crossing parity vector is in fact independent of the choice of cycle decomposition.}  \enote{Should we say more here, or is it clear? And double check proof of 3.1 above...}
 
 \begin{lemma}
-We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of
-arcs, in $O(\beta)$ time per edge of the subgraph.
+We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of arcs, in $O(\beta n)$ time.
+%arcs, in $O(\beta)$ time per edge of the subgraph.
 \end{lemma}
 
 \begin{proof}
-We can compute a cycle decomposition $\gamma_1, \dots, \gamma_r$ of $H$ in $O(1)$ time per edge, by following the proof of Lemma~\ref{lem:decomposition}.
-We can compute the number of crossings between any cycle $\gamma_i$ and any arc $a_j$ in time proportional to the number of edges in $\gamma_i$.
+Let $a_1,\dots, a_\beta$ be the fixed system of arcs. 
+We can compute a cycle decomposition $\gamma_1, \dots, \gamma_r$ of $H$ in $O(1)$ time per edge, by following the proof of Lemma~\ref{lem:decomposition}.  Finally, we can compute the number of crossings between (any ribbon perturbation of) any cycle $\gamma_i$ and any arc $a_j$ in time proportional to the number of edges in $\gamma_i$.
 \end{proof}
 
 \jnote{Extracted from earlier; where does this go??}
