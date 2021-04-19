@@ -590,14 +590,13 @@ A \EMPH{forest-cotree decomposition} of a combinatorial surface $S = (\Sigma, G)
 
 \begin{lemma}
 \label{lem:L_edges}
-In any forest-cotree decomposition $(\partial\! G, F, L, C)$ of any combinatorial surface with first Betti number~$\beta$, possibly with boundary, $L$ contains exactly $\beta$ edges.
+In any forest-cotree decomposition $(\partial\! G, F, L, C)$ of any combinatorial surface with boundary and with first Betti number~$\beta$,  $L$ contains exactly $\beta$ edges.
 \end{lemma}
 
 \begin{proof}
 Recall that $n$, $m$ and $f$ are the number of vertices, edges and faces of $G$ in order.
-If $G$ has no boundary, then $(F, C^*, L)$ is a tree-cotree decomposition, and therefore $|F| = n-1$ and $|C^*| = f-1$.  It follows that $|L| = m - |F| - |C^*| = 2g = \beta$.
-
-Otherwise, Let $d_1, \ldots, d_b$ be the number of edges on the boundary components.  
+%If $G$ has no boundary, then $(F, C^*, L)$ is a tree-cotree decomposition, and therefore $|F| = n-1$ and $|C^*| = f-1$.  It follows that $|L| = m - |F| - |C^*| = 2g = \beta$.
+Let $d_1, \ldots, d_b$ be the number of edges on the boundary components.  
 We have $|\partial\! G| = \sum_i {d_i}$.
 Also, since our boundary cycles are disjoint, we can view $F$ as a spanning forest of $G$ with $b$ connected components, after contracting the boundary cycles.  Hence, $|F| = (n - \sum_i{(d_i-1)}) - b$.  Finally, $C^*$ is a spanning tree of the dual graph, so it has $f-1$ edges. As $(\partial\! G, F, L, C)$ is a partition of the edges, we have
 \begin{align*}
@@ -608,7 +607,7 @@ Also, since our boundary cycles are disjoint, we can view $F$ as a spanning fore
 Therefore, $\abs{L} = m - n - f + 1 = 2g - b - 1$.  Thus, in both cases, $L$ contains exactly $\beta$ edges.
 \end{proof}
 
-Fix a forest-cotree decomposition $(\partial\! G, F, L, C)$, and arbitrarily index $L = \set{e_1, e_2, \dots, e_\beta}$.  For each edge $e_i\in L$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial loop from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of~$F$ twice.  We refer to the collection $\set{a_1, a_2, \dots, a_\beta}$ as a \EMPH{system of arcs}.  See Figure \ref{fig:forest-cotree}.
+Fix a forest-cotree decomposition $(\partial\! G, F, L, C)$, and arbitrarily index $L = \set{e_1, e_2, \dots, e_\beta}$.  For each edge $e_i\in L$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial walk from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of~$F$ twice.  We refer to the collection $\set{a_1, a_2, \dots, a_\beta}$ as a \EMPH{system of arcs}.  See Figure \ref{fig:forest-cotree}.
 
 \begin{lemma}
 The arcs $a_1, a_2, \dots, a_\beta$ are weakly simple and weakly disjoint.
@@ -616,6 +615,9 @@ The arcs $a_1, a_2, \dots, a_\beta$ are weakly simple and weakly disjoint.
 
 \begin{proof}
 \jnote{Perturb using a Euler tour of $F$.}
+\enote{took a first stab - not quite finished with the last few sentences, if someone else can look it over.}
+Each arc $a_i$ consists of an edge in $L$ plus two (possibly overlapping) paths in $F$; we know the edges from $L$ are disjoint, so we simply need define a consistent way to perturb forest paths apart.  We will use an Euler tour of $F$ to define consistent perturbations, as follows.
+For each edge $e_i$ in $L$, we subdivide into 3 edges, and the first and third of those edges to the forest $F$, yielding a new augmented forest $F'$.  We then compute an Euler tour of $F'$, giving a left to right ordering of all of the subdivided edges added to $F$ from $L$. This tour then gives a way to perturb our arcs: each is a path from $F$, then uses the subdivided edges from $L$, then another path from $F$.   Since at most one arc uses any of the subdivided edges, there are no intersections between the (consistently perturbed) arcs.  
 \end{proof}
 
 \begin{lemma}
