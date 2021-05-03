@@ -430,6 +430,7 @@ Further, we may sometimes use~$D$ to refer to an edge set or the subgraph~$F = (
 but it should be clear which we mean from context.
 
 \subsection{Perturbations and Crossings}
+\label{SS:perturb}
 
 Our algorithms manipulate cycles and arcs in combinatorial surfaces that can share or repeat graph vertices and edges, but that can be perturbed on the surface to avoid self-intersections and other degeneracies.  To accommodate these perturbations, we represent our combinatorial surfaces as \EMPH{ribbon graphs} \cite{l-gos-2004,em-gos-13}.  (Ribbon graphs are also known as \emph{band decompositions}  \cite{em-gos-13} and \emph{fat graphs} \cite{l-gos-2004}, and they are closely related to the \emph{graph-encoded map} data structure \cite{l-gem-82} for representing both orientable and non-orientable combinatorial surfaces.)  We note that the cross metric surface is a (roughly) equivalent structure to avoid these degeneracies as well; see~\cite{ce-tspcs-06,cl-opdsh-07}. \enote{Justify why we don't use it? Leaning towards no, but feel free if you think necessary!}
 
@@ -651,7 +652,7 @@ Exchange arguments by Erickson and Whittlesey \cite{ew-gohhg-05} and Colin de Ve
 
 Fix a system of arcs $a_1, a_2, \dots, a_\beta$.  In this section we define the \EMPH{crossing parity vector} of any even subgraph $H$, with respect to the fixed system of arcs, and prove that this vector characterizes the homology class of $H$.  Intuitively, the crossing parity vector is a vector of $\beta$ bits, whose $i$th bit is equal to $1$ if and only if $H$ crosses arc $a_i$ an odd number of times.  However, some care is required to ensure that this intuitive notion is actually consistent.  Rather than working directly with $H$, we formally define the crossing parity vector of an arbitrary \emph{ribbon perturbation} of an arbitrary \emph{cycle decomposition} of $H$, and then argue that the resulting bit vector is the same for any cycle decomposition and any ribbon perturbation thereof.
 
-First, fix a single cycle $\gamma$ in $G$ and an index $i$.  Let $\tilde{\gamma}$ and $\tilde{a}_i$ be any ribbon perturbation of the cycle $\gamma$ and the arc~$a_i$.  By definition, all intersections between $\tilde\gamma$ and $\tilde{a}_i$ are transverse crossings, and each vertex region $v^\square$ contains at most one such crossing.  We define the crossing parity $\bar{x}_i(\gamma)$ to be $1$ if $\tilde\gamma$ intersects $a_i$ an odd number of times, and $0$ otherwise.
+First, fix a single cycle $\gamma$ in $G$ and an index $i$.  Let $\tilde{\gamma}$ and $\tilde{a}_i$ be any ribbon perturbation of the cycle $\gamma$ and the arc~$a_i$, as defined in Section \ref{SS:perturb}.  By definition, all intersections between $\tilde\gamma$ and $\tilde{a}_i$ are transverse crossings within vertex regions of the ribbon graph $G^\square$, and each vertex region $v^\square$ contains at most one such crossing.  We define the crossing parity $\bar{x}_i(\gamma)$ to be $1$ if $\tilde\gamma$ intersects $a_i$ an odd number of times, and $0$ otherwise.
 
 Consider two ribbon perturbations $\set{\tilde{\gamma}, \tilde{a}_i}$ and $\set{\tilde{\gamma}’, \tilde{a}’_i}$.  These two pairs of curves are homotopic in $G^\square$; that is, the pair of curves $\tilde{\gamma}$ and $\tilde{a}_i$ can be continuously deformed to the pair of curves $\tilde{\gamma}’$ and $\tilde{a}’_i$ within the ribbon graph.  Classical topological arguments \cite{a-cas-26,ab-tkc-26,r-ebk-27} imply that any homotopy between (pairs of) curves can be decomposed into a finite sequence of elementary \emph{homotopy moves}, of three different types, as shown in Figure \ref{F:homotopy-moves}.  Straightforward case analysis implies that any homotopy move preserves the parity of the number of crossings between the two deforming curves.
 It follows that the crossing parity $\bar{x}_i(\gamma)$ is independent of the choice of ribbon perturbation of $\gamma$ and $a_i$.
@@ -665,26 +666,37 @@ It follows that the crossing parity $\bar{x}_i(\gamma)$ is independent of the ch
 
 %For any cycle $\gamma$ and any index $i$, let $x_i(\gamma)$ denote the number of times $\gamma$ crosses the arc~$a_i$.  The \EMPH{crossing vector} $x(\gamma)$ of $\gamma$ is the vector $(x_1(\gamma), \dots, x_\beta(\gamma))$.  The crossing vector of a set of cycles is the sum of the crossing vectors of its elements. \rnote{please define the notion of crossing between two paths in $G$? Amir: Also, we need to define 'the number of crossing' (?)} \jnote{See my earlier comment in Section 2.  We need a lemma for later: \emph{The greedy system of arcs is a shortest system of arcs.} Or more usefully: \emph{Every arc in the greedy system of arcs is tight (shortest in its homotopy class.} See Éric’s homology argument about greedy systems of \emph{loops} in my AMS survey and in Éric’s ESA 2010 paper.  Argue that our one-shot tree-cotree construction yields the same arcs as Éric’s iterative construction.}
 
-Now consider an even subgraph $H$.  We define the \emph{crossing parity} $x_i(H)$ as the sum of the crossing parities of the cycles in any cycle decomposition of $H$.  Again, we claim that this bit is independent of the choice of cycle decomposition.  Consider two cycle decompositions $\gamma_1, \dots, \gamma_k$ and $\delta_1, \dots, \delta_l$ of $H$.  Because the cycles in both decompositions traverse the same subset of edges, there are ribbon perturbations $\tilde\gamma_1, \dots, \tilde\gamma_k, \tilde{a}_1, \dots, \tilde{a}_\beta$ and $\tilde\delta_1, \dots, \tilde\delta_l, \tilde{a}_1, \dots, \tilde{a}_\beta$ that include identical perturbations of the arcs $a_i$ and that have identical orders with each edge ribbon.
+Now consider an even subgraph $H$.  We define the \emph{crossing parity} $x_i(H)$ as the sum of the crossing parities of the cycles in any cycle decomposition of $H$.  Again, we claim that this bit is independent of the choice of cycle decomposition.  Consider two cycle decompositions $\gamma_1, \dots, \gamma_k$ and $\delta_1, \dots, \delta_l$ of $H$.  Because the cycles in both decompositions traverse the same subset of edges, there are ribbon perturbations $\set{\tilde\gamma_1, \dots, \tilde\gamma_k, \tilde{a}_i\set}$ and $\smash{\set{\tilde\delta_1, \dots, \tilde\delta_l, \tilde{a}_i}}$ that include identical perturbations $\tilde{a}_i$ of arc $a_i$ and that have identical intersections with each edge ribbon.
 
-\medskip\centerline{\jnote{HERE}}\medskip
+Consider the restriction of these two ribbon perturbations to a single vertex region $v^\square$, as shown in Figure~\ref{F:cycle-decomp}.  The intersections $\tilde\gamma_i \cap v^\square$ are simple, pairwise-disjoint, boundary-to-boundary paths in $v^\square$.  The intersections $\tilde\delta_i \cap v^\square$ are also simple, pairwise-disjoint, boundary-to-boundary paths in $v^\square$.  Moreover, these two sets of paths share identical endpoints.  It follows that the symmetric difference $(\bigcup_i \tilde\delta_i \oplus \bigcup_i \tilde\gamma_i) \cap v^\square$ is the union of (not necessarily simple) closed curves in $v^\square$.  Any simple closed curve in $v^\square$ intersects any arc $\tilde{a}_i$ an even number of times.  It follows that these two ribbon perturbations either cross $\tilde{a}_i$ an even number of times, or both cross $\tilde{a}_i$ an odd number of times.  We conclude that $x_i(H)$ is independent of the cycle decomposition of $H$.
 
+\begin{figure}[htb]
+\centering
+\includegraphics[scale=0.5,page=1]{Fig/cycle-decomp-independence}\qquad
+\includegraphics[scale=0.5,page=2]{Fig/cycle-decomp-independence}\qquad
+\includegraphics[scale=0.5,page=3]{Fig/cycle-decomp-independence}
+\caption{Local view of ribbon perturbations of two cycle decompositions of the same even subgraph, and their symmetric difference.  The doubled lines describe a perturbation of a single weakly simple arc $a_i$.}
+\label{F:cycle-decomp}
+\end{figure}
 
-Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; \modified{instead, we define}
-\sout{however, the \emph{parity} of the crossing number is independent of the cycle decomposition.} 
-\anote{A reviewer has requested a proof that this definition is independent of the choice of the cycle decomposition ... }
-\enote{Edited this to address reviewer request, and instead justify why it's independent of the cycle decomposition after 3.1}
-\enote{Actually, this is AWFUL. Rewrite after the perturbation/crossing definitions stabilize.}
-the \EMPH{crossing parity vector} of any even subgraph $H$ \modified{with respect to a particular fixed cycle decomposition} to be the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses the cycle decomposition of $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
+Finally, the crossing parity vector $x(H)$ is defined as the vector $(x_1(H), x_2(H), \dots, x_\beta(H))$.
+
+%
+%Extending the notion of crossing vectors to even subgraphs is rather subtle, because we cannot consistently define when a path crosses an even subgraph $H$.  Instead, we consider crossings between a path and the cycles in an arbitrary cycle decomposition of the even subgraph $H$.  Different cycle decompositions may yield different numbers of crossings, so even subgraphs do not have well-defined crossing vectors; \modified{instead, we define}
+%\sout{however, the \emph{parity} of the crossing number is independent of the cycle decomposition.} 
+%\anote{A reviewer has requested a proof that this definition is independent of the choice of the cycle decomposition ... }
+%\enote{Edited this to address reviewer request, and instead justify why it's independent of the cycle decomposition after 3.1}
+%\enote{Actually, this is AWFUL. Rewrite after the perturbation/crossing definitions stabilize.}
+%the \EMPH{crossing parity vector} of any even subgraph $H$ \modified{with respect to a particular fixed cycle decomposition} to be the bit vector $\bar{x}(H) = (\bar{x}_1, \dots, \bar{x}_\beta)$, where $\bar{x}_i = 1$ if the arc $a_i$ crosses the cycle decomposition of $H$ an odd number of times, and $\bar{x}_i = 0$ otherwise.
  
 \begin{lemma}
 Two even subgraphs are $\Z_2$-homologous if and only if their crossing parity vectors (with respect to the same system of arcs) are equal.
 \end{lemma}
 
 \begin{proof}
-Any non-contractible loop or arc crosses any facial cycle an even number of times; thus, the crossing parity vector of any facial cycle is the zero vector.  
-Every boundary subgraph is the symmetric difference of facial cycles.  
-Thus, the crossing parity vector of any boundary subgraph is the zero vector.
+Any arc crosses any facial cycle an even number of times; thus, the crossing parity vector of a facial cycle is the zero vector.  Every boundary subgraph is the symmetric difference of facial cycles; thus, the crossing parity vector of any boundary subgraph is also the zero vector.
+
+\jnote{Don’t we also need to prove that zero crossing parity implies boundary?!}
 
 On the other hand, every pair of even subgraphs $H$ and $H'$ satisfies the identity $x(H\oplus H') = x(H) \oplus x(H')$. \anote{(do we need to prove $x(H\oplus H') = x(H) \oplus x(H')$? this seems more general than the fact that the crossing number is independent of the cycle decomposition that one of the reviewers asked to prove?)}
 So, if $x(H\oplus H')$ is the zero vector then  $x(H) = x(H')$.
