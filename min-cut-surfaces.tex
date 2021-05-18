@@ -694,15 +694,15 @@ Two even subgraphs are $\Z_2$-homologous if and only if their crossing parity ve
 \end{lemma}
 
 \begin{proof}
-Any arc crosses any facial cycle an even number of times; thus, the crossing parity vector of a facial cycle is the zero vector.  Every boundary subgraph is the symmetric difference of facial cycles; thus, the crossing parity vector of any boundary subgraph is also the zero vector.
+Any arc crosses any facial cycle an even number of times; thus, the crossing parity vector of a facial cycle is the zero vector.  Every boundary subgraph is the symmetric difference of facial cycles; thus, the crossing parity vector of any boundary subgraph is also the zero vector.  Every pair of even subgraphs $H$ and $H'$ satisfies the identity $x(H\oplus H') = x(H) \oplus x(H')$.  In particular, if $x(H\oplus H')$ is the zero vector, then $x(H) = x(H')$.  We conclude that if two even subgraphs are homologous, then their crossing parity vectors are equal.
 
-\jnote{Don’t we also need to prove that zero crossing parity implies boundary?!}
+On the other hand, suppose $H$ is an even subgraph such that $x(H) = 0$.  We claim that there is a subset $S$ of faces whose boundary is $H$.  \jnote{Consider a ribbon perturbation of (a cycle decomposition of) $H$ and the arcs.  Slice the surface along the (perturbed) arcs to obtain a disk $D$.  The perturbed cycles of $H$ appear as cycles and boundary-to-boundary paths in the disk $D$; call the set of these paths and cycles $\tilde{H}$.  Each (perturbed) arc appears as a pair of interior-disjoint paths on the boundary of $D$, each of which intersects $\tilde{H}$ an even number of times.  Moreover, every intersection of $\tilde{H}$ with the boundary of $D$ lies on one of these arc-paths.}
 
-On the other hand, every pair of even subgraphs $H$ and $H'$ satisfies the identity $x(H\oplus H') = x(H) \oplus x(H')$. \anote{(do we need to prove $x(H\oplus H') = x(H) \oplus x(H')$? this seems more general than the fact that the crossing number is independent of the cycle decomposition that one of the reviewers asked to prove?)}
-So, if $x(H\oplus H')$ is the zero vector then  $x(H) = x(H')$.
+\jnote{Now color the components of $D \snip \tilde{H}$ red and blue, so that components that are adjacent in $D$ have opposite colors.  Because $\tilde{H}$ intersects each arc-boundary-path an even number of times, every component of $D \setminus\setminus \tilde{H}$ that contains part of the boundary of the original surface $\Sigma$ has the same color, without loss of generality red.  Parity considerations imply that two faces of $G$ has opposite colors if and only if they are incident to an edge of $H$.  Thus $H$ is the boundary of the blue faces.  The identity $x(H\oplus H') = x(H) \oplus x(H')$ now implies that if two even subgraphs have equal crossing parity vectors, they must be homologous.}
+%\anote{(do we need to prove $x(H\oplus H') = x(H) \oplus x(H')$? this seems more general than the fact that the crossing number is independent of the cycle decomposition that one of the reviewers asked to prove?)}
 \end{proof}
 
-\modified{In fact, the previous lemma implies that since two even subgraphs are $\Z_2$-homologous subgraphs if and only if their crossing parity vectors agree, then the crossing parity vector is in fact independent of the choice of cycle decomposition.}  \enote{Should we say more here, or is it clear? And double check proof of 3.1 above...}
+%\modified{In fact, the previous lemma implies that since two even subgraphs are $\Z_2$-homologous subgraphs if and only if their crossing parity vectors agree, then the crossing parity vector is in fact independent of the choice of cycle decomposition.}  \enote{Should we say more here, or is it clear? And double check proof of 3.1 above...}
 
 \begin{lemma}
 We can compute the crossing parity vector of any even subgraph, with respect to any fixed system of arcs, in $O(\beta n)$ time.
