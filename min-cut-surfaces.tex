@@ -744,7 +744,7 @@ In any tree-coforest decomposition $(T, F, L)$ of any combinatorial surface with
 \end{lemma}
 \begin{proof}
 Recall that $n$, $m$ and $f$ are the number of vertices, edges and faces of the graph.
-We have $|T| = n-1$.  Also, we have $|F^*| = f $ if $b > 0$ and $|F^*| = f -1$ if $b = 0$.  Finally, we know $|L| + |T| + |F^*| = m$.
+We have $|T| = n-1$.  Also, we have $|F^*| = f-[b=0]$, where $[b=0]$ is one if $b=0$, and it is zero otherwise.  Finally, we know $|L| + |T| + |F^*| = m$.
 So, we conclude
 \[
 |L| = m - (n-1) - (f - [b=0]) = m - n - f + 1 + [b=0] = 2g - 2 + b + 1 + [b = 0] = 2g + b - [b\neq 0] = \beta 
