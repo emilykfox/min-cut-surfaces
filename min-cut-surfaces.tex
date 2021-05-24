@@ -615,10 +615,12 @@ The arcs $a_1, a_2, \dots, a_\beta$ are weakly simple and weakly disjoint.
 \end{lemma}
 
 \begin{proof}
-\jnote{Perturb using a Euler tour of $F$.}
-\enote{took a first stab - not quite finished with the last few sentences, if someone else can look it over.}
-Each arc $a_i$ consists of an edge in $L$ plus two (possibly overlapping) paths in $F$; we know the edges from $L$ are disjoint, so we simply need define a consistent way to perturb forest paths apart.  We will use an Euler tour of $F$ to define consistent perturbations, as follows.
-For each edge $e_i$ in $L$, we subdivide into 3 edges, and the first and third of those edges to the forest $F$, yielding a new augmented forest $F'$.  We then compute an Euler tour of $F'$, giving a left to right ordering of all of the subdivided edges added to $F$ from $L$. This tour then gives a way to perturb our arcs: each is a path from $F$, then uses the subdivided edges from $L$, then another path from $F$.   Since at most one arc uses any of the subdivided edges, there are no intersections between the (consistently perturbed) arcs.  
+Each arc $a_i$ consists of an edge in $L$ plus two (possibly overlapping) paths in $F$; we know the edges from $L$ are disjoint, so we simply need define a consistent way to perturb forest paths apart.  
+We will use an Euler tour on each component of $F$ to define consistent perturbations, as follows.
+For each edge $e_i$ in $L$, we subdivide into 3 edges, and add the first and third of those edges to the forest $F$, yielding a new augmented forest $F'$.  Root each component of $F'$ at its (unique) boundary vertex.
+We then compute an Euler tour for each component of $F'$, which for each tree in $F'$ gives a total ordering of the vertices based on when they are encountered in the tour.
+This in turn gives us a set of weakly simple paths from the root to every vertex in its tree, where the order of the paths out of the root is the same as the total ordering given by the Euler tour.
+This tour then gives a way to perturb our arcs: each is a path from our set of weakly simple paths ending at some subdivided edge, then uses the middle of a subdivided edge from $L$, then another path from $F'$.   
 \end{proof}
 
 \begin{lemma}
