@@ -868,17 +868,17 @@ Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsi
 \subsection{Crossing bound}
 \label{SS:homotopy-crossing}
 
-Our main technical lemma for this section establishes an upper bound on the number of crossings
-between members of a greedy system of arcs and \jnote{(some ribbon perturbation of some cycle decomposition of)} some minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that the shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
+Our main technical lemma for this section establishes an upper bound on the number of crossings between members of a greedy system of arcs and \jnote{(any ribbon perturbation of any cycle decomposition of)} some minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that the shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
 
-As mentioned in Section~\ref{sec:characterizing_crossings}, we cannot consistently define when a shortest path crosses an even subgraph.  Instead, we consider the total number of crossings between a shortest path and the cycles in an arbitrary cycle decomposition.
+As mentioned in Section~\ref{sec:characterizing_crossings}, we cannot consistently define when a shortest path crosses an even subgraph.  We avoid this issue by considering crossings between an entire arc in the greedy system and an arbitrary ribbon perturbation of an arbitrary cycle decomposition of the even subgraph.  We emphasize that different cycle decompositions and different ribbon decompositions of the same even subgraph can have different numbers of crossings with the same arc.  The following crossing bound applies to \emph{every} ribbon decomposition of \emph{every} cycle decomposition.
+
 
 \begin{lemma}
 \label{lem:crossing}
 Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.
 Let $A = \Set{a_1, a_2, \dots, a_\beta}$ be a greedy system of arcs.
 Let $H$ be a subgraph of $G$.
-There is a $\Z_2$-minimal even subgraph $H'$ homologous to $H$ such that for any cycle decomposition
+There is a $\Z_2$-minimal even subgraph $H'$ homologous to $H$ such that for \jnote{any ribbon perturbation of} any cycle decomposition
 $\gamma_1, \gamma_2, \dots, \gamma_r$ of $H'$, the total number of crossings between any arc $a_i$
 and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $12g+4b-5$.
 
@@ -973,25 +973,23 @@ Now suppose some pair of loops $\ell_i$ and $\ell_j$ are homotopic; by definitio
 We conclude that the loops $\ell_1, \ell_2, \dots, \ell_x$ lie in distinct nontrivial homotopy classes.  Thus, these loops define an embedding of a single-vertex graph with $x$ edges onto $\Sigma$, where every face of the embedding is bounded by at least three edges.  Euler's formula now implies that $x\le 6g+2b-3$~\cite[Lemma~2.1]{ccelw-scsih-08}.
 \end{proof}
 
-We emphasize that different cycle decompositions of the same even subgraph $H'$ may lead to
-different numbers of crossings.  Our crossing bound applies to \emph{every} cycle decomposition of
-$H'$.
 
 \subsection{Triangulations and crossing sequences}
 \label{SS:homotopy-triangulation}
 
+We can now describe our algorithm.  First, recall that we have a combinatorial surface $\Sigma$ along with an associated greedy system of arcs on that surface; if $\Sigma$ had no boundary, we can delete a face without loss of generality and proceed, as described in Section~\ref{S:tree-cotree}.
+We slice the combinatorial surface $\Sigma$ along our greedy system of arcs into a $2\beta$-gon, or \emph{abstract polygonal schema}.  (See Lemma~\ref{lem:disk}.)
+Specifically, we slice the surface along each arc in a ribbon perturbation of the greedy system, and then we replace each copy of each arc on the boundary of the resulting disk with a single edge.  Thus, each greedy arc corresponds to two edges of the resulting polygon.
 
-We can now describe our algorithm.  First, recall that we have a combinatorial surface $\Sigma$ along with an associated greedy system of arcs on that surface; if  $\Sigma$ had no boundary, we can delete a face without loss of generality and proceed, as described in Section~\ref{S:tree-cotree}.
-We will cut the combinatorial surface $\Sigma$ along our greedy system of arcs into a $2\beta$-gon, or \emph{abstract polygonal schema}.  
-\rnote{Again, you haven't proved that this is a disk. }
-This construction cuts along each path in the greedy system; we then have two copies of each path,  and replace each copy  with a single edge.  Thus, each path in our greedy system of arcs will correspond to two edges in the polygon.
+We next dualize the abstract polygonal schema, replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.
+%
+Any collection of disjoint simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of arcs.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, ee call a weighted triangulation \emph{valid} if corresponding vertices are incident to edges of equal total weight.  Every valid weighted triangulation corresponds to a collection of simple disjoint cycles, which is unique up to homotopy.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.
 
-We next dualize the abstract polygonal schema by replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Any collection of non-crossing, weakly simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08}, where we draw an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of loops.  
-\rnote{
-But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky.
-}
-Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, a weighted triangulation corresponds to a collection of non-crossing, non-self-crossing cycles as long as corresponding vertices are incident to edges of equal total weight.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.  Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.  \jnote{We haven’t defined ”valid crossing vector”!  Connect back to crossing parities.}
+%\rnote{But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky.}
 
+\jnote{Even subgraph perturbation something something.}
+
+Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.  \jnote{We haven’t defined ”valid crossing vector”!  Connect back to crossing parities.}
 
 \begin{figure}[htb]
 \centering\includegraphics[height=1.45in]{Fig/triangulation}
