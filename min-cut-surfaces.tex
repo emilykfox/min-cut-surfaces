@@ -573,7 +573,7 @@ In the second method, the vector is based on the crossings between~$H$ and a set
 The second method is somewhat easier to describe and implement than the first, so we use the second method in the algorithm given in Section~\ref{sec:homcover}.
 
 \subsection{Forest-cotree decompositions}
-\label{sec:characterizing_crossings}
+\label{sec:forest-cotree}
 
 The first method begins by computing a set~$A$ of~$\beta$ arcs, each of which is the concatenation of two shortest paths in $G$ plus one edge.  \jnote{Do we ever actually use the formulation “two equal-length shortest paths”?}
 %\sout{(possibly meeting in the interior of an edge)}, such that the surface $\Sigma\setminus A$ is a topological disk.
@@ -861,7 +861,7 @@ modified easily to compute a minimum-weight representative in
 there are exactly $2^{2g+b-1}$ such classes; recall that we assume non-empty boundary.
 Lemma~\ref{lem:cut-duality} implies our algorithm can be used to find a minimum $(s,t)$-cut in~$G^*$ in the same amount of time.
 
-Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:characterizing_crossings}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several (free) \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
+Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsih-08} for computing a shortest splitting cycle; in fact, our algorithm is somewhat simpler.  Our algorithm is based on the key observation (Lemma \ref{lem:crossing})  that the shortest even subgraph in any homology class crosses any shortest path at most $O(g+b)$ times.  The first stage of our algorithm cuts the underlying combinatorial surface into a topological disk by a greedy system of arcs, as described in Section~\ref{sec:forest-cotree}.  Next, we enumerate all possible ways for an even subgraph to intersect each of the greedy arcs at most $O(g+b)$ times; we quickly discard any crossing pattern that does not correspond to an even subgraph in the desired homology class.  Each crossing pattern is realized by several (free) \emph{homotopy} classes of sets of non-crossing cycles; we show how to enumerate these homotopy classes in Section~\ref{SS:homotopy-triangulation}.  Then within each homotopy class, we find a minimum-length set of non-crossing cycles with each crossing pattern, essentially by reducing to a \emph{planar} instance of the minimum-cut problem.  The union of those cycles is an even subgraph in the desired homology class; we return the lightest such subgraph as our output.
 
 
 
@@ -870,21 +870,14 @@ Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsi
 
 Our main technical lemma for this section establishes an upper bound on the number of crossings between members of a greedy system of arcs and \jnote{(any ribbon perturbation of any cycle decomposition of)} some minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that the shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
 
-As mentioned in Section~\ref{sec:characterizing_crossings}, we cannot consistently define when a shortest path crosses an even subgraph.  We avoid this issue by considering crossings between an entire arc in the greedy system and an arbitrary ribbon perturbation of an arbitrary cycle decomposition of the even subgraph.  We emphasize that different cycle decompositions and different ribbon decompositions of the same even subgraph can have different numbers of crossings with the same arc.  The following crossing bound applies to \emph{every} ribbon decomposition of \emph{every} cycle decomposition.
-
+As mentioned in Section~\ref{sec:forest-cotree}, we cannot consistently define when a shortest path crosses an even subgraph.  We avoid this issue by considering crossings between an entire arc in the greedy system and an arbitrary ribbon perturbation of an arbitrary cycle decomposition of the even subgraph.  We emphasize that different cycle decompositions and different ribbon decompositions of the same even subgraph can have different numbers of crossings with the same arc.  The following crossing bound applies to \emph{every} ribbon decomposition of \emph{every} cycle decomposition.
 
 \begin{lemma}
 \label{lem:crossing}
 Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b$ boundary components.
 Let $A = \Set{a_1, a_2, \dots, a_\beta}$ be a greedy system of arcs.
 Let $H$ be a subgraph of $G$.
-There is a $\Z_2$-minimal even subgraph $H'$ homologous to $H$ such that for \jnote{any ribbon perturbation of} any cycle decomposition
-$\gamma_1, \gamma_2, \dots, \gamma_r$ of $H'$, the total number of crossings between any arc $a_i$
-and the cycles $\gamma_1, \gamma_2, \dots, \gamma_r$ is at most $12g+4b-5$.
-
-\rnote{
-Why $-5$ and not $-6$? 
-}
+There is a $\Z_2$-minimal even subgraph~$H'$ homologous to $H$ such that for any index $i$, and for any ribbon perturbation $\set{\tilde{a}_i, \tilde\gamma_1, \dots, \tilde\gamma_r}$ of any cycle decomposition $\set{\gamma_1, \dots, \gamma_r}$ of $H'$, the total number of crossings between the perturbed arc $\tilde{a}_i$ and the perturbed cycles $\tilde\gamma_1,  \dots, \tilde\gamma_r$ is at most $12g+4b-5$.
 \end{lemma}
 
 %\begin{lemma}
@@ -893,13 +886,9 @@ Why $-5$ and not $-6$?
 %\end{lemma}
 
 \begin{proof}
-\knote{First draft of new detour focused proof below.}
-
-\knote{I moved the aside about uniqueness into the proof environment.}
 Our proof begins by conceptually modifying the edge weights in $G$ in a manner reminiscent to the
 way many earlier papers \cite{cce-msspe-13, benw-amcnt-16, mnnw-mdpgo-18, bsw-msopg-15, e-pspmf-10,
-eh-ocsd-04} enforce edge weight \emph{genericity}, and in particular, the uniqueness of shortest
-paths between any two vertices of a graph.
+eh-ocsd-04} to enforce the uniqueness of shortest paths between any two vertices of $G$.
 This assumption can be enforced \emph{with high probability} by adding random infinitesimal weights
 to each edge \cite{mvv-memi-87}.
 %Alternatively, we can enforce genericity using either of two
@@ -923,13 +912,27 @@ in $\sigma$, that $\sigma(u, v)$ is the unique shortest path from $u$ to $v$.
 Indeed, any path from $u$ to $v$ that uses an edge outside $F$ must weigh at least $\eps$ more than
 $\sigma(u, v)$, and $F$ is a forest so there are no other paths from $u$ to $v$ using only edges of~$F$.
 %
-Every \(Z_2\)-minimal even subgraph under the modified weights is \(Z_2\)-minimal under the original
+Every \(\Z_2\)-minimal even subgraph under the modified weights is \(\Z_2\)-minimal under the original
 weights as well;
-thus, it suffices to show that the cycles in any decomposition of any \(Z_2\)-minimal even subgraph under the modified
+thus, it suffices to show that the cycles in any decomposition of any \(\Z_2\)-minimal even subgraph under the modified
 weights also have a bounded number of crossings with each arc of \(A\)'s as specified by the lemma.
 
+\medskip
+Now we begin our main argument.  Fix an are $a_i$ in our greedy system of arcs.
 Let $H'$ be an arbitrary $\Z_2$-minimal even subgraph homologous to $H$ under the new edge weights.
-Let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H'$.
+Let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H’$, and let $\set{\tilde{a}_i, \tilde\gamma_1, \dots\tilde\gamma_r}$ be an arbitrary ribbon perturbation of $a_i$ and the cycles $\gamma_j$.  Without loss of generality, we can safely assume that $\tilde{a}_i = a_i$.
+
+Recall from Section \ref{sec:forest-cotree} that $a_i$ is the concatenation of a shortest path $\sigma_i$ in the forest $F$, a single leftover edge $e_i\in L$, and the reversal of a shortest path $\tau_i$ in $F$.  For each index $j$, we define a \EMPH{detour} of $\tilde\gamma_j$ from $\sigma_i$ as a subpath of $\tilde\gamma_j$ that has endpoints on $\sigma_i$ but is otherwise disjoint from $\sigma_i$; we define detours from $\tau_i$ similarly.  The number of crossings between $\tilde\gamma_j$ and $a_i$ is at most one more than the number of detours from $\sigma_i$ and $\tau_i$.
+
+\jnote{I don’t think the previous sentence is correct. The perturbed cycle $\tilde\gamma_j$ could pass through the vertex regions at the endpoints of $e_i$ multiple times, crossing $a_i$ each time but never intersecting $\sigma_i$ or $\tau_i$, and therefore without creating detours.  There’s an unavoidable tension between working directly in the graph (where we can do shortest-path things) and working in the ribbon perturbation (where crossings are well-defined).  I’m tempted to modify the argument as follows:}
+
+\modified{
+Let $\tilde\sigma_i$ and $\tilde\tau_i$ denote the components of $a_i \setminus e_i^\square$ containing~$\sigma_i$ and $\tau_i$, respectively.  Then every intersection between $\tilde\gamma_j$ and $a_i$ is either a point in $\tilde\gamma_j\cap\tilde\sigma_i$ or a point in $\tilde\gamma_j\cap\tilde\tau_i$.  Exchange arguments imply that if the perturbed cycles $\tilde\gamma_j$ cross $\tilde\sigma_i$ more than $6g+2b-3$ times altogether, then we can replace some subpath $\tilde\gamma_j(\tilde{u},\tilde{v})$ with a subpath $\tilde\sigma_i(\tilde{u},\tilde{v})$.  The corresponding surgery in $H’$ replaces some walk $\gamma_j(u,v)$ with the shortest path $\sigma_i(u,v)$.  This surgery reduces the total weight of $H’$ without changing its homology class, which is impossible.  A symmetric  argument bounds the number of crossings with $\tilde\tau_i$.  We conclude that the cycles $\tilde\gamma_j$ cross $a_i$ at most $12g+4b-6$ times in total.
+}
+
+\jnote{Stopping here for now.}
+
+\medskip
 Consider any shortest path \(\sigma = \sigma(u, v)\) contributing to \(F\).
 \enote{This gets a bit dense - add some motivation about why we're defining detours at all, which are (basically) crossings.  Also, make the total number of crossings between cycle and arc is at most the number of details plus one - hence, we get $-5$ and not $-6$.}
 We define a \EMPH{detour} of any cycle \(\gamma_j \in \Set{\gamma_1, \dots, \gamma_r}\) from
@@ -1159,7 +1162,7 @@ This seems weird. You are computing homology covers using the decomposition of S
 \begin{proof}
 We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we return the empty walk and halt.
 
-Next, we construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, as described in Section~\ref{sec:homcover_cover}, as well as the set $S$ of directed shortest paths described in Section~\ref{sec:characterizing_crossings}.
+Next, we construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, as described in Section~\ref{sec:homcover_cover}, as well as the set $S$ of directed shortest paths described in Section~\ref{sec:forest-cotree}.
 Any cycle homologous with~$\cycle$ must intersect at least one member of~$S$ as~$\cycle$ is not null-homologous.
 We look for the shortest path in $\Gbar$ of the canonical form described in Lemma~\ref{lem:nocross}, by considering each shortest path $\sigma\in S$ in turn as follows.
 
@@ -1476,7 +1479,7 @@ There's no need to compute two cycles.}
 
 \rnote{797: Perhaps tell that A is the set of edges of the arcs, rather than the arcs themselves. }
 The algorithm computes a system $A$ of tight arcs anchored on $s^*$ in $O(n)$ time as described in
-Section~\ref{sec:characterizing_crossings}.
+Section~\ref{sec:forest-cotree}.
 Let $\Gsnip$ denote the planar graph $G \snip A$; this graph has $O(n)$ vertices.
 
 Pick an arbitrary edge $e$ on one of the tight arcs $\alpha$, and let $e_1$ and $e_2$ be distinct
