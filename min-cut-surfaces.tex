@@ -914,11 +914,6 @@ Unfortunately, this latter scheme cannot be used as a black box in algorithms su
 on edges being undirected.
 
 We modify the edge weights of $G$ as follows.
-\knote{Changed this description of the perturbation scheme's guarantees.}
-Every \(Z_2\)-minimal even subgraph under the modified weights is \(Z_2\)-minimal under the original
-weights as well;
-however, the cycles in any decomposition of any \(Z_2\)-minimal even subgraph under the modified
-weights also has a bounded number of crossings with each arc of \(A\)'s as specified by the lemma.
 %
 Recall that every arc in $A$ consists of two shortest paths from a forest $F$ of shortest paths.
 Our modification simply adds identical infinitesimal weights $\eps$ to every edge \emph{outside} of
@@ -927,6 +922,11 @@ We claim for any shortest path $\sigma$ contributing to $F$, for any pair of ver
 in $\sigma$, that $\sigma(u, v)$ is the unique shortest path from $u$ to $v$.
 Indeed, any path from $u$ to $v$ that uses an edge outside $F$ must weigh at least $\eps$ more than
 $\sigma(u, v)$, and $F$ is a forest so there are no other paths from $u$ to $v$ using only edges of~$F$.
+%
+Every \(Z_2\)-minimal even subgraph under the modified weights is \(Z_2\)-minimal under the original
+weights as well;
+however, the cycles in any decomposition of any \(Z_2\)-minimal even subgraph under the modified
+weights also have a bounded number of crossings with each arc of \(A\)'s as specified by the lemma.
 
 Let $H'$ be an arbitrary $\Z_2$-minimal even subgraph homologous to $H$ under the new edge weights.
 Let $\gamma_1, \gamma_2, \dots, \gamma_r$ be an arbitrary cycle decomposition of $H'$.
