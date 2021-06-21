@@ -376,7 +376,7 @@ setting~$(p\cdot q)(t) = p(2t)$ for all~$t \leq 1/2$
 and~$(p\cdot q)(t) = q(2t-1)$ for all~$t \geq 1/2$.
 
 The \EMPH{genus} of a surface $\Sigma$ is the maximum number of disjoint simple cycles in $\Sigma$ whose complement is connected.
-\anote{It seems that this definition of genus only works for surfaces with no boundary.}
+\anote{It seems that this definition of genus only works for surfaces with no boundary.}\jnote{No, it’s correct even for surfaces with boundary.}
  Up to homeomorphism,
 there is exactly one orientable surface and one non-orientable surface with any genus $g\ge 0$ and any number of
 boundary cycles $b\ge 0$.
@@ -432,7 +432,7 @@ but it should be clear which we mean from context.
 \subsection{Perturbations and Crossings}
 \label{SS:perturb}
 
-Our algorithms manipulate cycles and arcs in combinatorial surfaces that can share or repeat graph vertices and edges, but that can be perturbed on the surface to avoid self-intersections and other degeneracies.  To accommodate these perturbations, we represent our combinatorial surfaces as \EMPH{ribbon graphs} \cite{l-gos-2004,em-gos-13}.  (Ribbon graphs are also known as \emph{band decompositions}  \cite{em-gos-13} and \emph{fat graphs} \cite{l-gos-2004}, and they are closely related to the \emph{graph-encoded map} data structure \cite{l-gem-82} for representing both orientable and non-orientable combinatorial surfaces.)  We note that the cross metric surface is a (roughly) equivalent structure to avoid these degeneracies as well; see~\cite{ce-tspcs-06,cl-opdsh-07}. \enote{Justify why we don't use it? Leaning towards no, but feel free if you think necessary!}
+Our algorithms manipulate cycles and arcs in combinatorial surfaces that can share or repeat graph vertices and edges, but that can be perturbed on the surface to avoid self-intersections and other degeneracies.  To accommodate these perturbations, we represent our combinatorial surfaces as \EMPH{ribbon graphs} \cite{l-gos-2004,em-gos-13}.  (Ribbon graphs are also known as \emph{band decompositions}  \cite{em-gos-13} and \emph{fat graphs} \cite{l-gos-2004}, and they are closely related to the \emph{graph-encoded map} data structure \cite{l-gem-82} for representing both orientable and non-orientable combinatorial surfaces.)  We note that the cross metric surface is a (roughly) equivalent structure to avoid these degeneracies as well; see~\cite{ce-tspcs-06,cl-opdsh-07}. \enote{Justify why we don't use it? Leaning towards no, but feel free if you think necessary!} \jnote{I vote no.}
 
 The ribbon graph $G^\square$ of an embedded graph $G$ is constructed by expanding each vertex $v$ of $G$ into a closed disk $v^\square$ called a \emph{vertex region}, and expanding each edge $e$ of $G$ into a narrow rectangle $e^\square$ called an \emph{edge ribbon}.  For any vertex $v$ and edge $e$, the intersection $v^\square\cap e^\square$ is a simple path on the boundary of both regions if $v$ is an endpoint of $e$; otherwise, the vertex regions and edge ribbons are pairwise disjoint.  Each face $f$ of the original embedding $G$ (including any faces deleted to create surface boundaries) contains exactly one component of $\Sigma\setminus G^\square$; we call this component the \emph{face region} $f^\square$.  See Figure~\ref{F:ribbon}.
 
@@ -501,11 +501,12 @@ cf-qhc-08, dls-chtl-07, dlsc-cgaht-08,e-sncds-11,f-sntcd-13}, we will consider o
 one-dimensional cellular homology with coefficients in the finite
 field $\Z_2$; this restriction allows us to radically simplify our
 definitions.
-Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, every separating cycle \modified{in a surface with no boundary} is a boundary subgraph.
+Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ and $b$ boundaries.  A \EMPH{boundary subgraph} is the boundary of the union of a subset of faces of $G$; for example, on a surface with no boundary, every separating cycle is a boundary subgraph.
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
-Boundary subgraphs are also called \EMPH{null-homologous}.  \modified{An even subgraph is $\Z_2$-minimal if it is the minimum weight subgraph in its homology class.} Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}.
+Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}. We call an even subgraph \EMPH{$\Z_2$-minimal} if it is the minimum-weight subgraph in its homology class. 
+
 Homology classes define a vector space $\Z_2^\beta$, called the first homology group, where $\beta = 2g$ if the surface has no boundary and $\beta = 2g+b-1$ otherwise.
-The rank $\beta$ of the first homology group is called the first \emph{Betti number} of the surface.
+The rank $\beta$ of the first homology group is called the first \EMPH{Betti number} of the surface.
 
 \begin{figure}[htb]
 \centering
@@ -556,7 +557,7 @@ Throughout the paper, we fix an \EMPH{undirected} graph $G=(V,E)$, a non-negativ
 Except where explicitly indicated otherwise, we assume without loss of generality  that the underlying surface $\Sigma$ has non-empty boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the the first Betti number of $\Sigma$.
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.
-Tree-cotree decompositions were first formalized by Eppstein~\cite{e-dgteg-03} to compute homology generators, although the same decomposition was also studied earlier \enote{Jeff, add citations of those two earlier papers here}.
+Tree-cotree decompositions were formalized by Eppstein~\cite{e-dgteg-03} to compute homology generators, although they were studied earlier by other authors \cite{b-stdg-71, rs-cseg-84, tr-gctts-98}.
 We give these full details here for completeness, and because as far as we are aware, no detailed description appears
 elsewhere in the literature for the first method.  We note that a preliminary version of the current
 work~\cite{en-mcsnc-11} was the first detailed description of the second method;
