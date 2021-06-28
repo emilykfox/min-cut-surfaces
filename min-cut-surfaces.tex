@@ -867,7 +867,7 @@ Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsi
 \subsection{Crossing bound}
 \label{SS:homotopy-crossing}
 
-Our main technical lemma for this section establishes an upper bound on the number of crossings between members of a greedy system of arcs and \jnote{(any ribbon perturbation of any cycle decomposition of)} some minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that some shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
+Our main technical lemma for this section intuitively establishes an upper bound on the number of crossings between members of a greedy system of arcs and the minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that some shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is simpler, because the structure we seek is a true subgraph, which need not be connected, rather than a single (weakly) simple closed walk.
 
 As mentioned in Section~\ref{sec:forest-cotree}, we cannot consistently define when a shortest path crosses a $\Z_2$-minimal even subgraph.  Instead, we upper-bound the smallest possible number of crossings between an entire arc in the greedy system and a ribbon perturbation of a cycle decomposition of a $\Z_2$-minimal even subgraph in each homology class.  We emphasize that different cycle decompositions and different ribbon decompositions of the same even subgraph can have different numbers of crossings with the same arc.
 
@@ -923,11 +923,10 @@ Fix a $\Z_2$-minimal even subgraph $H’$ homologous to $H$, a cycle decompositi
 
 Recall from Section \ref{sec:forest-cotree} that each arc $a_i$ is the concatenation of a shortest path $\sigma_i$ in the forest $F$, a single leftover edge $e_i\in L$, and the reversal of a shortest path $\tau_i$ in $F$.  Let $\tilde\sigma_i$ and $\tilde\tau_i$ denote the components of $\tilde{a}_i \setminus e_i^\square$ containing~$\sigma_i$ and $\tau_i$, respectively.  Then every intersection between $\tilde\gamma_j$ and $\tilde{a}_i$ is either a point in $\tilde\gamma_j\cap\tilde\sigma_i$ or a point in $\tilde\gamma_j\cap\tilde\tau_i$.
 
+Fix an index $i$.  For each index $j$, let $x_j$ denote the number of intersection points in $\tilde\sigma_i \cap \tilde\gamma_j$.  Finally, let $x = \sum_j x_j$.  To complete the proof of the lemma, it suffices to prove that $x\le 6g+2b-3$.  (An identical argument bounds the total number of crossings with $\tilde\tau_i$.)
 
-For each $j$, let~$x_j$ denote the number of detours of \(\gamma_j\) from $\sigma$ if \(\gamma_j\)
-and \(\sigma\) intersect and \(0\) otherwise.
-Let $x = x_1 + x_2 + \cdots + x_r$.
-We will prove that $x\le 6g+2b-3$.
+\medskip
+
 
 
 %For each index $j$, we define a \EMPH{detour} of $\tilde\gamma_j$ from $\sigma_i$ as a subpath of $\tilde\gamma_j$ that has endpoints on $\sigma_i$ but is otherwise disjoint from $\sigma_i$; we define detours from $\tau_i$ similarly.  The number of crossings between $\tilde\gamma_j$ and $a_i$ is at most one more than the number of detours from $\sigma_i$ and $\tau_i$.
