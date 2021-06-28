@@ -1383,7 +1383,10 @@ $\minSS$ is actually a shortest (weakly) simple contractible cycle of $G$ in the
 \label{fig:global_cases}
 \end{figure}
 
-Thus, in principle, we can find a minimum-weight separating subgraph by first computing a shortest contractible cycle, then computing a minimum-weight separating collection of non-contractible cycles, and finally returning the lighter of these two subgraphs.  Unfortunately, we do not know how to solve either of these subproblems in our stated time bounds, so our algorithm takes a more subtle approach. 
+Thus, in principle, we can find a minimum-weight separating subgraph by first computing a shortest
+contractible cycle, then computing a minimum-weight separating collection of non-contractible
+cycles, and finally returning the lighter of these two subgraphs.
+Unfortunately, we do not know how to solve either of these subproblems in our stated time bounds, so our algorithm takes a more subtle approach. 
 
 In Section \ref{sec:global_contractible}, we describe an algorithm that computes a minimum-weight separating subgraph \emph{if} any minimum-weight separating subgraph is contractible.  Similarly, in Section \ref{sec:global_non-contractible}, we describe an algorithm that computes a minimum-weight separating subgraph \emph{if} any minimum-weight separating subgraph is non-contractible.  In both cases, if no minimum-weight separating subgraph satisfies the corresponding condition, the algorithm still returns a boundary subgraph, but this subgraph could be empty or have large weight.  By running both subroutines and returning the best result, we are guaranteed to find a minimum-weight separating subgraph in $G$, no matter which category it falls into.
 
@@ -1392,9 +1395,23 @@ In Section \ref{sec:global_contractible}, we describe an algorithm that computes
 
 \subsection{Contractible}
 \label{sec:global_contractible}
+\knote{Replacing pretty much this whole subsection by a citation to~\cite{cdem-fotc-10}.
+I have to open the black box to get the running times we desire, though.}
 
 First we consider the case where some minimum-weight separating subgraph $\minSS$ is contractible.  
-We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.  Recall that an arc or cycle is \emph{tight} if it has minimum-weight among all arcs or cycles in its homotopy class.
+This case is nearly handled using a result of Cabello \etal~\cite[Theorem 5.4]{cdem-fotc-10} wherein
+they describe an algorithm for finding a shortest contractible cycle enclosing a non-empty set of
+faces in~\(O(T_{min-cut}(n) + n \log n)\) time where \(T_{min-cut}(n)\) is the time needed to find a
+minimum cut in a planar graph of size \(n\).
+Using the minimum cut algorithm of \L\c{a}cki and Sankowski~\cite{ls-mcsc-11}, we may assume
+\(T_{min-cut}(n) = O(n \log \log n)\).
+However, we still need to open the black box to reduce the \(n \log n\) term in the running time.
+In the interest of completeness and to avoid having to repeatedly reprove lemmas and theorems from
+Cabello \etal~\cite{cdem-fotc-10}, we describe how to handle the contractible case directly using
+tools developed earlier in the current paper.
+
+We begin by borrowing a result of Cabello~\cite[Lemma 4.1]{c-fscss-10}.
+Recall that an arc or cycle is \emph{tight} if it has minimum-weight among all arcs or cycles in its homotopy class.
 
 \begin{lemma}[Cabello~\cite{c-fscss-10}]
 \label{lem:disjoint-tight-arc}
@@ -1402,52 +1419,53 @@ Let $\alpha$ be a tight arc or tight cycle on $G$.  There exists a shortest simp
 \end{lemma}
 
 Cabello~\cite{c-fscss-10} uses this observation to compute a shortest simple contractible cycle in a surface embedded graph; unfortunately, his algorithm runs in $O(n^2\log n)$ time.
-Cabello \etal~\cite{cdem-fotc-10} use the same observations to find a shortest contractible \emph{closed walk} that encloses a non-empty set of faces in $O(n\log n)$ time (with no dependence on $g$).
-However, the resulting closed walk $W$ might traverse some edges of~$G$ more than once.  The set of edges that $W$ traverses an odd number of times does constitute a boundary subgraph; unfortunately, this subgraph could be disconnected or even empty.
+%Cabello \etal~\cite{cdem-fotc-10} use the same observations to find a shortest contractible \emph{closed walk} that encloses a non-empty set of faces in $O(n\log n)$ time (with no dependence on $g$).
+%However, the resulting closed walk $W$ might traverse some edges of~$G$ more than once.  The set of edges that $W$ traverses an odd number of times does constitute a boundary subgraph; unfortunately, this subgraph could be disconnected or even empty.
 
-Our algorithm closely follows the algorithm of Cabello \etal~\cite{cdem-fotc-10}, but with modifications to ensure that the resulting walk traverses at least one edge an odd number of times.
-
+%Our algorithm closely follows the algorithm of Cabello \etal~\cite{cdem-fotc-10}, but with modifications to ensure that the resulting walk traverses at least one edge an odd number of times.
 We use the slicing operation ($\snip$) along tight cycles and arcs in~$G$.  The following lemma
 implies it is safe for our algorithm to find minimum-weight separating subgraphs in sliced copies
 of~$\Sigma$.
 
+\knote{Modifying lemma to state the projection bounds the same subset of faces as \(\gammasnip\).}
 \begin{lemma}
 \label{lem:global_null-homologous-projections}
 Let~$\alpha$ be an arbitrary simple cycle or arc in~$G$.
 Let
-${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$. Any null-homologous closed
-walk~$\gammasnip$ in~$\Gsnip$ projects  to a null-homologous closed walk in~$G$.
+${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$.
+Finally, let \(\Hsnip\) denote a boundary subgraph in~\(\Gsnip\) and let~\(H\)
+denote the set of edges that appear an odd number of times in the projection of~\(H\).
+Subgraph~\(H\) bounds the natural projection to~\(G\) of the faces bound by~\(\Hsnip\)
+in~\(\Gsnip\).
 \end{lemma}
 
 \begin{proof}
-Let~$\gammasnip$ be a null-homologous closed walk in~$\Gsnip$ and let~$\gamma$ be its projection in~$G$.
-Let $\Hsnip$ be the even subgraph of $\Gsnip$ containing exactly the edges that appear an odd number of
-times in $\gammasnip$.
-Let $H$ be the even subgraph of $G$ containing exactly the edges that appear an odd number of times
-in $\gamma$.
-Subgraph~$\Hsnip$ bounds a subset of faces~$\Fsnip$ in~$\Gsnip$. 
+%Let~$\gammasnip$ be a null-homologous closed walk in~$\Gsnip$ and let~$\gamma$ be its projection in~$G$.
+%Let~\(\gamma\) be the projection of~\(\gammasnip\) to~\(G\).
+%By definition,~\(H\) is the subgraph of $G$ containing exactly the edges that appear an odd number
+%of times in $\gamma$.
+%Let $\Hsnip$ be the even subgraph of $\Gsnip$ containing exactly the edges that appear an odd number
+%of times in $\gammasnip$.
+Let~\(\Fsnip\) be the subset of faces bound by~$\Hsnip$ in~$\Gsnip$. 
 Let~$F$ be natural mapping of~$\Fsnip$ into~$G$.
 We will argue that~$H$ is the boundary of~$F$, proving the lemma.
 
 Consider any edge $e$ of $G$.
 Suppose $e$ is not in $\alpha$.
-In this case, $\Gsnip$ contains one copy~$e'$ of $e$, and all faces incident to~$e'$ map to faces
-incident to~$e$.
-Edge $e'$ being incident to exactly one face of $\Fsnip$ is equivalent to $e' \in H'$, which in turn
-is equivalent to $\gammasnip$ using $e'$ an odd number of times, $\gamma$ using $e$ an odd number of
-times, and finally $H$ containing $e$.
+In this case, $\Gsnip$ contains one copy~$e'$ of $e$, and \(e' \in H'\) if and only if \(e \in H\).
+Edge $e'$ being incident to exactly one face of $\Fsnip$ is therefore equivalent to~\(e\) being
+incident to exactly one face of~\(F\).
 
 Now suppose $e$ is in $\alpha$.
-Graph $\Gsnip$ contains two copies of $e$ denoted $e_1$ and $e_2$ each incident to one face $f_1$
-and $f_2$, respectively.
+Graph $\Gsnip$ contains two copies of $e$ denoted $e_1$ and $e_2$, each incident to one face denoted
+$f_1$ and $f_2$, respectively.
 If neither or both of $f_1$ and $f_2$ are in $\Fsnip$, then $\Hsnip$ includes neither or both of
 $e_1$ and $e_2$.
-In turn, $\gammasnip$ goes through the two copies of $e$ an even number of times total, meaning
-$\gamma$ uses $e$ an even number of times and $e \notin H$.
+Therefore, $\Hsnip$ contains the two copies of $e$ an even number of times total, implying $e \notin
+H$.
 If one, but not both, of $f_1$ and $f_2$ are in $\Fsnip$, then $\Hsnip$ includes exactly one of
 $e_1$ or $e_2$.
-In turn, $\gammasnip$ goes through the two copies of $e$ an odd number of times total, meaning
-$\gamma$ uses $e$ an odd number of times and $e \in H$.
+In turn, $\Hsnip$ contains the two copies of $e$ an odd number of times total, meaning $e \in H$.
 
 In all cases, an edge $e$ is in $H$ if and only if exactly one incident face to $e$ is in $F$.
 \end{proof}
@@ -1470,51 +1488,65 @@ We then cut along the greedy cut graph, which is the union of the greedy system 
 \end{comment}
 
 
-Finally, we can present our algorithm for finding a minimum-weight separating subgraph that happens
+We now present our algorithm for finding a minimum-weight separating subgraph that happens
 to be contractible.
 \begin{lemma}
 \label{lem:contractible-alg}
 There exists an $O(n \log \log n)$-time algorithm that computes a minimum-weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
 
-\knote{Seriously, me, rewrite this proof.
-In short, \(s^*\) lies outside the disk, so any cycle in the disk necessarily separates \(s^*\) from
-the interior of the cycle.
-There's no need to compute two cycles.}
-
 \begin{proof}
 
 \rnote{797: Perhaps tell that A is the set of edges of the arcs, rather than the arcs themselves. }
-The algorithm computes a system $A$ of tight arcs anchored on $s^*$ in $O(n)$ time as described in
+\knote{But I think \(A\) does consist of the arcs themselves.}
+The algorithm computes a greedy system of arcs $A$ in $O(n)$ time as described in
 Section~\ref{sec:forest-cotree}.
+Observe both endpoints of each arc lie on $s^*$.
 Let $\Gsnip$ denote the planar graph $G \snip A$; this graph has $O(n)$ vertices.
 
-Pick an arbitrary edge $e$ on one of the tight arcs $\alpha$, and let $e_1$ and $e_2$ be distinct
-copies of $e$
-in~$\Gsnip$.  Let $\gamma_1$ and $\gamma_2$ be the shortest simple cycles in the  subgraphs $\Gsnip
-\backslash e_1$ and $\Gsnip \backslash e_2$, respectively.  Our algorithm computes both~$\gamma_1$
-and~$\gamma_2$ in $O(n \log\log n)$ time using the algorithm of \L\c{a}cki and
-Sankowski~\cite{ls-mcsc-11}. Note that graphs~$\Gsnip \backslash e_1$ and~$\Gsnip \backslash e_2$
-may not contain any cycles. In this case,~$\Gsnip$ contains no simple cycles.
-Lemma~\ref{lem:disjoint-tight-arc} implies~$G$ does not contain any simple contractible cycles to begin with and our algorithm returns nothing. 
-For the rest of this section, we assume~$\gamma_1$ and~$\gamma_2$ are well defined.
-
-\rnote{Figure 7.2 is not referred to in the text. }
-\begin{figure}[ht]
-\centering
-\includegraphics[height=1.2in]{Fig/forbidden-pair}
-\caption{At least one copy of $e$ is forbidden in the planarized graph.}
-\label{fig:global_forbidden-pair}
-\end{figure}
-
-Let~$\gamma$ be the shorter of the cycles~$\gamma_1$ and $\gamma_2$.  By multiple instantiations of Lemma~\ref{lem:global_null-homologous-projections}, cycle~$\gamma$ projects to a null-homologous closed walk $\gamma'$ in the original graph $G$, which may or may not be simple.
-Our algorithm returns the symmetric difference over all edges in~$\gamma'$.
-The only cycle in $\Gsnip$ that is not a separating subgraph in~$G$ is the boundary of $\Gsnip$.
-Because $\gamma$ avoids at least one edge of the boundary, the carrier of $\gamma'$ must be non-empty. If our algorithm returns anything, it must return a separating subgraph.
+We now run the \(O(n \log \log n)\) time algorithm of \L\c{a}cki and
+Sankowski~\cite{ls-mcsc-11} to compute the shortest simple cycle~\(\gammasnip\) of \(\Gsnip\).
+\knote{Is the next sentence necessary, or just define \(\Hsnip\) directly?}
+Let \(\Hsnip\) be the subgraph of \(\Gsnip\) containing the edges of~\(\gammasnip\).
+Subgraph~\(\Hsnip\) separates a non-empty subset of faces~\(\Fsnip\) from the boundary
+of~\(\Gsnip\).
+By multiple instantiations of Lemma~\ref{lem:global_null-homologous-projections}, subgraph~$\Hsnip$
+projects to a boundary subgraph $H$.
+Because~\(s^*\) is a boundary component, we see~\(H\) separates the natural projection of~\(\Fsnip\)
+from~\(s^*\).
 
 Now, suppose some minimum weight separating subgraph of~$G$ is a simple contractible cycle.
 Lemma~\ref{lem:disjoint-tight-arc} implies that some shortest simple contractible cycle $\sigma$ in
-$G$ does not cross $A$.  (We emphasize that our algorithm does not necessarily compute~$\sigma$.)  This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that avoids at least one of the edges $e_1$ or $e_2$.  Thus, $\sigma$ cannot be shorter than $\gamma$, and our algorithm returns a minimum-weight separating subgraph.
+$G$ does not cross $A$.  (We emphasize that our algorithm does not necessarily compute~$\sigma$.)
+This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that separates at least one face
+of~\(\Gsnip\) from the boundary.
+Thus, $\sigma$ cannot be shorter than $H$, and our algorithm returns a minimum-weight separating
+subgraph.
+
+%Pick an arbitrary edge $e$ on one of the tight arcs $\alpha$, and let $e_1$ and $e_2$ be distinct
+%copies of $e$
+%in~$\Gsnip$.  Let $\gamma_1$ and $\gamma_2$ be the shortest simple cycles in the  subgraphs $\Gsnip
+%\backslash e_1$ and $\Gsnip \backslash e_2$, respectively.  Our algorithm computes both~$\gamma_1$
+%and~$\gamma_2$ in $O(n \log\log n)$ time using
+%the algorithm of \L\c{a}cki and
+%Sankowski~\cite{ls-mcsc-11}. Note that graphs~$\Gsnip \backslash e_1$ and~$\Gsnip \backslash e_2$
+%may not contain any cycles. In this case,~$\Gsnip$ contains no simple cycles.
+%Lemma~\ref{lem:disjoint-tight-arc} implies~$G$ does not contain any simple contractible cycles to begin with and our algorithm returns nothing. 
+%For the rest of this section, we assume~$\gamma_1$ and~$\gamma_2$ are well defined.
+%
+%\rnote{Figure 7.2 is not referred to in the text. }
+%\begin{figure}[ht]
+%\centering
+%\includegraphics[height=1.2in]{Fig/forbidden-pair}
+%\caption{At least one copy of $e$ is forbidden in the planarized graph.}
+%\label{fig:global_forbidden-pair}
+%\end{figure}
+%
+%Let~$\gamma$ be the shorter of the cycles~$\gamma_1$ and $\gamma_2$.
+%By multiple instantiations of Lemma~\ref{lem:global_null-homologous-projections}, cycle~$\gamma$ projects to a null-homologous closed walk $\gamma'$ in the original graph $G$, which may or may not be simple.
+%Our algorithm returns the symmetric difference over all edges in~$\gamma'$.
+%The only cycle in $\Gsnip$ that is not a separating subgraph in~$G$ is the boundary of $\Gsnip$.
+%Because $\gamma$ avoids at least one edge of the boundary, the carrier of $\gamma'$ must be non-empty. If our algorithm returns anything, it must return a separating subgraph.
 \end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1522,6 +1554,7 @@ $G$ does not cross $A$.  (We emphasize that our algorithm does not necessarily c
 \subsection{Non-contractible}
 \label{sec:global_non-contractible}
 
+\knote{TODO: Work on this next.}
 \knote{Use \(Y\) for a subset of faces?}
 Now suppose some minimum-weight separating subgraph $\minSS$ is non-contractible.  At a high level,
 our algorithm for this case computes a set $F$ of faces, such that some minimum-weight separating
