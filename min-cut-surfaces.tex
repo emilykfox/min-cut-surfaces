@@ -783,7 +783,22 @@ We can preprocess $G$ in $O(\beta n)$ time, so that the signature $[\cycle]$ of 
 A tree-coforest decomposition can be computed in $O(n)$ time as follows.  First construct a graph~$G'$ by identifying all the dual boundary vertices in $G^*$ to a single vertex.  Compute a spanning tree of $G'$ by whatever-first search; the edges of this spanning tree define an appropriate dual spanning forest~$F^*$.  Construct the subgraph $G\setminus F$ and compute a spanning tree $T$ via whatever-first search.  Finally, let $L = G\setminus (T\cup F)$.  With the decomposition in hand, it is straightforward to compute each path $\dualarc_i$ in $O(n)$ time, and then compute each edge signature in $O(\beta)$ time.
 \end{proof}
 
-We note that a proof of our next lemma appears in Borradaile~\etal~\cite[Corollary 3.5]{bcfn-mchbs-17}.
+For each edge \(e_i \in L\), let \(\cycle_i\) denote the fundamental cycle obtained by adding
+\(e_i\) to \(T\).
+\begin{lemma}
+\label{lem:basis}
+The set of cycles \(\Set{\cycle_1, \dots, \cycle_\beta}\) form a basis of the first homology group;
+precisely, these cycles lie in linearly independent homology classes that span the group.
+\end{lemma}
+\begin{proof}
+  Consider any non-empty subset \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}}\) of these
+  cycles, and let \(\cycle_i\) be an arbitrary member of this subset.
+  Dual arc \(\alpha_i\) crosses the subset exactly once, at the dual edge \(e^*_i\).
+  Therefore, even subgraph \(\bigoplus_{\cycle \in \Gamma} \cycle\) does not bound the union of a
+  subset of primal faces/dual vertices.
+\end{proof}
+
+A proof of our next lemma appears in Borradaile~\etal~\cite[Corollary 3.5]{bcfn-mchbs-17}.
 They cite an earlier version~\cite{en-mcsnc-11} of the current paper for the lemma statement, so we
 present a slightly simplified version of their proof for completeness.
 
@@ -802,20 +817,7 @@ An even subgraph $H$ of $G$ is null-homologous in $\Sigma$ if and only if $[H] =
 %}
 %\knote{Please check new proof.}
 
-
-
-For each edge \(e_i \in L\), let \(\cycle_i\) denote the fundamental cycle obtained by adding
-\(e_i\) to \(T\).
-We claim the set of cycles \(\Set{\cycle_1, \dots, \cycle_\beta}\) form a basis of the first
-homology group;
-precisely, these cycles lie in linearly independent homology classes that span the group.
-Indeed, consider any non-empty subset \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}}\) of these
-cycles, and let \(\cycle_i\) be an arbitrary member of this subset.
-Dual arc \(\alpha_i\) crosses the subset exactly once, at the dual edge \(e^*_i\).
-Therefore, even subgraph \(\bigoplus_{\cycle \in \Gamma} \cycle\) does not bound the union of a
-subset of primal faces/dual vertices.
-
-Now, let $H$ be an even subgraph of $G$.
+Let $H$ be an even subgraph of $G$.
 Let \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}} \subseteq \Set{\cycle_1, \dots,
 \cycle_\beta}\) be such that \(\bigoplus_{\cycle \in \Gamma} \cycle\) is homologous to \(H\).
 Then by definition, $H \oplus \bigoplus_{\cycle \in \Gamma} \cycle$ is the boundary of the union of
@@ -1604,10 +1606,12 @@ There is a~$g^{O(g)} n \log \log n$-time algorithm that computes a minimum-weigh
 
 \begin{proof}
 %Our algorithm begins by fixing an arbitrary face $f$.
-In a preprocessing phase, we  construct a homology basis from a tree-cotree decomposition in $O(gn)$ time~\cite{e-dgteg-03}.  
+In a preprocessing phase, we construct a homology basis from a tree-coforest decomposition in
+$O(gn)$ time; see Lemma~\ref{lem:basis}.
 \rnote{
 850: This is strange to rely to [41] while you have introduced the tree-cotree decomposition in Section 3. Please try to make the paper more self-contained. 
 }
+\knote{Done.}
 Then we enumerate all~$2^{2g}-1$ non-trivial homology classes by considering subsets of cycles in this homology basis.  For each non-trivial homology class $h$, we perform the following steps:
 \begin{itemize}
 \item
