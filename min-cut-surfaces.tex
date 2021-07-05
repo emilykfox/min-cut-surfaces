@@ -39,7 +39,7 @@
 \def\Z{\mathbb{Z}}
 \def\Real{\mathbb{R}}
 \def\Q{\mathbb{Q}}
-\def\reverse#1{\smash{\overline{#1}}}
+\def\reverse#1{\textit{rev}(#1)}
 \let\eps\varepsilon
 
 % needs marvosym package:
@@ -756,10 +756,7 @@ Recall that $n$, $m$, and $f$ respectively denote the number of vertices, edges,
 We immediately have $|T| = n-1$ and $|F^*| = f$.  Because $T$, $F$, and $L$ partition the edges, we conclude that $|L| = m - (n-1) - f = m - n - f + 1 = 1 - \chi  = \beta$.
 \end{proof}
 
-\modified{
-By Lemma~\ref{lem:L_edges_tree_coforest} there are exactly~$\beta$ edges in $L$;
-}
-\sout{Euler's formula implies that there are exactly~$\beta$ edges in $L$;} arbitrarily index these edges $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to $F^*$ creates a new dual path $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  
+Arbitrarily index the edges in $L$ as $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to the forest~$F^*$ creates a dual arc $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  
 \modified{The paths $\dualarc_i$ form a set of weakly simple arcs;}
 \sout{We can treat each path $\dualarc_i$ as a simple arc in the \emph{abstract} surface $\Sigma$;} slicing along these $\beta$ arcs transforms $\Sigma$ into a topological disk. \modified{What do we mean by abstract surface? a reviewer asked? Also, should we say $\alpha_i$ is weakly simple.  I think the only non-simple part of $\alpha_i$ is the initial part of the two paths to the endpoints of $e_i$, am I right? may be we can just say that}
 See Figure~\ref{fig:tree-coforest}.  We call the set $\set{\dualarc_1, \dualarc_2, \dots, \dualarc_\beta}$ a \EMPH{system of dual arcs}.
@@ -927,7 +924,7 @@ We prove our key claim by contradiction, using a pair of exchange arguments.
 \medskip
 \paragraph{\textbf{No contractible loops}}
 %
-For the same of argument, suppose $\mathcal{L}$ contains a contractible loop.  Let $\ell$ be an \emph{innermost} contractible loop, meaning there are no other contractible loops in the disk bounded by $\ell$.  Without loss of generality, this loop is the contraction of some subpath $\tilde\gamma_1(p,q)$ of cycle $\tilde\gamma_1$; the endpoints $p$ and $q$ of this subpath lie on $\tilde\sigma_i$.  Let $u$ and $v$ be the vertices of $G$ such that $p\in u^\square$ and $q\in v^\square$.  Fix points $p^\flat \in u^\square\cap \tilde\gamma_1$ and $q^\sharp \in v^\square\cap\tilde\gamma_j$ such that the subpath $\tilde\pi = \tilde\gamma_1(p^\flat, q^\sharp)$ strictly contains $\tilde\gamma_1(p,q)$ but has no more intersections with any arc $\tilde{a}_i$.  Let $\pi$ be the path from $u$ to $v$ in $G$ determined by the sequence of vertex regions and edge ribbons traversed by $\tilde\pi$.
+For the sake of argument, suppose $\mathcal{L}$ contains a contractible loop.  Let $\ell$ be an \emph{innermost} contractible loop, meaning there are no other contractible loops in the disk bounded by $\ell$.  This loop is the contraction of some subpath $\tilde\gamma(p,q)$ of some cycle $\tilde\gamma$ in the perturbed cycle decomposition; the endpoints $p$ and $q$ of this subpath lie on $\tilde\sigma_i$.  Let $u$ and $v$ be the vertices of $G$ such that $p\in u^\square$ and $q\in v^\square$.  Fix points $p^\flat \in u^\square\cap \tilde\gamma$ and $q^\sharp \in v^\square\cap\tilde\gamma$ such that the subpath $\tilde\pi = \tilde\gamma(p^\flat, q^\sharp)$ strictly contains $\tilde\gamma(p,q)$ but has no more intersections with any perturbed arc $\tilde{a}_i$ or perturbed cycle $\tilde\gamma_j$.  Let $\pi$ be the path from $u$ to $v$ in $G$ determined by the sequence of vertex regions and edge ribbons traversed by $\tilde\pi$.
 
 Now let $\tilde\rho$ be a path from $q^\sharp$ to $p^\flat$ that closely parallels $\tilde\sigma(q,p)$; specifically, $\tilde\rho$ traverses the same sequence of vertex regions and edge ribbons as $\tilde\sigma(q,p)$, without crossing any perturbed arc $\tilde{a}_i$ or perturbed cycle $\tilde\gamma_j$.  See Figure \ref{F:contractible-exchange}.  Let $\rho$ be the path from $v$ to $u$ obtained by pulling $\tilde\rho$ back to $G$.  Because $\rho$ is a subpath of the shortest path $\sigma$, it is actually a \emph{shortest} path from $v$ to $u$.
 
@@ -940,70 +937,26 @@ Now let $\tilde\rho$ be a path from $q^\sharp$ to $p^\flat$ that closely paralle
 
 Because $\ell$ is contractible, the cycle $\tilde\delta = \tilde\pi\cdot\tilde\rho$ is also contractible.  Thus, the corresponding closed walk $\delta = \pi\cdot\rho$ in $G$ is contractible and therefore null-homologous.  It follows that the subgraph $H^- = H’\oplus \delta$ is homologous with $H’$ and thus with~$H$.  Because $\rho$ is a shortest path, the weight of $H^-$ cannot be larger than the weight of $H’$, and because $H’$ is $\Z_2$-minimal, the weight of $H^-$ cannot be smaller than the weight of $H’$.  We conclude that the subgraphs $H^-$ and $H’$ have equal weight; both are $\Z_2$-minimal.\footnote{If shortest paths in $G$ are unique, we can actually conclude at this point that $H^- = H’$.}
 
-The cycle $\tilde\gamma_1’ = \tilde\gamma_1 \oplus \tilde\delta$ intersects $\sigma$ strictly fewer times than $\tilde\gamma_1$, and does not cross any arc $\tilde{a}_i$ more times than~$\tilde\gamma_1$.  Thus, the cycles $\tilde\gamma_1’, \tilde\gamma_2, \dots, \tilde\gamma_\beta$ cross the perturbed arcs less than $X$ times.  Because $\ell$ is an innermost contractible loop in $\mathcal{L}$, the cycle $\tilde\gamma_1’$ is simple and disjoint from the other cycles $\tilde\gamma_j$ in the perturbed cycle decomposition.  By replacing small neighborhoods of each self-intersection point of $\tilde\gamma_1’$ and of each intersection point $\tilde\gamma_1’ \cap \tilde\gamma_j$ with a pair of disjoint paths, we obtain a perturbed cycle decomposition of $H^-$ with fewer than $X$ crossings.  But this contradicts our definition of $X$; we conclude that no loop in $\mathcal{L}$ is contractible.
+The cycle $\tilde\gamma’ = \tilde\gamma \oplus \tilde\delta$ intersects $\sigma$ strictly fewer times than $\tilde\gamma$, and does not cross any arc $\tilde{a}_i$ more times than~$\tilde\gamma$.  Because $\ell$ is an innermost contractible loop in $\mathcal{L}$, the cycle $\tilde\gamma’$ is simple and disjoint from all other cycles $\tilde\gamma_j$ in the perturbed cycle decomposition.  Thus, replacing $\tilde\gamma$ with $\tilde\gamma’$ gives us a perturbed cycle decomposition of $H^-$ with fewer than $X$ crossings.  But this contradicts our definition of $X$.  We conclude that no loop in $\mathcal{L}$ is contractible.
 
 %
 \medskip
-\paragraph{\textbf{No homotopic loops}}  \jnote{This still needs to be updated.}
+\paragraph{\textbf{No homotopic loops}}
 %
-Now suppose some pair of loops $\ell_i$ and $\ell_j$ are homotopic; by definition, the cycle $\ell_i\cdot\reverse{\ell_j}$ is contractible.  These two loops are contractions of paths $\pi_i$ and $\pi_j$ in~$G$ with endpoints in $\sigma$.  Let $u_i$ and~$v_i$ denote the endpoints of $\pi_i$, and let $u_j$ and~$v_j$ denote the endpoints of $\pi_j$.  The cycle $\pi_i \cdot \sigma(v_i,v_j) \cdot \overline{\pi_j} \cdot \sigma(u_j, u_i)$ in $G$ is also contractible.  Let $\delta$ denote the set of edges of $G$ that appear in this cycle exactly once.  If the sub-paths $\sigma(v_i,v_j)$ and $\sigma(u_j, u_i)$ are edge-disjoint, then $\delta$ is a contractible cycle; otherwise, $\delta$ is the union of two non-crossing homotopic cycles.  In either case, $\delta$ is a boundary subgraph, so the symmetric difference $H\oplus\delta$ is homologous with $H$.  Moreover, $H\oplus\delta$ has smaller weight than~$H$, and we obtain another contradiction.
+Now suppose for the sake of argument that $\mathcal{L}$ contains homotopic pairs of loops.  Let $\ell$ and $\ell’$ be homotopic loops in~$\mathcal{L}$ with no other homotopic loops between them.
+%By definition, the cycle $\ell\cdot\reverse{\ell’}$ is contractible.
+These two loops are contractions of subpaths $\tilde\gamma(p, q)$ and $\tilde\gamma’(r,s)$ of (not necessarily distinct) cycles $\tilde\gamma$ and $\tilde\gamma’$ in the perturbed cycle decomposition, with all endpoints $p,q,r,s$ on the path $\tilde\sigma$.
 %
+As in the previous argument, we extend these subpaths within the vertex regions containing their endpoints, to obtain paths $\tilde\pi = \tilde\gamma(p^\flat, q^\sharp)$ and $\tilde\gamma’(r^\flat, s^\sharp)$.  Let $\pi$ and $\pi’$ be the paths obtained by pulling $\tilde\pi$ and $\tilde\pi’$ back to $G$.
+
+Let $\tilde\rho$ be a path from $r^\sharp$ to $r^\flat$ that closely follows $\tilde\sigma$, and similarly let $\tilde\rho’$ be a path from $q^\flat$ to $s^\sharp$ that closely follows $\tilde\sigma$.  Let $\rho$ and $\rho’$ be the paths obtained by pulling $\tilde\rho$ and $\tilde\rho’$ back to $G$.  Because $\rho$ and $\rho’$ are subpaths of $\sigma$, they are shortest paths in $G$.
+
+Because $\ell$ and $\ell’$ are homotopic, the cycle $\tilde\delta = \tilde\pi \cdot \tilde\rho \cdot \reverse{\tilde\pi’} \cdot \tilde\rho’$ is contractible, which implies that the corresponding closed walk $\delta = \pi\cdot\rho\cdot\reverse{\pi’}\cdot\rho’$ in $G$ is contractible and therefore null-homologous.  It follows that the subgraph $H^- = H’\oplus \delta$ is homologous to $H’$ and therefore to $H$.  Moreover, $H^-$ must be $\Z_2$-minimal, because $\rho$ and~$\rho’$ are shortest paths.
 %
-%
-%
-%%For each index $j$, we define a \EMPH{detour} of $\tilde\gamma_j$ from $\sigma_i$ as a subpath of $\tilde\gamma_j$ that has endpoints on $\sigma_i$ but is otherwise disjoint from $\sigma_i$; we define detours from $\tau_i$ similarly.  The number of crossings between $\tilde\gamma_j$ and $a_i$ is at most one more than the number of detours from $\sigma_i$ and $\tau_i$.
-%
-%%\jnote{I don’t think the previous sentence is correct. The perturbed cycle $\tilde\gamma_j$ could pass through the vertex regions at the endpoints of $e_i$ multiple times, crossing $a_i$ each time but never intersecting $\sigma_i$ or $\tau_i$, and therefore without creating detours.  There’s an unavoidable tension between working directly in the graph (where we can do shortest-path things) and working in the ribbon perturbation (where crossings are well-defined).  I’m tempted to modify the argument as follows:}
-%
-%\modified{
-%Exchange arguments imply that if the perturbed cycles $\tilde\gamma_j$ cross $\tilde\sigma_i$ more than $6g+2b-3$ times altogether, then we can replace some subpath $\tilde\gamma_j(\tilde{u},\tilde{v})$ with a subpath $\tilde\sigma_i(\tilde{u},\tilde{v})$.  The corresponding surgery in $H’$ replaces some walk $\gamma_j(u,v)$ with the shortest path $\sigma_i(u,v)$.  This surgery reduces the total weight of $H’$ without changing its homology class, which is impossible.  A symmetric  argument bounds the number of crossings with $\tilde\tau_i$.  We conclude that the cycles $\tilde\gamma_j$ cross $a_i$ at most $12g+4b-6$ times in total.
-%}
-%
-%\jnote{Stopping here for now.}
-%
-%\medskip
-%Consider any shortest path \(\sigma = \sigma(u, v)\) contributing to \(F\).
-%\enote{This gets a bit dense - add some motivation about why we're defining detours at all, which are (basically) crossings.  Also, make the total number of crossings between cycle and arc is at most the number of details plus one - hence, we get $-5$ and not $-6$.}
-%We define a \EMPH{detour} of any cycle \(\gamma_j \in \Set{\gamma_1, \dots, \gamma_r}\) from
-%\(\sigma\) as a subpath of \(\gamma_j\) that has endpoints on \(\sigma\) but is otherwise disjoint
-%from \(\sigma\).
-%For each $j$, let~$x_j$ denote the number of detours of \(\gamma_j\) from $\sigma$ if \(\gamma_j\)
-%and \(\sigma\) intersect and \(0\) otherwise.
-%Let $x = x_1 + x_2 + \cdots + x_r$.
-%We will prove that $x\le 6g+2b-3$.
-%%We now argue that the total number of detours from \(\sigma\) is at most $6g+2b-3$.
-%The lemma immediately follows from the construction of $A$, as each arc in $A$ is the concatenation
-%of two shortest paths with an additional edge.
-%In particular, every crossing between arc \(a_i\) and a cycle~\(\gamma_j\) ends with a detour from
-%one of the two shortest paths of~\(a_i\).
-%\knote{Check that last statement.}
-%%Without loss of generality, we can assume that $\sigma$ crosses each cycle $\gamma_i$ at least once.  
-%%\rnote{
-%%Reviewer: It is true, but please justify better why you can assume that sigma crosses each cycle $\gamma_i$ at least once. 
-%%}
-%%\anote{
-% %Why do we need this assumption?
-%%}
-%%Let $\sigma = \sigma(u,v)$ denote the shortest path between some pair of vertices $u$ and~$v$.  Uniqueness of shortest paths (see Section \ref{SS:unique}) implies that if $y$ and $z$ are vertices of $\sigma$, either the shortest path $\sigma(y,z)$ or its reversal $\sigma(z,y)$ is a subpath of $\sigma$.
-%
-%Consider the graph $G/\sigma$ obtained from $G$ by contracting the path $\sigma$ to a single vertex $uv$.
-%This graph inherits a cellular embedding on $\Sigma$ from the cellular embedding of $G$.
-%Each cycle $\gamma_i$ is contracted to the union of~$x_i$ weakly simple pairwise non-crossing loops
-%in $G/\sigma$ with basepoint $uv$.
-%Altogether, we obtain $x$ loops, which we denote $\ell_1, \ell_2, \dots, \ell_x$.
-%We claim that these $x$ loops lie in distinct nontrivial homotopy classes.
-%
-%Suppose some loop $\ell_i$ is contractible.  This loop is the contraction of a path $\pi_i$ in $G$
-%whose endpoints~$u_i$ and $v_i$ lie in $\sigma$.  The cycle $\delta = \pi_i \cdot \sigma(v_i,u_i)$
-%is also contractible.  Thus, the even subgraph $H\oplus\delta$ is homologous with $H$.  Moreover,
-%the previously discussed uniqueness of shortest paths implies that the weight of $H\oplus\delta = H \cup \sigma(v_i,u_i) \setminus \pi_i$ is smaller than the weight of~$H$.
-%But this last observation contradicts our assumption that $H $ has minimum weight in its homology
-%class.
-%
-%Now suppose some pair of loops $\ell_i$ and $\ell_j$ are homotopic; by definition, the cycle $\ell_i\cdot\reverse{\ell_j}$ is contractible.  These two loops are contractions of paths $\pi_i$ and $\pi_j$ in $G$ with endpoints in $\sigma$.  Let $u_i$ and~$v_i$ denote the endpoints of $\pi_i$, and let $u_j$ and~$v_j$ denote the endpoints of $\pi_j$.  The cycle $\pi_i \cdot \sigma(v_i,v_j) \cdot \overline{\pi_j} \cdot \sigma(u_j, u_i)$ in $G$ is also contractible.  Let $\delta$ denote the set of edges of $G$ that appear in this cycle exactly once.  If the sub-paths $\sigma(v_i,v_j)$ and $\sigma(u_j, u_i)$ are edge-disjoint, then $\delta$ is a contractible cycle; otherwise, $\delta$ is the union of two non-crossing homotopic cycles.  In either case, $\delta$ is a boundary subgraph, so the symmetric difference $H\oplus\delta$ is homologous with $H$.  Moreover, $H\oplus\delta$ has smaller weight than~$H$, and we obtain another contradiction.
-%
-%We conclude that the loops $\ell_1, \ell_2, \dots, \ell_x$ lie in distinct nontrivial homotopy classes.  Thus, these loops define an embedding of a single-vertex graph with $x$ edges onto $\Sigma$, where every face of the embedding is bounded by at least three edges.  Euler's formula now implies that $x\le 6g+2b-3$~\cite[Lemma~2.1]{ccelw-scsih-08}.
+Finally, exchanging $\tilde\pi$ and $\tilde\pi’$ with $\tilde\rho$ and $\tilde\rho’$ transforms our perturbed cycle decomposition of $H’$ into a perturbed cycle decomposition of $H^-$ with fewer than $X$ crossings, violating our definition of $X$.  We conclude that no two loops in $\mathcal{L}$ are homotopic.
 \end{proof}
+
+\jnote{I’m confident that everything in the last exchange argument is correct, but I worry that I’m brushing too many details under the rug.  For example, \emph{because} the loops $\ell$ and $\ell’$ are adjacent, the exchange produces simple, disjoint cycles; moreover, the cycle $\tilde\delta$ is actually simple!  \textbf{Do we need another figure??}}
 
 
 \subsection{Triangulations and crossing sequences}
@@ -1019,7 +972,7 @@ Any collection of disjoint simple cycles corresponds to a \emph{weighted triangu
 
 %\rnote{But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky.}
 
-\jnote{Even subgraph perturbation something something.}
+\jnote{\textbf{ENGLISH!!} Even subgraph perturbation something something.}
 
 Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.  \jnote{We haven’t defined ”valid crossing vector”!  Connect back to crossing parities.}
 
