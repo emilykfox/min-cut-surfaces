@@ -1576,8 +1576,6 @@ subgraph.
 \subsection{Non-contractible}
 \label{sec:global_non-contractible}
 
-\knote{TODO: Work on this next.}
-\knote{Use \(Y\) for a subset of faces?}
 Now suppose some minimum-weight separating subgraph $\minSS$ is non-contractible.  At a high level,
 our algorithm for this case computes a set $F$ of faces, such that some minimum-weight separating
 subgraph of $G$ separates $s^*$ from at least one face in $F$.  (Equivalently, $F^*$ is a set of
@@ -1623,8 +1621,12 @@ Call the faces in this subset \emph{white} and the rest \emph{black}.
 
 Let~$\minSS'$ be the boundary of the union of the far faces and white faces in $G$.
 There is at least one far face, so subgraph~$\minSS'$ is separating.
-Every edge of~$H$ is incident to a white face, so~$H$ lies in the closure of the  component
-of~$\Sigma \setminus \minSS'$ not incident to $s^*$. \rnote{833: "Every edge of H is incident to a white face": I think this is not the case; see your remark on l.831 telling that if $H=\gamma$, then every face of $G$ is black. }
+For each edge \(e\) of \(H\), either \(e\) is incident to a white face or it is also an edge
+of~\(\gamma\).
+Either way, \(e\) lies in the closure of the component of~$\Sigma \setminus \minSS'$ not
+incident to $s^*$. \rnote{833: "Every edge of H is incident to a white face": I think this is not
+the case; see your remark on l.831 telling that if $H=\gamma$, then every face of $G$ is black. }
+\knote{Fixed?}
 
 It remains to argue that~$\minSS'$ is a minimum-weight separating subgraph of $G$.
 
