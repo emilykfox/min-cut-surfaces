@@ -610,6 +610,7 @@ We conclude that $\abs{L} = m - n - f + 1 = 1 - \chi = \beta$.
 Fix a forest-cotree decomposition $(\partial\! G, F, L, C)$, and arbitrarily index $L = \set{e_1, e_2, \dots, e_\beta}$.  For each edge $e_i\in L$, the subgraph~$F\cup \set{e_i}$ contains a single nontrivial arc $a_i$, which is either a simple path between distinct boundary cycles, or a nontrivial walk from a boundary cycle back to itself; in the second case, $a_i$ may traverse some edges of~$F$ twice.  We refer to the collection $\set{a_1, a_2, \dots, a_\beta}$ as a \EMPH{system of arcs}.  See Figure \ref{fig:forest-cotree}.
 
 \begin{lemma}
+\label{L:weak}
 The arcs $a_1, a_2, \dots, a_\beta$ are weakly simple and weakly disjoint.
 \end{lemma}
 
@@ -631,6 +632,8 @@ Slicing along the arcs $a_1, a_2, \dots, a_\beta$ transforms~$\Sigma$ into a top
 \begin{proof}
 \jnote{The cotree edges glue the faces together into a disk.}
 Consider the set of edges \emph{not} in  $a_1, a_2, \dots, a_\beta$.
+
+\jnote{Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists. Let $H$ be the graph whose vertices are the $2\beta$ endpoints of the perturbed arcs, and whose edges are either perturbed arcs or portions of boundary cycles.  $H$ has a single “face” $f$.  (Details!)  Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.}
 \end{proof}
 
 \begin{figure}[htb]
@@ -721,11 +724,11 @@ We can compute the crossing parity vector of any even subgraph, with respect to 
 Let $a_1,\dots, a_\beta$ be the fixed system of arcs. 
 We can compute a cycle decomposition $\gamma_1, \dots, \gamma_r$ of $H$ in $O(1)$ time per edge, by following the proof of Lemma~\ref{lem:decomposition}.  Finally, we can compute the number of crossings between (any ribbon perturbation of) any cycle $\gamma_i$ and any arc $a_j$ in time proportional to the number of edges in $\gamma_i$.
 \end{proof}
-
-\jnote{Extracted from earlier; where does this go??}
-It follows that every cycle that does not cross $A$ can be written as the sum of the faces in $C^*$.
-Therefore, every non-null-homologous cycle in $G$ must intersect at least one arc in $A$ and so one path in $S$. \anote{Perhaps, it is better to write a lemma and show that cutting $G$ along $A$ would give us a topological disk.}
-
+%
+%\jnote{Extracted from earlier; where does this go??}
+%It follows that every cycle that does not cross $A$ can be written as the sum of the faces in $C^*$.
+%Therefore, every non-null-homologous cycle in $G$ must intersect at least one arc in $A$ and so one path in $S$. \anote{Perhaps, it is better to write a lemma and show that cutting $G$ along $A$ would give us a topological disk.}
+%
 
 
 
@@ -970,11 +973,11 @@ Specifically, we slice the surface along each arc in a ribbon perturbation of th
 
 We next dualize the abstract polygonal schema, replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.
 %
-Any collection of disjoint simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of arcs.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, ee call a weighted triangulation \emph{valid} if corresponding vertices are incident to edges of equal total weight.  Every valid weighted triangulation corresponds to a collection of simple disjoint cycles, which is unique up to homotopy.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.
+Any collection of disjoint simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of arcs.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, we call a weighted triangulation \emph{valid} if corresponding vertices are incident to edges of equal total weight.  Every valid weighted triangulation corresponds to a collection of simple disjoint cycles, which is unique up to homotopy.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.
 
 %\rnote{But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky.}
 
-\jnote{\textbf{ENGLISH!!} Even subgraph perturbation something something.}
+\jnote{\textbf{ENGLISH!!} Even subgraph perturbation something something.  We need the ribbon perturbation to define the abstract polygonal schema and to invoke Kutz’s algorithm.}
 
 Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.  \jnote{We haven’t defined ”valid crossing vector”!  Connect back to crossing parities.}
 
@@ -990,7 +993,7 @@ Thus, for each weighted triangulation, we obtain the shortest corresponding set 
 
 \begin{theorem}
 \label{Th:Z2-minimal-crossing}
-Let $G$ be an undirected graph with positively weighted edges embedded on a surface with genus $g$ and $b$ boundary components, and let $H$ be an even subgraph of $G$. We can compute the minimum-weight even subgraph homologous with $H$ in $(g+b)^{O(g+b)} n\log \log n$ time.
+Let $G$ be an undirected graph with positively weighted edges embedded on a surface with genus~$g$ and $b$ boundary components, and let $H$ be an even subgraph of $G$. We can compute the minimum-weight even subgraph homologous with $H$ in $(g+b)^{O(g+b)} n\log \log n$ time.
 \end{theorem}
 
 \begin{corollary}
@@ -1004,7 +1007,7 @@ Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g
 
 At a very high level, our algorithms in Section 4 find the minimum-weight subgraph in a given homology class by enumerating possible \emph{homotopy} classes of the cycles in a cycle decomposition, and then finding the shortest cycle in each possible homotopy class by searching a finite portion of the universal cover of the surface~$\Sigma$.  In this section, we describe a more direct algorithm, which finds the shortest cycle in each \emph{homology} class, by constructing and searching a space which we call the \emph{$\Z_2$-homology cover}.
 Specifically, given a homology signature $h\in (\Z_2)^\beta$, our algorithm computes the shortest
-cycle with signature $h$ in \sout{$\beta^{O(\beta)} n \log n$} \modified{$2^{O(\beta)} n \log n$} time, using a generalization of Klein's
+cycle with signature $h$ in $2^{O(\beta)} n \log n$ time, using a generalization of Klein's
 multiple-source shortest path algorithm~\cite{k-msspp-05} for planar graphs to higher-genus embedded
 graphs \cite{cce-msspe-13,efl-hmcpf-18}.
 In fact, because there are only $2^\beta$ homology classes, we can compute the shortest cycle in \emph{every} homology class in the same running time.
@@ -1143,6 +1146,7 @@ Let $G$ be a  graph with non-negative edge weights, cellularly embedded on a sur
 \rnote{
 This seems weird. You are computing homology covers using the decomposition of Section 3.2, but computing crossings with the decomposition of Section 3.1. It looks correct, but very unnatural! If you cannot fix this in a nicer way, please at least emphasize this, and explain why you choose this route. 
 }
+\jnote{We need a collection of shortest paths that cross every non-null-homologous cycle.  The greedy system of arcs gives us $2\beta$ such paths.  The dual arcs are not made of shortest paths!!}
 \begin{proof}
 We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we return the empty walk and halt.
 
