@@ -1637,8 +1637,16 @@ $s^*$.
 \rnote{
 866: I do not see why Sigma' necessarily contains a cycle that is not separating in Sigma'. Indeed, Sigma' is not a disk, but it could be, eg, an annulus. 
 }
-Because $\Sigma'$ is not a disk, it contains a cycle $\gamma$ that is not separating in
-$\Sigma'$, and therefore not separating in $\Sigma$.  Let~$h$ be the homology class of $\gamma$ in
+\knote{Fixed.}
+If \(\Sigma'\) has genus, then it contains a cycle $\gamma$ that is not separating in $\Sigma'$ or
+\(\Sigma\).
+Otherwise, \(\Sigma'\) not being a disk implies it has multiple boundary components.
+We may assume that each of these boundary components is non-separating in~\(\Sigma\).
+Otherwise, we could remove exactly one non-separating component to find a separating subgraph that
+weighs no more than~\(\minSS\).
+Let \(\gamma\) be any one of these boundary components.
+In both cases, \(\gamma\) lies in \(\Sigma'\) and is non-separating in \(\Sigma\).
+Let~$h$ be the homology class of $\gamma$ in
 $\Sigma$, and let $H_h$ be any minimum-weight even subgraph of $G$ that is homologous with $\gamma$
 in $\Sigma$.  Lemma~\ref{lem:global_split-nocross} implies, without loss of generality, that~$H_h$
 lies entirely in~$\Sigma'$.  Thus, every edge of $H_h$ is on the boundary of at least one face $f'$
