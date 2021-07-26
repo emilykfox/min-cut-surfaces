@@ -967,12 +967,35 @@ Finally, exchanging $\tilde\pi$ and $\tilde\pi’$ with $\tilde\rho$ and $\tilde
 \subsection{Triangulations and crossing sequences}
 \label{SS:homotopy-triangulation}
 
-We can now describe our algorithm.  First, recall that we have a combinatorial surface $\Sigma$ along with an associated greedy system of arcs on that surface; if $\Sigma$ had no boundary, we can delete a face without loss of generality and proceed, as described in Section~\ref{S:tree-cotree}.
-We define a $2\beta$-gon, which we call an \emph{abstract polygonal schema}, by slicing the surface $\sigma$ along each arc in a ribbon perturbation of the greedy system to obtain a disk, as described by Lemma~\ref{lem:disk}, and then replacing each copy of each perturbed arc on the boundary of that disk with a single edge.
+Our algorithm for computing minimum-weight even subgraph in a given homology class follows a strategy first used by Kutz to compute shortest non-contractible cycles~\cite{k-csnco-06}; in fact our algorithm uses Kutz’s algorithm as a subroutine.
 
-We next dualize the abstract polygonal schema, replacing each edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.
+Our algorithm begins begin by constructing a greedy system of arcs $a_1, \dots, a_\beta$ for the input combinatorial surface $\Sigma$; we also compute a ribbon perturbation $\set{\tilde{a}_1, \dots, \tilde{a}_\beta}$ of this greedy systen into pairwise-disjoint arcs, as described in Lemma \ref{L:weak}.  Lemma~\ref{lem:disk} implies that slicing the combinatorial surface $\Sigma^\square$ along these perturbed arcs yields a disk $D^\square$, which we call a \emph{polygonal schema}.  The boundary of $D^\square$ alternates between perturbed arcs $\tilde{a_i}$ and boundary paths of $\Sigma^\square$; each perturbed arc appears twice on the boundary of~$D^\square$.  See Figure \ref{F:schema}.
+
+\begin{figure}[htb]
+\centering
+\raisebox{-0.5\height}{\includegraphics[scale=0.4]{Fig/2torus}}\hfil
+\raisebox{-0.5\height}{\includegraphics[scale=0.4]{Fig/2torus-schema}}
+\caption{A system of arcs on a surface with genus 2 and one boundary cycle, and the polygonal schema obtained by slicing along the arcs.}
+\label{fig:schema}
+\end{figure}
+
+
+Replacing each copy of each perturbed arc on the boundary of $D^\square$ with a single edge, and contracting each boundary path of $\Sigma^\square$ to a single point, yields a $2\beta$-gon that we call the \emph{abstract polygonal schema}.
+
+We next dualize the abstract polygonal schema, replacing each boundary edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.
 %
-Any collection of disjoint simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of paths in the greedy system of arcs.  Each edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, we call a weighted triangulation \emph{valid} if corresponding vertices are incident to edges of equal total weight.  Every valid weighted triangulation corresponds to a collection of simple disjoint cycles, which is unique up to homotopy.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.
+Any collection of disjoint simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of arcs in the perturbed greedy system.  Each triangulation edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, we call a weighted triangulation \emph{valid} if corresponding vertices are incident to edges of equal total weight.  Every valid weighted triangulation corresponds to a collection of simple disjoint cycles, which is unique up to homotopy.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.
+
+\begin{figure}[htb]
+\centering\includegraphics[scale=0.4]{Fig/schema-triangulation}
+\caption{Two disjoint simple cycles on a surface of genus 2 with one boundary, and the corresponding weighted triangulation.}
+\label{fig:weightedtriangulation}
+\end{figure}
+
+For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with our perturbed greedy arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time; this proceeds by slicing $\Sigma$ along the greedy system of arcs, and then gluing together $x$ copies of the resulting planar surface into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
+Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $(s,t)$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
+Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log \log n)$ time.
+
 
 %\rnote{But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky.}
 
@@ -980,15 +1003,7 @@ Any collection of disjoint simple cycles corresponds to a \emph{weighted triangu
 
 Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.  \jnote{We haven’t defined ”valid crossing vector”!  Connect back to crossing parities.}
 
-\begin{figure}[htb]
-\centering\includegraphics[height=1.45in]{Fig/triangulation}
-\caption{Two disjoint simple cycles on a surface of genus 2, and the corresponding weighted triangulation.}
-\label{fig:weightedtriangulation}
-\end{figure}
 
-For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with the paths from our greedy system of arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time; this proceeds by slicing $\Sigma$ along the greedy system of arcs, and then gluing together $x$ copies of the resulting planar surface into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
-Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $(s,t)$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
-Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log \log n)$ time.
 
 \begin{theorem}
 \label{Th:Z2-minimal-crossing}
