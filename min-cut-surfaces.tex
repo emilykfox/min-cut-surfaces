@@ -117,7 +117,7 @@ Erin W. Chambers%
 	\thanks{Department of Computer Science,
 	Saint Louis University;
 	\url{erin.chambers@slu.edu}.
-	Supported in part by NSF grants CCF-1054779, IIS-1319573, and CCF-1614562.
+	Supported in part by NSF grants CCF-1054779, CCF-1614562, DBI-1759807, CCF-1907612, and CCF-2106672.
 	Portions of this work were done while this author was a student at the University of Illinois at Urbana-Champaign.}
 %
 \and
@@ -630,9 +630,8 @@ Slicing along the arcs $a_1, a_2, \dots, a_\beta$ transforms~$\Sigma$ into a top
 \end{lemma}
 
 \begin{proof}
-\enote{Rewrote: please double check}
-Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists. Cutting along a perturbed arc $\tilde{a}_i$ either reduces the number of boundary components by 1, if the arc goes between distinct boundaries, or cuts along a handle once, if the arc is a nontrivial walk from a boundary back to itself.  In either case, the Euler characteristic of the surface minus the arc goes down by 1.  Since the $\tilde{a}_i$ are weakly simple and weakly disjoint, cutting along all $\beta$ paths reduces the Euler characteristic to 1, implying that the remaining surface after cutting must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
-\jnote{We also need to argue that the sliced surface is connected (via the cotree)!}
+Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists. Cutting along a perturbed arc $\tilde{a}_i$ either reduces the number of boundary components by 1, if the arc goes between distinct boundaries, or cuts along a handle once, if the arc is a nontrivial walk from a boundary back to itself.  In either case, the Euler characteristic of the surface minus the arc goes down by 1.  Since the $\tilde{a}_i$ are weakly simple and weakly disjoint, cutting along all $\beta$ paths reduces the Euler characteristic to 1.  If the resulting surface is disconnected after cutting, then some two faces adjacent along the cut are separated; however, all are connected via the co-tree, so it must be connected.  Therefore, the remaining surface after cutting must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
+
 \end{proof}
 
 \begin{figure}[htb]
@@ -758,10 +757,9 @@ Recall that $n$, $m$, and $f$ respectively denote the number of vertices, edges,
 We immediately have $|T| = n-1$ and $|F^*| = f$.  Because $T$, $F$, and $L$ partition the edges, we conclude that $|L| = m - (n-1) - f = m - n - f + 1 = 1 - \chi  = \beta$.
 \end{proof}
 
-Arbitrarily index the edges in $L$ as $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to the forest~$F^*$ creates a dual arc $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  
-\modified{The paths $\dualarc_i$ form a set of weakly simple arcs;}
-\sout{We can treat each path $\dualarc_i$ as a simple arc in the \emph{abstract} surface $\Sigma$;} slicing along these $\beta$ arcs transforms $\Sigma$ into a topological disk. \modified{What do we mean by abstract surface? a reviewer asked? Also, should we say $\alpha_i$ is weakly simple.  I think the only non-simple part of $\alpha_i$ is the initial part of the two paths to the endpoints of $e_i$, am I right? may be we can just say that}
-See Figure~\ref{fig:tree-coforest}.  We call the set $\set{\dualarc_1, \dualarc_2, \dots, \dualarc_\beta}$ a \EMPH{system of dual arcs}.
+Arbitrarily index the edges in $L$ as $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to the forest~$F^*$ creates a dual arc $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  \enote{rewrote here - please  check}
+The paths $\dualarc_i$ again form a set of weakly simple and weakly disjoint arcs, and slicing along these $\beta$ arcs transforms $\Sigma$ into a topological disk; both facts follow from the same arguments as given in the proofs of Lemmas~\ref{L:weak} and~\ref{lem:disk}.
+We call the set $\set{\dualarc_1, \dualarc_2, \dots, \dualarc_\beta}$ a \EMPH{system of dual arcs}.  See Figure~\ref{fig:tree-coforest}.  
 
 \begin{figure}[htb]
 \centering\footnotesize\sf
