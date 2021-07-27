@@ -174,10 +174,8 @@ It would be nice if the authors would add a short discussion what happens on non
 
 \note{Still pending:
 \begin{itemize}
-\item Lemma \ref{lem:L_edges_tree_coforest}
-\item Discussion of unique shortest paths near Lemma \ref{lem:multishort}
-\item “This is weird” referee comment in Theorem \ref{thm:min-cycle}
-\item Non-orientable???
+\item Non-orientable???  Directed???
+\item Cosmetics?
 \end{itemize}}
 
 % ===============================================================================================
@@ -252,7 +250,7 @@ Minimum $(s,t)$-cuts in directed planar graphs can also be computed in $O(n\log 
 A \EMPH{cut} (without specified $s$ and $t$) is a subset of edges of $G$ that separate $G$ into two non-empty sets of vertices.
 A \emph{global minimum} cut is a cut of minimum size, or minimum total weight if the edges of~$G$
 are weighted.  Equivalently, a global minimum cut is an $(s,t)$-minimum cut of smallest total
-weight, minimized over all pairs of vertices $s$ and $t$.  Chalermsook, Fakcharoenphol, and
+weight, minimized over all pairs of vertices $s$ and~$t$.  Chalermsook, Fakcharoenphol, and
 Nanongkai~\cite{cfn-dnlta-04} gave the first algorithm for computing global minimum cuts that relies
 on planarity; their algorithm runs in~$O(n \log^2 n)$ time.  Their algorithm was improved by
 \L\c{a}cki and Sankowski~\cite{ls-mcsc-11} who achieved an $O(n \log \log n)$ running time.  Mozes
@@ -768,8 +766,7 @@ Recall that $n$, $m$, and $f$ respectively denote the number of vertices, edges,
 We immediately have $|T| = n-1$ and $|F^*| = f$.  Because $T$, $F$, and $L$ partition the edges, we conclude that $|L| = m - (n-1) - f = m - n - f + 1 = 1 - \chi  = \beta$.
 \end{proof}
 
-Arbitrarily index the edges in $L$ as $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to the forest~$F^*$ creates a dual arc $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  \enote{rewrote here - please  check}
-The paths $\dualarc_i$ again form a set of weakly simple and weakly disjoint arcs, and slicing along these $\beta$ arcs transforms $\Sigma$ into a topological disk; both facts follow from the same arguments as given in the proofs of Lemmas~\ref{L:weak} and~\ref{lem:disk}.
+Arbitrarily index the edges in $L$ as $e_1, \dots, e_\beta$.  For each edge $e_i\in L$, adding the corresponding dual edge $e_i^*$ to the forest~$F^*$ creates a dual arc $\dualarc_i$, which is either a simple path between distinct boundary vertices, or a nontrivial loop from a boundary vertex back to itself; in the second case, $\dualarc_i$ may traverse some edges of $F^*$ twice.  (The arguments in Lemmas~\ref{L:weak} and~\ref{lem:disk} imply that the dual arcs $\dualarc_i$ are weakly simple and weakly disjoint; however, our algorithms do not use these properties.)
 We call the set $\set{\dualarc_1, \dualarc_2, \dots, \dualarc_\beta}$ a \EMPH{system of dual arcs}.  See Figure~\ref{fig:tree-coforest}.  
 
 \begin{figure}[htb]
@@ -1111,11 +1108,11 @@ Recall that any path $\sigma$ from $u$ to $v$ in $G$ is the projection of a uniq
 
 \begin{lemma}
 \label{lem:nocross}
-Let $\cycle$ be a $\Z_2$-minimal cycle in $G$, and let~$\sigma$ be any shortest path in $G$ that intersects $\cycle$.  There is a $\Z_2$-minimal cycle $\cycle'$ homologous to $\cycle$, which is the projection of a shortest path $(\cycle', h)$ in $\Gbar$ that starts with a subpath of $(\sigma, 0)$ but does not otherwise intersect $(\sigma, 0)$.
+Let $\cycle$ be a $\Z_2$-minimal cycle in $G$ in homology class $h$, and let~$\sigma$ be any shortest path in $G$ that intersects $\cycle$.  There is a $\Z_2$-minimal cycle $\cycle'$ in homology class $h$, which is the projection of a shortest path $(\cycle', h)$ in $\Gbar$ that starts with a subpath of $(\sigma, 0)$ but does not otherwise intersect $(\sigma, 0)$.
 \end{lemma}
-\rnote{
-Perhaps, for consistency, it would be better to use your perturbation argument (l.455). Lemma~\ref{lem:crossing}
-}
+%\rnote{
+%Perhaps, for consistency, it would be better to use your perturbation argument (l.455). Lemma~\ref{lem:crossing}
+%}
 \begin{proof}
 Let $v$ be the vertex of $\sigma\cap\cycle$ closest to the starting vertex of $\sigma$, and let $(v,h)$ be the corresponding vertex of the lifted path $(\sigma,0)$.  Think of~$\cycle$ as a loop based at $v$.  Lemma \ref{lem:lift-minimal} implies that the lifted path $(\cycle, h)$ is a shortest path from $(v,h)$ to $(v,h\oplus [\cycle])$.
 
@@ -1124,8 +1121,7 @@ Now let $(w,h')$ be the last vertex along $(\cycle,h)$ that is also a vertex of 
 
 We emphasize that the modified cycle $\cycle'$ may intersect~$\sigma$ arbitrarily many times; however, all such intersections lift to intersections between $(\cycle', h)$ and lifts of $\sigma$ other than $(\sigma, 0)$.
 
-\jnote{Revise.}
-Our algorithm uses a generalization of Klein's  multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
+Our algorithm uses a generalization of Klein's multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs, first developed by Chambers \etal~\cite{cce-msspe-13} and later slightly improved by Erickson \etal~\cite{efl-hmcpf-18}.
 %\note{Kyle: I changed to the deterministic running time for MSSP and added a short discussion on the
 %randomized alternative.
 %Please double check my math!
@@ -1135,46 +1131,44 @@ Our algorithm uses a generalization of Klein's  multiple-source shortest path al
 %have been \(O(64^g g^2 n \log n)\).}
 %\note{Erin: Looks good to me!  Jeff and Amir, you might also want to check in next round of revision.}
 
-\begin{lemma}[Erickson \etal~\cite{efl-hmcpf-18}]
+\begin{lemma}[\cite{cce-msspe-13,efl-hmcpf-18}]
 \label{lem:multishort}
-Let $G$ be a graph with positive edge weights, cellularly embedded on a surface $\Sigma$ of
-genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of~$G$.
-We can preprocess $G$ in $O(g^2n\log n)$ time and $O(g n \log n)$ space so that the length of the
-shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$
-time.
+Let $G$ be a graph with non-negatively weighted edges, cellularly embedded on a surface of
+genus $g$ (possibly with boundary), and let $f$ be an arbitrary face of~$G$.
+We can preprocess $G$ in $O(g^2 n\log n)$ time and $O(g n \log n)$ space so that the shortest-path distance from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$ time.
 \end{lemma}
-
-The above result is based on a procedure of Chambers \etal~\cite{cce-msspe-13} which requires only
-$O(g n \log n)$ preprocessing time but relies on the shortest path between any pair of vertices
-being unique.
-We can enforce uniqueness of shortest paths and achieve the $O(g n \log n)$ preprocessing time
-\emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.
-\modified{Alternatively, uniqueness of shortest paths can be enforced in $O(g^2 n \log n)$ preprocessing time by a deterministic algorithm as referenced in
-Lemma~\ref{lem:multishort}. Since, our minimum weight $(s,t)$-cut algorithm is otherwise deterministic, we use this deterministic preprocessing procedure in this paper.}
-\sout{Because our minimum-weight $(s,t)$-cut algorithm is otherwise deterministic, we will use the
-deterministic $O(g^2 n \log n)$ preprocessing time procedure referenced in
-Lemma~\ref{lem:multishort} throughout the rest of this section.}
+%
+%The above result is based on a procedure of Chambers \etal~\cite{cce-msspe-13} which requires only
+%$O(g n \log n)$ preprocessing time but relies on the shortest path between any pair of vertices
+%being unique.
+%We can enforce uniqueness of shortest paths and achieve the $O(g n \log n)$ preprocessing time
+%\emph{with high probability} by adding random infinitesimal weights to each edge \cite{mvv-memi-87}.
+%\modified{Alternatively, uniqueness of shortest paths can be enforced in $O(g^2 n \log n)$ preprocessing time by a deterministic algorithm as referenced in
+%Lemma~\ref{lem:multishort}. Since, our minimum weight $(s,t)$-cut algorithm is otherwise deterministic, we use this deterministic preprocessing procedure in this paper.}
+%\sout{Because our minimum-weight $(s,t)$-cut algorithm is otherwise deterministic, we will use the
+%deterministic $O(g^2 n \log n)$ preprocessing time procedure referenced in
+%Lemma~\ref{lem:multishort} throughout the rest of this section.}
 
 \begin{theorem}
 \label{thm:min-cycle}
 Let $G$ be a graph with positively weighted edges, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 8^\beta \beta^3\, n\log n)$ time.
 \end{theorem}
-\rnote{
-This seems weird. You are computing homology covers using the decomposition of Section 3.2, but computing crossings with the decomposition of Section 3.1. It looks correct, but very unnatural! If you cannot fix this in a nicer way, please at least emphasize this, and explain why you choose this route. 
-}
-\jnote{We need a collection of shortest paths that cross every non-null-homologous cycle.  The greedy system of arcs gives us $2\beta$ such paths.  The dual arcs are not made of shortest paths!!}
+
 \begin{proof}
-We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, as described in Section~\ref{sec:characterizing_signatures}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we return the empty walk and halt.
+We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ time, using a dual system of arcs, as described in Section~\ref{sec:characterizing_signatures}.  In $O(\beta k)$ time, we then compute the homology signature~$[\cycle]$.  If $[\cycle] = 0$, we can immediately return the empty walk, so assume otherwise.  We then construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, using the same system of dual arcs, as described in Section~\ref{sec:homcover_cover}.
 
-Next, we construct the $\Z_2$-homology cover $\Gbar$ in $O(2^\beta n\log n)$ time, as described in Section~\ref{sec:homcover_cover}, as well as the set $S$ of directed shortest paths described in Section~\ref{sec:forest-cotree}.
-Any cycle homologous with~$\cycle$ must intersect at least one member of~$S$ as~$\cycle$ is not null-homologous.
-We look for the shortest path in $\Gbar$ of the canonical form described in Lemma~\ref{lem:nocross}, by considering each shortest path $\sigma\in S$ in turn as follows.
+To exploit Lemma \ref{lem:nocross}, we need a set $S$ of shortest paths in $G$ that are guaranteed to intersect every cycle with non-trivial homology.  Somewhat counterintuitively, we construct $S$ essentially by building the \emph{greedy primal} system of arcs, as described in Section~\ref{sec:forest-cotree}.  Specifically, we build the greedy forest-cotree decomposition $(\partial G, F, C^*, L)$, and let $S$ be the set of paths in the forest $F$ from the boundary of $\Sigma$ to the endpoints of edges in~$L$.  Lemma~\ref{lem:L_edges} immediately implies that $S$ contains $2\beta$ shortest paths.  Lemma~\ref{lem:disk} implies that every cycle with non-trivial homology---in fact, every non-contractible cycle---shares at least one vertex with at least one path in $S$.  We emphasize that our algorithm in this section does not need ribbon perturbations; in particular, every path in $S$ is simple, and our algorithm considers each path in $S$ in isolation.
 
-Let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arcto (v_t, h_t)$.  We construct the combinatorial surface $\Sigmabar\snip(\sigma,0)$ by splitting the path $(\sigma,0)$ into two parallel paths from $(v_0,0)$ to $(v_t,h_t)$, which we denote  $(\sigma,0)^+$ and $(\sigma,0)^-$.  For each index $1\le i\le t-1$, let $(v_i,h_i)^+$ and $(v_i,h_i)^-$ denote the copies of vertex $(v_i,h_i)$  on the paths $(\sigma,0)^+$ and $(\sigma,0)^-$, respectively.  The paths $(\sigma,0)^+$ and $(\sigma,0)^-$ bound a new common face $f_{(\sigma,0)}$ in $\Sigmabar\snip(\sigma,0)$.
+Then for each each shortest path $\sigma\in S$, we look for $\Z_2$-minimal cycle homologous to $\gamma$ that intersects $\sigma$ and has the structure described in Lemma~\ref{lem:nocross}.  Lemma~\ref{lem:lift-shortest} implies that $\sigma$ is the projection of a shortest path $(\sigma,0)$ in $\overline{G}$; let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arcto (v_t, h_t)$.  We construct the combinatorial surface $\Sigmabar\snip(\sigma,0)$ by splitting the path $(\sigma,0)$ into two parallel paths from $(v_0,0)$ to $(v_t,h_t)$, which we denote  $(\sigma,0)^+$ and $(\sigma,0)^-$.  For each index $1\le i\le t-1$, let $(v_i,h_i)^+$ and $(v_i,h_i)^-$ denote the copies of vertex $(v_i,h_i)$  on the paths $(\sigma,0)^+$ and $(\sigma,0)^-$, respectively.  The paths $(\sigma,0)^+$ and $(\sigma,0)^-$ bound a new common face $f_{(\sigma,0)}$ in $\Sigmabar\snip(\sigma,0)$.
 
 Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $\cycle$ intersects $\sigma$, then some $\Z_2$-minimal cycle homologous to $\cycle$ is the projection of a shortest path in $\Sigmabar\snip(\sigma,0)$ from some vertex $(v_i,h_i)^\pm$ to the corresponding vertex $(v_i, h_i\oplus[\cycle])$.  To compute these shortest paths, we implicitly compute the shortest path in $\Sigmabar\snip(\sigma,0)$ from every vertex on the boundary of $f_{(\sigma,0)}$ to \emph{every} vertex of $\Sigmabar\snip(\sigma,0)$, using Lemma~\ref{lem:multishort}.
 The resulting algorithm runs in $O(\gbar^2\,\nbar \log \nbar) = O(8^\beta \beta^3\, n\log n)$ time, by Lemma \ref{lem:cover-cxy}.
 \end{proof}
+%
+%\rnote{
+%This seems weird. You are computing homology covers using the decomposition of Section 3.2, but computing crossings with the decomposition of Section 3.1. It looks correct, but very unnatural! If you cannot fix this in a nicer way, please at least emphasize this, and explain why you choose this route. 
+%}
+%\jnote{We need a collection of shortest paths that cross every non-null-homologous cycle.  The greedy system of arcs gives us $2\beta$ such paths.  The dual arcs are not made of shortest paths!!}
 
 By running this algorithm $2^\beta$ times, we can compute the shortest cycle in $\Sigma$ in
 \emph{every} $\Z_2$-homology class, in $O(16^\beta \beta^3\, n\log n)$ time.
@@ -1224,13 +1218,13 @@ This recurrence has two base cases: $C(0, k) = 0$ for any integer $k$, and for a
 %\anote{no dependence on $b$?}\jnote{That’s correct; no dependence on $b$.}
 \begin{corollary}
 \label{cor:mincut}
-Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with genus $g$ (and possibly with boundary), and let $s$ and~$t$ be vertices of $G$.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with genus~$g$ (and possibly with boundary), and let $s$ and~$t$ be vertices of $G$.
 We can compute the minimum-weight $(s,t)$-cut in $G$ in $O(256^g g^3 n \log n)$ time.
 \end{corollary}
 
-As discussed above, we can instead randomly perturb edge weights and use the faster multiple-source
-shortest paths algorithm of Chambers \etal~\cite{cce-msspe-13} to find a minimum-weight $(s,t)$-cut
-with high probability in $O(64^g g^3 n \log n)$ time.
+%As discussed above, we can instead randomly perturb edge weights and use the faster multiple-source
+%shortest paths algorithm of Chambers \etal~\cite{cce-msspe-13} to find a minimum-weight $(s,t)$-cut
+%with high probability in $O(64^g g^3 n \log n)$ time.
 
 % ==================================================================================
 \section{{NP}-Hardness}
