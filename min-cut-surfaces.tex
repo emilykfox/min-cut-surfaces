@@ -161,7 +161,7 @@ known for computing minimum cuts in planar graphs.
 Our algorithms for minimum cuts rely on reductions to the problem of finding a minimum-weight
 subgraph in a given \(\Z_2\)-homology class, and we give efficient algorithms for this latter
 problem as well.
-If $G$ is embedded on a surface with $b$ boundary components, these algorithms run in $(g + b)^{O(g
+If $G$ is embedded on a surface with genus $g$ and $b$ boundary components, these algorithms run in $(g + b)^{O(g
 + b)} n \log \log n$ and $2^{O(g + b)} n \log n$ time.
 We also prove that finding a minimum-weight subgraph homologous to a single input cycle is NP-hard,
 showing it is likely impossible to improve upon the exponential dependencies on $g$ for this latter
@@ -171,6 +171,14 @@ problem.
 \rnote{
 It would be nice if the authors would add a short discussion what happens on nonorientable surfaces. Does the same approach work, possibly with some additional work, or is that open. 
 }
+
+\note{Still pending:
+\begin{itemize}
+\item Lemma \ref{lem:L_edges_tree_coforest}
+\item Discussion of unique shortest paths near Lemma \ref{lem:multishort}
+\item “This is weird” referee comment in Theorem \ref{thm:min-cycle}
+\item Non-orientable???
+\end{itemize}}
 
 % ===============================================================================================
 \section{Introduction}
@@ -196,7 +204,10 @@ In contrast, prior to our work, almost nothing was known about computing minimum
 This paper describes the first algorithms to compute minimum cuts in surface-embedded graphs of fixed genus in near-linear time.  Specifically, we describe two algorithms to compute minimum $(s,t)$-cuts in undirected surface graphs, the first in $g^{O(g)} n\log\log n$ time, and the second in $2^{O(g)} n\log n$ time.
 We also extend our  algorithms to find \emph{global} minimum cuts in undirected surface graphs in the same asymptotic time bounds.  For all our algorithms, the input consists of an undirected $n$-vertex graph, with arbitrary positive real edge weights, embedded on an orientable surface of genus~$g$.
 
-Our algorithms are based on a natural generalization of the duality between cuts and cycles in planar graphs, first proposed by Whitney \cite{w-pg-33} and first exploited to compute minimum cuts in planar graphs by Itai and Shiloach \cite{is-mfpn-79}. \modified{A set $C$ of the edges crossing a nontrivial partition $(S,T)$ of $V$ is an $(s,t)$-cut if $s\in S$ and $t \in T$. } By definition, a set $C$ of edges defines an $(s,t)$-cut in a graph $G$ if and only if their complement $G\setminus C$ is a disconnected graph, with $s$ and $t$ in different components.  If $G$ is embedded on a surface, then the corresponding edges $C^*$ in the dual graph~$G^*$ separate the \emph{faces} of $G^*$ into two disconnected subcomplexes, one containing the dual face $s^*$ and the other containing the dual face $t^*$. 
+Our algorithms are based on a natural generalization of the duality between cuts and cycles in planar graphs, first proposed by Whitney \cite{w-pg-33} and first exploited to compute minimum cuts in planar graphs by Itai and Shiloach \cite{is-mfpn-79}.  
+A set $C$ of the edges crossing a nontrivial partition $(S,T)$ of $V$ is an $(s,t)$-cut if $s\in S$ and $t \in T$.
+%By definition, a set $C$ of edges defines an $(s,t)$-cut in a graph $G$ if and only if their complement $G\setminus C$ is a disconnected graph, with $s$ and $t$ in different components.
+If $G$ is embedded on a surface, then the corresponding edges $C^*$ in the dual graph~$G^*$ separate the \emph{faces} of $G^*$ into two disconnected subcomplexes, one containing the dual face $s^*$ and the other containing the dual face $t^*$. 
 
 We formalize this characterization in terms of \emph{homology}, a standard equivalence relation from algebraic topology; specifically, we use cellular homology with coefficients in $\Z_2$.  Briefly, two subgraphs of a surface graph are \emph{homologous}, or in the same \emph{homology class}, if and only if their symmetric difference is the boundary of a subset of faces.  In light of this characterization, finding minimum $(s,t)$-cuts in surface graphs becomes a special case of finding the minimum-weight subgraph of a surface graph in a given homology class.  Indeed, both of our algorithms for computing minimum $(s,t)$-cuts solve this more general problem, which is sometimes called \emph{homology localization}~\cite{cf-qhc-08,cf-hrhl-10}.
 
@@ -267,7 +278,7 @@ Their algorithm can be adapted to compute maximum flows (and therefore minimum c
 However, this algorithm is slower than more recent and more general algorithms \cite{ds-flgfi-08, gr-bfdb-98}.
 
 Chambers, Erickson, and Nayyeri~\cite{cen-hfcc-12} describe maximum flow algorithms that are tailored specifically for graphs of constant genus.
-Given a graph embedded on a surface of genus~$g$, their algorithms compute a maximum flow in  $O(g^8 n \log^2 n \log^2 C)$ time where $C$ is the sum of integer edge weights and in $g^{O(g)}n^{3/2}$ arithmetic operations when edge weights are arbitrary positive real numbers.  Their key insight is that it suffices to optimize the \emph{homology class} (with coefficients in $\Real$) of the flow, rather than directly optimizing the flow itself.
+Given a graph embedded on an orientable surface of genus~$g$, their algorithms compute a maximum flow in  $O(g^8 n \log^2 n \log^2 C)$ time where $C$ is the sum of integer edge weights and in $g^{O(g)}n^{3/2}$ arithmetic operations when edge weights are arbitrary positive real numbers.  Their key insight is that it suffices to optimize the \emph{homology class} (with coefficients in $\Real$) of the flow, rather than directly optimizing the flow itself.
 
 Euler's formula implies that a simple $n$-vertex graph embedded on a surface of genus $O(n)$ has $O(n)$ edges.
 The fastest known combinatorial maximum-flow algorithm for sparse graphs, due to Orlin~\cite{o-mfotl-13}, runs in $O(n^2 / \log n)$ time.
@@ -289,7 +300,7 @@ Homology is a topological notion of equivalence with nice algebraic properties. 
 Most interesting variants of homology localization are NP-hard.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{simple cycle} in a given homology class is {NP}-hard.  Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Recently, Grochaw and Tucker-Foltz \cite{gt-ctugc-18} proved that homology localization in surface graphs, over a sufficiently large finite coefficient ring, is equivalent to Unique Games; in particular, there is no PTAS for \emph{any} finite coefficient ring unless the Unique Games Conjecture is false.
 
 %\rnote{137-138: perhaps add some details. }\anote{I added citations in the and of the last sentence.}
-On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time~\cite{cen-hfcc-12, s-cath-90}.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on a surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
+On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time~\cite{cen-hfcc-12, s-cath-90}.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on an orientable surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
 
 \subsection{New results and organization}
 
@@ -363,7 +374,8 @@ the only difference between a cycle and a loop is that a loop has a
 distinguished basepoint.
 We say a loop~$\ell$ and a cycle~$\gamma$ are \EMPH{equivalent} if, for some
 real number~$\delta$, we have~$\ell(t) = \gamma(t + \delta)$ for
-all~$t \in [0,1]$. \anote{What about more complicated parameterizations?}
+all~$t \in [0,1]$.
+%\anote{What about more complicated parameterizations?}
 We collectively refer to paths, loops, arcs, and cycles as \EMPH{curves}.
 A~curve is \EMPH{simple} if it is injective, except for the endpoints of a loop; we usually do not distinguish between simple curves and their images in~$\Sigma$.
 A simple curve~$p$ is \EMPH{separating} if~$\Sigma \setminus p$ is disconnected.
@@ -384,7 +396,6 @@ Orientable surfaces with~$b$ boundary components are differentiated by their \EM
 
 \subsection{Graph embeddings}
 \label{SS:embeddings}
-
 
 An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
@@ -867,7 +878,7 @@ As mentioned in Section~\ref{sec:forest-cotree}, we cannot consistently define w
 
 \begin{lemma}
 \label{lem:crossing}
-Let $G$ be an edge-weighted graph embedded on a surface with genus $g$ and $b>0$ boundary components.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with genus $g$ and $b>0$ boundary components.
 Let $A = \Set{a_1, a_2, \dots, a_\beta}$ be a greedy system of arcs.
 Let $H$ be an even subgraph of $G$.
 There is a $\Z_2$-minimal even subgraph~$H'$ homologous to $H$, a cycle decomposition $\set{\gamma_1, \dots, \gamma_r}$ of $H’$, and a ribbon perturbation $\set{\tilde{a}_1,  \dots, \tilde{a}_\beta, \tilde\gamma_1, \dots, \tilde\gamma_r}$, such that for each index $i$, the total number of crossings between the perturbed arc $\tilde{a}_i$ and the perturbed cycles $\tilde\gamma_1, \dots, \tilde\gamma_r$ is at most $12g+4b-6$.
@@ -997,12 +1008,12 @@ Now suppose we are given an even subgraph $H$.  In $O(gn)$ time, we can compute 
 
 \begin{theorem}
 \label{Th:Z2-minimal-crossing}
-Let $G$ be an undirected graph with positively weighted edges embedded on a surface with genus~$g$ and $b$ boundary components, and let $H$ be an even subgraph of $G$. We can compute the minimum-weight even subgraph homologous with $H$ in $(g+b)^{O(g+b)} n\log \log n$ time.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with genus~$g$ and $b$ boundary components, and let $H$ be an even subgraph of $G$.  We can compute the minimum-weight even subgraph homologous with $H$ in $(g+b)^{O(g+b)} n\log \log n$ time.
 \end{theorem}
 
 \begin{corollary}
 \label{C:min-cut-crossing}
-Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$ and $b$ boundary components, and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $(g+b)^{O(g+b)} n\log \log n$ time.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with genus~$g$ (possibly with boundary), and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $g^{O(g)} n\log \log n$ time.
 \end{corollary}
 
 % ===============================================================================================
@@ -1146,7 +1157,7 @@ Lemma~\ref{lem:multishort} throughout the rest of this section.}
 
 \begin{theorem}
 \label{thm:min-cycle}
-Let $G$ be a graph with positive edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 8^\beta \beta^3\, n\log n)$ time.
+Let $G$ be a graph with positively weighted edges, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 8^\beta \beta^3\, n\log n)$ time.
 \end{theorem}
 \rnote{
 This seems weird. You are computing homology covers using the decomposition of Section 3.2, but computing crossings with the decomposition of Section 3.1. It looks correct, but very unnatural! If you cannot fix this in a nicer way, please at least emphasize this, and explain why you choose this route. 
@@ -1197,9 +1208,7 @@ We conclude that some subgraph $H’$ of $H$ is null-homologous.  Because all ed
 
 \begin{theorem}
 \label{thm:min-even}
-Let $G$ be an undirected graph with positive edge weights, cellularly embedded on a
-surface~$\Sigma$ with first Betti number $\beta$.  A minimum-weight even subgraph of $G$ in each
-$\Z_2$-homology class can be computed in $O(16^\beta \beta^3\, n\log n)$ time.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with first Betti number $\beta$.  A minimum-weight even subgraph of $G$ in each $\Z_2$-homology class can be computed in $O(16^\beta \beta^3\, n\log n)$ time.
 \end{theorem}
 
 \begin{proof}
@@ -1215,10 +1224,8 @@ This recurrence has two base cases: $C(0, k) = 0$ for any integer $k$, and for a
 %\anote{no dependence on $b$?}\jnote{That’s correct; no dependence on $b$.}
 \begin{corollary}
 \label{cor:mincut}
-Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$,
-%and $b$ boundary components,
-and let $s$ and~$t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut
-in $G$ in $O(256^g g^3 n \log n)$ time.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with genus $g$ (and possibly with boundary), and let $s$ and~$t$ be vertices of $G$.
+We can compute the minimum-weight $(s,t)$-cut in $G$ in $O(256^g g^3 n \log n)$ time.
 \end{corollary}
 
 As discussed above, we can instead randomly perturb edge weights and use the faster multiple-source
@@ -1381,8 +1388,8 @@ In Section \ref{sec:global_contractible}, we describe an algorithm that computes
 
 \subsection{Contractible}
 \label{sec:global_contractible}
-\knote{Replacing pretty much this whole subsection by a citation to~\cite{cdem-fotc-10}.
-I have to open the black box to get the running times we desire, though.}
+%\knote{Replacing pretty much this whole subsection by a citation to~\cite{cdem-fotc-10}.
+%I have to open the black box to get the running times we desire, though.}
 
 First we consider the case where some minimum-weight separating subgraph $\minSS$ is contractible.  
 This case is nearly handled using a result of Cabello \etal~\cite[Theorem 5.4]{cdem-fotc-10} wherein
@@ -1413,7 +1420,7 @@ We use the slicing operation ($\snip$) along tight cycles and arcs in~$G$.  The 
 implies it is safe for our algorithm to find minimum-weight separating subgraphs in sliced copies
 of~$\Sigma$.
 
-\knote{Modifying lemma to state the projection bounds the same subset of faces as \(\gammasnip\).}
+%\knote{Modifying lemma to state the projection bounds the same subset of faces as \(\gammasnip\).}
 \begin{lemma}
 \label{lem:global_null-homologous-projections}
 Let~$\alpha$ be an arbitrary simple cycle or arc in~$G$.
@@ -1443,12 +1450,10 @@ Edge $e'$ being incident to exactly one face of $\Fsnip$ is therefore equivalent
 incident to exactly one face of~\(F\).
 
 Now suppose $e$ is in $\alpha$.
-Graph $\Gsnip$ contains two copies of $e$ denoted $e_1$ and $e_2$, each incident to one face denoted
-$f_1$ and $f_2$, respectively.
+Graph $\Gsnip$ contains two copies of $e$ denoted $e_1$ and $e_2$, each incident to one face denoted~$f_1$ and $f_2$, respectively.
 If neither or both of $f_1$ and $f_2$ are in $\Fsnip$, then $\Hsnip$ includes neither or both of
-$e_1$ and $e_2$.
-Therefore, $\Hsnip$ contains the two copies of $e$ an even number of times total, implying $e \notin
-H$.
+$e_1$ and~$e_2$.
+Therefore, $\Hsnip$ contains the two copies of $e$ an even number of times total, implying $e \notin H$.
 If one, but not both, of $f_1$ and $f_2$ are in $\Fsnip$, then $\Hsnip$ includes exactly one of
 $e_1$ or $e_2$.
 In turn, $\Hsnip$ contains the two copies of $e$ an odd number of times total, meaning $e \in H$.
@@ -1483,8 +1488,8 @@ There exists an $O(n \log \log n)$-time algorithm that computes a minimum-weight
 
 \begin{proof}
 
-\rnote{797: Perhaps tell that A is the set of edges of the arcs, rather than the arcs themselves. }
-\knote{But I think \(A\) does consist of the arcs themselves.}
+%\rnote{797: Perhaps tell that A is the set of edges of the arcs, rather than the arcs themselves. }
+%\knote{But I think \(A\) does consist of the arcs themselves.}
 The algorithm computes a greedy system of arcs $A$ in $O(n)$ time as described in
 Section~\ref{sec:forest-cotree}.
 Observe both endpoints of each arc lie on $s^*$.
@@ -1492,7 +1497,7 @@ Let $\Gsnip$ denote the planar graph $G \snip A$; this graph has $O(n)$ vertices
 
 We now run the \(O(n \log \log n)\) time algorithm of \L\c{a}cki and
 Sankowski~\cite{ls-mcsc-11} to compute the shortest simple cycle~\(\gammasnip\) of \(\Gsnip\).
-\knote{Is the next sentence necessary, or just define \(\Hsnip\) directly?}
+%\knote{Is the next sentence necessary, or just define \(\Hsnip\) directly?}
 Let \(\Hsnip\) be the subgraph of \(\Gsnip\) containing the edges of~\(\gammasnip\).
 Subgraph~\(\Hsnip\) separates a non-empty subset of faces~\(\Fsnip\) from the boundary
 of~\(\Gsnip\).
@@ -1508,7 +1513,8 @@ This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that separates at leas
 of~\(\Gsnip\) from the boundary.
 Thus, $\sigma$ cannot be shorter than $H$, and our algorithm returns a minimum-weight separating
 subgraph.
-
+\end{proof}
+%
 %Pick an arbitrary edge $e$ on one of the tight arcs $\alpha$, and let $e_1$ and $e_2$ be distinct
 %copies of $e$
 %in~$\Gsnip$.  Let $\gamma_1$ and $\gamma_2$ be the shortest simple cycles in the  subgraphs $\Gsnip
@@ -1533,7 +1539,6 @@ subgraph.
 %Our algorithm returns the symmetric difference over all edges in~$\gamma'$.
 %The only cycle in $\Gsnip$ that is not a separating subgraph in~$G$ is the boundary of $\Gsnip$.
 %Because $\gamma$ avoids at least one edge of the boundary, the carrier of $\gamma'$ must be non-empty. If our algorithm returns anything, it must return a separating subgraph.
-\end{proof}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -1588,9 +1593,9 @@ There is at least one far face, so subgraph~$\minSS'$ is separating.
 For each edge \(e\) of \(H\), either \(e\) is incident to a white face or it is also an edge
 of~\(\gamma\).
 Either way, \(e\) lies in the closure of the component of~$\Sigma \setminus \minSS'$ not
-incident to $s^*$. \rnote{833: "Every edge of H is incident to a white face": I think this is not
-the case; see your remark on l.831 telling that if $H=\gamma$, then every face of $G$ is black. }
-\knote{Fixed?}
+incident to $s^*$.
+%\rnote{833: "Every edge of H is incident to a white face": I think this is not the case; see your remark on l.831 telling that if $H=\gamma$, then every face of $G$ is black. }
+% \knote{Fixed?}
 
 It remains to argue that~$\minSS'$ is a minimum-weight separating subgraph of $G$.
 
@@ -1610,17 +1615,15 @@ We conclude that $\minSS'$ is also a minimum-weight separating subgraph.
 
 \begin{lemma}
 \label{lem:global_split-alg}
-There is a~$g^{O(g)} n \log \log n$-time algorithm that computes a minimum-weight separating subgraph of $G$ if any minimum-weight separating subgraph of $G$ is non-contractible.  If every minimum-weight separating subgraph of $G$ is contractible, the algorithm returns a separating subgraph that may not have minimum weight.
+There is a~$g^{O(g)} n \log \log n$-time algorithm that computes a minimum-weight separating subgraph of~$G$ if any minimum-weight separating subgraph of $G$ is non-contractible.  If every minimum-weight separating subgraph of $G$ is contractible, the algorithm returns a separating subgraph that may not have minimum weight.
 \end{lemma}
 
 \begin{proof}
 %Our algorithm begins by fixing an arbitrary face $f$.
 In a preprocessing phase, we construct a homology basis from a tree-coforest decomposition in
 $O(gn)$ time; see Lemma~\ref{lem:basis}.
-\rnote{
-850: This is strange to rely to [41] while you have introduced the tree-cotree decomposition in Section 3. Please try to make the paper more self-contained. 
-}
-\knote{Done.}
+%\rnote{850: This is strange to rely to [41] while you have introduced the tree-cotree decomposition in Section 3. Please try to make the paper more self-contained.}
+%\knote{Done.}
 Then we enumerate all~$2^{2g}-1$ non-trivial homology classes by considering subsets of cycles in this homology basis.  For each non-trivial homology class $h$, we perform the following steps:
 \begin{itemize}
 \item
@@ -1639,10 +1642,8 @@ It remains to prove that our algorithm is correct.  Let~$\minSS$ be any minimum-
 of~$G$ such that the component of $\Sigma \setminus \minSS$ not incident to $s^*$ is not a disk.
 Let $\Sigma'$ be the closure of the component of $\Sigma \setminus \minSS$ that does not contain
 $s^*$.  
-\rnote{
-866: I do not see why Sigma' necessarily contains a cycle that is not separating in Sigma'. Indeed, Sigma' is not a disk, but it could be, eg, an annulus. 
-}
-\knote{Fixed.}
+%\rnote{866: I do not see why Sigma' necessarily contains a cycle that is not separating in Sigma'. Indeed, Sigma' is not a disk, but it could be, eg, an annulus.}
+%\knote{Fixed.}
 If \(\Sigma'\) has genus, then it contains a cycle $\gamma$ that is not separating in $\Sigma'$ or
 \(\Sigma\).
 Otherwise, \(\Sigma'\) not being a disk implies it has multiple boundary components.
@@ -1662,7 +1663,7 @@ Modifying the previous algorithm to use results of Section \ref{sec:homcover}, i
 
 \begin{lemma}
 \label{lem:global_split-alg2}
-There is a~$2^{O(g)} n \log n$-time algorithm that computes a minimum-weight separating subgraph of $G$ if any minimum-weight separating subgraph of $G$ is non-contractible.  If every minimum-weight separating subgraph of $G$ is contractible, the algorithm returns a separating subgraph that may not have minimum weight.
+There is a~$2^{O(g)} n \log n$-time algorithm that computes a minimum-weight separating subgraph of $G$ if any minimum-weight separating subgraph of $G$ is non-contractible.  If every minimum-weight separating subgraph of~$G$ is contractible, the algorithm returns a separating subgraph that may not have minimum weight.
 \end{lemma}
 
 %\begin{proof}
@@ -1696,13 +1697,12 @@ There is a~$2^{O(g)} n \log n$-time algorithm that computes a minimum-weight sep
 Finally, to compute the minimum-weight separating subgraph in $G$, we run both  algorithms described in Lemmas~\ref{lem:contractible-alg} and~\ref{lem:global_split-alg}.  If either algorithm returns nothing, the other algorithm returns a minimum-weight separating subgraph of $G$; otherwise, both algorithms return non-empty separating subgraphs of $G$, and the smaller of those two subgraphs is a minimum-weight separating subgraph of $G$.  We conclude:
 
 \begin{theorem}
-Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$ with one boundary
-component.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a surface with genus~$g$ and exactly one boundary component.
 We can compute a minimum-weight separating subgraph in $G$ in either $g^{O(g)} n \log \log n$ time or $2^{O(g)} n \log n$ time.
 \end{theorem}
 
 \begin{corollary}
-Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$.
+Let $G$ be an undirected graph with positively weighted edges, embedded on an orientable surface with genus $g$ (possibly with boundary).
 We can compute a global minimum cut in $G$ in either $g^{O(g)} n \log \log n$ time or $2^{O(g)} n \log n$ time.
 \end{corollary}
 
@@ -1721,7 +1721,6 @@ We can compute a global minimum cut in $G$ in either $g^{O(g)} n \log \log n$ ti
 \paragraph{Acknowledgments}
 The authors would like to thank Chandra Chekuri and Aparna Sundar for helpful discussions on some of the preliminary work included here. % \note{Éric? Sergio? Cora? David? Anyone else?} \note{Erin: Just taking these out, but feel free to re-add!  I had not spoken to any of these people about the paper I was on, and no one added, but we can re-include if you want when revising next round.}
 We would also like to thank the anonymous reviewers, both for our earlier extended abstracts \cite{cen-mcshc-09, en-mcsnc-11, efn-gmcse-12} and for this paper, for many helpful comments and suggestions.
-
 
 % ===============================================================================================
 \bibliographystyle{siamplain}
