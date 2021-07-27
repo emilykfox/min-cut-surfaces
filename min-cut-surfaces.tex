@@ -288,7 +288,7 @@ Homology is a topological notion of equivalence with nice algebraic properties. 
 
 Most interesting variants of homology localization are NP-hard.  Chambers \etal~\cite{ccelw-scsih-08} prove that finding the shortest \emph{splitting} cycle is {NP}-hard; a cycle is splitting if it is non-self-crossing, non-contractible, and null-homologous.  A simple modification of their reduction (from Hamiltonian cycle in planar grid graphs) implies that finding the shortest \emph{simple cycle} in a given homology class is {NP}-hard.  Chen and Freedman \cite{cf-qhc-08, cf-qhc2-07} proved a similar hardness result for general simplicial complexes; however, the complexes output by their reduction are never manifolds.  Recently, Grochaw and Tucker-Foltz \cite{gt-ctugc-18} proved that homology localization in surface graphs, over a sufficiently large finite coefficient ring, is equivalent to Unique Games; in particular, there is no PTAS for \emph{any} finite coefficient ring unless the Unique Games Conjecture is false.
 
-\rnote{137-138: perhaps add some details. }\anote{I added citations in the and of the last sentence.}
+%\rnote{137-138: perhaps add some details. }\anote{I added citations in the and of the last sentence.}
 On the other hand, for homology with real or integer coefficients, homology localization in surface graphs is equivalent (via duality) to a minimum-cost flow problem and hence can be solved in polynomial time~\cite{cen-hfcc-12, s-cath-90}.  Chambers \etal~\cite{cen-hfcc-12} describe an algorithm to find optimal circulations in a given homology class in near-linear time, given a graph with integer coefficients on a surface of fixed genus.  Sullivan \cite{s-cath-90} and Dey \etal\ \cite{dhk-ohctu-11} prove similar results for higher-dimensional orientable manifolds.
 
 \subsection{New results and organization}
@@ -365,7 +365,7 @@ We say a loop~$\ell$ and a cycle~$\gamma$ are \EMPH{equivalent} if, for some
 real number~$\delta$, we have~$\ell(t) = \gamma(t + \delta)$ for
 all~$t \in [0,1]$. \anote{What about more complicated parameterizations?}
 We collectively refer to paths, loops, arcs, and cycles as \EMPH{curves}.
-A~curve is \EMPH{simple} if it is injective \anote{except possibly for its endpoints(?)}; we usually do not distinguish between simple curves and their images in~$\Sigma$.
+A~curve is \EMPH{simple} if it is injective, except for the endpoints of a loop; we usually do not distinguish between simple curves and their images in~$\Sigma$.
 A simple curve~$p$ is \EMPH{separating} if~$\Sigma \setminus p$ is disconnected.
 
 The \EMPH{reversal}~$\rev(p)$ of a path~$p$ is defined by
@@ -375,7 +375,7 @@ setting~$(p\cdot q)(t) = p(2t)$ for all~$t \leq 1/2$
 and~$(p\cdot q)(t) = q(2t-1)$ for all~$t \geq 1/2$.
 
 The \EMPH{genus} of a surface $\Sigma$ is the maximum number of disjoint simple cycles in $\Sigma$ whose complement is connected.
-\anote{It seems that this definition of genus only works for surfaces with no boundary.}\jnote{No, it’s correct even for surfaces with boundary.}
+%\anote{It seems that this definition of genus only works for surfaces with no boundary.}\jnote{No, it’s correct even for surfaces with boundary.}
  Up to homeomorphism,
 there is exactly one orientable surface and one non-orientable surface with any genus $g\ge 0$ and any number of
 boundary cycles $b\ge 0$.
@@ -615,13 +615,13 @@ The arcs $a_1, a_2, \dots, a_\beta$ are weakly simple and weakly disjoint.
 \end{lemma}
 
 \begin{proof} 
-\enote{Rewrote: please double check}
-Each arc $a_i$ consists of an edge in $L$ plus two (possibly overlapping) paths in $F$; we know the edges from $L$ are disjoint, so we simply need define a consistent way to perturb forest paths apart.  
-We will use an Euler tour on each component of $F$ to define consistent perturbations, as follows.
-For each edge $e_i$ in $L$, we subdivide into 3 edges, and add the first and third of those edges to the forest $F$, yielding a new augmented forest $F'$.  Root each component of $F'$ at its (unique) boundary vertex.
-We then compute an Euler tour for each component of $F'$, which for each tree in $F'$ gives a total ordering of the vertices based on when they are encountered in the tour.
-This in turn gives us a set of weakly simple paths from the root to every vertex in its tree, where the order of the paths out of the root is the same as the total ordering given by the Euler tour.
-This tour then gives a way to perturb our arcs: each is a path from our set of weakly simple paths ending at some subdivided edge, then uses the middle of a subdivided edge from $L$, then another path from $F'$.   
+%\enote{Rewrote: please double check}
+Each arc $a_i$ consists of an edge in $L$ plus two (possibly overlapping) paths in $F$.  We know the edges from $L$ are disjoint and paths in the forest are simple, so it suffices to describe a consistent way to perturb forest paths apart.  
+We use an Euler tour on each component of $F$ to define consistent perturbations, as follows.
+For each edge $e_i$ in $L$, we subdivide $e_i$ into a path of length $3$, and add the first and third edges on that path to the forest $F$, yielding a new augmented forest $F'$.  Root each component of $F'$ at its (unique) boundary vertex.
+We then compute an Euler tour for each component of $F'$, which for each tree in $F'$ gives a total ordering of the leaves based on when they are encountered in the tour.
+We can then perturb all root-to-leaf paths in each component of $F’$ to become disjoint,  where the order of the paths out of the root is the same as the total ordering of the leaves in the Euler tour.
+Adding the middle thirds of the edges from $L$ to these disjoint paths gives us a perturbation of $a_1, a_2, \dots, a_\beta$ into disjoint simple arcs.
 \end{proof}
 
 \begin{lemma}
@@ -632,6 +632,7 @@ Slicing along the arcs $a_1, a_2, \dots, a_\beta$ transforms~$\Sigma$ into a top
 \begin{proof}
 \enote{Rewrote: please double check}
 Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists. Cutting along a perturbed arc $\tilde{a}_i$ either reduces the number of boundary components by 1, if the arc goes between distinct boundaries, or cuts along a handle once, if the arc is a nontrivial walk from a boundary back to itself.  In either case, the Euler characteristic of the surface minus the arc goes down by 1.  Since the $\tilde{a}_i$ are weakly simple and weakly disjoint, cutting along all $\beta$ paths reduces the Euler characteristic to 1, implying that the remaining surface after cutting must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
+\jnote{We also need to argue that the sliced surface is connected (via the cotree)!}
 \end{proof}
 
 \begin{figure}[htb]
@@ -967,7 +968,7 @@ Finally, exchanging $\tilde\pi$ and $\tilde\pi’$ with $\tilde\rho$ and $\tilde
 
 Our algorithm for computing minimum-weight even subgraph in a given homology class follows a strategy first used by Kutz to compute shortest non-contractible cycles~\cite{k-csnco-06}; in fact our algorithm uses Kutz’s algorithm as a subroutine.
 
-Our algorithm begins begin by constructing a greedy system of arcs $a_1, \dots, a_\beta$ for the input combinatorial surface $\Sigma$; we also compute a ribbon perturbation $\set{\tilde{a}_1, \dots, \tilde{a}_\beta}$ of this greedy systen into pairwise-disjoint arcs, as described in Lemma \ref{L:weak}.  Lemma~\ref{lem:disk} implies that slicing the combinatorial surface $\Sigma^\square$ along these perturbed arcs yields a disk $D^\square$, which we call a \emph{polygonal schema}.  The boundary of $D^\square$ alternates between perturbed arcs $\tilde{a_i}$ and boundary paths of $\Sigma^\square$; each perturbed arc appears twice on the boundary of~$D^\square$.  See Figure \ref{F:schema}.
+Our algorithm begins begin by constructing a greedy system of arcs $a_1, \dots, a_\beta$ for the input combinatorial surface $\Sigma$; we also compute a ribbon perturbation $\set{\tilde{a}_1, \dots, \tilde{a}_\beta}$ of this greedy systen into pairwise-disjoint arcs, as described in Lemma \ref{L:weak}.  Lemma~\ref{lem:disk} implies that slicing the combinatorial surface $\Sigma^\square$ along these perturbed arcs yields a disk $D^\square$, which we call a \emph{polygonal schema}.  The boundary of $D^\square$ alternates between perturbed arcs $\tilde{a_i}$ and boundary paths of $\Sigma^\square$; each perturbed arc appears twice on the boundary of~$D^\square$.  Replacing each copy of each perturbed arc on the boundary of $D^\square$ with a single edge, and contracting each boundary path of $\Sigma^\square$ to a single point, yields a $2\beta$-gon that we call the \emph{abstract polygonal schema}.  See Figure \ref{fig:schema} for an illustrative example.
 
 \begin{figure}[htb]
 \centering
@@ -977,12 +978,7 @@ Our algorithm begins begin by constructing a greedy system of arcs $a_1, \dots, 
 \label{fig:schema}
 \end{figure}
 
-
-Replacing each copy of each perturbed arc on the boundary of $D^\square$ with a single edge, and contracting each boundary path of $\Sigma^\square$ to a single point, yields a $2\beta$-gon that we call the \emph{abstract polygonal schema}.
-
-We next dualize the abstract polygonal schema, replacing each boundary edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.
-%
-Any collection of disjoint simple cycles corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of arcs in the perturbed greedy system.  Each triangulation edge is weighted by the number of times such a crossing occurs in our collection.  Conversely, we call a weighted triangulation \emph{valid} if corresponding vertices are incident to edges of equal total weight.  Every valid weighted triangulation corresponds to a collection of simple disjoint cycles, which is unique up to homotopy.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.
+We next dualize the abstract polygonal schema, replacing each boundary edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Thus, the dual polygonal schema is a $2\beta$-gon with two vertices corresponding to each perturbed greedy arc $\tilde{a}_i$.  Any collection of disjoint simple cycles in $\Sigma^\square$ corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of perturbed greedy arcs.  Each triangulation edge is weighted by the number of times such a crossing occurs in our collection.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.
 
 \begin{figure}[htb]
 \centering\includegraphics[scale=0.4]{Fig/schema-triangulation}
@@ -990,18 +986,16 @@ Any collection of disjoint simple cycles corresponds to a \emph{weighted triangu
 \label{fig:weightedtriangulation}
 \end{figure}
 
-For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with our perturbed greedy arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time; this proceeds by slicing $\Sigma$ along the greedy system of arcs, and then gluing together $x$ copies of the resulting planar surface into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
+Conversely, we call a weighted triangulation \emph{valid} if corresponding vertices are incident to edges of equal total weight, and the weight of each edge is between $0$ and $12g+4b-6$.  Altogether, there are $(g+b)^{O(g+b)}$ different valid weighted triangulations.  Each valid weighted triangulation corresponds to a collection of simple disjoint cycles in~$\Sigma^\square$, which is unique up to homotopy. Lemma~\ref{lem:crossing} implies that every homology class contains a $\Z_2$-minimal even subgraph $H’$, such that some perturbed cycle decomposition of $H’$ is consistent with a valid weighted triangulation.
+
+For each valid weighted triangulation, we can compute a corresponding collection of abstract cycles in $O((g+b)^2)$ time by brute force.  In the same time, we can also compute the \emph{sequence} of crossings of each abstract cycle with our perturbed greedy arcs.  An algorithm of Kutz~\cite{k-csnco-06} computes the shortest cycle in $G$ with a given crossing sequence of length $x$ in $O(x n \log n)$ time, by gluing together $x$ copies of the polygonal schema $D^\square$ into an annulus and calling Frederickson's planar minimum-cut algorithm \cite{f-faspp-87}.
 Italiano \etal~\cite{insw-iamcmf-11} point out that their recent $O(n \log \log n)$-time improvement in computing minimum $(s,t)$-cuts in planar graphs can be used instead of Frederickson's algorithm. 
-Thus, for each weighted triangulation, we obtain the shortest corresponding set of cycles in $O((g+b)^2 n \log \log n)$ time.
+Thus, for each weighted triangulation, we can compute the shortest corresponding set of cycles in $\Sigma^\square$, and therefore the minimum-weight corresponding even subgraph of $G$, in $O((g+b)^2 n \log \log n)$ time.
 
 
 %\rnote{But the arcs overlap. So you are implicitly relying on an ordering of the arcs along each edge of G? Again, the notion of crossing between paths in the same graph has not been defined, and is tricky. The notion of crossing sequence is even more tricky.}
 
-\jnote{\textbf{ENGLISH!!} Even subgraph perturbation something something.  We need the ribbon perturbation to define the abstract polygonal schema and to invoke Kutz’s algorithm.}
-
-Lemma~\ref{lem:crossing} implies that we only need to consider weights between 0 and $O(g+b)$.  Thus, there are $(g+b)^{O(g+b)}$ different weighted triangulations for each valid crossing vector.  \jnote{We haven’t defined ”valid crossing vector”!  Connect back to crossing parities.}
-
-
+Now suppose we are given an even subgraph $H$.  In $O(gn)$ time, we can compute the crossing parity vector $\bar{x}(H)$ by decomposing $H$ into cycles, perturbing the cycles within the ribbon graph $\Sigma^\square$, and counting crossings with the perturbed greedy arcs $\tilde{a}_i$ (modulo 2).  To compute the minimum-weight even subgraph $\Z_2$-homologous with $H$, we enumerate all valid weighted triangulations with the correct crossing parity vector, compute a minimum-weight even subgraph corresponding to each triangulation, and return the smallest even subgraph found. 
 
 \begin{theorem}
 \label{Th:Z2-minimal-crossing}
@@ -1220,11 +1214,12 @@ For each homology class $h\in (\Z_2)^\beta$ and each integer $1\le k\le g+b-1$, 
 This recurrence has two base cases: $C(0, k) = 0$ for any integer $k$, and for any homology class $h$, the value $C(h,1)$ is just the length of $\gamma_h$.  A standard dynamic programming algorithm computes $C(h, g+b-1)$ for all $2^\beta$ homology classes $h$ in $O(4^\beta \beta)$ time.  We can then assemble the actual minimum-weight even subgraphs in each homology class in $O(\beta n)$ time.  The total time for this phase of the algorithm is $O(4^\beta \beta + 2^\beta \beta n)$, which is dominated by the time to compute all the $\Z_2$-minimal cycles.
 \end{proof}
 
-\anote{no dependence on $b$?}
+\anote{no dependence on $b$?}\jnote{That’s correct; no dependence on $b$.}
 \begin{corollary}
 \label{cor:mincut}
-Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$ and $b$ boundary
-components, and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut
+Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$,
+%and $b$ boundary components,
+and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut
 in $G$ in $O(256^g g^3 n \log n)$ time.
 \end{corollary}
 
