@@ -304,6 +304,14 @@ On the other hand, for homology with real or integer coefficients, homology loca
 
 \subsection{New results and organization}
 
+\enote{Make sure we add something about:
+\begin{itemize}
+\item Talk about ribbon graphs (since not in any of the earlier preprints)
+\item Talk about tons of work to deal with perturbations and make intuitively disjoint things actually disjoint
+\item Mention $\Z_2$ homology cover being simpler, but having the $\log n$ instead of the $\log \log n$ dependence.
+\end{itemize}
+}
+
 In Section \ref{S:tree-cotree}, we describe two techniques to preprocess a graph on a surface with boundary, so that the homology class of any subgraph can be computed quickly.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.  In particular, we describe how to construct a \emph{system of arcs}---a collection of $O(g+b)$ boundary-to-boundary paths that cut the surface into a disk---in $O((g+b)n)$ time.  This generalization is essential for our algorithms, as our dual homology characterization of minimum $(s,t)$-cuts removes the dual faces $s^*$ and $t^*$, leaving a surface with two boundary components.
 
 In Section~\ref{sec:crossing}, we present our first algorithm to compute minimum-weight subgraphs in a given homology class.  Our algorithm first computes a \emph{greedy system of arcs}; each arc in this system consists of two shortest paths.  Using an exchange argument, we prove that the minimum-weight subgraph in any homology class crosses each arc in the greedy system at most $O(g+b)$ times.  Our algorithm enumerates all possible sequences of crossings consistent with this upper bound, and finds the shortest subgraph consistent with each crossing sequence, by reducing to a planar minimum cut problem.  The resulting algorithm runs  in $(g+b)^{O(g+b)}n\log \log n$ time.
