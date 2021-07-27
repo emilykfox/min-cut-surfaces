@@ -194,7 +194,7 @@ The classical minimum cut problem and its dual, the maximum flow problem, are st
 In contrast, prior to our work, almost nothing was known about computing minimum cuts in even mild generalizations of planar graphs; in particular, except for the work reported in this paper, we are unaware of any algorithm to compute minimum-cuts in non-planar graphs that does not require first computing a maximum flow.  
 
 This paper describes the first algorithms to compute minimum cuts in surface-embedded graphs of fixed genus in near-linear time.  Specifically, we describe two algorithms to compute minimum $(s,t)$-cuts in undirected surface graphs, the first in $g^{O(g)} n\log\log n$ time, and the second in $2^{O(g)} n\log n$ time.
-We also extend our  algorithms to find \emph{global} minimum cuts in undirected surface graphs in the same asymptotic time bounds.  For all our algorithms, the input consists of an $n$-vertex graph with arbitrary real edge weights, embedded on an orientable surface of genus~$g$.
+We also extend our  algorithms to find \emph{global} minimum cuts in undirected surface graphs in the same asymptotic time bounds.  For all our algorithms, the input consists of an undirected $n$-vertex graph, with arbitrary positive real edge weights, embedded on an orientable surface of genus~$g$.
 
 Our algorithms are based on a natural generalization of the duality between cuts and cycles in planar graphs, first proposed by Whitney \cite{w-pg-33} and first exploited to compute minimum cuts in planar graphs by Itai and Shiloach \cite{is-mfpn-79}. \modified{A set $C$ of the edges crossing a nontrivial partition $(S,T)$ of $V$ is an $(s,t)$-cut if $s\in S$ and $t \in T$. } By definition, a set $C$ of edges defines an $(s,t)$-cut in a graph $G$ if and only if their complement $G\setminus C$ is a disconnected graph, with $s$ and $t$ in different components.  If $G$ is embedded on a surface, then the corresponding edges $C^*$ in the dual graph~$G^*$ separate the \emph{faces} of $G^*$ into two disconnected subcomplexes, one containing the dual face $s^*$ and the other containing the dual face $t^*$. 
 
@@ -551,7 +551,7 @@ Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\
 \section{Characterizing Homology}
 \label{S:tree-cotree}
 
-Throughout the paper, we fix an \EMPH{undirected} graph $G=(V,E)$, a non-negative weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b>0$ boundary cycles.
+Throughout the paper, we fix an \EMPH{undirected} graph $G=(V,E)$, a positive weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a surface $\Sigma$ of genus $g$ with $b>0$ boundary cycles.
 Except where explicitly indicated otherwise, we assume without loss of generality  that the underlying surface $\Sigma$ has non-empty boundary; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the first Betti number of $\Sigma$.
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.
@@ -821,10 +821,10 @@ An even subgraph $H$ of $G$ is null-homologous in $\Sigma$ if and only if $[H] =
 
 Let $H$ be an even subgraph of $G$.
 Let \(\Gamma = \Set{\cycle_{i_1}, \dots, \cycle_{i_k}} \subseteq \Set{\cycle_1, \dots,
-\cycle_\beta}\) be such that \(\bigoplus_{\cycle \in \Gamma} \cycle\) is homologous to \(H\).
+\cycle_\beta}\) be such that \(\bigoplus_{\cycle \in \Gamma} \cycle\) is homologous to~\(H\).
 Then by definition, $H \oplus \bigoplus_{\cycle \in \Gamma} \cycle$ is the boundary of the union of
 a subset~$Y$ of faces of $G$.
-The boundary of any face $f$ is contractible in $\Sigma$ and therefore has signature $0$.
+The boundary of any face~$f$ is contractible in $\Sigma$ and therefore has signature $0$.
 It follows immediately that $[H] = [\bigoplus_{\cycle \in \Gamma} \cycle] \oplus [\bigoplus_{f\in Y}
 \partial f] = [\bigoplus_{\cycle \in \Gamma} \cycle] \oplus \bigoplus_{f\in Y} [\partial f] =
 [\bigoplus_{\cycle \in \Gamma} \cycle]$.
@@ -960,7 +960,7 @@ Because $\ell$ and $\ell’$ are homotopic, the cycle $\tilde\delta = \tilde\pi 
 Finally, exchanging $\tilde\pi$ and $\tilde\pi’$ with $\tilde\rho$ and $\tilde\rho’$ transforms our perturbed cycle decomposition of $H’$ into a perturbed cycle decomposition of $H^-$ with fewer than $X$ crossings, violating our definition of $X$.  We conclude that no two loops in $\mathcal{L}$ are homotopic.
 \end{proof}
 
-\jnote{I’m confident that everything in the last exchange argument is correct, but I worry that I’m brushing too many details under the rug.  For example, \emph{because} the loops $\ell$ and $\ell’$ are adjacent, the exchange produces simple, disjoint cycles; moreover, the cycle $\tilde\delta$ is actually simple!  \textbf{Do we need another figure??}}
+%\jnote{I’m confident that everything in the last exchange argument is correct, but I worry that I’m brushing too many details under the rug.  For example, \emph{because} the loops $\ell$ and $\ell’$ are adjacent, the exchange produces simple, disjoint cycles; moreover, the cycle $\tilde\delta$ is actually simple!  \textbf{Do we need another figure??}}
 
 
 \subsection{Triangulations and crossing sequences}
@@ -1115,6 +1115,7 @@ Now let $(w,h')$ be the last vertex along $(\cycle,h)$ that is also a vertex of 
 
 We emphasize that the modified cycle $\cycle'$ may intersect~$\sigma$ arbitrarily many times; however, all such intersections lift to intersections between $(\cycle', h)$ and lifts of $\sigma$ other than $(\sigma, 0)$.
 
+\jnote{Revise.}
 Our algorithm uses a generalization of Klein's  multiple-source shortest path algorithm~\cite{k-msspp-05} to higher-genus embedded graphs:
 %\note{Kyle: I changed to the deterministic running time for MSSP and added a short discussion on the
 %randomized alternative.
@@ -1127,7 +1128,7 @@ Our algorithm uses a generalization of Klein's  multiple-source shortest path al
 
 \begin{lemma}[Erickson \etal~\cite{efl-hmcpf-18}]
 \label{lem:multishort}
-Let $G$ be a graph with non-negative edge weights, cellularly embedded on a surface $\Sigma$ of
+Let $G$ be a graph with positive edge weights, cellularly embedded on a surface $\Sigma$ of
 genus $g$ with $b>0$ boundaries, and let $f$ be an arbitrary face of~$G$.
 We can preprocess $G$ in $O(g^2n\log n)$ time and $O(g n \log n)$ space so that the length of the
 shortest path from any vertex incident to $f$ to any other vertex can be retrieved in $O(\log n)$
@@ -1147,7 +1148,7 @@ Lemma~\ref{lem:multishort} throughout the rest of this section.}
 
 \begin{theorem}
 \label{thm:min-cycle}
-Let $G$ be a  graph with non-negative edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 8^\beta \beta^3\, n\log n)$ time.
+Let $G$ be a graph with positive edge weights, cellularly embedded on a surface~$\Sigma$ with first Betti number $\beta$, and let~$\cycle$ be a cycle in~$G$ with $k$ edges.  A shortest cycle in~$\Sigma$ that is $\Z_2$-homologous with~$\cycle$ can be computed in $O(\beta k + 8^\beta \beta^3\, n\log n)$ time.
 \end{theorem}
 \rnote{
 This seems weird. You are computing homology covers using the decomposition of Section 3.2, but computing crossings with the decomposition of Section 3.1. It looks correct, but very unnatural! If you cannot fix this in a nicer way, please at least emphasize this, and explain why you choose this route. 
@@ -1178,8 +1179,7 @@ We note that this result holds in directed graphs as well, as the construction o
 
 We now apply our algorithm for computing $\Z_2$-minimal cycles to the problem of computing $\Z_2$-minimal even subgraphs in undirected surface embedded graphs.
 Theorem~\ref{thm:min-cycle} immediately implies that we can compute a minimum-weight \emph{cycle} in
-every $\Z_2$-homology class in $O(16^\beta \beta^3\, n\log n)$ time.  However, the minimum weight \emph{even subgraph} in a given homology class may not be (the carrier of) a $\Z_2$-minimal cycle.  In particular, \modified{in a positively weighted graph,} if a $\Z_2$-minimal cycle $\gamma$ traverses any edge more than once, then every minimum-weight even subgraph with signature $[\gamma]$ \emph{must} be disconnected.
-\rnote{This assumes positive weights, not only nonnegative ones. }\anote{I just said this is true in a positively weighted graph, as I think we're just using this as an example.}
+every $\Z_2$-homology class in $O(16^\beta \beta^3\, n\log n)$ time.  However, the minimum weight \emph{even subgraph} in a given homology class may not be (the carrier of) a $\Z_2$-minimal cycle.  In particular, if all edge weights are strictly positive, and some $\Z_2$-minimal cycle $\gamma$ traverses any edge more than once, then every minimum-weight even subgraph homologous to $\gamma$ \emph{must} be disconnected.
 However, any \emph{connected} $\Z_2$-minimal even subgraph is the carrier of a $\Z_2$-minimal cycle, and the components of any $\Z_2$-minimal even subgraph are themselves $\Z_2$-minimal even subgraphs.  Thus, we can assemble a $\Z_2$-minimal even subgraph in any homology class from a subset of the $\Z_2$-minimal cycles we have already computed.  The following lemma puts an upper bound on the number of cycles we need.
 
 \begin{lemma}
@@ -1188,18 +1188,18 @@ Every $\Z_2$-minimal even subgraph of $G$ has at most $g+b-1$ components.
 \end{lemma}
 
 \begin{proof}
+Let $H$ be an even subgraph of $G$ with more than $g+b-1$ components.  Each component has a cycle decomposition, so $H$ must have a cycle decomposition $\gamma_1, \dots, \gamma_r$ consisting of $r > g+b-1$ elements.  Let $\Sigma^\bullet$ be the surface obtained from $\Sigma$ by gluing a disk to each boundary component; $\Sigma^\bullet$ is a surface of genus $g$ with no boundary but with $b$ designated faces.
 
-\modified{Let $\Sigma$ be the surface described by $G$, and let $\Sigma'$ be a surface obtained from $\Sigma$ by adding $b$ faces one for each boundary component in $\Sigma$.  Hence, $\Sigma'$ is a surface of genus $g$ with no boundary that has $b$ designated faces.
-Let $\gamma_1, \dots, \gamma_{g+b}$ be disjoint simple cycles on $\Sigma'$, and consider the surface $\Sigma'' = \Sigma' \setminus (\gamma_1 \cup \cdots \cup \gamma_{g+b})$.  The definition of genus implies that $\Sigma''$ cannot be connected; indeed, $\Sigma''$ must have at least $b+1$ components.  So the pigeonhole principle implies that some component $\Sigma'''$ of~$\Sigma''$ does not contain any of the designated faces.  The boundary of $\Sigma'''$ is therefore null-homologous in $\Sigma'''$ and so in $\Sigma$.}
+Now consider the surface $\Sigma' = \Sigma^\bullet \setminus (\gamma_1 \cup \cdots \cup \gamma_r)$.  The definition of genus implies that $\Sigma'$ cannot be connected; indeed, $\Sigma'$ must have at least $b+1$ components.  So by the pigeonhole principle, some component $\Sigma''$ of~$\Sigma'$ contains none of the $b$ designated faces.  Thus, the boundary of $\Sigma''$ is null-homologous in $\Sigma^\bullet$, and therefore in $\Sigma$.
 
-\sout{Let $\gamma_1, \dots, \gamma_{g+b}$ be disjoint simple cycles on an \emph{abstract} surface $\Sigma$ of genus $g$ with $b$ boundaries, and consider the surface $\Sigma' = \Sigma \setminus (\gamma_1 \cup \cdots \cup \gamma_{g+b})$.  The definition of genus implies that $\Sigma'$ cannot be connected; indeed, $\Sigma'$ must have at least $b+1$ components.  So the pigeonhole principle implies that some component $\Sigma''$ of~$\Sigma$ does not contain any of the boundary cycles of $\Sigma$.  The boundary of $\Sigma''$ is therefore null-homologous.}
+%\sout{Let $\gamma_1, \dots, \gamma_{g+b}$ be disjoint simple cycles on an \emph{abstract} surface $\Sigma$ of genus $g$ with $b$ boundaries, and consider the surface $\Sigma' = \Sigma \setminus (\gamma_1 \cup \cdots \cup \gamma_{g+b})$.  The definition of genus implies that $\Sigma'$ cannot be connected; indeed, $\Sigma'$ must have at least $b+1$ components.  So the pigeonhole principle implies that some component $\Sigma''$ of~$\Sigma$ does not contain any of the boundary cycles of $\Sigma$.  The boundary of $\Sigma''$ is therefore null-homologous.}
 
-Now let $H$ be an even subgraph of $G$ with more than $g+b-1$ components.  Each component has a cycle decomposition, so $H$ must have a cycle decomposition with more than $g+b-1$ elements.  Thus, the argument in the first paragraph implies that some subgraph of $H$ must be null-homologous.  We conclude that $H$ is not $\Z_2$-minimal.
+We conclude that some subgraph $H’$ of $H$ is null-homologous.  Because all edges in $H’$ have positive weight, we conclude that $H$ is not $\Z_2$-minimal.
 \end{proof}
 
 \begin{theorem}
 \label{thm:min-even}
-Let $G$ be an undirected graph with non-negative edge weights, cellularly embedded on a
+Let $G$ be an undirected graph with positive edge weights, cellularly embedded on a
 surface~$\Sigma$ with first Betti number $\beta$.  A minimum-weight even subgraph of $G$ in each
 $\Z_2$-homology class can be computed in $O(16^\beta \beta^3\, n\log n)$ time.
 \end{theorem}
@@ -1214,12 +1214,12 @@ For each homology class $h\in (\Z_2)^\beta$ and each integer $1\le k\le g+b-1$, 
 This recurrence has two base cases: $C(0, k) = 0$ for any integer $k$, and for any homology class $h$, the value $C(h,1)$ is just the length of $\gamma_h$.  A standard dynamic programming algorithm computes $C(h, g+b-1)$ for all $2^\beta$ homology classes $h$ in $O(4^\beta \beta)$ time.  We can then assemble the actual minimum-weight even subgraphs in each homology class in $O(\beta n)$ time.  The total time for this phase of the algorithm is $O(4^\beta \beta + 2^\beta \beta n)$, which is dominated by the time to compute all the $\Z_2$-minimal cycles.
 \end{proof}
 
-\anote{no dependence on $b$?}\jnote{That’s correct; no dependence on $b$.}
+%\anote{no dependence on $b$?}\jnote{That’s correct; no dependence on $b$.}
 \begin{corollary}
 \label{cor:mincut}
 Let $G$ be an edge-weighted undirected graph embedded on a surface with genus $g$,
 %and $b$ boundary components,
-and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut
+and let $s$ and~$t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut
 in $G$ in $O(256^g g^3 n \log n)$ time.
 \end{corollary}
 
@@ -1238,7 +1238,7 @@ Computing the minimum-weight even subgraph in a given homology class on a surfac
 \end{theorem}
 
 \begin{proof}
-Fix a graph $G$ embedded on a surface $\Sigma$ without boundary, together with a weight function $c\colon E\to \Real$.  For any even subgraph $H$ of $G$, let $c(H) = \sum_{e\in H} c(e)$, and let $\textsc{MinHom}(H,c)$ denote the even subgraph of minimum weight in the homology class of $H$ with respect to weight function $c$.
+Fix a graph $G$ embedded on a surface $\Sigma$ without boundary, together with a positive weight function $c\colon E\to \Real^+$.  For any even subgraph $H$ of $G$, let $c(H) = \sum_{e\in H} c(e)$, and let $\textsc{MinHom}(H,c)$ denote the even subgraph of minimum weight in the homology class of $H$ with respect to weight function $c$.
 
 Consider the \emph{residual weight} function $c_H\colon E\to \Real$ defined by setting $c_H(e) = c(e)$ for each edge $e\not\in H$, and $c_H(e) = -c(e)$ for each edge $e\in H$.  For any subgraph $H'$ of $G$, we have $c(H') = c_H(H\oplus H') + c(H)$, which immediately implies that
 \(
@@ -1351,7 +1351,7 @@ of~$G^*$ in $\Sigma \setminus s^*$.
   a cut (in particular, an $(s,t)$-cut).
 \end{proof}
 
-In light of this lemma, the remainder of this section describes an algorithm to find a minimum-weight separating subgraph in a given surface-embedded graph $G$ with non-negative edge weights.
+In light of this lemma, the remainder of this section describes an algorithm to find a minimum-weight separating subgraph in a given surface-embedded graph $G$ with positive edge weights.
 Graph $G$ is embedded in a surface $\Sigma$ with \emph{exactly one boundary component $s^*$}.
 
 Let $\minSS$ be a minimum-weight separating subgraph.
