@@ -302,6 +302,14 @@ On the other hand, for homology with real or integer coefficients, homology loca
 
 \subsection{New results and organization}
 
+\enote{Make sure we add something about:
+\begin{itemize}
+\item Talk about ribbon graphs (since not in any of the earlier preprints)
+\item Talk about tons of work to deal with perturbations and make intuitively disjoint things actually disjoint
+\item Mention $\Z_2$ homology cover being simpler, but having the $\log n$ instead of the $\log \log n$ dependence.
+\end{itemize}
+}
+
 In Section \ref{S:tree-cotree}, we describe two techniques to preprocess a graph on a surface with boundary, so that the homology class of any subgraph can be computed quickly.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.  In particular, we describe how to construct a \emph{system of arcs}---a collection of $O(g+b)$ boundary-to-boundary paths that cut the surface into a disk---in $O((g+b)n)$ time.  This generalization is essential for our algorithms, as our dual homology characterization of minimum $(s,t)$-cuts removes the dual faces $s^*$ and $t^*$, leaving a surface with two boundary components.
 
 In Section~\ref{sec:crossing}, we present our first algorithm to compute minimum-weight subgraphs in a given homology class.  Our algorithm first computes a \emph{greedy system of arcs}; each arc in this system consists of two shortest paths.  Using an exchange argument, we prove that the minimum-weight subgraph in any homology class crosses each arc in the greedy system at most $O(g+b)$ times.  Our algorithm enumerates all possible sequences of crossings consistent with this upper bound, and finds the shortest subgraph consistent with each crossing sequence, by reducing to a planar minimum cut problem.  The resulting algorithm runs  in $(g+b)^{O(g+b)}n\log \log n$ time.
@@ -984,7 +992,7 @@ Our algorithm begins begin by constructing a greedy system of arcs $a_1, \dots, 
 \label{fig:schema}
 \end{figure}
 
-We next dualize the abstract polygonal schema, replacing each boundary edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Thus, the dual polygonal schema is a $2\beta$-gon with two vertices corresponding to each perturbed greedy arc $\tilde{a}_i$.  Any collection of disjoint simple cycles in $\Sigma^\square$ corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of perturbed greedy arcs.  Each triangulation edge is weighted by the number of times such a crossing occurs in our collection.  We note that the crossing parity vector of the collection of cycles can then be computed directly from this weighted triangulation.  See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence. 
+We next dualize the abstract polygonal schema, replacing each boundary edge with a vertex, and connecting vertices which correspond to adjacent edges in the primal schema.  Thus, the dual polygonal schema is a $2\beta$-gon with two vertices corresponding to each perturbed greedy arc $\tilde{a}_i$.  Any collection of disjoint simple cycles in $\Sigma^\square$ corresponds to a \emph{weighted triangulation} \cite{ccelw-scsih-08} of this dual polygonal schema, which includes an edge between two vertices of the dual abstract polygonal schema if and only if some cycle consecutively crosses the corresponding pair of perturbed greedy arcs.  Each triangulation edge is weighted by the number of times such a crossing occurs in our collection.    See Figure~\ref{fig:weightedtriangulation} for an illustration of this correspondence.  We note that the crossing parity vector of the collection of cycles can then be computed directly from this weighted triangulation.
 
 \begin{figure}[htb]
 \centering\includegraphics[scale=0.4]{Fig/schema-triangulation}
