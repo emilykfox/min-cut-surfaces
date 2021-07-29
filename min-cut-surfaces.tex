@@ -257,7 +257,7 @@ Surprisingly little is known about the complexity of computing maximum flows or 
 By combining a technique of Miller and Naor \cite{mn-fpgms-95} with the planar directed flow
 algorithm of Borradaile and Klein \cite{b-epnfc-08, bk-tamfd-06, bk-amfdp-09, e-mfpsp-10}, one can
 compute maximum (single-commodity) flows in a planar graph with $k$ sources and sinks in $O(k^2
-n\log n)$ time.  Borradaile \etal~\cite{bkmnw-msmsm-17} described an algorithm to
+n\log n)$ time.  More recently, Borradaile \etal~\cite{bkmnw-msmsm-17} described an algorithm to
 compute maximum flows in planar graphs with an arbitrary number of sources and sinks in $O(n\log^3 n)$ time.  An algorithm of Hochstein and Weihe \cite{hw-mstfkc-07} computes maximum flows in planar graphs with $k$ additional edges in $O(k^3n\log n)$ time, using a clever simulation of Goldberg and Tarjan's push-relabel algorithm~\cite{gt-namfp-88}.  Borradaile \etal~\cite{bkmnw-msmsm-17} extend Hochstein and Weihe's framework to compute maximum flows in planar graphs with $k$ apices in $O(k^3n\log^3 n)$ time.
 
 Chambers and Eppstein \cite{ce-focmf-13} describe an algorithm to compute maximum flows in $O(n\log n)$ time if the input graph forbids a fixed minor that can be drawn in the plane with one crossing.  Another related result is the algorithm of Hagerup \etal~\cite{hknr-cmfnc-98} to compute maximum flows in graphs of constant treewidth in $O(n)$ time.
@@ -274,7 +274,7 @@ Euler's formula implies that a simple $n$-vertex graph embedded on a surface of 
 The fastest known combinatorial maximum-flow algorithm for sparse graphs, due to Orlin~\cite{o-mfotl-13}, runs in $O(n^2 / \log n)$ time.
 The fastest algorithm known for sparse graphs with small integer capacities, due to Goldberg and Rao
 \cite{gr-bfdb-98} and Lee and Sidford~\cite{ls-pfmlp-14}, run in time $O(n^{3/2} \polylog(n, U))$, where $U$ is an upper bound on the integer edge weights.
-Madry~\cite{m-ncpef-13} describes a faster algorithm for unit capacity graphs that runs
+M\k{a}dry~\cite{m-ncpef-13} describes a faster algorithm for unit capacity graphs that runs
 in~$O(n^{10/7} \polylog n)$ time when the graph is sparse.
 
 The fastest algorithm known to compute global minimum cuts in arbitrary weighted undirected graphs is a Monte Carlo randomized algorithm of Karger~\cite{k-mcnlt-00}, which runs in~$O(m \log^3 n)$ time but fails with small probability. 
@@ -366,7 +366,7 @@ An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plan
 
 We also refer to the complex of vertices, edges, and faces induced by a cellular embedding as a \EMPH{combinatorial surface}.  Every combinatorial surface with boundary can be obtained from a combinatorial surface without boundary by deleting the interiors of one or more faces.  See Kettner \cite{k-ugpdd-99} for an overview and comparison of several standard data structures for combinatorial surfaces. 
 
-Euler's formula implies that any cellularly embedded graph with $n$ vertices, $m$ edges, and $f$ faces lies on a surface with Euler characteristic $\chi = n-m+f$, which implies that $m = O(n+g)$ and $f=O(n+g)$ if the graph is simple.
+Euler's formula implies that any cellularly embedded graph with $n$ vertices, $m$ edges, and $f$ faces lies on a surface with Euler characteristic \EMPH{$\chi = n-m+f$}, which implies that $m = O(n+g)$ and $f=O(n+g)$ if the graph is simple.
 To simplify our presentation, we implicitly assume throughout the paper that $g = O(\log n)$, since otherwise our minimum-cut algorithms are slower than textbook maximum-flow algorithms.  This assumption implies that the overall complexity of an embedding is $O(n)$.
 
 We redundantly use the term \EMPH{arc} to refer to a walk in the graph whose endpoints are boundary vertices, but that is otherwise disjoint from the boundary.  Likewise, we use the term \EMPH{cycle} to refer to a closed walk in the graph.  Note that arcs and cycles may traverse the same vertex or edge more than once.
@@ -478,8 +478,6 @@ Fix a cellular embedding of an undirected graph $G$ on a surface with genus $g$ 
 Two even subgraphs are \EMPH{homologous}, or in the same \EMPH{homology class}, if their symmetric difference is a boundary subgraph.
 Boundary subgraphs are also called \EMPH{null-homologous}.  Any two homotopic cycles are homologous, but homologous cycles are not necessarily homotopic; see Figure \ref{fig:homology}.  Moreover, the homology class of a cycle can contain even subgraphs that are not cycles; see Figure \ref{fig:homology2}. We call an even subgraph \EMPH{$\Z_2$-minimal} if it is the minimum-weight subgraph in its homology class. 
 
-Homology classes define a vector space $\Z_2^\beta$, called the first homology group, where $\beta = 2-\chi = 2g$ if the surface has no boundary and $\beta = 1-\chi = 2g+b-1$ otherwise.  The rank $\beta$ of the first homology group is called the first \EMPH{Betti number} of the surface.  \note{Assumes orientability.}
-
 \begin{figure}[htb]
 \centering
 \includegraphics[height=1in]{Fig/homologous3}\qquad
@@ -494,6 +492,8 @@ Homology classes define a vector space $\Z_2^\beta$, called the first homology g
 \caption{Each cycle is homologous to the union of the other two.}
 \label{fig:homology2}
 \end{figure}
+
+Homology classes define a vector space $\Z_2^\beta$, called the first homology group, whose rank $\beta$ is called the first \EMPH{Betti number}.  The first Betti number $\beta$ of any surface is related to its Euler characteristic $\chi$ as follows: $\beta = 2-\chi$ if the surface has no boundary and $\beta = 1-\chi$ otherwise.  Equivalently, we have $\beta = 2g$ for orientable surfaces without boundary, $\beta = 2g+b-1$ for orientable surfaces with boundary, $\beta = g$ for non-orientable surfaces without boundary, and $\beta = g-b+1$ for non-orientable surfaces with boundary.
 
 
 \subsection{Duality between cuts and even subgraphs}
@@ -527,8 +527,7 @@ Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\
 
 Throughout the paper, we fix an \emph{undirected} graph $G=(V,E)$, a positive weight function $w\colon E\to \Real$, and a cellular embedding of $G$ on a (possibly non-orientable) surface $\Sigma$ of genus $g$ with $b$ boundary cycles.
 %
-Except where explicitly indicated otherwise, we assume without loss of generality that $b>0$; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta = 2g+b-1$ denote the first Betti number of $\Sigma$.
-\note{This formula for $\beta$ assumes orientability.  But we always have $\beta - 1-\chi$, and that’s all we actually use.  Right??}
+Except where explicitly indicated otherwise, we assume without loss of generality that $b>0$; otherwise, we can remove an arbitrary face of $G$ from~$\Sigma$ without affecting its homology at all.  Let $\delta_1, \dots, \delta_b$ denote the boundary cycles of $\Sigma$, and let $\beta$ denote the first Betti number of $\Sigma$.  Recall that $\beta = 2g+b-1$ if $\Sigma$ is orientable and $\beta = g+b-1$ otherwise.
 
 In this section, we describe two standard methods for preprocessing a combinatorial surface with boundary in~$O(\beta n)$ time, so that the $\Z_2$-homology class of any even subgraph $H$ can be computed in $O(\beta)$ time per edge.  These are both straightforward generalizations of standard methods for measuring homology in surfaces \emph{without} boundary based on tree-cotree decompositions \cite{ew-gohhg-05, ccelw-scsih-08, e-dgteg-03}.
 Tree-cotree decompositions were formalized by Eppstein~\cite{e-dgteg-03} to compute homology generators, although they were studied earlier by other authors \cite{b-stdg-71, rs-cseg-84, tr-gctts-98}.
@@ -593,7 +592,7 @@ The arcs $a_1, a_2, \dots, a_\beta$ are weakly simple and weakly disjoint.
 %\enote{Rewrote: please double check}
 Each arc $a_i$ consists of an edge in $L$ plus two (possibly overlapping) paths in $F$.  We know the edges from $L$ are disjoint and paths in the forest are simple, so it suffices to describe a consistent way to perturb forest paths apart.  
 We use an Euler tour on each component of $F$ to define consistent perturbations, as follows.
-For each edge $e_i$ in $L$, we subdivide $e_i$ into a path of length $3$, and add the first and third edges on that path to the forest $F$, yielding a new augmented forest $F'$.  Root each component of $F'$ at its (unique) boundary vertex.
+For each edge~$e_i$ in $L$, we subdivide $e_i$ into a path of length $3$ and add the first and third edges on that path to the forest~$F$, yielding a new augmented forest $F'$.  Root each component of $F'$ at its (unique) boundary vertex.
 We then compute an Euler tour for each component of $F'$, which for each tree in $F'$ gives a total ordering of the leaves based on when they are encountered in the tour.
 We can then perturb all root-to-leaf paths in each component of $F'$ to become disjoint,  where the order of the paths out of the root is the same as the total ordering of the leaves in the Euler tour.
 Adding the middle thirds of the edges from $L$ to these disjoint paths gives us a perturbation of $a_1, a_2, \dots, a_\beta$ into disjoint simple arcs.
@@ -605,8 +604,7 @@ Slicing along the arcs $a_1, a_2, \dots, a_\beta$ transforms~$\Sigma$ into a top
 \end{lemma}
 
 \begin{proof}
-Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists. Cutting along a perturbed arc $\tilde{a}_i$ either reduces the number of boundary components by 1, if the arc goes between distinct boundaries, or cuts along a handle once, if the arc is a nontrivial walk from a boundary back to itself.  In either case, the Euler characteristic of the surface minus the arc goes down by 1.  Since the $\tilde{a}_i$ are weakly simple and weakly disjoint, cutting along all $\beta$ paths reduces the Euler characteristic to 1.  If the resulting surface is disconnected after cutting, then some two faces adjacent along the cut are separated; however, all are connected via the co-tree, so it must be connected.  Therefore, the remaining surface after cutting must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
-
+Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists.  Slicing the surface along any perturbed arc~$\tilde{a}_i$ either reduces the number of boundary components by 1, if the endpoints of $\tilde{a}_i$ lie on distinct boundaries, or cuts along a handle once, if both endpoints lie on the same boundary.  In either case, slicing along $\tilde{a}_i$ increases the Euler characteristic of the surface by 1.  Because the perturbed arcs $\tilde{a}_i$ are simple and disjoint, slicing along all $\beta$ perturbed arcs increases the Euler characteristic to 1.  If the resulting sliced surface were disconnected, then the faces of $G$ incident to some edge in $L$ would lie in different components, but this is impossible, because all faces are connected in the sliced surface via the cotree $C^*$.  We conclude that the sliced surface is connected and has Euler characteristic $1$, so it must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
 \end{proof}
 
 \begin{figure}[htb]
@@ -1461,8 +1459,8 @@ We then cut along the greedy cut graph, which is the union of the greedy system 
 \end{comment}
 
 
-We now present our algorithm for finding a minimum-weight separating subgraph that happens
-to be contractible.
+We now present our algorithm for finding a minimum-weight separating subgraph if that subgraph happens to be a contractible cycle.
+
 \begin{lemma}
 \label{lem:contractible-alg}
 There exists an $O(n \log \log n)$-time algorithm that computes a minimum-weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
