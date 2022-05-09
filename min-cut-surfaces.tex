@@ -353,14 +353,16 @@ and~$(p\cdot q)(t) = q(2t-1)$ for all~$t \geq 1/2$.
 The \EMPH{genus} of a surface $\Sigma$ is the maximum number of disjoint simple cycles in $\Sigma$ whose complement is connected.
 %\anote{It seems that this definition of genus only works for surfaces with no boundary.}\jnote{No, it's correct even for surfaces with boundary.}
  Up to homeomorphism,
-there is exactly one orientable surface and one non-orientable surface with any genus $g\ge 0$ and any number of
-boundary cycles $b\ge 0$.
+there is exactly one orientable surface with any genus $g\ge 0$ and any number of
+boundary cycles $b\ge 0$, and exactly one non-orientable surface with any positive genus $g>0$ and any number of boundary cycles $b\ge 0$.
 The \EMPH{Euler characteristic $\chi$} of a surface with genus $g$ and $b$ boundary components is ${2 - 2g - b}$ if the surface is orientable, and ${2 - g - b}$ otherwise.
 
 \subsection{Graph embeddings}
 \label{SS:embeddings}
 
-An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
+An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths %jeffe added:
+that intersect vertices only at their endpoints.
+The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
 An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plane; in particular, in any cellular embedding, each component of the boundary of $\Sigma$ must be covered by a cycle of edges in~$G$.  
 
@@ -413,7 +415,7 @@ Any finite collection $C$ of cycles and arcs in a combinatorial surface, each re
 
 The intersection of each perturbed curve with any vertex region $v^\square$ consists of simple boundary-to-boundary paths in $v^\square$.  In particular, any arc that ends at vertex $v$ on a boundary face $f$ is perturbed into an arc in $G^\square$ that ends at the boundary segment $v^\square \cap f^\square$.  We also require minimal intersection within vertex regions, so any two boundary-to-boundary paths within the same vertex region intersect at most once.  We refer to any deformation of~$C$ that meets these criteria as a \EMPH{ribbon perturbation} of $C$.
 
-None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  This requirement allows us to represent a ribbon perturbation of $C$ symbolically by recording its order of intersection with interior segments of the form $v^\square\cap e^\square$ and with boundary segments of the form $v^\square\cap f^\square$.
+None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  This requirement allows us to represent a ribbon perturbation of $C$ symbolically by recording its order of intersection with interior segments of the form $v^\square\cap e^\square$ and with boundary segments of the form $v^\square\cap f^\square$. \note{Ref 2 line 268: We also need access to the ordering of curve segments traversing each ribbon, and to the cyclic ordering of the intersections of the curves with the boundary of each vertex region.}
 
 \begin{figure}[htb]
 \centering
@@ -424,9 +426,7 @@ None of the cycles and arcs we consider in this paper contain \emph{spurs}—sub
 \end{figure}
 
 An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be perturbed into a \emph{simple} path or cycle in the ribbon graph; algorithms to detect if a cycle is weakly simple have been studied extensively of late, in both the plane and on orientable or non-orientable surfaces~\cite{cex-dwsp-15,aaet-rwsp-17}.
-Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if they have disjoint perturbations within the ribbon graph; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.
-
-
+Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if they have disjoint perturbations within the ribbon graph; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.  \note{Ref 2 line 295: More generally, we say that a collection of arcs and/or cycles is \EMPH{non-crossing} if there is a ribbon perturbation of the entire collection in which all perturbed curves are disjoint.}
 
 %\rnote{214: Definition of an arc as a walk. Previously, arc on a surface was disallowed to contain internal vertices on boundaries. Is here an arc as a walk disallowed to contain vertices on the boundary as internal vertices? I think not, you consider such an arc as bouncing from the boundary without really touching it, but I think it requires an explicit comment. }
 
