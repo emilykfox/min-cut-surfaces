@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2580
+{\rtf1\ansi\ansicpg1252\cocoartf2513
 \cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
 {\colortbl;\red255\green255\blue255;\red24\green24\blue23;\red255\green255\blue255;}
 {\*\expandedcolortbl;;\cssrgb\c12549\c12157\c11765;\cssrgb\c100000\c100000\c100000;}
@@ -18,16 +18,23 @@ Referee #1 (Remarks to the Author):\cb1 \
 \
 \cb3 ----------------------------- Main comments\cb1 \
 \
-\cb3 268: It sounds a bit strange; ribbon graphs are actually not graphs. Furthermore, data structures for ribbon graphs are not described; please provide details. My understanding is that you record, for each ribbon, the ordering of the edges crossing the ribbon, and at each vertex region you record the cyclic ordering of the intersections of the curves you consider with each boundary of the region; thus, ignoring the precise arrangement of the curves inside each vertex region. Details on how you use this data structure could be useful, e.g. on lines 500 and 1000.\cb1 \
+\cb3 268: It sounds a bit strange; ribbon graphs are actually not graphs. Furthermore, data structures for ribbon graphs are not described; please provide details. My understanding is that you record, for each ribbon, the ordering of the edges crossing the ribbon, and at each vertex region you record the cyclic ordering of the intersections of the curves you consider with each boundary of the region; thus, ignoring the precise arrangement of the curves inside each vertex region. Details on how you use this data structure could be useful, e.g. on lines 500 and 1000.\
+\
+	Jeff: Added comment to clean up.\cb1 \
 \
 \cb3 295: What is a set of non-crossing weakly simple cycles? I think you do not mean "pairwise non-crossing", but you mean that there exists a perturbation of all the cycles so that they become disjoint? There may be an ambiguity on this concept throughout the paper; please check.\cb1 \
 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \cb3 	Jeff: Added comment with draft text.\cb1 \
+\pard\pardeftab720\partightenfactor0
+\cf2 \
 \cb3 ----------------------------- Minor comments\cb1 \
 \
 \cb3 39: The expression "disconnected subcomplexes" is strange. First, they are not necessarily disconnected. Second, the term "subcomplexes" is not defined. Why not "surfaces with boundary" instead of "disconnected subcomplexes"?\cb1 \
 \
 Response: In fact, they are disconnected (or it is not a cut).  We also feel \'93subcomplexes\'94 is fairly standard and well understood.\
 \
+<<<<<<< HEAD
 \cb3 155: "pattern" is a bit vague. Perhaps replace with "unordered sequence"? Similarly 166.\
 \
 Response: Sequences are intrinsically ordered, so we are uncomfortable with this wording.  While vague, we feel \'93pattern\'94 captures the idea better, especially in an introduction section, and the ideas are made more precise later in the paper in any case.\cb1 \
@@ -35,8 +42,15 @@ Response: Sequences are intrinsically ordered, so we are uncomfortable with this
 \cb3 222: If g=0, the surface is necessarily orientable.\
 \
 Response: Changed the statement to be for g>0.\cb1 \
+=======
+\cb3 222: If g=0, the surface is necessarily orientable.\
 \
-\cb3 224: Your definition of an embedding is intuitive, but not formally correct (the relative interiors of paths must avoid the images of vertices; there is a condition on the endpoints of the paths). I think it is fine to skip the details, provided you indicate that this is an informal definition.\cb1 \
+	Fixed\cb1 \
+\
+\cb3 224: Your definition of an embedding is intuitive, but not formally correct (the relative interiors of paths must avoid the images of vertices; there is a condition on the endpoints of the paths). I think it is fine to skip the details, provided you indicate that this is an informal definition.\
+>>>>>>> 3233c9f5165de2bd20436839c472cfbfe09f3078
+\
+	Jeff: Added \'93that intersect vertices only at their endpoints\'94\cb1 \
 \
 \cb3 265: I think that cross-metric surfaces would be completely appropriate for your purposes, but indeed your ribbon graph structure does the job.\cb1 \
 \
@@ -82,4 +96,4 @@ Response: done\cb1 \
 \
 \cb3 1070: "it follow" should be "it follows".\cb1 \
 \
-\cb3 1090, 1094: "on an" should be "on a".}
+\cb3 1090, 1094: "on an" should be "on a".  FIXED.}

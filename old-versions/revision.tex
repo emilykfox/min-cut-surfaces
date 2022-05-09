@@ -353,26 +353,14 @@ and~$(p\cdot q)(t) = q(2t-1)$ for all~$t \geq 1/2$.
 The \EMPH{genus} of a surface $\Sigma$ is the maximum number of disjoint simple cycles in $\Sigma$ whose complement is connected.
 %\anote{It seems that this definition of genus only works for surfaces with no boundary.}\jnote{No, it's correct even for surfaces with boundary.}
  Up to homeomorphism,
-<<<<<<< HEAD
-there is exactly one orientable surface and one non-orientable surface with any genus $g > 0$ and any number of
+there is exactly one orientable surface and one non-orientable surface with any genus $g\ge 0$ and any number of
 boundary cycles $b\ge 0$.
-=======
-there is exactly one orientable surface with any genus $g\ge 0$ and any number of
-boundary cycles $b\ge 0$, and exactly one non-orientable surface with any positive genus $g>0$ and any number of boundary cycles $b\ge 0$.
->>>>>>> 3233c9f5165de2bd20436839c472cfbfe09f3078
 The \EMPH{Euler characteristic $\chi$} of a surface with genus $g$ and $b$ boundary components is ${2 - 2g - b}$ if the surface is orientable, and ${2 - g - b}$ otherwise.
 
 \subsection{Graph embeddings}
 \label{SS:embeddings}
 
-<<<<<<< HEAD
 An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths.  The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
-\enote{From reviewer: Your definition of an embedding is intuitive, but not formally correct (the relative interiors of paths must avoid the images of vertices; there is a condition on the endpoints of the paths). I think it is fine to skip the details, provided you indicate that this is an informal definition.}
-=======
-An \EMPH{embedding} of an undirected graph $G=(V,E)$ on a surface $\Sigma$ maps vertices to distinct points and edges to simple, interior-disjoint paths %jeffe added:
-that intersect vertices only at their endpoints.
-The \EMPH{faces} of the embedding are maximal connected subsets of $\Sigma$ that are disjoint from the image of the graph.
->>>>>>> 3233c9f5165de2bd20436839c472cfbfe09f3078
 We may denote an edge~$uv \in E$ as~$f | g$ if it is incident to faces~$f$ and~$g$.
 An embedding is \EMPH{cellular} if each of its faces is homeomorphic to the plane; in particular, in any cellular embedding, each component of the boundary of $\Sigma$ must be covered by a cycle of edges in~$G$.  
 
@@ -425,7 +413,7 @@ Any finite collection $C$ of cycles and arcs in a combinatorial surface, each re
 
 The intersection of each perturbed curve with any vertex region $v^\square$ consists of simple boundary-to-boundary paths in $v^\square$.  In particular, any arc that ends at vertex $v$ on a boundary face $f$ is perturbed into an arc in $G^\square$ that ends at the boundary segment $v^\square \cap f^\square$.  We also require minimal intersection within vertex regions, so any two boundary-to-boundary paths within the same vertex region intersect at most once.  We refer to any deformation of~$C$ that meets these criteria as a \EMPH{ribbon perturbation} of $C$.
 
-None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  This requirement allows us to represent a ribbon perturbation of $C$ symbolically by recording its order of intersection with interior segments of the form $v^\square\cap e^\square$ and with boundary segments of the form $v^\square\cap f^\square$. \note{Ref 2 line 268: We also need access to the ordering of curve segments traversing each ribbon, and to the cyclic ordering of the intersections of the curves with the boundary of each vertex region.}
+None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  This requirement allows us to represent a ribbon perturbation of $C$ symbolically by recording its order of intersection with interior segments of the form $v^\square\cap e^\square$ and with boundary segments of the form $v^\square\cap f^\square$.
 
 \begin{figure}[htb]
 \centering
@@ -436,7 +424,9 @@ None of the cycles and arcs we consider in this paper contain \emph{spurs}—sub
 \end{figure}
 
 An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be perturbed into a \emph{simple} path or cycle in the ribbon graph; algorithms to detect if a cycle is weakly simple have been studied extensively of late, in both the plane and on orientable or non-orientable surfaces~\cite{cex-dwsp-15,aaet-rwsp-17}.
-Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if they have disjoint perturbations within the ribbon graph; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.  \note{Ref 2 line 295: More generally, we say that a collection of arcs and/or cycles is \EMPH{non-crossing} if there is a ribbon perturbation of the entire collection in which all perturbed curves are disjoint.}
+Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if they have disjoint perturbations within the ribbon graph; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.
+
+
 
 %\rnote{214: Definition of an arc as a walk. Previously, arc on a surface was disallowed to contain internal vertices on boundaries. Is here an arc as a walk disallowed to contain vertices on the boundary as internal vertices? I think not, you consider such an arc as bouncing from the boundary without really touching it, but I think it requires an explicit comment. }
 
@@ -525,7 +515,7 @@ Let $\partial s^*$ denote the boundary of $s^*$, and let $\Sigma'$ denote the su
 
 Let $\Cut$ be an arbitrary $(s,t)$-cut in $G$.  By definition, there is a non-trivial partition $V = S\cup T$, such that $s\in S$ and $t\in T$, where $\Cut$ is the set of edges crossing $S$ and $T$.
 %\sout{This cut partitions the vertices of $G$ into two disjoint subsets~$S$ and $T$, respectively containing vertices $s$ and $t$.}
-Thus, the dual subgraph $\Cut^*$ partitions the faces of $G^*$ into two disjoint (possibly non-connected) subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $\Cut^*$ is the boundary of the union of the faces in $S^*$, which implies that $\Cut^*$ is null-homologous in $\Sigma$.  The symmetric difference $\Cut^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus, $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $\Cut^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
+Thus, the dual subgraph $\Cut^*$ partitions the faces of $G^*$ into two disjoint subsets, $S^*$ and $T^*$, respectively containing faces $s^*$ and $t^*$.  In particular, $\Cut^*$ is the boundary of the union of the faces in $S^*$, which implies that $\Cut^*$ is null-homologous in $\Sigma$.  The symmetric difference $\Cut^* \oplus \partial s^*$ is the boundary of the union of $S^* \setminus\set{s^*}$, which is a subset of the faces of $\Sigma'$.  Thus, $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  We conclude that $\Cut^*$ and  $\partial s^*$ are homologous in $\Sigma'$.
 
 Conversely, let $\Cut^*$ be an arbitrary even subgraph of $G^*$ homologous to $\partial s^*$ in $\Sigma'$.  The subgraph $\Cut^*\oplus \partial s^*$ is null-homologous in $\Sigma'$.  This immediately implies that $X^*$ is null-homologous in $\Sigma$; moreover, faces $s^*$ and $t^*$ are on opposite sides of $X^*$.  Any path from $s$ to $t$ in the original graph $G$ must traverse at least one edge of $\Cut$.  We conclude that $\Cut$ is an $(s,t)$-cut.
 \end{proof}
@@ -563,7 +553,7 @@ The first method begins by computing a set~$A$ of~$\beta$ arcs, each of which is
 %
 Following previous papers \cite{ccelw-scsih-08, ce-tnpcs-10, c-scgsp-10}, we construct a \EMPH{greedy system of arcs}, using a variant of Erickson and Whittlesey's algorithm to construct optimal systems of loops \cite{ew-gohhg-05}.  Our algorithm uses a natural generalization of tree-cotree decompositions~\cite{e-dgteg-03} to surfaces with boundary.
 
-A \EMPH{forest-cotree decomposition} (see Figure~\ref{fig:forest-cotree}) of a combinatorial surface $S = (\Sigma, G)$ is any partition $(\partial\! G, F, L, C)$ of the edges of $G$ into four edge-disjoint subgraphs with the following properties:
+A \EMPH{forest-cotree decomposition} of a combinatorial surface $S = (\Sigma, G)$ is any partition $(\partial\! G, F, L, C)$ of the edges of $G$ into four edge-disjoint subgraphs with the following properties:
 \begin{itemize}\itemsep0pt
 \item $\partial\! G$ is the set of all boundary edges of $G$.
 \item $F$ is a spanning forest of $G$, that is, an acyclic subgraph of $G$ that contains every vertex.
@@ -614,9 +604,7 @@ Slicing along the arcs $a_1, a_2, \dots, a_\beta$ transforms~$\Sigma$ into a top
 \end{lemma}
 
 \begin{proof}
-Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists.  Slicing the surface along any perturbed arc~$\tilde{a}_i$ either reduces the number of boundary components by 1, if the endpoints of $\tilde{a}_i$ lie on distinct boundaries, or 
-\enote{Reviewer says: "Since the surface is allowed to be non-orientable (see line 356), you also need to consider crosscaps. Actually, perhaps just removing the sentence would be better."  I'm not following what they object to here.}
-cuts along a handle once, if both endpoints lie on the same boundary.  In either case, slicing along $\tilde{a}_i$ increases the Euler characteristic of the surface by 1.  Because the perturbed arcs $\tilde{a}_i$ are simple and disjoint, slicing along all $\beta$ perturbed arcs increases the Euler characteristic to 1.  If the resulting sliced surface were disconnected, then the faces of $G$ incident to some edge in $L$ would lie in different components, but this is impossible, because all faces are connected in the sliced surface via the cotree $C^*$.  We conclude that the sliced surface is connected and has Euler characteristic $1$, so it must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
+Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists.  Slicing the surface along any perturbed arc~$\tilde{a}_i$ either reduces the number of boundary components by 1, if the endpoints of $\tilde{a}_i$ lie on distinct boundaries, or cuts along a handle once, if both endpoints lie on the same boundary.  In either case, slicing along $\tilde{a}_i$ increases the Euler characteristic of the surface by 1.  Because the perturbed arcs $\tilde{a}_i$ are simple and disjoint, slicing along all $\beta$ perturbed arcs increases the Euler characteristic to 1.  If the resulting sliced surface were disconnected, then the faces of $G$ incident to some edge in $L$ would lie in different components, but this is impossible, because all faces are connected in the sliced surface via the cotree $C^*$.  We conclude that the sliced surface is connected and has Euler characteristic $1$, so it must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
 \end{proof}
 
 \begin{figure}[htb]
@@ -728,7 +716,7 @@ We define a \EMPH{tree-coforest decomposition} of $G$ to be any partition $(T, L
 \begin{itemize}\itemsep0pt
 \item $T$ is a spanning tree of $G$.
 \item $F^*$ is a spanning \emph{forest} of $G^*$, that is, an acyclic subgraph that contains every vertex.
-\item Each component of $F^*$ contains a single dual boundary vertex $\delta_i^*$. \enote{Reviewer says: ``Have you defined $delta_i^*$ above? If so, I have forgotten."  I actually think this is fair, and cannot see anywhere that we use $delta_i^*$.  I propose removing, if you all agree.}
+\item Each component of $F^*$ contains a single dual boundary vertex $\delta_i^*$.
 \item Finally, $L$ is the set of leftover edges $E \setminus (T\cup F)$.
 \end{itemize}
 %
@@ -845,7 +833,7 @@ Our algorithm closely resembles the algorithm of Chambers \etal~\cite{ccelw-scsi
 \subsection{Crossing bound}
 \label{SS:homotopy-crossing}
 
-Our main technical lemma for this section  establishes an upper bound on the number of crossings between members of a greedy system of arcs and the minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that some shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is somewhat different, because we work explicitly with ribbon perturbations and the structure we seek is a true subgraph, which need not be connected, rather than a single weakly simple closed walk.
+Our main technical lemma for this section intuitively establishes an upper bound on the number of crossings between members of a greedy system of arcs and the minimum-weight even subgraph in any homology class.  Crossing-number arguments were first used by Cabello and Mohar \cite{cm-fsnsn-07} to develop the first subquadratic algorithms for shortest non-contractible and non-separating cycles in undirected surface embedded graphs; their arguments are the foundation of all later improvements of their algorithm \cite{c-mdpg-06, k-csnco-06, cce-msspe-13}.  Our proof is quite similar to the argument of Chambers \etal~\cite{ccelw-scsih-08} that some shortest \emph{splitting} cycle crosses any shortest path $O(g+b)$ times.  However, our new proof is somewhat different, because we work explicitly with ribbon perturbations and the structure we seek is a true subgraph, which need not be connected, rather than a single weakly simple closed walk.
 
 As mentioned in Section~\ref{sec:forest-cotree}, we cannot consistently define when a shortest path crosses a $\Z_2$-minimal even subgraph.  Instead, we upper-bound the smallest possible number of crossings between an entire arc in the greedy system and a ribbon perturbation of a cycle decomposition of a $\Z_2$-minimal even subgraph in each homology class.  We emphasize that different cycle decompositions and different ribbon decompositions of the same even subgraph can have different numbers of crossings with the same arc.
 
@@ -1006,7 +994,7 @@ Consider any ribbon perturbation $\set{\tilde\gamma_1, \dots, \tilde\gamma_r}$ o
 The previous lemma implies that if our minimum-cut algorithm can ignore weighted subgraphs that induce one-sided cycles.  Specifically, whenever the algorithm glues copies of $D^\square$ according to some crossing sequence, if the resulting surface is a Möbius band, we ignore the weighted triangulation that produced it.  All other aspects of the algorithm are unchanged.
 
 \begin{corollary}
-Let $G$ be an undirected graph with positively weighted edges, embedded on a \textbf{possibly non-orientable} surface with genus~$g$ (possibly with boundary), and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $g^{O(g)} n\log \log n$ time.
+Let $G$ be an undirected graph with positively weighted edges, embedded on an \textbf{possibly non-orientable} surface with genus~$g$ (possibly with boundary), and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $g^{O(g)} n\log \log n$ time.
 \end{corollary}
 
 % ===============================================================================================
@@ -1155,7 +1143,7 @@ We begin by computing homology signatures for the edges of $G$ in $O(\beta n)$ t
 
 To exploit Lemma \ref{lem:nocross}, we need a set $S$ of shortest paths in $G$ that are guaranteed to intersect every cycle with non-trivial homology.  Somewhat counterintuitively, we construct $S$ essentially by building the \emph{greedy primal} system of arcs, as described in Section~\ref{sec:forest-cotree}.  Specifically, we build the greedy forest-cotree decomposition $(\partial G, F, C^*, L)$, and let $S$ be the set of paths in the forest $F$ from the boundary of $\Sigma$ to the endpoints of edges in~$L$.  Lemma~\ref{lem:L_edges} immediately implies that $S$ contains $2\beta$ shortest paths.  Lemma~\ref{lem:disk} implies that every cycle with non-trivial homology---in fact, every non-contractible cycle---shares at least one vertex with at least one path in $S$.  We emphasize that our algorithm in this section does not need ribbon perturbations; in particular, every path in $S$ is simple, and our algorithm considers each path in $S$ in isolation.
 
-Then for each each shortest path $\sigma\in S$, we look for a $\Z_2$-minimal cycle homologous to $\gamma$ that intersects $\sigma$ and has the structure described in Lemma~\ref{lem:nocross}.  Lemma~\ref{lem:lift-shortest} implies that $\sigma$ is the projection of a shortest path $(\sigma,0)$ in $\overline{G}$; let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arcto (v_t, h_t)$.  We construct the combinatorial surface $\Sigmabar\snip(\sigma,0)$ by splitting the path $(\sigma,0)$ into two parallel paths from $(v_0,0)$ to $(v_t,h_t)$, which we denote  $(\sigma,0)^+$ and $(\sigma,0)^-$.  For each index $1\le i\le t-1$, let $(v_i,h_i)^+$ and $(v_i,h_i)^-$ denote the copies of vertex $(v_i,h_i)$  on the paths $(\sigma,0)^+$ and $(\sigma,0)^-$, respectively.  The paths $(\sigma,0)^+$ and $(\sigma,0)^-$ bound a new common face $f_{(\sigma,0)}$ in $\Sigmabar\snip(\sigma,0)$.
+Then for each each shortest path $\sigma\in S$, we look for $\Z_2$-minimal cycle homologous to $\gamma$ that intersects $\sigma$ and has the structure described in Lemma~\ref{lem:nocross}.  Lemma~\ref{lem:lift-shortest} implies that $\sigma$ is the projection of a shortest path $(\sigma,0)$ in $\overline{G}$; let us write $(\sigma,0) = (v_0,0) \arcto (v_1,h_1) \arcto\allowbreak \cdots\arcto (v_t, h_t)$.  We construct the combinatorial surface $\Sigmabar\snip(\sigma,0)$ by splitting the path $(\sigma,0)$ into two parallel paths from $(v_0,0)$ to $(v_t,h_t)$, which we denote  $(\sigma,0)^+$ and $(\sigma,0)^-$.  For each index $1\le i\le t-1$, let $(v_i,h_i)^+$ and $(v_i,h_i)^-$ denote the copies of vertex $(v_i,h_i)$  on the paths $(\sigma,0)^+$ and $(\sigma,0)^-$, respectively.  The paths $(\sigma,0)^+$ and $(\sigma,0)^-$ bound a new common face $f_{(\sigma,0)}$ in $\Sigmabar\snip(\sigma,0)$.
 
 Lemma \ref{lem:nocross} implies that if any $\Z_2$-minimal cycle homologous to $\cycle$ intersects $\sigma$, then some $\Z_2$-minimal cycle homologous to $\cycle$ is the projection of a shortest path in $\Sigmabar\snip(\sigma,0)$ from some vertex $(v_i,h_i)^\pm$ to the corresponding vertex $(v_i, h_i\oplus[\cycle])$.  To compute these shortest paths, we implicitly compute the shortest path in $\Sigmabar\snip(\sigma,0)$ from every vertex on the boundary of $f_{(\sigma,0)}$ to \emph{every} vertex of $\Sigmabar\snip(\sigma,0)$, using Lemma~\ref{lem:multishort}.
 The resulting algorithm runs in $O(\gbar^2\,\nbar \log \nbar) = O(8^\beta \beta^3\, n\log n)$ time, by Lemma \ref{lem:cover-cxy}.
@@ -1696,12 +1684,12 @@ We can compute a global minimum cut in $G$ in either $g^{O(g)} n \log \log n$ ti
 Most of the results in this section extend directly to non-orientable surfaces.  The only exception is our algorithm for the non-contractible case (Lemma \ref{lem:global_split-alg}), which computes a minimum-weight subgraph in \emph{every} homology class.  When the underlying surface is non-orientable, we cannot use our crossing-sequence algorithm in Section \ref{sec:crossing} to solve this subproblem, for the reasons spelled out in Section \ref{sec:nononono}.  However, we can still use our homology-cover algorithm from Section \ref{sec:homcover}.
  
 \begin{theorem}
-Let $G$ be an undirected graph with positively weighted edges, embedded on a \textbf{non-orientable} surface with genus~$g$ and exactly one boundary component.
+Let $G$ be an undirected graph with positively weighted edges, embedded on an \textbf{non-orientable} surface with genus~$g$ and exactly one boundary component.
 We can compute a minimum-weight separating subgraph in $G$ in $2^{O(g)} n \log n$ time.
 \end{theorem}
 
 \begin{corollary}
-Let $G$ be an undirected graph with positively weighted edges, embedded on a \textbf{non-orientable} surface with genus $g$ (possibly with boundary).
+Let $G$ be an undirected graph with positively weighted edges, embedded on an \textbf{non-orientable} surface with genus $g$ (possibly with boundary).
 We can compute a global minimum cut in $G$ in $2^{O(g)} n \log n$ time.
 \end{corollary}
 
