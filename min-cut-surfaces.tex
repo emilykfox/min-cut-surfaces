@@ -1233,7 +1233,7 @@ Consider the \emph{residual weight} function $c_H\colon E\to \Real$ defined by s
 \)
 
 
-Every boundary subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the weight function $c_H$.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost has zero cost.
+Every boundary subgraph of $G$ is dual to a cut in the dual graph $G^*$.  Thus, we have reduced our problem to computing the minimum cut in $G^*$ with respect to the weight function $c_H$, which is NP-hard as stated in Lemma~\ref{lem:mincut_np_hard}.  Since the empty set is a valid cut with zero cost, the cost of the minimum cut is never positive.  In particular, $H$ is the minimum-cost even subgraph in its homology class if and only if the cut in $G^*$ with minimum residual cost has zero cost.
 
 In fact, our reduction is reversible.  Suppose we want to find the minimum cut in an embedded graph $G = (V, E)$ with respect to the cost function $c\colon E\to \Real$, where every face of $G$ is incident to an even number of edges with negative cost.  Let $H = \set{{e\in E}\mid {c(e)<0}}$ be the subgraph of negative-cost edges, and let $X$ denote the (possibly empty) set of edges in the minimum cut of $G$.  Consider the \emph{absolute cost} function $\abs{c}\colon E^*\to \Real$ defined as $\abs{c}(e^*) = \abs{c(e)}$.  Then $(H\oplus X)^*$ is the even subgraph of $G^*$ of minimum absolute cost that is homologous to $H^*$.
 \end{proof}
@@ -1242,6 +1242,7 @@ In fact, our reduction is reversible.  Suppose we want to find the minimum cut i
 We now prove that this special case of the minimum cut problem is {NP}-hard, by  reduction from \textsc{MinCut} in graphs with negative edges.  This problem includes \textsc{MaxCut} as a special case (when every edge has negative cost), but many other special cases are also {NP}-hard~\cite{mrr-edofm-03}.
 
 \begin{lemma}[McCormick \etal~\cite{mrr-edofm-03}]
+\label{lem:mincut_np_hard}
 \textsc{MinCut} is strongly NP-hard.
 \end{lemma}
 
@@ -1638,7 +1639,7 @@ Let~$h$ be the homology class of $\gamma$ in
 $\Sigma$, and let $H_h$ be any minimum-weight even subgraph of $G$ that is homologous with $\gamma$
 in $\Sigma$.  Lemma~\ref{lem:global_split-nocross} implies, without loss of generality, that~$H_h$
 lies entirely in~$\Sigma'$.  Thus, every edge of $H_h$ is on the boundary of at least one face $f'$
-in~$\Sigma'$; it follow that $\minSS$ is a minimum-weight even subgraph separating $s^*$ and $f'$.  We conclude that when our algorithm considers homology class $h$, either $\minSS_h$ or $\minSS'_h$ is a minimum-weight separating subgraph of $G$.
+in~$\Sigma'$; it follows that $\minSS$ is a minimum-weight even subgraph separating $s^*$ and $f'$.  We conclude that when our algorithm considers homology class $h$, either $\minSS_h$ or $\minSS'_h$ is a minimum-weight separating subgraph of $G$.
 \end{proof}
 
 Modifying the previous algorithm to use results of Section \ref{sec:homcover}, instead of the corresponding results in Section \ref{sec:crossing}, immediately gives us the following:
