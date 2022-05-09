@@ -994,7 +994,7 @@ Consider any ribbon perturbation $\set{\tilde\gamma_1, \dots, \tilde\gamma_r}$ o
 The previous lemma implies that if our minimum-cut algorithm can ignore weighted subgraphs that induce one-sided cycles.  Specifically, whenever the algorithm glues copies of $D^\square$ according to some crossing sequence, if the resulting surface is a Möbius band, we ignore the weighted triangulation that produced it.  All other aspects of the algorithm are unchanged.
 
 \begin{corollary}
-Let $G$ be an undirected graph with positively weighted edges, embedded on an \textbf{possibly non-orientable} surface with genus~$g$ (possibly with boundary), and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $g^{O(g)} n\log \log n$ time.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a \textbf{possibly non-orientable} surface with genus~$g$ (possibly with boundary), and let $s$ and $t$ be vertices of $G$.  We can compute the minimum-weight $(s,t)$-cut in $G$ in $g^{O(g)} n\log \log n$ time.
 \end{corollary}
 
 % ===============================================================================================
@@ -1684,12 +1684,12 @@ We can compute a global minimum cut in $G$ in either $g^{O(g)} n \log \log n$ ti
 Most of the results in this section extend directly to non-orientable surfaces.  The only exception is our algorithm for the non-contractible case (Lemma \ref{lem:global_split-alg}), which computes a minimum-weight subgraph in \emph{every} homology class.  When the underlying surface is non-orientable, we cannot use our crossing-sequence algorithm in Section \ref{sec:crossing} to solve this subproblem, for the reasons spelled out in Section \ref{sec:nononono}.  However, we can still use our homology-cover algorithm from Section \ref{sec:homcover}.
  
 \begin{theorem}
-Let $G$ be an undirected graph with positively weighted edges, embedded on an \textbf{non-orientable} surface with genus~$g$ and exactly one boundary component.
+Let $G$ be an undirected graph with positively weighted edges, embedded on a \textbf{non-orientable} surface with genus~$g$ and exactly one boundary component.
 We can compute a minimum-weight separating subgraph in $G$ in $2^{O(g)} n \log n$ time.
 \end{theorem}
 
 \begin{corollary}
-Let $G$ be an undirected graph with positively weighted edges, embedded on an \textbf{non-orientable} surface with genus $g$ (possibly with boundary).
+Let $G$ be an undirected graph with positively weighted edges, embedded on a \textbf{non-orientable} surface with genus $g$ (possibly with boundary).
 We can compute a global minimum cut in $G$ in $2^{O(g)} n \log n$ time.
 \end{corollary}
 
