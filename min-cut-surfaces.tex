@@ -615,15 +615,13 @@ Slicing along the arcs $a_1, a_2, \dots, a_\beta$ transforms~$\Sigma$ into a top
 \end{lemma}
 
 \begin{proof}
-Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs
-$a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.
-Lemma \ref{L:weak} implies that such a perturbation exists.  Slicing the surface along any perturbed
-arc~$\tilde{a}_i$ either reduces the number of boundary components by 1, if the endpoints of
-$\tilde{a}_i$ lie on distinct boundaries, or it does not separate the surface, resulting in a
-lowered genus.
+Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists.
+Slicing along any perturbed arc~$\tilde{a}_i$ increases the Euler characteristic of the surface by
+1.
+For example, if the surface is orientable, then slicing either reduces the number of boundary components by 1, if the endpoints of $\tilde{a}_i$ lie on distinct boundaries, or 
 %\enote{Reviewer says: "Since the surface is allowed to be non-orientable (see line 356), you also need to consider crosscaps. Actually, perhaps just removing the sentence would be better."  I'm not following what they object to here.}
-%cuts along a handle once, if both endpoints lie on the same boundary.
-In either case, slicing along $\tilde{a}_i$ increases the Euler characteristic of the surface by 1.  Because the perturbed arcs $\tilde{a}_i$ are simple and disjoint, slicing along all $\beta$ perturbed arcs increases the Euler characteristic to 1.  If the resulting sliced surface were disconnected, then the faces of $G$ incident to some edge in $L$ would lie in different components, but this is impossible, because all faces are connected in the sliced surface via the cotree $C^*$.  We conclude that the sliced surface is connected and has Euler characteristic $1$, so it must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
+cuts along a handle once, if both endpoints lie on the same boundary.
+Because the perturbed arcs $\tilde{a}_i$ are simple and disjoint, slicing along all $\beta$ perturbed arcs increases the Euler characteristic to 1.  If the resulting sliced surface were disconnected, then the faces of $G$ incident to some edge in $L$ would lie in different components, but this is impossible, because all faces are connected in the sliced surface via the cotree $C^*$.  We conclude that the sliced surface is connected and has Euler characteristic $1$, so it must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
 \end{proof}
 
 \begin{figure}[htb]
@@ -1237,7 +1235,7 @@ We can compute the minimum-weight $(s,t)$-cut in $G$ in $O(256^g g^3 n \log n)$ 
 In this section, we show that finding the minimum-cost even subgraph in a given homology class is {NP}-hard, even when the underlying surface has no boundary.  Our proof closely follows a reduction of McCormick \etal~\cite{mrr-edofm-03} from \textsc{Min2Sat} to a special case of \textsc{MaxCut}.
 
 \begin{theorem}
-Computing the minimum-weight even subgraph in a given homology class on a surface without boundary is equivalent to computing a minimum-weight cut in an embedded edge-weighted graph $G$ whose negative-weight edges are dual to an even subgraph in $G^*$.
+Computing the minimum-weight even subgraph in a given homology class on a surface without boundary is equivalent to computing a minimum-weight cut in an embedded edge-weighted graph $G$, where negative-weight edges of $G$ are dual to an even subgraph in $G^*$.
 \end{theorem}
 
 \begin{proof}
@@ -1281,11 +1279,11 @@ We transform the edges one at a time; after each iteration, the embedding is a s
 
 \begin{figure}[hbt]
 \centering\includegraphics[scale=0.4]{Fig/addhandle3}
-\caption{Adding a handle to transform a negative edge into a negative cocycle.  Thick (blue) edges have cost $C$; dashed edges have cost zero.}
+\caption{Adding a handle to transform a negative edge into a negative cocycle.  Thick (blue) edges have cost $C$; dashed edges have cost zero. The cost of each red edge is $c(uv)/6$.}
 \label{fig:addhandle}
 \end{figure}
 
-Let $G'$ denote the transformed graph and $c'\colon E(G')\to \Real$ its associated cost function.  The minimum cut in $G'$ cannot contain any edge of an endpoint triangle.  Thus, for each edge cocycle, either all six edges cross the cut, or none of them cross the cut.  It follows that the minimum cut in $G'$ corresponds to a cut with equal cost in the original graph $G$.  Conversely, any cut in $G$ can be transformed into a cut in~$G'$ of equal cost.  Thus, computing the minimum cut in $G'$ is equivalent to computing the minimum cut in $G$.
+Let $G'$ denote the transformed graph and $c'\colon E(G')\to \Real$ its associated cost function.  The minimum cut in $G'$ cannot contain any edge of an endpoint triangle.  Thus, for each edge cocycle, either all six edges cross the cut, or none of them cross the cut.  It follows that the minimum cut in $G'$ corresponds to a cut with equal cost in the original graph $G$.  Conversely, any cut in $G$ can be transformed into a cut in~$G'$ of equal cost.  Thus, computing the minimum cut in $G'$ is equivalent to computing the minimum cut in $G$, which is NP-hard by Lemma~\ref{lem:mincut_np_hard}.
 \end{proof}
 \color{black}
 
@@ -1427,7 +1425,7 @@ Let~$\alpha$ be an arbitrary simple cycle or arc in~$G$.
 Let
 ${\Sigmasnip = \Sigma \snip \alpha}$ and let~$\Gsnip = G \snip \alpha$.
 Finally, let \(\Hsnip\) denote a boundary subgraph in~\(\Gsnip\) and let~\(H\)
-denote the set of edges that appear an odd number of times in the projection of~\(H\).
+denote the set of edges that appear an odd number of times in the projection of~\(H'\).
 Subgraph~\(H\) bounds the natural projection to~\(G\) of the faces bound by~\(\Hsnip\)
 in~\(\Gsnip\).
 \end{lemma}
