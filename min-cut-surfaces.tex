@@ -415,7 +415,18 @@ Any finite collection $C$ of cycles and arcs in a combinatorial surface, each re
 
 The intersection of each perturbed curve with any vertex region $v^\square$ consists of simple boundary-to-boundary paths in $v^\square$.  In particular, any arc that ends at vertex $v$ on a boundary face $f$ is perturbed into an arc in $G^\square$ that ends at the boundary segment $v^\square \cap f^\square$.  We also require minimal intersection within vertex regions, so any two boundary-to-boundary paths within the same vertex region intersect at most once.  We refer to any deformation of~$C$ that meets these criteria as a \EMPH{ribbon perturbation} of $C$.
 
-None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  This requirement allows us to represent a ribbon perturbation of $C$ symbolically by recording its order of intersection with interior segments of the form $v^\square\cap e^\square$ and with boundary segments of the form $v^\square\cap f^\square$. \jnote{Ref 2 line 268: We also need access to the ordering of curve segments traversing each ribbon, and to the cyclic ordering of the intersections of the curves with the boundary of each vertex region.}
+None of the cycles and arcs we consider in this paper contain \emph{spurs}—subpaths that traverse an edge followed immediately by its reversal.  Thus, the intersection of the perturbed cycles and arcs and any edge ribbon is a collection of disjoint paths that traverse the ribbon from one end to the other.  Thus, to represent any ribbon perturbation of $C$, it suffices to record the following information:
+\begin{itemize}
+\item 
+The alternating sequence of vertices and edges traversed by each cycle in $C$;
+\item
+The starting boundary face, alternating sequence of vertices and edges, and ending boundary face of each arc in $C$;
+\item 
+The ordering of perturbed curve segments traversing each ribbon $e^\square$; and
+\item
+The cyclic order of intersections of the perturbed curves with the boundary of each vertex region $v^\square$.
+\end{itemize}
+
 
 \begin{figure}[htb]
 \centering
@@ -426,7 +437,7 @@ None of the cycles and arcs we consider in this paper contain \emph{spurs}—sub
 \end{figure}
 
 An arc or cycle in a combinatorial surface is \EMPH{weakly simple} if it can be perturbed into a \emph{simple} path or cycle in the ribbon graph; algorithms to detect if a cycle is weakly simple have been studied extensively of late, in both the plane and on orientable or non-orientable surfaces~\cite{cex-dwsp-15,aaet-rwsp-17}.
-Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if they have disjoint perturbations within the ribbon graph; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.  \jnote{Ref 2 line 295: More generally, we say that a collection of arcs and/or cycles is \EMPH{non-crossing} if there is a ribbon perturbation of the entire collection in which all perturbed curves are disjoint.}
+Similarly, an arc or cycle~$\alpha$ and another arc or cycle $\beta$ are \EMPH{non-crossing} if they have disjoint perturbations within the ribbon graph; otherwise, we say that $\alpha$ \EMPH{crosses}~$\beta$.  More generally, we say that a collection $C$ of cycles and arcs is \EMPH{non-crossing} if there is a single ribbon perturbation of $C$ in which all perturbed curves are pairwise disjoint.
 
 %\rnote{214: Definition of an arc as a walk. Previously, arc on a surface was disallowed to contain internal vertices on boundaries. Is here an arc as a walk disallowed to contain vertices on the boundary as internal vertices? I think not, you consider such an arc as bouncing from the boundary without really touching it, but I think it requires an explicit comment. }
 
@@ -445,7 +456,7 @@ Let $H$ be an even subgraph of $G$.  We can decompose $H$ into cycles by specify
 
 We emphasize that each cycle in a cycle decomposition may visit vertices multiple times; indeed, some even subgraphs of $G$ cannot be decomposed into strictly simple cycles in $G$.
 
-\EMPH{Slicing} a combinatorial surface along a cycle or arc modifies both the surface and the embedded graph.  For any combinatorial surface $S = (\Sigma, G)$ and any \emph{simple} cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.  We can also slice along any \emph{weakly} simple arc or cycle $\gamma$ by considering any simple ribbon perturbation $\tilde\gamma$ of $\gamma$.  In particular, $\tilde\gamma$ partitions the vertex regions and edge ribbons of $G^\square$ into the vertex regions and edge ribbons of the ribbon graph of \EMPH{$S \snip \gamma$}.
+\EMPH{Slicing} a combinatorial surface along a cycle or arc modifies both the surface and the embedded graph.  For any combinatorial surface $S = (\Sigma, G)$ and any \emph{simple} cycle or arc $\gamma$ in~$G$, we define a new combinatorial surface \EMPH{$S \snip \gamma$} by taking the topological closure of $\Sigma \backslash \gamma$ as the new underlying surface; the new embedded graph contains two copies of each vertex and edge of $\gamma$, each bordering a new boundary.  We can also slice along any \emph{weakly} simple arc or cycle $\gamma$ by considering any simple ribbon perturbation $\tilde\gamma$ of $\gamma$.  In particular, $\tilde\gamma$ partitions the vertex regions and edge ribbons of $G^\square$ into the vertex regions and edge ribbons of the ribbon graph of \EMPH{$S \snip \gamma$}.  Our representation of ribbon perturbations allows us to compute this new ribbon graph in time proportional to the combinatorial length of $\gamma$.
 
 We define the~\EMPH{projection} of a curve in~$S \snip \gamma$ as the natural mapping of points (or vertices and edges) to~$S$. 
 
