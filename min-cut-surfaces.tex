@@ -1481,7 +1481,7 @@ We now present our algorithm for finding a minimum-weight separating subgraph if
 
 \begin{lemma}
 \label{lem:contractible-alg}
-There exists an $O(n \log \log n)$-time algorithm that computes a minimum-weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
+There exists an $O(gn \log \log n)$-time algorithm that computes a minimum-weight separating subgraph if any such subgraph is a simple contractible cycle. If not, the algorithm either returns some separating subgraph (that may not be minimum weight) or nothing.
 \end{lemma}
 
 \begin{proof}
@@ -1491,10 +1491,11 @@ There exists an $O(n \log \log n)$-time algorithm that computes a minimum-weight
 The algorithm computes a greedy system of arcs $A$ in $O(n)$ time as described in
 Section~\ref{sec:forest-cotree}.
 Observe both endpoints of each arc lie on $s^*$.
-Let $\Gsnip$ denote the planar graph $G \snip A$; this graph has $O(n)$ vertices.
+Let $\Gsnip$ denote the planar graph $G \snip A$; this graph has $O(gn)$ vertices.
 
-We now run the \(O(n \log \log n)\) time algorithm of \L\c{a}cki and
-Sankowski~\cite{ls-mcsc-11} to compute the shortest simple cycle~\(\gammasnip\) of \(\Gsnip\).
+We now run the algorithm of \L\c{a}cki and
+Sankowski~\cite{ls-mcsc-11} to compute the shortest simple cycle~\(\gammasnip\) of \(\Gsnip\) in
+\(O(gn \log \log n)\) time.
 %\knote{Is the next sentence necessary, or just define \(\Hsnip\) directly?}
 Let \(\Hsnip\) be the subgraph of \(\Gsnip\) containing the edges of~\(\gammasnip\).
 Subgraph~\(\Hsnip\) separates a non-empty subset of faces~\(\Fsnip\) from the boundary
@@ -1505,11 +1506,16 @@ Because~\(s^*\) is a boundary component, we see~\(H\) separates the natural proj
 from~\(s^*\).
 
 Now, suppose some minimum weight separating subgraph of~$G$ is a simple contractible cycle.
-Lemma~\ref{lem:disjoint-tight-arc} implies that some shortest simple contractible cycle $\sigma$ in
-$G$ does not cross $A$.  (We emphasize that our algorithm does not necessarily compute~$\sigma$.)
-This cycle $\sigma$ appears as a simple cycle in $\Gsnip$ that separates at least one face
-of~\(\Gsnip\) from the boundary.
-Thus, $\sigma$ cannot be shorter than $H$, and our algorithm returns a minimum-weight separating
+Lemma~\ref{lem:disjoint-tight-arc} implies that for any arc \(\alpha \in A\), there exists a
+shortest simple contractible cycle \(\sigma\) that does not cross~\(\alpha\).
+The cycle \(\sigma\) appears as a simple contractible cycle in \(G \snip \alpha\).
+Any contractible cycle in \(G \snip \alpha\) is contractible in \(G\), so \(\sigma\) is a
+\emph{shortest} contractible cycle in \(G \snip \alpha\) as well.
+Therefore, by repeated applications of Lemma~\ref{lem:disjoint-tight-arc}, we may assume $\sigma$
+does not cross any arc of \(A\), and it appears as a simple cycle in $\Gsnip$ that separates at
+least one face of~\(\Gsnip\) from the boundary.
+We emphasize that our algorithm does not necessarily compute~$\sigma$.
+However, $\sigma$ cannot be shorter than $H$, and our algorithm returns a minimum-weight separating
 subgraph.
 \end{proof}
 %
@@ -1692,7 +1698,8 @@ There is a~$2^{O(g)} n \log n$-time algorithm that computes a minimum-weight sep
 
 \subsection{Summing up}
 
-Finally, to compute the minimum-weight separating subgraph in $G$, we run both  algorithms described in Lemmas~\ref{lem:contractible-alg} and~\ref{lem:global_split-alg}.  If either algorithm returns nothing, the other algorithm returns a minimum-weight separating subgraph of $G$; otherwise, both algorithms return non-empty separating subgraphs of $G$, and the smaller of those two subgraphs is a minimum-weight separating subgraph of $G$.  We conclude:
+Finally, to compute the minimum-weight separating subgraph in $G$, we run both  algorithms described in Lemmas~\ref{lem:contractible-alg} and~\ref{lem:global_split-alg}.  If either algorithm returns nothing, the other algorithm returns a minimum-weight separating subgraph of $G$.
+Otherwise, both algorithms return non-empty separating subgraphs of $G$, and the smaller of those two subgraphs is a minimum-weight separating subgraph of $G$.  We conclude:
 
 \begin{corollary}
 Let $G$ be an undirected graph with positively weighted edges, embedded on an \textbf{orientable} surface with genus $g$ (possibly with boundary).
