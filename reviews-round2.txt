@@ -1,0 +1,88 @@
+Referee #1 (Remarks to the Author):
+
+Thank you for the revision, I am happy with all changes and I do not have any further comments.
+
+
+Referee #3 (Remarks to the Author):
+
+The paper has been revised with care (thanks!). I am convinced that the paper is correct. I still have quite a few comments, but all except two of them are very minor and of stylistic nature, and I think that the two non-minor ones can be addressed rather easily. Up to these changes, I strongly recommend acceptance.
+
+----------------------------- Main comments
+
+268: It sounds a bit strange; ribbon graphs are actually not graphs. Furthermore, data structures for ribbon graphs are not described; please provide details. My understanding is that you record, for each ribbon, the ordering of the edges crossing the ribbon, and at each vertex region you record the cyclic ordering of the intersections of the curves you consider with each boundary of the region; thus, ignoring the precise arrangement of the curves inside each vertex region. Details on how you use this data structure could be useful, e.g. on lines 500 and 1000.
+
+	Jeff: Added comment to clean up.
+
+295: What is a set of non-crossing weakly simple cycles? I think you do not mean "pairwise non-crossing", but you mean that there exists a perturbation of all the cycles so that they become disjoint? There may be an ambiguity on this concept throughout the paper; please check.
+
+	Jeff: Added comment with draft text.
+
+----------------------------- Minor comments
+
+39: The expression "disconnected subcomplexes" is strange. First, they are not necessarily disconnected. Second, the term "subcomplexes" is not defined. Why not "surfaces with boundary" instead of "disconnected subcomplexes"?
+
+Response: In fact, they are disconnected (or it is not a cut).  We also feel “subcomplexes” is fairly standard and well understood.
+
+Response: Sequences are intrinsically ordered, so we are uncomfortable with this wording.  While vague, we feel “pattern” captures the idea better, especially in an introduction section, and the ideas are made more precise later in the paper in any case.
+
+222: If g=0, the surface is necessarily orientable.
+
+	Fixed
+
+224: Your definition of an embedding is intuitive, but not formally correct (the relative interiors of paths must avoid the images of vertices; there is a condition on the endpoints of the paths). I think it is fine to skip the details, provided you indicate that this is an informal definition.
+
+	Jeff: Added formal definition (injective map from G to Sigma) and “that intersect vertices only at their endpoints”
+
+265: I think that cross-metric surfaces would be completely appropriate for your purposes, but indeed your ribbon graph structure does the job.
+
+347: Perhaps indicate "two disjoint (possibly non-connected) subsets".
+
+Response: done
+
+383: refer already to Figure 3.1.
+
+Response: done
+
+389: Have you defined delta_i^* above? If so, I have forgotten.
+
+Response: We were first defining it here. However, we never use the notation later, so we have removed it.
+
+422: Since the surface is allowed to be non-orientable (see line 356), you also need to consider crosscaps. Actually, perhaps just removing the sentence would be better.
+
+Response: Instead of mentioning handles, the second case now states we reduce the genus.
+
+574: "intuitively establishes" sounds weird.
+
+Response: Agreed - we have removed the word intuitively.
+
+811: "we look for" should be "we look for a"
+
+Response: done
+
+867: I think this is correct, but I got confused a bit. Perhaps it would help if you would make it explicit that a cut is the same as the primal of an even subgraph.
+
+877: Explain that H is a graph in the homology class you are considering.  FIXED.
+ 
+887: Explain that you will use Lemma 6.2 in the following lemma.
+
+913: Refer to Lemma 6.2, which you are indeed using.
+
+Caption of Figure 6.1: It would help to mention that the cost of each red edge is c(uv)/6.  FIXED.
+
+983: I think H should be H'.
+
+1000: Shouldn't the complexity be O(gn)? Again, this depends on your data structure, and it would be better to be more explicit. Similarly, on line 1001, isn't the number of vertices O(gn)? (This doesn't affect the rest anyway.)
+
+Response: We replaced applicable instances of n and n log log n with gn and gn log log n, respectively.
+
+1006: I think that you are using a slight extension of Lemma 7.2, because you are using it with several disjoint shortest paths. It is clear that the proof of Lemma 7.2 extends to this case.
+
+Response: We rewrote this paragraph to make it clear we are using repeated instantiations of Lemma 7.2.
+
+1066: Replacing the semicolon with a period would help the reader understand where your "Otherwise..." reasoning ends.  FIXED.
+
+1069: The "without loss of generality" looks slightly abusive, because X satisfies a property that X' does not need to satisfy (a priori), namely, that the component of Sigma \ X not incident to s^* is not a disk. I think it would be better to be explicit, although I believe the proof is correct.
+
+1070: "it follow" should be "it follows".  FIXED
+
+1090, 1094: "on an" should be "on a".  FIXED.
