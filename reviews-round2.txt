@@ -11,11 +11,12 @@ The paper has been revised with care (thanks!). I am convinced that the paper i
 
 268: It sounds a bit strange; ribbon graphs are actually not graphs. Furthermore, data structures for ribbon graphs are not described; please provide details. My understanding is that you record, for each ribbon, the ordering of the edges crossing the ribbon, and at each vertex region you record the cyclic ordering of the intersections of the curves you consider with each boundary of the region; thus, ignoring the precise arrangement of the curves inside each vertex region. Details on how you use this data structure could be useful, e.g. on lines 500 and 1000.
 
-	Jeff: Added comment to clean up.
+	Response: We have added text as far as noting what is explicitly stored, and how to "cut" and update the information (including time bounds).  We have also included a bit more detail later in the paper, so hopefully this is clearer now.
 
 295: What is a set of non-crossing weakly simple cycles? I think you do not mean "pairwise non-crossing", but you mean that there exists a perturbation of all the cycles so that they become disjoint? There may be an ambiguity on this concept throughout the paper; please check.
 
 	Jeff: Added comment with draft text.
+	Response: 
 
 ----------------------------- Minor comments
 
