@@ -99,7 +99,7 @@ Caption of Figure 6.1: It would help to mention that the cost of each red edge i
 
 1069: The "without loss of generality" looks slightly abusive, because X satisfies a property that X' does not need to satisfy (a priori), namely, that the component of Sigma \ X not incident to s^* is not a disk. I think it would be better to be explicit, although I believe the proof is correct.
 
-	Response: 
+	Response: We now explicitly mention X', the new subspace Sigma \ X' containing H_h, and how they lead to the lemma.
 
 1070: "it follow" should be "it follows".  
 
