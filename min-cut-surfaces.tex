@@ -616,11 +616,9 @@ Slicing along the arcs $a_1, a_2, \dots, a_\beta$ transforms~$\Sigma$ into a top
 
 \begin{proof}
 Let $\set{\tilde{a}_1, \tilde{a}_2, \dots, \tilde{a}_\beta}$ be any ribbon perturbation of the arcs $a_1, a_2, \dots, a_\beta$, such that the arcs $\tilde{a}_i$ are simple and pairwise disjoint.  Lemma \ref{L:weak} implies that such a perturbation exists.
-Slicing along any perturbed arc~$\tilde{a}_i$ increases the Euler characteristic of the surface by
-1.
-For example, if the surface is orientable, then slicing either reduces the number of boundary components by 1, if the endpoints of $\tilde{a}_i$ lie on distinct boundaries, or 
-%\enote{Reviewer says: "Since the surface is allowed to be non-orientable (see line 356), you also need to consider crosscaps. Actually, perhaps just removing the sentence would be better."  I'm not following what they object to here.}
-cuts along a handle once, if both endpoints lie on the same boundary.
+Slicing along any perturbed arc~$\tilde{a}_i$ increases the Euler characteristic of the surface by $1$.
+% I don’t think this case analysis is actually helpful! -- Jeff
+% For example, if the surface is orientable, slicing along $\tilde{a}_i$ either reduces the number of boundaries by $1$, because the endpoints of $\tilde{a}_i$ lie on distinct boundaries. or decreases the genus by $1$ and increases the number of boundaries by $1$, because the endpoints of $\tilde{a}_i$ lie on the same boundary.
 Because the perturbed arcs $\tilde{a}_i$ are simple and disjoint, slicing along all $\beta$ perturbed arcs increases the Euler characteristic to 1.  If the resulting sliced surface were disconnected, then the faces of $G$ incident to some edge in $L$ would lie in different components, but this is impossible, because all faces are connected in the sliced surface via the cotree $C^*$.  We conclude that the sliced surface is connected and has Euler characteristic $1$, so it must be a disk.  %Expressing the Euler characteristic of $\Sigma$ in terms of the Euler characteristic of $f$ implies that the latter Euler characteristic is $1$.  So $f$ is a disk.
 \end{proof}
 
@@ -1279,7 +1277,7 @@ We transform the edges one at a time; after each iteration, the embedding is a s
 
 \begin{figure}[hbt]
 \centering\includegraphics[scale=0.4]{Fig/addhandle3}
-\caption{Adding a handle to transform a negative edge into a negative cocycle.  Thick (blue) edges have cost $C$; dashed edges have cost zero. The cost of each red edge is $c(uv)/6$.}
+\caption{Adding a handle to transform a negative edge into a negative cocycle.  Thick (blue) edges have cost $C$; dashed edges have cost zero; and red edges have cost $c(uv)/6$.}
 \label{fig:addhandle}
 \end{figure}
 

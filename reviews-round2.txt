@@ -15,8 +15,7 @@ The paper has been revised with care (thanks!). I am convinced that the paper i
 
 295: What is a set of non-crossing weakly simple cycles? I think you do not mean "pairwise non-crossing", but you mean that there exists a perturbation of all the cycles so that they become disjoint? There may be an ambiguity on this concept throughout the paper; please check.
 
-	Jeff: Added comment with draft text.
-	Response: 
+	Response: We added text to clarify that a collection of curves is non-crossing if there is a single ribbon perturbation in which the perturbed curve are pairwise disjoint.
 
 ----------------------------- Minor comments
 
@@ -54,7 +53,7 @@ The paper has been revised with care (thanks!). I am convinced that the paper i
 
 422: Since the surface is allowed to be non-orientable (see line 356), you also need to consider crosscaps. Actually, perhaps just removing the sentence would be better.
 
-	Response: Instead of mentioning handles, the second case now states we reduce the genus.
+	Response: Agreed.  We’ve removed the sentence.  (In all cases, slicing along a simple arc increases the Euler characteristic by 1.)
 
 574: "intuitively establishes" sounds weird.
 
@@ -72,11 +71,11 @@ The paper has been revised with care (thanks!). I am convinced that the paper i
  
 887: Explain that you will use Lemma 6.2 in the following lemma.
 
-	Response: 
+	Response: Three lines earlier we said we would prove NP-hardness by reduction from MINCUT; saying the same thing again seems unnecessary.
 
 913: Refer to Lemma 6.2, which you are indeed using.
 
-	Response: 
+	Response: done
 
 Caption of Figure 6.1: It would help to mention that the cost of each red edge is c(uv)/6.  
 
@@ -84,7 +83,7 @@ Caption of Figure 6.1: It would help to mention that the cost of each red edge i
 
 983: I think H should be H'.
 
-	Response: 
+	Response: Agreed; fixed.
 
 1000: Shouldn't the complexity be O(gn)? Again, this depends on your data structure, and it would be better to be more explicit. Similarly, on line 1001, isn't the number of vertices O(gn)? (This doesn't affect the rest anyway.)
 
